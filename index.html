@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FIT NIIKITERS RECIPE VAULT</title>
+<title>FIT NIIKITER'S RECIPE VAULT</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -23,6 +23,14 @@
   .nav-tab{padding:15px 28px;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;white-space:nowrap;}
   .nav-tab:hover{color:var(--text);}
   .nav-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+  .nav-social{display:flex;align-items:center;gap:8px;margin-left:auto;padding:0 20px;}
+  .social-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:20px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;text-decoration:none;transition:all .2s;border:1.5px solid transparent;white-space:nowrap;}
+  .social-btn:hover{transform:translateY(-1px);}
+  .social-btn.youtube{background:rgba(255,0,0,.12);color:#ff4444;border-color:rgba(255,0,0,.25);}
+  .social-btn.youtube:hover{background:rgba(255,0,0,.22);border-color:#ff4444;}
+  .social-btn.tiktok{background:rgba(255,255,255,.07);color:#f0f0f0;border-color:rgba(255,255,255,.15);}
+  .social-btn.tiktok:hover{background:rgba(255,255,255,.13);border-color:#fff;}
+  .social-icon{font-size:14px;}
 
   .page{display:none;}
   .page.active{display:block;}
@@ -174,6 +182,20 @@
   .note-box{background:rgba(232,255,71,.04);border:1px solid rgba(232,255,71,.12);border-radius:8px;padding:14px 16px;font-size:12px;color:#aaa;line-height:1.6;}
   .note-box strong{color:var(--accent);}
 
+  /* ── PROTEIN SELECTOR ── */
+  .protein-selector{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
+  .protein-btn{display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s;user-select:none;}
+  .protein-btn:hover{border-color:#555;}
+  .protein-btn.active{border-color:var(--accent);background:rgba(232,255,71,.06);}
+  .protein-btn .pb-icon{font-size:20px;}
+  .protein-btn .pb-name{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:.5px;color:var(--text);}
+  .protein-btn .pb-sub{font-size:10px;color:var(--muted);}
+  .protein-variant{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+  .variant-btn{padding:6px 14px;background:var(--surface);border:1.5px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;}
+  .variant-btn:hover{border-color:#555;color:var(--text);}
+  .variant-btn.active{background:var(--accent);border-color:var(--accent);color:#000;}
+  .protein-macro-hint{font-size:11px;color:#555;margin-top:8px;}
+
   footer{padding:28px 40px;border-top:1px solid var(--border);text-align:center;font-size:12px;color:var(--muted);}
   footer strong{color:var(--accent);}
 
@@ -280,6 +302,14 @@
   <button class="nav-tab active" onclick="switchTab('recipes',this)">📋 500 Recipes</button>
   <button class="nav-tab" onclick="switchTab('calculator',this)">⚖️ Macro Calculator</button>
   <button class="nav-tab" onclick="switchTab('pantry',this)">🧺 My Pantry</button>
+  <div class="nav-social">
+    <a class="social-btn youtube" href="https://www.youtube.com/@fitniikiter/shorts" target="_blank" rel="noopener">
+      <span class="social-icon">▶️</span> YouTube
+    </a>
+    <a class="social-btn tiktok" href="https://www.tiktok.com/@fitniikiter" target="_blank" rel="noopener">
+      <span class="social-icon">🎵</span> TikTok
+    </a>
+  </div>
 </div>
 
 <!-- ══════════════════════ RECIPES PAGE ══════════════════════ -->
@@ -289,7 +319,7 @@
     <div class="header-top">
       <div class="recipe-count">500</div>
       <div class="header-title">
-        <h1>FIT NIIKITERS<br>RECIPE VAULT</h1>
+        <h1>FIT NIIKITER'S<br>RECIPE VAULT</h1>
         <p>Boneless · Skinless · High Protein · Potato / Rice / Noodle / Bread · Macros update live from Calculator tab</p>
       </div>
     </div>
@@ -320,108 +350,30 @@
   <div class="carb-bar">
     <span class="carb-bar-label">🥔 Carb Sources:</span>
     <div class="carb-inputs">
-      <div class="carb-input-group">
-        <label class="carb-check-wrap potato-check" onclick="toggleCarb('potato')">
-          <input type="checkbox" id="chkPotato" checked>
-          <span class="carb-checkbox"></span>
-          <span class="carb-check-label">Potato</span>
-        </label>
-        <input type="number" class="carb-num" id="fPotato" value="500" min="0" oninput="syncCarbFilter('potato',this.value)">
-        <span class="carb-unit">g</span>
-      </div>
-      <div class="carb-input-group">
-        <label class="carb-check-wrap rice-check" onclick="toggleCarb('rice')">
-          <input type="checkbox" id="chkRice" checked>
-          <span class="carb-checkbox"></span>
-          <span class="carb-check-label">Rice</span>
-        </label>
-        <input type="number" class="carb-num" id="fRice" value="200" min="0" oninput="syncCarbFilter('rice',this.value)">
-        <span class="carb-unit">g</span>
-      </div>
-      <div class="carb-input-group">
-        <label class="carb-check-wrap noodle-check" onclick="toggleCarb('noodle')">
-          <input type="checkbox" id="chkNoodle" checked>
-          <span class="carb-checkbox"></span>
-          <span class="carb-check-label">Noodles</span>
-        </label>
-        <input type="number" class="carb-num" id="fNoodle" value="150" min="0" oninput="syncCarbFilter('noodle',this.value)">
-        <span class="carb-unit">g</span>
-      </div>
-      <div class="carb-input-group">
-        <label class="carb-check-wrap bread-check" onclick="toggleCarb('bread')">
-          <input type="checkbox" id="chkBread" checked>
-          <span class="carb-checkbox"></span>
-          <span class="carb-check-label">Bread/Wrap</span>
-        </label>
-        <input type="number" class="carb-num" id="fBread" value="80" min="0" oninput="syncCarbFilter('bread',this.value)">
-        <span class="carb-unit">g</span>
-      </div>
+      <label class="carb-check-wrap potato-check" onclick="toggleCarb('potato')">
+        <input type="checkbox" id="chkPotato" checked>
+        <span class="carb-checkbox"></span>
+        <span class="carb-check-label">🥔 Potato</span>
+      </label>
+      <label class="carb-check-wrap rice-check" onclick="toggleCarb('rice')">
+        <input type="checkbox" id="chkRice" checked>
+        <span class="carb-checkbox"></span>
+        <span class="carb-check-label">🍚 Rice</span>
+      </label>
+      <label class="carb-check-wrap noodle-check" onclick="toggleCarb('noodle')">
+        <input type="checkbox" id="chkNoodle" checked>
+        <span class="carb-checkbox"></span>
+        <span class="carb-check-label">🍜 Noodles</span>
+      </label>
+      <label class="carb-check-wrap bread-check" onclick="toggleCarb('bread')">
+        <input type="checkbox" id="chkBread" checked>
+        <span class="carb-checkbox"></span>
+        <span class="carb-check-label">🫓 Bread/Wrap</span>
+      </label>
     </div>
   </div>
 
   <div class="stats-bar">Showing <span id="visibleCount">500</span> of 500 recipes</div>
-  <!-- MACRO FILTER BAR -->
-  <div class="macro-filter-bar">
-    <span class="mf-title">🎯 Filter:</span>
-    <div class="mf-groups">
-
-      <div class="mf-group">
-        <span class="mf-group-label kcal-lbl">Kcal</span>
-        <div class="mf-range-row">
-          <input class="mf-num" type="number" id="mfKcalMin" value="0" min="0" max="9999" oninput="applyMacroFilter()">
-          <span class="mf-sep">–</span>
-          <input class="mf-num" type="number" id="mfKcalMax" value="9999" min="0" max="9999" oninput="applyMacroFilter()">
-        </div>
-      </div>
-
-      <div class="mf-group">
-        <span class="mf-group-label prot-lbl">Protein (g)</span>
-        <div class="mf-range-row">
-          <input class="mf-num" type="number" id="mfProtMin" value="0" min="0" max="999" oninput="applyMacroFilter()">
-          <span class="mf-sep">–</span>
-          <input class="mf-num" type="number" id="mfProtMax" value="999" min="0" max="999" oninput="applyMacroFilter()">
-        </div>
-      </div>
-
-      <div class="mf-group">
-        <span class="mf-group-label carbs-lbl">Carbs (g)</span>
-        <div class="mf-range-row">
-          <input class="mf-num" type="number" id="mfCarbMin" value="0" min="0" max="999" oninput="applyMacroFilter()">
-          <span class="mf-sep">–</span>
-          <input class="mf-num" type="number" id="mfCarbMax" value="999" min="0" max="999" oninput="applyMacroFilter()">
-        </div>
-      </div>
-
-      <div class="mf-group">
-        <span class="mf-group-label fat-lbl">Fat (g)</span>
-        <div class="mf-range-row">
-          <input class="mf-num" type="number" id="mfFatMin" value="0" min="0" max="999" oninput="applyMacroFilter()">
-          <span class="mf-sep">–</span>
-          <input class="mf-num" type="number" id="mfFatMax" value="999" min="0" max="999" oninput="applyMacroFilter()">
-        </div>
-      </div>
-
-      <div class="mf-group">
-        <span class="mf-group-label score-lbl">🥗 Saturation</span>
-        <div class="mf-range-row">
-          <input class="mf-num" type="number" id="mfScoreMin" value="1" min="1" max="10" oninput="applyMacroFilter()">
-          <span class="mf-sep">–</span>
-          <input class="mf-num" type="number" id="mfScoreMax" value="10" min="1" max="10" oninput="applyMacroFilter()">
-        </div>
-      </div>
-
-      <div class="mf-group">
-        <span class="mf-group-label time-lbl">⏱ Time (min)</span>
-        <div class="mf-range-row">
-          <input class="mf-num" type="number" id="mfTimeMin" value="0" min="0" max="999" oninput="applyMacroFilter()">
-          <span class="mf-sep">–</span>
-          <input class="mf-num" type="number" id="mfTimeMax" value="999" min="0" max="999" oninput="applyMacroFilter()">
-        </div>
-      </div>
-
-      <button class="mf-reset-btn" onclick="resetMacroFilter()">↺ Reset</button>
-    </div>
-  </div>
   <div id="noResults" class="no-results" style="display:none;"><strong>No recipes found</strong>Adjust your filters or carb weights above.</div>
   <div class="grid" id="recipeGrid"></div>
 
@@ -432,15 +384,71 @@
   <div class="calc-page">
 
     <div class="calc-header">
-      <h2>Macro Calculator</h2>
-      <p>Set your raw ingredient weights — all recipe cards update instantly. Set any carb to 0g to hide those recipes.</p>
+      <h2>Weights & Filters</h2>
+      <p>Set your protein source, weights and filters — everything updates instantly on the recipe tab.</p>
     </div>
 
+    <!-- FILTER FIRST -->
     <div class="calc-section">
-      <h3><span class="dot"></span> Protein Base</h3>
+      <h3><span class="dot"></span> 🎯 Filter Recipes</h3>
+      <div class="input-grid-4">
+        <div class="input-group">
+          <label class="mf-group-label kcal-lbl">Max Kcal</label>
+          <div class="input-wrap">
+            <input type="number" id="mfKcalMax" value="9999" min="0" max="9999" oninput="applyMacroFilter()">
+            <span class="unit">kcal</span>
+          </div>
+        </div>
+        <div class="input-group">
+          <label class="mf-group-label prot-lbl">Min Protein</label>
+          <div class="input-wrap">
+            <input type="number" id="mfProtMin" value="0" min="0" max="999" oninput="applyMacroFilter()">
+            <span class="unit">g</span>
+          </div>
+        </div>
+        <div class="input-group">
+          <label class="mf-group-label carbs-lbl">Max Carbs</label>
+          <div class="input-wrap">
+            <input type="number" id="mfCarbMax" value="999" min="0" max="999" oninput="applyMacroFilter()">
+            <span class="unit">g</span>
+          </div>
+        </div>
+        <div class="input-group">
+          <label class="mf-group-label fat-lbl">Max Fat</label>
+          <div class="input-wrap">
+            <input type="number" id="mfFatMax" value="999" min="0" max="999" oninput="applyMacroFilter()">
+            <span class="unit">g</span>
+          </div>
+        </div>
+        <div class="input-group">
+          <label class="mf-group-label score-lbl">Min Saturation Score</label>
+          <div class="input-wrap">
+            <input type="number" id="mfScoreMin" value="1" min="1" max="10" oninput="applyMacroFilter()">
+            <span class="unit">/ 10</span>
+          </div>
+        </div>
+        <div class="input-group">
+          <label class="mf-group-label time-lbl">Max Time</label>
+          <div class="input-wrap">
+            <input type="number" id="mfTimeMax" value="999" min="0" max="999" oninput="applyMacroFilter()">
+            <span class="unit">min</span>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:14px;">
+        <button class="mf-reset-btn" onclick="resetMacroFilter()">↺ Reset all filters</button>
+      </div>
+    </div>
+
+    <!-- PROTEIN SOURCE -->
+    <div class="calc-section">
+      <h3><span class="dot"></span> Protein Source</h3>
+      <div class="protein-selector" id="proteinSelector"></div>
+      <div class="protein-variant" id="variantRow" style="display:none;"></div>
+      <div style="height:12px;"></div>
       <div class="input-grid">
         <div class="input-group">
-          <label>🍗 Chicken Thigh — boneless, skinless, raw</label>
+          <label id="proteinInputLabel">🍗 Protein — raw weight</label>
           <div class="input-wrap">
             <input type="number" id="chickenInput" value="400" min="0" max="3000" oninput="updateCalc()">
             <span class="unit">g</span>
@@ -448,12 +456,12 @@
           <div class="input-hint">Raw weight before cooking</div>
         </div>
         <div class="input-group">
-          <label>🍳 Eggs (optional add-on)</label>
+          <label>🥚 Eggs (optional add-on)</label>
           <div class="input-wrap">
             <input type="number" id="eggsInput" value="0" min="0" max="20" oninput="updateCalc()">
             <span class="unit">pcs</span>
           </div>
-          <div class="input-hint">Whole eggs added to the dish</div>
+          <div class="input-hint">Extra eggs added to the dish</div>
         </div>
       </div>
     </div>
@@ -539,6 +547,7 @@
       </table>
     </div>
 
+
     <div class="note-box">
       <strong>📌 How macros work:</strong> Each recipe card shows: chicken base + the relevant carb source (at your weights) + a recipe-specific sauce/oil estimate. Setting a carb to <strong>0g also hides those recipes</strong> from the recipe tab — so the filter bar and calculator stay in sync.
     </div>
@@ -592,18 +601,28 @@
 </div>
 
 
-<footer>Built for <strong>FIT NIIKITERS</strong> · 500 recipes · Boneless skinless chicken thighs · All weights raw · 4 carb sources</footer>
+<footer>Built for <strong>FIT NIIKITER'S</strong> · 500 recipes · Boneless skinless chicken thighs · All weights raw · 4 carb sources</footer>
 
 <script>
 // ── Nutritional values per 100g RAW ──
 const NUT = {
-  chicken: {kcal:150, p:17,  c:0,   f:9   }, // boneless skinless thigh
-  potato:  {kcal:77,  p:2,   c:17,  f:0.1 }, // raw unpeeled
-  rice:    {kcal:356, p:7,   c:78,  f:0.6 }, // dry jasmine/white rice
-  noodle:  {kcal:352, p:12,  c:71,  f:1.5 }, // dry pasta/noodles
-  bread:   {kcal:260, p:9,   c:49,  f:3   }, // wrap/flatbread
-  egg:     {kcal:155, p:13,  c:1,   f:11  }, // whole egg per 100g (~60g each)
+  // proteins
+  chicken_thigh:  {kcal:150, p:17,  c:0, f:9   }, // boneless skinless thigh raw
+  chicken_breast: {kcal:110, p:23,  c:0, f:1.5 }, // boneless skinless breast raw
+  beef_regular:   {kcal:215, p:17,  c:0, f:16  }, // ground beef ~20% fat raw
+  beef_lean:      {kcal:145, p:20,  c:0, f:7   }, // ground beef ~5% fat raw
+  eggs:           {kcal:155, p:13,  c:1, f:11  }, // whole egg per 100g (~60g each)
+  salmon:         {kcal:208, p:20,  c:0, f:13  }, // atlantic salmon raw
+  tofu:           {kcal:76,  p:8,   c:2, f:4   }, // firm tofu
+  // carbs
+  potato:  {kcal:77,  p:2,   c:17,  f:0.1 },
+  rice:    {kcal:356, p:7,   c:78,  f:0.6 },
+  noodle:  {kcal:352, p:12,  c:71,  f:1.5 },
+  bread:   {kcal:260, p:9,   c:49,  f:3   },
 };
+// backwards compat alias
+NUT.chicken = NUT.chicken_thigh;
+NUT.egg = NUT.eggs;
 
 // ── Global state ──
 // ── Recipe data ──
@@ -1141,21 +1160,86 @@ const R = [
 // ── State ──
 let currentCuisineFilter = 'all';
 let weights = { chicken:400, potato:500, rice:200, noodle:150, bread:80, eggs:0, servings:2 };
+let activeProtein = 'chicken_thigh'; // current protein source key in NUT
 let carbEnabled = { potato:true, rice:true, noodle:true, bread:true };
 
 function baseMacros(carbType) {
-  const s = Math.max(weights.servings, 1);
-  const ck = weights.chicken / 100;
-  const eg = weights.eggs * 0.6; // ~60g per egg
-  let carbG = weights[carbType] / 100;
-
-  const carbNut = NUT[carbType];
+  const s   = Math.max(weights.servings, 1);
+  const pNut = NUT[activeProtein] || NUT.chicken_thigh;
+  const cNut = NUT[carbType];
+  const protG = weights.chicken / 100;
+  const carbG = weights[carbType] / 100;
+  // eggs are always additive (optional)
+  const egG   = (activeProtein === 'eggs') ? 0 : (weights.eggs * 0.6 / 100);
+  const egNut = NUT.eggs;
   return {
-    kcal: (ck*NUT.chicken.kcal + carbG*carbNut.kcal + (eg/100)*NUT.egg.kcal) / s,
-    p:    (ck*NUT.chicken.p    + carbG*carbNut.p    + (eg/100)*NUT.egg.p)    / s,
-    c:    (ck*NUT.chicken.c    + carbG*carbNut.c    + (eg/100)*NUT.egg.c)    / s,
-    f:    (ck*NUT.chicken.f    + carbG*carbNut.f    + (eg/100)*NUT.egg.f)    / s,
+    kcal: (protG*pNut.kcal + carbG*cNut.kcal + egG*egNut.kcal) / s,
+    p:    (protG*pNut.p    + carbG*cNut.p    + egG*egNut.p)    / s,
+    c:    (protG*pNut.c    + carbG*cNut.c    + egG*egNut.c)    / s,
+    f:    (protG*pNut.f    + carbG*cNut.f    + egG*egNut.f)    / s,
   };
+}
+
+// ── Protein selection ──
+const PROTEIN_DEFS = [
+  { key:'chicken', icon:'🍗', name:'Chicken', variants:[
+    { key:'chicken_thigh',  label:'Thigh',  sub:'150 kcal · 17g P · 9g F per 100g' },
+    { key:'chicken_breast', label:'Breast', sub:'110 kcal · 23g P · 1.5g F per 100g' },
+  ]},
+  { key:'beef', icon:'🥩', name:'Beef', variants:[
+    { key:'beef_regular', label:'Regular (20% fat)', sub:'215 kcal · 17g P · 16g F per 100g' },
+    { key:'beef_lean',    label:'Lean (5% fat)',     sub:'145 kcal · 20g P · 7g F per 100g' },
+  ]},
+  { key:'eggs',   icon:'🥚', name:'Eggs',   variants:null },
+  { key:'salmon', icon:'🐟', name:'Salmon', variants:null },
+  { key:'tofu',   icon:'🫘', name:'Tofu',   variants:null },
+];
+
+function selectProtein(key) {
+  const def = PROTEIN_DEFS.find(p => p.key === key);
+  if (!def) return;
+  // If has variants, pick first variant; else use key directly
+  activeProtein = def.variants ? def.variants[0].key : key;
+  // Update button active states
+  document.querySelectorAll('.protein-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.protein === key);
+  });
+  // Show/hide variant row
+  const varRow = document.getElementById('variantRow');
+  if (varRow) {
+    if (def.variants) {
+      varRow.innerHTML = def.variants.map(v =>
+        `<button class="variant-btn ${activeProtein===v.key?'active':''}" onclick="selectVariant('${v.key}','${key}')" title="${v.sub}">${v.label}</button>`
+      ).join('') + `<span class="protein-macro-hint" id="proteinHint">${def.variants.find(v=>v.key===activeProtein)?.sub||''}</span>`;
+      varRow.style.display = 'flex';
+    } else {
+      const nutKey = key === 'eggs' ? 'eggs' : key;
+      const n = NUT[nutKey];
+      varRow.innerHTML = `<span class="protein-macro-hint">${n ? n.kcal+' kcal · '+n.p+'g Protein · '+n.f+'g Fat per 100g' : ''}</span>`;
+      varRow.style.display = 'flex';
+    }
+  }
+  updateCardMacros();
+  filterRecipes();
+  updateCalcDisplay();
+}
+
+function selectVariant(variantKey, parentKey) {
+  activeProtein = variantKey;
+  document.querySelectorAll('.variant-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.trim() === document.querySelector(`.variant-btn[onclick*="${variantKey}"]`)?.textContent.trim());
+  });
+  // re-render variant buttons to update active state properly
+  const def = PROTEIN_DEFS.find(p => p.key === parentKey);
+  const varRow = document.getElementById('variantRow');
+  if (varRow && def?.variants) {
+    varRow.innerHTML = def.variants.map(v =>
+      `<button class="variant-btn ${activeProtein===v.key?'active':''}" onclick="selectVariant('${v.key}','${parentKey}')" title="${v.sub}">${v.label}</button>`
+    ).join('') + `<span class="protein-macro-hint">${def.variants.find(v=>v.key===activeProtein)?.sub||''}</span>`;
+  }
+  updateCardMacros();
+  filterRecipes();
+  updateCalcDisplay();
 }
 
 // ── ONE-TIME render: build all 500 cards into DOM on startup ──
@@ -1242,12 +1326,12 @@ function filterRecipes() {
     const carbs = Math.round(m.c    + r.sauce_c);
     const fat   = Math.round(m.f    + r.sauce_f);
     const score = calcScore(r, prot, fat);
-    const mm = kcal  >= macroFilter.kcalMin  && kcal  <= macroFilter.kcalMax
-            && prot  >= macroFilter.protMin  && prot  <= macroFilter.protMax
-            && carbs >= macroFilter.carbMin  && carbs <= macroFilter.carbMax
-            && fat   >= macroFilter.fatMin   && fat   <= macroFilter.fatMax
-            && score >= macroFilter.scoreMin && score <= macroFilter.scoreMax
-            && r.time >= macroFilter.timeMin && r.time <= macroFilter.timeMax;
+    const mm = kcal  <= macroFilter.kcalMax
+            && prot  >= macroFilter.protMin
+            && carbs <= macroFilter.carbMax
+            && fat   <= macroFilter.fatMax
+            && score >= macroFilter.scoreMin
+            && r.time <= macroFilter.timeMax;
     // pantry filter
     const blockedByPantry = Object.entries(INGREDIENT_RECIPE_MAP).some(([ingId, rIds]) =>
       disabledIngredients.has(ingId) && rIds.includes(r.id)
@@ -1299,27 +1383,27 @@ function scoreLabel(s) {
 }
 
 // ── Macro filter state ──
-let macroFilter = { kcalMin:0,kcalMax:9999, protMin:0,protMax:999, carbMin:0,carbMax:999, fatMin:0,fatMax:999, scoreMin:1,scoreMax:10, timeMin:0,timeMax:999 };
+let macroFilter = { kcalMax:9999, protMin:0, carbMax:999, fatMax:999, scoreMin:1, timeMax:999 };
 
 
 function applyMacroFilter() {
-  macroFilter.kcalMin  = parseFloat(document.getElementById('mfKcalMin').value)  || 0;
-  macroFilter.kcalMax  = parseFloat(document.getElementById('mfKcalMax').value)  || 9999;
-  macroFilter.protMin  = parseFloat(document.getElementById('mfProtMin').value)  || 0;
-  macroFilter.protMax  = parseFloat(document.getElementById('mfProtMax').value)  || 999;
-  macroFilter.carbMin  = parseFloat(document.getElementById('mfCarbMin').value)  || 0;
-  macroFilter.carbMax  = parseFloat(document.getElementById('mfCarbMax').value)  || 999;
-  macroFilter.fatMin   = parseFloat(document.getElementById('mfFatMin').value)   || 0;
-  macroFilter.fatMax   = parseFloat(document.getElementById('mfFatMax').value)   || 999;
-  macroFilter.scoreMin = parseFloat(document.getElementById('mfScoreMin').value) || 1;
-  macroFilter.scoreMax = parseFloat(document.getElementById('mfScoreMax').value) || 10;
-  macroFilter.timeMin  = parseFloat(document.getElementById('mfTimeMin').value)  || 0;
-  macroFilter.timeMax  = parseFloat(document.getElementById('mfTimeMax').value)  || 999;
+  const g = id => { const el = document.getElementById(id); return el ? parseFloat(el.value) : null; };
+  macroFilter.kcalMax  = g('mfKcalMax')  ?? 9999;
+  macroFilter.protMin  = g('mfProtMin')  ?? 0;
+  macroFilter.carbMax  = g('mfCarbMax')  ?? 999;
+  macroFilter.fatMax   = g('mfFatMax')   ?? 999;
+  macroFilter.scoreMin = g('mfScoreMin') ?? 1;
+  macroFilter.timeMax  = g('mfTimeMax')  ?? 999;
   filterRecipes();
 }
 
 function resetMacroFilter() {
-  macroFilter = { kcalMin:0,kcalMax:9999, protMin:0,protMax:999, carbMin:0,carbMax:999, fatMin:0,fatMax:999, scoreMin:1,scoreMax:10, timeMin:0,timeMax:999 };
+  macroFilter = { kcalMax:9999, protMin:0, carbMax:999, fatMax:999, scoreMin:1, timeMax:999 };
+  const vals = { mfKcalMax:9999, mfProtMin:0, mfCarbMax:999, mfFatMax:999, mfScoreMin:1, mfTimeMax:999 };
+  Object.entries(vals).forEach(([id, val]) => {
+    const el = document.getElementById(id);
+    if (el) el.value = val;
+  });
   filterRecipes();
 }
 
@@ -1328,37 +1412,30 @@ function resetMacroFilter() {
 function syncCarbFilter(type, val) {
   const enabled = parseFloat(val) > 0;
   carbEnabled[type] = enabled;
-  // sync checkbox
   const chk = document.getElementById('chk'+type.charAt(0).toUpperCase()+type.slice(1));
   if (chk) chk.checked = enabled;
-  // sync calculator input
-  const calcInput = document.getElementById(type+'Input');
-  if (calcInput) calcInput.value = val;
   weights[type] = parseFloat(val)||0;
   filterRecipes();
   updateCalcDisplay();
 }
 
 function toggleCarb(type) {
-  // prevent label double-fire — checkbox handles its own state, we just read it after a tick
   setTimeout(() => {
     const chk = document.getElementById('chk'+type.charAt(0).toUpperCase()+type.slice(1));
     if (!chk) return;
     carbEnabled[type] = chk.checked;
-    // if unchecking, set weight input to 0; if re-checking, restore last value
-    const numEl = document.getElementById('f'+type.charAt(0).toUpperCase()+type.slice(1));
-    if (!chk.checked) {
-      if (numEl && parseFloat(numEl.value) > 0) {
-        numEl.dataset.prev = numEl.value;
-        numEl.value = 0;
+    // also sync calculator carb input
+    const calcInput = document.getElementById(type+'Input');
+    if (calcInput) {
+      if (!chk.checked) {
+        calcInput.dataset.prev = calcInput.value;
+        calcInput.value = 0;
+        weights[type] = 0;
+      } else {
+        const prev = calcInput.dataset.prev || {potato:500,rice:200,noodle:150,bread:80}[type];
+        calcInput.value = prev;
+        weights[type] = parseFloat(prev)||0;
       }
-      weights[type] = 0;
-    } else {
-      const prev = numEl ? (numEl.dataset.prev || {potato:500,rice:200,noodle:150,bread:80}[type]) : 0;
-      if (numEl) numEl.value = prev;
-      weights[type] = parseFloat(prev)||0;
-      const calcInput = document.getElementById(type+'Input');
-      if (calcInput) calcInput.value = weights[type];
     }
     filterRecipes();
     updateCalcDisplay();
@@ -1374,12 +1451,9 @@ function updateCalc() {
   weights.eggs     = parseFloat(document.getElementById('eggsInput').value)||0;
   weights.servings = parseInt(document.getElementById('servingsInput').value)||1;
 
-  // sync carb filter bar
+  // sync carb checkboxes
   ['potato','rice','noodle','bread'].forEach(t => {
     carbEnabled[t] = weights[t] > 0;
-    const fi = document.getElementById('f'+t.charAt(0).toUpperCase()+t.slice(1));
-    if (fi) fi.value = weights[t];
-    // sync checkbox
     const chk = document.getElementById('chk'+t.charAt(0).toUpperCase()+t.slice(1));
     if (chk) chk.checked = carbEnabled[t];
   });
@@ -1408,8 +1482,8 @@ function updateCalcDisplay() {
   // breakdown table
   const s = Math.max(weights.servings, 1);
   let rows = [
-    {label:`🍗 Chicken thigh (${weights.chicken}g raw)`, g:weights.chicken, n:NUT.chicken},
-    {label:`🍳 Eggs (${weights.eggs} × 60g)`, g:weights.eggs*60, n:NUT.egg},
+    {label:`Protein — ${activeProtein.replace('_',' ')} (${weights.chicken}g raw)`, g:weights.chicken, n:NUT[activeProtein]||NUT.chicken_thigh},
+    {label:`🥚 Eggs (${weights.eggs} × 60g)`, g:weights.eggs*60, n:NUT.eggs},
   ];
   ['potato','rice','noodle','bread'].forEach(t => {
     if (weights[t]>0) {
@@ -1642,9 +1716,24 @@ function switchTab(tab, btn) {
 
 // Init
 buildAllCards();    // render all 500 cards once
-updateCardMacros(); // fill in initial macro values
+
+// Build protein selector buttons
+(function() {
+  const sel = document.getElementById('proteinSelector');
+  if (!sel) return;
+  sel.innerHTML = PROTEIN_DEFS.map(p =>
+    `<div class="protein-btn ${p.key==='chicken'?'active':''}" data-protein="${p.key}" onclick="selectProtein('${p.key}')">
+      <span class="pb-icon">${p.icon}</span>
+      <span class="pb-name">${p.name}</span>
+    </div>`
+  ).join('');
+  // trigger chicken selected to show variants
+  selectProtein('chicken');
+})();
+
+updateCardMacros();
 updateCalcDisplay();
-filterRecipes();    // apply initial visibility
+filterRecipes();
 // Pantry init (don't render yet — tab is hidden)
 // disabledIngredients already loaded from localStorage above
 </script>
