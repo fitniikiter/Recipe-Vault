@@ -331,6 +331,54 @@
   .pantry-info{background:rgba(232,255,71,.04);border:1px solid rgba(232,255,71,.12);border-radius:8px;padding:14px 16px;font-size:12px;color:#aaa;line-height:1.6;margin-top:16px;}
   .pantry-info strong{color:var(--accent);}
   .missing-count{font-size:12px;color:var(--accent2);font-weight:700;margin-left:auto;}
+
+  /* ── PANTRY COLLAPSIBLE SECTIONS ── */
+  .pantry-section{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden;}
+  .pantry-section-header{display:flex;align-items:center;gap:12px;padding:18px 20px;cursor:pointer;transition:background .15s;user-select:none;}
+  .pantry-section-header:hover{background:rgba(255,255,255,.03);}
+  .pantry-section-icon{font-size:20px;}
+  .pantry-section-title{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:1px;color:var(--text);flex:1;}
+  .pantry-section-count{font-size:11px;color:var(--muted);background:rgba(255,255,255,.06);padding:3px 8px;border-radius:20px;}
+  .pantry-section-arrow{color:var(--muted);font-size:12px;transition:transform .2s;}
+  .pantry-section.open .pantry-section-arrow{transform:rotate(180deg);}
+  .pantry-section-body{display:none;padding:0 20px 18px;}
+  .pantry-section.open .pantry-section-body{display:block;}
+
+  /* ── DIETARY FILTER PANEL ── */
+  .dietary-panel{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  .dietary-panel-header{display:flex;align-items:center;gap:10px;padding:16px 20px;cursor:pointer;transition:background .15s;user-select:none;}
+  .dietary-panel-header:hover{background:rgba(255,255,255,.03);}
+  .dietary-panel-title{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:1px;color:var(--accent);flex:1;}
+  .dietary-panel-arrow{color:var(--muted);font-size:12px;transition:transform .2s;}
+  .dietary-panel.open .dietary-panel-arrow{transform:rotate(180deg);}
+  .dietary-panel-body{display:none;padding:0 20px 20px;}
+  .dietary-panel.open .dietary-panel-body{display:block;}
+  .dietary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-bottom:12px;}
+  .dietary-btn{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;cursor:pointer;transition:all .15s;user-select:none;}
+  .dietary-btn:hover{border-color:#555;}
+  .dietary-btn.active{border-color:var(--accent2);background:rgba(255,107,53,.08);}
+  .dietary-btn .diet-icon{font-size:18px;}
+  .dietary-btn .diet-label{font-size:12px;font-weight:600;color:var(--text);}
+  .dietary-btn .diet-sub{font-size:10px;color:var(--muted);margin-top:1px;}
+  .dietary-active-bar{font-size:11px;color:var(--accent2);margin-top:8px;min-height:16px;}
+
+  /* ── PROTEIN CHECKBOXES in carb-bar ── */
+  .filter-divider{width:1px;height:24px;background:var(--border);margin:0 4px;flex-shrink:0;}
+  .video-check-wrap{display:flex;align-items:center;gap:6px;cursor:pointer;user-select:none;padding:4px 10px;background:rgba(255,255,255,.04);border:1.5px solid var(--border);border-radius:20px;transition:all .15s;}
+  .video-check-wrap:hover{border-color:#555;}
+  .video-check-wrap input[type=checkbox]{display:none;}
+  .video-checkbox{width:14px;height:14px;border-radius:3px;border:1.5px solid #555;background:transparent;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;}
+  .video-check-wrap input:checked + .video-checkbox{background:var(--accent2);border-color:var(--accent2);}
+  .video-check-wrap input:checked + .video-checkbox::after{content:"✓";font-size:9px;font-weight:900;color:#fff;}
+  .video-check-label{font-size:11px;color:var(--muted);font-weight:600;}
+  .video-check-wrap input:checked ~ .video-check-label{color:var(--accent2);}
+
+  /* ── CARD THUMBNAIL ── */
+  .card-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px;margin-bottom:12px;background:#111;}
+  .card-thumb-wrap{position:relative;margin-bottom:12px;}
+  .card-thumb-wrap .play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;background:rgba(0,0,0,.3);border-radius:8px;}
+  .card:hover .card-thumb-wrap .play-overlay{opacity:1;}
+  .play-overlay span{font-size:36px;}
   .pantry-search-wrap{position:relative;max-width:320px;margin-bottom:20px;}
   .pantry-search-wrap input{width:100%;background:var(--card);border:1px solid var(--border);color:var(--text);padding:10px 16px 10px 38px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;}
   .pantry-search-wrap input:focus{border-color:var(--accent);}
@@ -426,30 +474,61 @@
     </div>
   </div>
 
-  <div class="carb-bar">
-    <span class="carb-bar-label">🥔 Carb Sources:</span>
-    <div class="carb-inputs">
-      <label class="carb-check-wrap potato-check" onclick="toggleCarb('potato')">
-        <input type="checkbox" id="chkPotato" checked>
-        <span class="carb-checkbox"></span>
-        <span class="carb-check-label">🥔 Potato</span>
-      </label>
-      <label class="carb-check-wrap rice-check" onclick="toggleCarb('rice')">
-        <input type="checkbox" id="chkRice" checked>
-        <span class="carb-checkbox"></span>
-        <span class="carb-check-label">🍚 Rice</span>
-      </label>
-      <label class="carb-check-wrap noodle-check" onclick="toggleCarb('noodle')">
-        <input type="checkbox" id="chkNoodle" checked>
-        <span class="carb-checkbox"></span>
-        <span class="carb-check-label">🍜 Noodles</span>
-      </label>
-      <label class="carb-check-wrap bread-check" onclick="toggleCarb('bread')">
-        <input type="checkbox" id="chkBread" checked>
-        <span class="carb-checkbox"></span>
-        <span class="carb-check-label">🫓 Bread/Wrap</span>
-      </label>
-    </div>
+  <div class="carb-bar" style="flex-wrap:wrap;gap:8px 16px;">
+    <span class="carb-bar-label">🥔 Carbs:</span>
+    <label class="carb-check-wrap potato-check" onclick="toggleCarb('potato')">
+      <input type="checkbox" id="chkPotato" checked>
+      <span class="carb-checkbox"></span>
+      <span class="carb-check-label">🥔 Potato</span>
+    </label>
+    <label class="carb-check-wrap rice-check" onclick="toggleCarb('rice')">
+      <input type="checkbox" id="chkRice" checked>
+      <span class="carb-checkbox"></span>
+      <span class="carb-check-label">🍚 Rice</span>
+    </label>
+    <label class="carb-check-wrap noodle-check" onclick="toggleCarb('noodle')">
+      <input type="checkbox" id="chkNoodle" checked>
+      <span class="carb-checkbox"></span>
+      <span class="carb-check-label">🍜 Noodles</span>
+    </label>
+    <label class="carb-check-wrap bread-check" onclick="toggleCarb('bread')">
+      <input type="checkbox" id="chkBread" checked>
+      <span class="carb-checkbox"></span>
+      <span class="carb-check-label">🫓 Bread</span>
+    </label>
+    <div class="filter-divider"></div>
+    <span class="carb-bar-label">🍗 Protein:</span>
+    <label class="carb-check-wrap" style="border-color:var(--carb-potato);" onclick="toggleProteinFilter('chicken')">
+      <input type="checkbox" id="chkPChicken" checked>
+      <span class="carb-checkbox" style="border-color:var(--carb-potato);"></span>
+      <span class="carb-check-label">🍗 Chicken</span>
+    </label>
+    <label class="carb-check-wrap" style="border-color:#e84747;" onclick="toggleProteinFilter('beef')">
+      <input type="checkbox" id="chkPBeef" checked>
+      <span class="carb-checkbox" style="border-color:#e84747;"></span>
+      <span class="carb-check-label">🥩 Beef</span>
+    </label>
+    <label class="carb-check-wrap" style="border-color:#ffb347;" onclick="toggleProteinFilter('eggs')">
+      <input type="checkbox" id="chkPEggs" checked>
+      <span class="carb-checkbox" style="border-color:#ffb347;"></span>
+      <span class="carb-check-label">🥚 Eggs</span>
+    </label>
+    <label class="carb-check-wrap" style="border-color:#47b3e8;" onclick="toggleProteinFilter('salmon')">
+      <input type="checkbox" id="chkPSalmon" checked>
+      <span class="carb-checkbox" style="border-color:#47b3e8;"></span>
+      <span class="carb-check-label">🐟 Salmon</span>
+    </label>
+    <label class="carb-check-wrap" style="border-color:#47e8a3;" onclick="toggleProteinFilter('tofu')">
+      <input type="checkbox" id="chkPTofu" checked>
+      <span class="carb-checkbox" style="border-color:#47e8a3;"></span>
+      <span class="carb-check-label">🫘 Tofu</span>
+    </label>
+    <div class="filter-divider"></div>
+    <label class="video-check-wrap" onclick="toggleVideoFilter()">
+      <input type="checkbox" id="chkVideoOnly">
+      <span class="video-checkbox"></span>
+      <span class="video-check-label">▶️ With Video Only</span>
+    </label>
   </div>
 
   <div class="stats-bar">Showing <span id="visibleCount">500</span> of 500 recipes</div>
@@ -545,7 +624,7 @@
         <div class="input-group">
           <label id="proteinInputLabel">🍗 Protein — raw weight</label>
           <div class="input-wrap">
-            <input type="number" id="chickenInput" value="400" min="0" max="3000" oninput="updateCalc()">
+            <input type="number" id="chickenInput" value="500" min="0" max="3000" oninput="updateCalc()">
             <span class="unit">g</span>
           </div>
           <div class="input-hint">Raw weight before cooking</div>
@@ -624,6 +703,20 @@
       Your selections are saved in the browser.</p>
     </div>
 
+    <!-- Dietary Filter Panel -->
+    <div class="dietary-panel" id="dietaryPanel">
+      <div class="dietary-panel-header" onclick="toggleDietaryPanel()">
+        <span style="font-size:20px;">🥗</span>
+        <span class="dietary-panel-title">Dietary Preferences & Allergies</span>
+        <span class="dietary-active-bar" id="dietaryActiveBar"></span>
+        <span class="dietary-panel-arrow">▼</span>
+      </div>
+      <div class="dietary-panel-body">
+        <div class="dietary-grid" id="dietaryGrid"></div>
+        <div style="font-size:11px;color:#555;">Activating a filter automatically unchecks conflicting ingredients in your pantry and hides affected recipes.</div>
+      </div>
+    </div>
+
     <div class="pantry-search-wrap">
       <span class="pantry-search-icon">🔍</span>
       <input type="text" id="pantrySearch" placeholder="Search ingredients..." oninput="pantrySearchFilter()">
@@ -633,25 +726,50 @@
       <button class="pantry-btn" onclick="pantrySelectNone()">✗ Clear all</button>
     </div>
 
-    <div class="pantry-section">
-      <h3><span class="dot"></span> Sauces & Condiments</h3>
-      <div class="ingredient-grid" id="pantry-sauces"></div>
+    <div class="pantry-section" id="psec-sauces">
+      <div class="pantry-section-header" onclick="togglePantrySection('sauces')">
+        <span class="pantry-section-icon">🫙</span>
+        <span class="pantry-section-title">Sauces & Condiments</span>
+        <span class="pantry-section-count" id="pcount-sauces">—</span>
+        <span class="pantry-section-arrow">▼</span>
+      </div>
+      <div class="pantry-section-body"><div class="ingredient-grid" id="pantry-sauces"></div></div>
     </div>
-    <div class="pantry-section">
-      <h3><span class="dot"></span> Spices & Dried Herbs</h3>
-      <div class="ingredient-grid" id="pantry-spices"></div>
+    <div class="pantry-section" id="psec-spices">
+      <div class="pantry-section-header" onclick="togglePantrySection('spices')">
+        <span class="pantry-section-icon">🌶️</span>
+        <span class="pantry-section-title">Spices & Dried Herbs</span>
+        <span class="pantry-section-count" id="pcount-spices">—</span>
+        <span class="pantry-section-arrow">▼</span>
+      </div>
+      <div class="pantry-section-body"><div class="ingredient-grid" id="pantry-spices"></div></div>
     </div>
-    <div class="pantry-section">
-      <h3><span class="dot"></span> Fresh Produce & Aromatics</h3>
-      <div class="ingredient-grid" id="pantry-fresh"></div>
+    <div class="pantry-section" id="psec-fresh">
+      <div class="pantry-section-header" onclick="togglePantrySection('fresh')">
+        <span class="pantry-section-icon">🥬</span>
+        <span class="pantry-section-title">Fresh Produce & Aromatics</span>
+        <span class="pantry-section-count" id="pcount-fresh">—</span>
+        <span class="pantry-section-arrow">▼</span>
+      </div>
+      <div class="pantry-section-body"><div class="ingredient-grid" id="pantry-fresh"></div></div>
     </div>
-    <div class="pantry-section">
-      <h3><span class="dot"></span> Dairy & Eggs</h3>
-      <div class="ingredient-grid" id="pantry-dairy"></div>
+    <div class="pantry-section" id="psec-dairy">
+      <div class="pantry-section-header" onclick="togglePantrySection('dairy')">
+        <span class="pantry-section-icon">🥛</span>
+        <span class="pantry-section-title">Dairy & Eggs</span>
+        <span class="pantry-section-count" id="pcount-dairy">—</span>
+        <span class="pantry-section-arrow">▼</span>
+      </div>
+      <div class="pantry-section-body"><div class="ingredient-grid" id="pantry-dairy"></div></div>
     </div>
-    <div class="pantry-section">
-      <h3><span class="dot"></span> Pantry Staples</h3>
-      <div class="ingredient-grid" id="pantry-staples"></div>
+    <div class="pantry-section" id="psec-staples">
+      <div class="pantry-section-header" onclick="togglePantrySection('staples')">
+        <span class="pantry-section-icon">🏺</span>
+        <span class="pantry-section-title">Pantry Staples</span>
+        <span class="pantry-section-count" id="pcount-staples">—</span>
+        <span class="pantry-section-arrow">▼</span>
+      </div>
+      <div class="pantry-section-body"><div class="ingredient-grid" id="pantry-staples"></div></div>
     </div>
 
     <div class="pantry-info">
@@ -691,7 +809,7 @@
   </div>
 </div>
 
-<footer>Built for <strong>FIT NIIKITER'S</strong> · 500 recipes · Boneless skinless chicken thighs · All weights raw · 4 carb sources</footer>
+<footer><strong>FIT NIIKITER'S RECIPE VAULT</strong> · HIGH PROTEIN · LOW CALORIE · HEALTHY</footer>
 
 <script>
 // ── Nutritional values per 100g RAW ──
@@ -1249,7 +1367,7 @@ const R = [
 
 // ── State ──
 let currentCuisineFilter = 'all';
-let weights = { chicken:400, potato:500, rice:200, noodle:150, bread:80, eggs:0, servings:2 };
+let weights = { chicken:500, potato:500, rice:200, noodle:150, bread:80, eggs:0, servings:2 };
 // Carb ratios per 100g protein (raw)
 const CARB_RATIOS = { potato:1.25, rice:0.5, noodle:0.38, bread:0.2 };
 
@@ -1311,6 +1429,10 @@ function selectProtein(key) {
   const protWeight = document.getElementById('proteinWeightSection');
   if (eggCtrl) eggCtrl.style.display = key === 'eggs' ? 'block' : 'none';
   if (protWeight) protWeight.style.display = key === 'eggs' ? 'none' : 'block';
+  // Update label emoji
+  const emojiMap = { chicken:'🍗', beef:'🥩', eggs:'🥚', salmon:'🐟', tofu:'🫘' };
+  const lbl = document.getElementById('proteinInputLabel');
+  if (lbl) lbl.textContent = (emojiMap[key] || '🍗') + ' Protein — raw weight';
   // Show/hide variant row
   const varRow = document.getElementById('variantRow');
   if (varRow) {
@@ -1349,6 +1471,129 @@ function selectVariant(variantKey, parentKey) {
   updateCalcDisplay();
 }
 
+
+// ── Protein filter state ──
+let proteinEnabled = { chicken:true, beef:true, eggs:true, salmon:true, tofu:true };
+let videoFilterOnly = false;
+
+// Map recipe IDs to their protein type
+// All current 500 recipes are chicken. Others will be added later.
+// For now chicken = all, others = none (will grow as we add recipes)
+function getRecipeProtein(r) { return r.protein || 'chicken'; }
+
+function toggleProteinFilter(type) {
+  setTimeout(() => {
+    const chk = document.getElementById('chkP'+type.charAt(0).toUpperCase()+type.slice(1));
+    if (!chk) return;
+    proteinEnabled[type] = chk.checked;
+    filterRecipes();
+  }, 0);
+}
+
+function toggleVideoFilter() {
+  setTimeout(() => {
+    const chk = document.getElementById('chkVideoOnly');
+    if (!chk) return;
+    videoFilterOnly = chk.checked;
+    filterRecipes();
+  }, 0);
+}
+
+// ── Dietary filter data ──
+const DIETARY_FILTERS = [
+  { id:'gluten_free',  icon:'🌾', label:'Gluten-Free',      sub:'No wheat/barley/rye',
+    blocks:['panko','flour','worcestershire','hoisin'] },
+  { id:'dairy_free',   icon:'🥛', label:'Dairy-Free',       sub:'No milk/cheese/butter',
+    blocks:['butter','cheese_parm','cheese_mozz','cheese_feta','heavy_cream','cream_cheese','sour_cream','labneh'] },
+  { id:'nut_free',     icon:'🥜', label:'Nut-Free',         sub:'No peanuts/tree nuts',
+    blocks:['peanuts','pine_nuts','peanut_butter'] },
+  { id:'no_soy',       icon:'🫘', label:'No Soy',           sub:'No soy sauce/tofu',
+    blocks:['soy_sauce','hoisin','miso','teriyaki','oyster_sauce'] },
+  { id:'no_fish',      icon:'🐟', label:'No Fish/Seafood',  sub:'No fish sauce/seafood',
+    blocks:['fish_sauce','dashi'] },
+  { id:'no_eggs',      icon:'🥚', label:'No Eggs',          sub:'Egg-free recipes only',
+    blocks:['eggs'] },
+  { id:'no_beef',      icon:'🐄', label:'No Beef',          sub:'Beef-free only',
+    blocks:[] },
+  { id:'no_pork',      icon:'🐷', label:'No Pork',          sub:'Pork-free only',
+    blocks:[] },
+  { id:'low_spice',    icon:'🌶️', label:'Low Spice',        sub:'Mild recipes only',
+    blocks:['gochujang','gochugaru','harissa','sriracha','hot_sauce','chili_flakes','dried_chili','chili_fresh'] },
+  { id:'no_garlic',    icon:'🧄', label:'No Garlic/Onion',  sub:'FODMAP-friendly',
+    blocks:['garlic'] },
+  { id:'vegetarian',   icon:'🌱', label:'Vegetarian',       sub:'No meat',
+    blocks:[] },
+  { id:'vegan',        icon:'🌿', label:'Vegan',            sub:'No animal products',
+    blocks:['butter','cheese_parm','cheese_mozz','cheese_feta','heavy_cream','cream_cheese','sour_cream','labneh','fish_sauce','dashi','oyster_sauce'] },
+];
+
+let activeDietary = new Set(JSON.parse(localStorage.getItem('dietaryFilters') || '[]'));
+
+function saveDietary() {
+  try { localStorage.setItem('dietaryFilters', JSON.stringify([...activeDietary])); } catch(e){}
+}
+
+function buildDietaryGrid() {
+  const grid = document.getElementById('dietaryGrid');
+  if (!grid) return;
+  grid.innerHTML = DIETARY_FILTERS.map(d => `
+    <div class="dietary-btn ${activeDietary.has(d.id)?'active':''}" onclick="toggleDietary('${d.id}')">
+      <span class="diet-icon">${d.icon}</span>
+      <div>
+        <div class="diet-label">${d.label}</div>
+        <div class="diet-sub">${d.sub}</div>
+      </div>
+    </div>`).join('');
+  updateDietaryBar();
+}
+
+function updateDietaryBar() {
+  const bar = document.getElementById('dietaryActiveBar');
+  if (!bar) return;
+  if (activeDietary.size === 0) { bar.textContent = ''; return; }
+  const labels = [...activeDietary].map(id => DIETARY_FILTERS.find(d=>d.id===id)?.label).filter(Boolean);
+  bar.textContent = labels.join(' · ');
+}
+
+function toggleDietary(id) {
+  const def = DIETARY_FILTERS.find(d => d.id === id);
+  if (!def) return;
+  if (activeDietary.has(id)) {
+    activeDietary.delete(id);
+  } else {
+    activeDietary.add(id);
+    // auto-disable conflicting pantry ingredients
+    def.blocks.forEach(ingId => {
+      disabledIngredients.add(ingId);
+    });
+    savePantry();
+  }
+  saveDietary();
+  buildDietaryGrid();
+  if (document.getElementById('pantry-sauces')?.children.length > 0) renderPantry();
+  filterRecipes();
+}
+
+function toggleDietaryPanel() {
+  const panel = document.getElementById('dietaryPanel');
+  if (panel) panel.classList.toggle('open');
+}
+
+function togglePantrySection(id) {
+  const sec = document.getElementById('psec-'+id);
+  if (sec) sec.classList.toggle('open');
+}
+
+function updatePantryCounts() {
+  const sections = ['sauces','spices','fresh','dairy','staples'];
+  sections.forEach(s => {
+    const items = PANTRY_ITEMS[s] || [];
+    const disabled = items.filter(i => disabledIngredients.has(i.id)).length;
+    const el = document.getElementById('pcount-'+s);
+    if (el) el.textContent = disabled > 0 ? `${items.length - disabled}/${items.length}` : `${items.length}/${items.length}`;
+  });
+}
+
 // ── ONE-TIME render: build all 500 cards into DOM on startup ──
 function buildAllCards() {
   const grid = document.getElementById('recipeGrid');
@@ -1360,7 +1605,12 @@ function buildAllCards() {
     div.dataset.id = r.id;
     div.onclick = () => openModal(r.id);
     const tagsHtml = r.tags.map(t=>`<span class="tag tag-${t}">${t.replace('-',' ')}</span>`).join('');
-    div.innerHTML = `
+    // Check if recipe has video for thumbnail
+    const rDetail = RECIPE_DETAILS[r.id];
+    const thumbHtml = rDetail && rDetail.video
+      ? `<div class="card-thumb-wrap"><img class="card-thumb" src="https://img.youtube.com/vi/${rDetail && rDetail.video}/mqdefault.jpg" loading="lazy" alt="${r.title}"><div class="play-overlay"><span>▶️</span></div></div>`
+      : '';
+    div.innerHTML = `${thumbHtml}
       <div class="card-top">
         <div class="card-num">#${String(r.id).padStart(3,'0')}</div>
         <div class="card-time"><span class="time-icon">⏱</span>${r.time} min</div>
@@ -1423,6 +1673,14 @@ function filterRecipes() {
 
     // carb enabled
     if (!carbEnabled[r.carb]) { el.style.display='none'; return; }
+    // protein filter
+    const rProtin = getRecipeProtein(r);
+    if (!proteinEnabled[rProtin]) { el.style.display='none'; return; }
+    // video filter
+    if (videoFilterOnly) {
+      const rd = RECIPE_DETAILS[r.id];
+      if (!rd || !rd.video) { el.style.display='none'; return; }
+    }
 
     // cuisine filter
     const mf = currentCuisineFilter==='all' || r.tags.includes(currentCuisineFilter);
@@ -2228,6 +2486,10 @@ function renderPantry() {
   });
 }
 
+function updatePantryAfterRender() {
+  updatePantryCounts();
+}
+
 function toggleIngredient(id, el) {
   if (disabledIngredients.has(id)) {
     disabledIngredients.delete(id);
@@ -2260,7 +2522,7 @@ function switchTab(tab, btn) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+tab).classList.add('active');
   if (tab === 'calculator') updateCalcDisplay();
-  if (tab === 'pantry') renderPantry();
+  if (tab === 'pantry') { renderPantry(); buildDietaryGrid(); }
 }
 
 // Init
@@ -2284,8 +2546,13 @@ buildAllCards();    // render all 500 cards once
 updateCardMacros();
 updateCalcDisplay();
 filterRecipes();
-// Pantry init (don't render yet — tab is hidden)
-// disabledIngredients already loaded from localStorage above
+// Pantry init — build dietary grid (hidden until tab opened)
+buildDietaryGrid();
+// Apply saved dietary filters on load
+activeDietary.forEach(id => {
+  const def = DIETARY_FILTERS.find(d=>d.id===id);
+  if (def) def.blocks.forEach(ingId => disabledIngredients.add(ingId));
+});
 </script>
 </body>
 </html>
