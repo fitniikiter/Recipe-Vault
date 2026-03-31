@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FIT NIIKITER'S RECIPE VAULT</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍🍳</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -196,6 +197,14 @@
   .variant-btn:hover{border-color:#555;color:var(--text);}
   .variant-btn.active{background:var(--accent);border-color:var(--accent);color:#000;}
   .protein-macro-hint{font-size:11px;color:#555;margin-top:8px;}
+  .egg-size-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;align-items:center;}
+  .egg-size-btn{padding:6px 14px;background:var(--surface);border:1.5px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:2px;}
+  .egg-size-btn:hover{border-color:#555;color:var(--text);}
+  .egg-size-btn.active{background:var(--accent);border-color:var(--accent);color:#000;}
+  .egg-size-btn .esz{font-size:10px;opacity:.7;}
+  .egg-count-row{display:flex;align-items:center;gap:10px;margin-top:14px;}
+  .egg-count-row label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;}
+  .egg-stepper{display:flex;align-items:center;gap:0;margin-left:auto;}
 
   footer{padding:28px 40px;border-top:1px solid var(--border);text-align:center;font-size:12px;color:var(--muted);}
   footer strong{color:var(--accent);}
@@ -515,8 +524,24 @@
       <h3><span class="dot"></span> Protein Source</h3>
       <div class="protein-selector" id="proteinSelector"></div>
       <div class="protein-variant" id="variantRow" style="display:none;"></div>
-      <div style="height:12px;"></div>
-      <div class="input-grid">
+      <!-- Egg size + count — shown only when eggs is active protein -->
+      <div id="eggControls" style="display:none;">
+        <div class="egg-size-row">
+          <span style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;">Size:</span>
+          <button class="egg-size-btn" onclick="setEggSize('S')" id="eggS">S<span class="esz">~48g</span></button>
+          <button class="egg-size-btn active" onclick="setEggSize('M')" id="eggM">M<span class="esz">~58g</span></button>
+          <button class="egg-size-btn" onclick="setEggSize('L')" id="eggL">L<span class="esz">~68g</span></button>
+        </div>
+        <div class="egg-count-row">
+          <label>🥚 Number of eggs</label>
+          <div class="egg-stepper serving-stepper">
+            <button class="step-btn" onclick="changeEggCount(-1)">−</button>
+            <span class="serving-val" id="eggCountVal" style="width:40px;height:36px;line-height:36px;font-size:20px;">2</span>
+            <button class="step-btn" onclick="changeEggCount(1)">+</button>
+          </div>
+        </div>
+      </div>
+      <div id="proteinWeightSection" style="margin-top:16px;">
         <div class="input-group">
           <label id="proteinInputLabel">🍗 Protein — raw weight</label>
           <div class="input-wrap">
@@ -525,50 +550,10 @@
           </div>
           <div class="input-hint">Raw weight before cooking</div>
         </div>
-        <div class="input-group">
-          <label>🥚 Eggs (optional add-on)</label>
-          <div class="input-wrap">
-            <input type="number" id="eggsInput" value="0" min="0" max="20" oninput="updateCalc()">
-            <span class="unit">pcs</span>
-          </div>
-          <div class="input-hint">Extra eggs added to the dish</div>
-        </div>
       </div>
     </div>
 
-    <div class="calc-section">
-      <h3><span class="dot"></span> Carb Sources (raw weight — set to 0 to exclude)</h3>
-      <div class="input-grid-4">
-        <div class="carb-input-group-calc">
-          <label><span class="dot-lbl dot-potato"></span> 🥔 Potato</label>
-          <div class="input-wrap">
-            <input type="number" id="potatoInput" value="500" min="0" max="5000" oninput="updateCalc()">
-            <span class="unit">g</span>
-          </div>
-        </div>
-        <div class="carb-input-group-calc">
-          <label><span class="dot-lbl dot-rice"></span> 🍚 Rice (dry)</label>
-          <div class="input-wrap">
-            <input type="number" id="riceInput" value="200" min="0" max="2000" oninput="updateCalc()">
-            <span class="unit">g</span>
-          </div>
-        </div>
-        <div class="carb-input-group-calc">
-          <label><span class="dot-lbl dot-noodle"></span> 🍜 Noodles (dry)</label>
-          <div class="input-wrap">
-            <input type="number" id="noodleInput" value="150" min="0" max="2000" oninput="updateCalc()">
-            <span class="unit">g</span>
-          </div>
-        </div>
-        <div class="carb-input-group-calc">
-          <label><span class="dot-lbl dot-bread"></span> 🫓 Bread/Wrap</label>
-          <div class="input-wrap">
-            <input type="number" id="breadInput" value="80" min="0" max="1000" oninput="updateCalc()">
-            <span class="unit">g</span>
-          </div>
-        </div>
-      </div>
-    </div>
+
 
     <div class="calc-section">
       <h3><span class="dot"></span> Number of Servings</h3>
@@ -623,7 +608,7 @@
 
 
     <div class="note-box">
-      <strong>📌 How macros work:</strong> Each recipe card shows: chicken base + the relevant carb source (at your weights) + a recipe-specific sauce/oil estimate. Setting a carb to <strong>0g also hides those recipes</strong> from the recipe tab — so the filter bar and calculator stay in sync.
+      <strong>📌 How macros work:</strong> Each recipe card shows: chicken base + the relevant carb source (at your weights) + a recipe-specific sauce/oil estimate. Carb amounts are calculated automatically based on your protein weight. Use the checkboxes on the recipe page to show/hide carb types.
     </div>
 
   </div>
@@ -811,7 +796,7 @@ const R = [
   {id:70,  carb:'potato', time:35, title:"Chicken Thigh & Potato Vichyssoise Bowl",       desc:"Warm potato-leek cream soup topped with crispy pan-seared chicken thigh.",                       tags:["comfort","fusion"],  sauce_kcal:140,sauce_p:2,sauce_c:8, sauce_f:11},
 
   // ═══════════ RICE — ALL CUISINES (71–200) ═══════════
-  {id:71,  carb:'rice', time:30, title:"Korean Crispy Chicken Rice Bowl",                  desc:"Boneless thighs with quick-pickled cucumber, spring onions and Korean glaze over jasmine rice.",  tags:["korean"],          sauce_kcal:95, sauce_p:2,sauce_c:12,sauce_f:3},
+  {id:71,  carb:'rice', time:30, title:"Korean Glazed Chicken Bowl",                  desc:"Boneless thighs with quick-pickled cucumber, spring onions and Korean glaze over jasmine rice.",  tags:["korean"],          sauce_kcal:95, sauce_p:2,sauce_c:12,sauce_f:3},
   {id:72,  carb:'rice', time:35, title:"Thai Green Curry Chicken Rice Bowl",               desc:"Coconut-based green curry with chicken thigh over jasmine rice with Thai basil.",                  tags:["thai"],            sauce_kcal:160,sauce_p:3,sauce_c:8, sauce_f:13},
   {id:73,  carb:'rice', time:50, title:"Thai Massaman Chicken Rice Bowl",                  desc:"Rich peanut-kissed massaman curry over fragrant jasmine rice with peanut crumble.",               tags:["thai"],            sauce_kcal:180,sauce_p:4,sauce_c:10,sauce_f:15},
   {id:74,  carb:'rice', time:35, title:"Vietnamese Lemongrass Chicken Rice Bowl",          desc:"Aromatic lemongrass-coconut thighs over broken jasmine rice with crispy shallots.",               tags:["asian"],           sauce_kcal:130,sauce_p:2,sauce_c:6, sauce_f:11},
@@ -1265,6 +1250,18 @@ const R = [
 // ── State ──
 let currentCuisineFilter = 'all';
 let weights = { chicken:400, potato:500, rice:200, noodle:150, bread:80, eggs:0, servings:2 };
+// Carb ratios per 100g protein (raw)
+const CARB_RATIOS = { potato:1.25, rice:0.5, noodle:0.38, bread:0.2 };
+
+function autoCalcCarbs() {
+  const p = weights.chicken;
+  weights.potato  = Math.round(p * CARB_RATIOS.potato);
+  weights.rice    = Math.round(p * CARB_RATIOS.rice);
+  weights.noodle  = Math.round(p * CARB_RATIOS.noodle);
+  weights.bread   = Math.round(p * CARB_RATIOS.bread);
+}
+let eggSizeG = 58; // M by default
+let eggCount = 2;
 let activeProtein = 'chicken_thigh'; // current protein source key in NUT
 let carbEnabled = { potato:true, rice:true, noodle:true, bread:true };
 
@@ -1275,7 +1272,7 @@ function baseMacros(carbType) {
   const protG = weights.chicken / 100;
   const carbG = weights[carbType] / 100;
   // eggs are always additive (optional)
-  const egG   = (activeProtein === 'eggs') ? 0 : (weights.eggs * 0.6 / 100);
+  const egG   = (activeProtein === 'eggs') ? 0 : (weights.eggs * (eggSizeG/100));
   const egNut = NUT.eggs;
   return {
     kcal: (protG*pNut.kcal + carbG*cNut.kcal + egG*egNut.kcal) / s,
@@ -1309,6 +1306,11 @@ function selectProtein(key) {
   document.querySelectorAll('.protein-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.protein === key);
   });
+  // Show/hide egg controls vs weight input
+  const eggCtrl = document.getElementById('eggControls');
+  const protWeight = document.getElementById('proteinWeightSection');
+  if (eggCtrl) eggCtrl.style.display = key === 'eggs' ? 'block' : 'none';
+  if (protWeight) protWeight.style.display = key === 'eggs' ? 'none' : 'block';
   // Show/hide variant row
   const varRow = document.getElementById('variantRow');
   if (varRow) {
@@ -1539,14 +1541,37 @@ function toggleCarb(type) {
         calcInput.value = 0;
         weights[type] = 0;
       } else {
-        const prev = calcInput.dataset.prev || {potato:500,rice:200,noodle:150,bread:80}[type];
-        calcInput.value = prev;
-        weights[type] = parseFloat(prev)||0;
+        const ratio = CARB_RATIOS[type] || 0.5;
+        const autoVal = Math.round(weights.chicken * ratio);
+        calcInput.value = autoVal;
+        weights[type] = autoVal;
       }
     }
     filterRecipes();
     updateCalcDisplay();
   }, 0);
+}
+
+function setEggSize(size) {
+  const sizes = { S:48, M:58, L:68 };
+  eggSizeG = sizes[size] || 58;
+  document.querySelectorAll('.egg-size-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('egg'+size);
+  if (btn) btn.classList.add('active');
+  weights.eggs = eggCount; // keep count, update gram calc via eggSizeG
+  updateCardMacros();
+  filterRecipes();
+  updateCalcDisplay();
+}
+
+function changeEggCount(delta) {
+  eggCount = Math.max(0, Math.min(20, eggCount + delta));
+  const el = document.getElementById('eggCountVal');
+  if (el) el.textContent = eggCount;
+  weights.eggs = eggCount;
+  updateCardMacros();
+  filterRecipes();
+  updateCalcDisplay();
 }
 
 function changeServings(delta) {
@@ -1562,23 +1587,21 @@ function changeServings(delta) {
 
 function updateCalc() {
   weights.chicken  = parseFloat(document.getElementById('chickenInput').value)||0;
-  weights.potato   = parseFloat(document.getElementById('potatoInput').value)||0;
-  weights.rice     = parseFloat(document.getElementById('riceInput').value)||0;
-  weights.noodle   = parseFloat(document.getElementById('noodleInput').value)||0;
-  weights.bread    = parseFloat(document.getElementById('breadInput').value)||0;
-  weights.eggs     = parseFloat(document.getElementById('eggsInput').value)||0;
+  // eggs managed via stepper — weights.eggs already updated
   weights.servings = parseInt(document.getElementById('servingsInput').textContent)||1;
 
-  // sync carb checkboxes
+  // auto-calc carbs proportionally
+  autoCalcCarbs();
+
+  // sync carb checkboxes (enabled state unchanged by weight change)
   ['potato','rice','noodle','bread'].forEach(t => {
-    carbEnabled[t] = weights[t] > 0;
     const chk = document.getElementById('chk'+t.charAt(0).toUpperCase()+t.slice(1));
-    if (chk) chk.checked = carbEnabled[t];
+    if (chk) carbEnabled[t] = chk.checked;
   });
 
   updateCalcDisplay();
-  updateCardMacros(); // fast: only update numbers
-  filterRecipes();    // fast: only toggle visibility
+  updateCardMacros();
+  filterRecipes();
 }
 
 function makeResultGrid(m) {
@@ -1601,7 +1624,7 @@ function updateCalcDisplay() {
   const s = Math.max(weights.servings, 1);
   let rows = [
     {label:`Protein — ${activeProtein.replace('_',' ')} (${weights.chicken}g raw)`, g:weights.chicken, n:NUT[activeProtein]||NUT.chicken_thigh},
-    {label:`🥚 Eggs (${weights.eggs} × 60g)`, g:weights.eggs*60, n:NUT.eggs},
+    {label:`🥚 Eggs (${weights.eggs} × ${eggSizeG}g)`, g:weights.eggs*eggSizeG, n:NUT.eggs},
   ];
   ['potato','rice','noodle','bread'].forEach(t => {
     if (weights[t]>0) {
@@ -1639,6 +1662,52 @@ function updateCalcDisplay() {
 // RECIPE DETAIL DATA
 // ══════════════════════════════════════════════════
 const RECIPE_DETAILS = {
+  71: {
+    ingredients: [
+      { section:'Rice', items:[
+        { name:'Jasmine rice (dry)', amt:'{{carbG}}g' },
+        { name:'Chicken broth (low-sodium)', amt:'320ml' },
+      ]},
+      { section:'Chicken', items:[
+        { name:'Boneless skinless chicken thighs', amt:'{{proteinG}}g raw' },
+        { name:'Cooking spray / neutral oil', amt:'1 tsp' },
+        { name:'Garlic powder', amt:'½ tsp' },
+        { name:'Black pepper', amt:'pinch' },
+      ]},
+      { section:'Gochujang Glaze', items:[
+        { name:'Gochujang paste', amt:'1.5 tbsp' },
+        { name:'Soy sauce (low-sodium)', amt:'3 tbsp' },
+        { name:'Rice vinegar', amt:'1.5 tbsp' },
+        { name:'Honey', amt:'1 tsp' },
+        { name:'Garlic cloves (minced)', amt:'5 cloves' },
+      ]},
+      { section:'Quick Pickle', items:[
+        { name:'Cucumber', amt:'1 whole' },
+        { name:'Rice vinegar', amt:'splash' },
+        { name:'Salt', amt:'pinch' },
+        { name:'Gochugaru or chili flakes', amt:'½ tsp' },
+      ]},
+      { section:'Topping', items:[
+        { name:'Spring onions (sliced)', amt:'3 stalks' },
+        { name:'Sesame seeds', amt:'1 tsp' },
+      ]},
+    ],
+    steps: [
+      'Cook the broth rice: Rinse jasmine rice until water runs clear. Combine with chicken broth in a pot. Bring to a boil, reduce to lowest heat, cover and cook 12 minutes. Off heat, steam covered for 5 more minutes. Don\'t lift the lid.',
+      'Make the glaze: Finely mince garlic. Mix with gochujang paste, soy sauce, rice vinegar and honey in a small bowl. Taste — punchy, tangy, slightly sweet. Set aside.',
+      'Sear the thighs: Pat chicken dry with paper towels — the drier the surface, the better the crust. Season with garlic powder and black pepper. Heat a non-stick or cast iron pan over high until just smoking. Place thighs flat — don\'t move them. Sear 4–5 minutes until deeply golden and releasing naturally, then flip. Another 3–4 minutes. Internal temp 75°C.',
+      'Glaze and caramelize: Reduce heat to medium. Pour glaze over the thighs and toss to coat. Let caramelize 60–90 seconds, turning once — sticky, lacquered surface with slightly charred edges. Pull off heat immediately.',
+      'Rest and slice: Let thighs rest 2 minutes on a board, then slice against the grain into thick strips.',
+      'Quick-pickle the cucumber: Thinly slice cucumber into half-moons. Toss with salt, a splash of rice vinegar and gochugaru. Let sit at least 5 minutes.',
+      'Build the bowl: Spoon broth rice into bowls. Lay sliced glazed thighs over the rice. Add pickled cucumber alongside. Finish with spring onion and drizzle any remaining caramelized glaze over everything. Serve immediately.',
+    ],
+    hacks: [
+      { title:'Rice hack', text:'Broth instead of water = free savory depth, zero extra calories. Takes the same time, tastes completely different.' },
+      { title:'Pickle hack', text:'The pickle adds acid that cuts through the richness of the thigh meat — it\'s the balance the bowl needs. Even 5 minutes of pickling makes a difference.' },
+    ],
+    notes: 'Spice level: 1.5 tbsp gochujang = medium — adjust to taste. Meal prep: sauce lasts 5 days refrigerated, chicken and rice store well for 3 days.',
+    video: 'I5BZybb9bpM',
+  },
   1: {
     ingredients: [
       { section:'Protein', items:[
@@ -1705,49 +1774,6 @@ const RECIPE_DETAILS = {
     hacks: [
       { title:'One-tray hack', text:'Line the tray with baking paper — the oyster sauce caramelises hard and the paper saves 10 min of scrubbing.' },
       { title:'Flavour hack', text:'A small splash of rice vinegar over the finished dish brightens the whole thing. Free flavour.' },
-    ],
-    video: null,
-  },
-  71: {
-    ingredients: [
-      { section:'Protein', items:[
-        { name:'Boneless skinless chicken thigh', amt:'{{proteinG}}g raw' },
-      ]},
-      { section:'Carb Base', items:[
-        { name:'Jasmine rice (dry)', amt:'{{carbG}}g' },
-        { name:'Chicken stock', amt:'400ml' },
-      ]},
-      { section:'Korean Glaze', items:[
-        { name:'Gochujang', amt:'2 tbsp' },
-        { name:'Soy sauce', amt:'2 tbsp' },
-        { name:'Honey', amt:'1 tbsp' },
-        { name:'Garlic (minced)', amt:'3 cloves' },
-        { name:'Rice vinegar', amt:'1 tbsp' },
-        { name:'Sesame oil', amt:'1 tsp' },
-      ]},
-      { section:'Quick Pickle', items:[
-        { name:'Cucumber (sliced thin)', amt:'½ cucumber' },
-        { name:'Rice vinegar', amt:'2 tbsp' },
-        { name:'Salt', amt:'pinch' },
-        { name:'Sugar', amt:'½ tsp' },
-      ]},
-      { section:'To Serve', items:[
-        { name:'Spring onion (sliced)', amt:'3 stalks' },
-        { name:'Sesame seeds', amt:'1 tsp' },
-      ]},
-    ],
-    steps: [
-      'Cook rice in chicken stock instead of water — bring to boil, cover, 12 min on low, rest 5 min off heat.',
-      'Mix cucumber with rice vinegar, salt and sugar. Set aside to quick-pickle while you cook.',
-      'Whisk gochujang, soy sauce, honey, garlic, rice vinegar and sesame oil into a glaze.',
-      'Pat chicken dry. Sear in hot pan skin-side down 4 min until golden and crispy.',
-      'Flip, pour glaze over, reduce heat to medium. Baste every minute for 5–6 min until sticky and cooked through.',
-      'Slice chicken. Spoon rice into bowls, top with chicken, pickled cucumber, spring onion and sesame.',
-    ],
-    hacks: [
-      { title:'Rice hack', text:'Cooking rice in chicken stock is a free flavour upgrade — costs nothing, adds a whole layer of depth that plain water never gives you.' },
-      { title:'Glaze hack', text:'Don\'t rush the basting step. Each minute of basting builds a thicker, stickier glaze. 5 minutes of attention = restaurant quality result.' },
-      { title:'Pickle hack', text:'Even 10 min of pickling transforms the cucumber — it cuts through the richness of the glaze and makes the whole bowl feel balanced.' },
     ],
     video: null,
   },
@@ -1871,16 +1897,27 @@ function getRecipeDetail(r) {
 // ══════════════════════════════════════════════════
 let currentModalRecipe = null;
 
-function openModal(recipeId) {
-  const r = R.find(x => x.id === recipeId);
+function updateModalMacros(r) {
   if (!r) return;
-  currentModalRecipe = r;
-
+  // Temporarily override servings so baseMacros uses modalServings
+  const savedServings = weights.servings;
+  weights.servings = modalServings;
   const m = baseMacros(r.carb);
+  weights.servings = savedServings; // restore
   const kcal  = Math.round(m.kcal + r.sauce_kcal);
   const prot  = Math.round(m.p    + r.sauce_p);
   const carbs = Math.round(m.c    + r.sauce_c);
   const fat   = Math.round(m.f    + r.sauce_f);
+  document.getElementById('mKcal').textContent  = kcal;
+  document.getElementById('mProt').textContent  = prot + 'g';
+  document.getElementById('mCarbs').textContent = carbs + 'g';
+  document.getElementById('mFat').textContent   = fat + 'g';
+}
+
+function openModal(recipeId) {
+  const r = R.find(x => x.id === recipeId);
+  if (!r) return;
+  currentModalRecipe = r;
 
   // Header
   document.getElementById('modalTitle').textContent = r.title;
@@ -1890,11 +1927,8 @@ function openModal(recipeId) {
   badge.className = 'carb-badge ' + r.carb;
   badge.textContent = {potato:'🥔 Potato', rice:'🍚 Rice', noodle:'🍜 Noodle', bread:'🫓 Bread'}[r.carb];
 
-  // Macros
-  document.getElementById('mKcal').textContent  = kcal;
-  document.getElementById('mProt').textContent  = prot + 'g';
-  document.getElementById('mCarbs').textContent = carbs + 'g';
-  document.getElementById('mFat').textContent   = fat + 'g';
+  // Macros — computed fresh each time (respects modalServings)
+  updateModalMacros(r);
 
   // Build dynamic tabs
   const detail = getRecipeDetail(r);
@@ -1906,7 +1940,7 @@ function openModal(recipeId) {
   `;
 
   // Build content
-  const modalServings = weights.servings;
+  modalServings = weights.servings;
   buildIngredientsTab(r, modalServings);
   buildRecipeTab(r);
   if (detail.video) buildVideoTab(r);
@@ -1976,7 +2010,9 @@ function buildIngredientsTab(r, servings) {
 function changeModalServings(delta, recipeId) {
   modalServings = Math.max(1, Math.min(10, modalServings + delta));
   const r = R.find(x => x.id === recipeId);
-  if (r) buildIngredientsTab(r);
+  if (!r) return;
+  buildIngredientsTab(r);
+  updateModalMacros(r);
 }
 
 function buildRecipeTab(r) {
@@ -1999,6 +2035,10 @@ function buildRecipeTab(r) {
     });
   }
 
+  // Notes
+  if (detail.notes) {
+    html += `<div class="ing-note" style="margin-top:16px;">📌 ${detail.notes}</div>`;
+  }
   document.getElementById('tab-recipe').innerHTML = html;
 }
 
@@ -2224,6 +2264,7 @@ function switchTab(tab, btn) {
 }
 
 // Init
+autoCalcCarbs();    // set initial carb weights based on default protein
 buildAllCards();    // render all 500 cards once
 
 // Build protein selector buttons
