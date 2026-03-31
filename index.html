@@ -276,7 +276,22 @@
   .ing-list li{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:7px;font-size:13px;}
   .ing-list li .ing-item-name{color:var(--text);}
   .ing-list li .ing-item-amt{color:var(--accent);font-weight:700;font-family:'Bebas Neue',sans-serif;font-size:15px;}
+  .equipment-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:20px;padding-top:16px;border-top:1px solid #2a2a2a;}
+  .equipment-tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid #2a2a2a;color:var(--muted);}
+  .equipment-label{font-size:10px;color:#444;text-transform:uppercase;letter-spacing:.6px;margin-right:4px;}
   .ing-note{font-size:11px;color:#555;margin-top:16px;padding:10px 14px;border:1px solid #2a2a2a;border-radius:8px;}
+  .modal-variant-row{display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(255,255,255,.03);border:1px solid #2a2a2a;border-radius:8px;margin-bottom:8px;flex-wrap:wrap;}
+  .modal-variant-row label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;font-weight:600;min-width:80px;}
+  .modal-variant-btn{padding:5px 12px;background:var(--surface);border:1.5px solid var(--border);border-radius:16px;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap;}
+  .modal-variant-btn:hover{border-color:#555;color:var(--text);}
+  .modal-variant-btn.active{background:var(--accent);border-color:var(--accent);color:#000;}
+  .modal-weight-row{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.03);border:1px solid #2a2a2a;border-radius:8px;margin-bottom:8px;flex-wrap:wrap;}
+  .modal-weight-row label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;font-weight:600;min-width:80px;}
+  .modal-weight-input{width:72px;background:var(--surface);border:1px solid #333;color:var(--text);padding:5px 8px;border-radius:6px;font-family:'Bebas Neue',sans-serif;font-size:20px;text-align:center;outline:none;-moz-appearance:textfield;transition:border-color .2s;}
+  .modal-weight-input:focus{border-color:var(--accent);}
+  .modal-weight-input::-webkit-outer-spin-button,.modal-weight-input::-webkit-inner-spin-button{-webkit-appearance:none;}
+  .modal-weight-unit{font-size:12px;color:var(--muted);}
+  .modal-weight-hint{font-size:10px;color:#444;margin-left:auto;}
   .serving-control{display:flex;align-items:center;gap:10px;margin-bottom:20px;padding:12px 16px;background:rgba(255,255,255,.03);border:1px solid #2a2a2a;border-radius:10px;}
   .serving-control label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;font-weight:500;}
   .serving-stepper{display:flex;align-items:center;gap:0;margin-left:auto;}
@@ -447,6 +462,7 @@
   .video-check-wrap input:checked ~ .video-check-label{color:var(--accent2);}
 
   /* ── CARD THUMBNAIL ── */
+
   .card-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px;margin-bottom:12px;background:#111;}
   .card-thumb-wrap{position:relative;margin-bottom:12px;}
   .card-thumb-wrap .play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;background:rgba(0,0,0,.3);border-radius:8px;}
@@ -904,9 +920,9 @@
   </div>
 </div>
 
-<footer><strong>FIT NIIKITER'S RECIPE VAULT</strong> · HIGH PROTEIN · LOW CALORIE · HEALTHY</footer>
+<footer><strong>FIT NIIKITER'S RECIPE VAULT</strong> · HIGH PROTEIN · LOW CALORIE · HEALTHY · <a href="/cdn-cgi/l/email-protection#c4a2adb0aaadadafadb0a1b684a3a9a5ada8eaa7aba9" style='color:var(--muted);text-decoration:none;'><span class="__cf_email__" data-cfemail="701619041e19191b1904150230171d11191c5e131f1d">[email&#160;protected]</span></a></footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── Nutritional values per 100g RAW ──
 const NUT = {
   // proteins
@@ -932,6 +948,8 @@ NUT.egg = NUT.eggs;
 // carb: 'potato'|'rice'|'noodle'|'bread'
 // time: total minutes
 // sauce_*: per-portion sauce/oil additions on top of base
+const HIDDEN_RECIPE_IDS = new Set([22, 29, 43, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 74, 75, 84, 85, 88, 89, 90, 91, 92, 93, 94, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 189, 193, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 281, 283, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 323, 324, 325, 326, 327, 328, 329, 330, 334, 341, 342, 343, 344, 345, 346, 347, 348, 349, 351, 352, 353, 355, 356, 357, 359, 360, 361, 363, 364, 365, 366, 367, 368, 369, 371, 372, 373, 375, 376, 377, 379, 380, 381, 383, 384, 385, 387, 388, 389, 391, 392, 393, 395, 396, 397, 399, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 415, 416, 417, 419, 420, 421, 423, 424, 425, 426, 427, 428, 429, 431, 432, 433, 435, 436, 437, 439, 440, 441, 442, 443, 444, 445, 447, 448, 449, 451, 452, 453, 455, 456, 457, 458, 459, 460, 461, 463, 464, 465, 467, 468, 469, 470, 471, 472, 473, 475, 476, 477, 479, 480, 481, 483, 484, 485, 487, 488, 489, 491, 492, 493, 495, 496, 497, 499, 500]);
+
 const R = [
   // ═══════════ POTATO — ASIAN/KOREAN/JAPANESE (1-80) ═══════════
   {id:1,   carb:'potato', time:35, title:"Teriyaki Chicken & Hasselback Potatoes",        desc:"Glazed thighs in homemade teriyaki with fanned hasselback potatoes roasted in sesame butter.",           tags:["asian","fusion"],  sauce_kcal:110,sauce_p:2,sauce_c:14,sauce_f:5},
@@ -1688,6 +1706,87 @@ function updatePillStates() {
   if (protPill) protPill.classList.toggle('has-active', Object.values(proteinEnabled).some(v=>!v));
 }
 
+function selectModalVariant(variantKey, recipeId) {
+  // Set global activeProtein directly — do NOT call selectProtein() as it resets to first variant
+  activeProtein = variantKey;
+
+  // Sync W&F fully by rebuilding variant row with correct active state
+  const parentMap = { chicken_thigh:'chicken', chicken_breast:'chicken', beef_regular:'beef', beef_lean:'beef' };
+  const parent = parentMap[variantKey] || variantKey;
+  const def = PROTEIN_DEFS.find(p => p.key === parent);
+
+  // Sync protein buttons in W&F
+  document.querySelectorAll('.protein-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.protein === parent);
+  });
+
+  // Rebuild variant row in W&F with correct active button
+  const varRow = document.getElementById('variantRow');
+  if (varRow && def && def.variants) {
+    varRow.innerHTML = def.variants.map(v =>
+      `<button class="variant-btn ${activeProtein===v.key?'active':''}" onclick="selectVariant('${v.key}','${parent}')" title="${v.sub}">${v.label}</button>`
+    ).join('') + `<span class="protein-macro-hint" id="proteinHint">${def.variants.find(v=>v.key===activeProtein)?.sub||''}</span>`;
+    varRow.style.display = 'flex';
+  }
+
+  // Update label emoji in W&F
+  const emojiMap = { chicken:'🍗', beef:'🥩', eggs:'🥚', salmon:'🐟', tofu:'🫘' };
+  const lbl = document.getElementById('proteinInputLabel');
+  if (lbl) lbl.textContent = (emojiMap[parent] || '🍗') + ' Protein — raw weight';
+
+  // Rebuild ingredients tab with new protein
+  const r = R.find(x => x.id === recipeId);
+  if (r) {
+    buildIngredientsTab(r);
+    updateModalMacros(r);
+  }
+
+  updateCardMacros();
+  filterRecipes();
+  updateCalcDisplay();
+}
+
+function updateModalWeight(type, val, recipeId) {
+  const g = Math.max(0, Math.min(3000, parseInt(val) || 0));
+  const r = R.find(x => x.id === recipeId);
+  if (!r) return;
+
+  if (type === 'prot') {
+    weights.chicken = g;
+    // Also auto-calc this carb proportionally
+    autoCalcCarbs();
+    // Sync W&F input
+    const mainInput = document.getElementById('chickenInput');
+    if (mainInput) mainInput.value = g;
+  } else {
+    // Override just this carb
+    weights[r.carb] = g;
+  }
+
+  // Rebuild ingredients tab with new weights
+  buildIngredientsTab(r);
+  updateModalMacros(r);
+  updateCardMacros();
+  filterRecipes();
+  updateCalcDisplay();
+}
+
+function updateGlobalWeight(val) {
+  const g = Math.max(50, Math.min(3000, parseInt(val) || 500));
+  weights.chicken = g;
+  autoCalcCarbs();
+  // Sync the main input in W&F tab
+  const mainInput = document.getElementById('chickenInput');
+  if (mainInput) mainInput.value = g;
+  // Sync all card weight inputs
+  document.querySelectorAll('.card-weight-input').forEach(el => {
+    if (parseInt(el.value) !== g) el.value = g;
+  });
+  updateCardMacros();
+  filterRecipes();
+  updateCalcDisplay();
+}
+
 function toggleProteinFilter(type) {
   setTimeout(() => {
     const chk = document.getElementById('chkP'+type.charAt(0).toUpperCase()+type.slice(1));
@@ -1770,16 +1869,46 @@ function toggleDietary(id) {
     activeDietary.delete(id);
   } else {
     activeDietary.add(id);
-    // auto-disable conflicting pantry ingredients
-    def.blocks.forEach(ingId => {
-      disabledIngredients.add(ingId);
-    });
+    def.blocks.forEach(ingId => { disabledIngredients.add(ingId); });
     savePantry();
   }
   saveDietary();
+  applyDietaryToProteinFilters();
   buildDietaryGrid();
   if (document.getElementById('pantry-sauces')?.children.length > 0) renderPantry();
+  updatePillStates();
   filterRecipes();
+}
+
+function applyDietaryToProteinFilters() {
+  // Map dietary filter → which proteins to hide on main page
+  const noBeef  = activeDietary.has('no_beef');
+  const noEggs  = activeDietary.has('no_eggs');
+  const noFish  = activeDietary.has('no_fish');
+  const veggie  = activeDietary.has('vegetarian');
+  const vegan   = activeDietary.has('vegan');
+
+  const beefOff  = noBeef || veggie || vegan;
+  const eggsOff  = noEggs || vegan;
+  const salmonOff= noFish || veggie || vegan;
+  const chickenOff = veggie || vegan;
+  const tofuOn   = true; // tofu always allowed
+
+  const setCheck = (id, checked) => {
+    const el = document.getElementById(id);
+    if (el && el.checked !== checked) {
+      el.checked = checked;
+      // Also update proteinEnabled state
+      const type = id.replace('chkP','').toLowerCase();
+      proteinEnabled[type] = checked;
+    }
+  };
+
+  setCheck('chkPChicken', !chickenOff);
+  setCheck('chkPBeef',    !beefOff);
+  setCheck('chkPEggs',    !eggsOff);
+  setCheck('chkPSalmon',  !salmonOff);
+  // Tofu always stays on
 }
 
 function toggleDietaryPanel() {
@@ -1886,6 +2015,8 @@ function filterRecipes() {
     const el = document.querySelector(`.card[data-id="${r.id}"]`);
     if (!el) return;
 
+    // hide placeholder/generic recipes
+    if (HIDDEN_RECIPE_IDS.has(r.id)) { el.style.display='none'; return; }
     // carb enabled
     if (!carbEnabled[r.carb]) { el.style.display='none'; return; }
     // protein filter
@@ -2065,6 +2196,11 @@ function updateCalc() {
 
   // auto-calc carbs proportionally
   autoCalcCarbs();
+
+  // Sync card weight inputs
+  document.querySelectorAll('.card-weight-input').forEach(el => {
+    el.value = weights.chicken;
+  });
 
   // sync carb checkboxes (enabled state unchanged by weight change)
   ['potato','rice','noodle','bread'].forEach(t => {
@@ -21417,17 +21553,56 @@ function buildIngredientsTab(r, servings) {
   const s = modalServings;
   const protG = Math.round(weights.chicken / s);
   const carbG = Math.round(weights[r.carb] / s);
+  const protDisplay = getActiveProteinDisplay();
 
-  let html = `<div class="serving-control">
+  // Protein emoji for label
+  const protEmoji = {chicken_thigh:'🍗',chicken_breast:'🍗',beef_regular:'🥩',beef_lean:'🥩',eggs:'🥚',salmon:'🐟',tofu:'🫘'}[activeProtein] || '🍗';
+  const carbEmoji  = {potato:'🥔',rice:'🍚',noodle:'🍜',bread:'🫓'}[r.carb] || '🍽️';
+  const carbLabel  = {potato:'Potato',rice:'Rice',noodle:'Noodles',bread:'Bread/Wrap'}[r.carb] || 'Carb';
+
+  // Build variant buttons if protein has variants
+  const rProteinKey = r.protein || 'chicken';
+  const protDef = PROTEIN_DEFS.find(p => p.key === rProteinKey);
+  let variantHtml = '';
+  if (protDef && protDef.variants) {
+    const btns = protDef.variants.map(v =>
+      `<button class="modal-variant-btn ${activeProtein === v.key ? 'active' : ''}"
+        onclick="selectModalVariant('${v.key}', ${r.id})">${v.label}</button>`
+    ).join('');
+    variantHtml = `<div class="modal-variant-row">
+      <label>${protEmoji} Variant</label>
+      ${btns}
+    </div>`;
+  }
+
+  let html = `
+  <div class="serving-control">
     <label>🍽️ Servings</label>
     <div class="serving-stepper">
       <button class="step-btn" onclick="changeModalServings(-1, ${r.id})">−</button>
       <span class="serving-val" id="modalServingVal">${s}</span>
       <button class="step-btn" onclick="changeModalServings(1, ${r.id})">+</button>
     </div>
+    <span class="modal-weight-hint">per portion</span>
+  </div>
+  ${variantHtml}
+  <div class="modal-weight-row">
+    <label>${protEmoji} ${protDisplay.short}</label>
+    <input type="number" class="modal-weight-input" id="mwProt" value="${weights.chicken}"
+      min="50" max="3000"
+      onchange="updateModalWeight('prot', this.value, ${r.id})">
+    <span class="modal-weight-unit">g batch total</span>
+    <span class="modal-weight-hint">${protG}g per portion</span>
+  </div>
+  <div class="modal-weight-row">
+    <label>${carbEmoji} ${carbLabel}</label>
+    <input type="number" class="modal-weight-input" id="mwCarb" value="${weights[r.carb]}"
+      min="0" max="3000"
+      onchange="updateModalWeight('carb', this.value, ${r.id})">
+    <span class="modal-weight-unit">g batch total</span>
+    <span class="modal-weight-hint">${carbG}g per portion</span>
   </div>`;
 
-  const protDisplay = getActiveProteinDisplay();
   detail.ingredients.forEach(sec => {
     html += `<div class="ing-section-title">${sec.section}</div><ul class="ing-list">`;
     sec.items.forEach(item => {
@@ -21435,19 +21610,17 @@ function buildIngredientsTab(r, servings) {
         .replace('{{proteinG}}', protG)
         .replace('{{carbG}}', carbG)
         .replace('{{servings}}', s);
-      // Dynamically replace protein ingredient name
       let name = item.name;
-      if (item.amt && item.amt.includes('{{proteinG}}')) {
-        name = protDisplay.ing;
-      }
+      if (item.amt && item.amt.includes('{{proteinG}}')) name = protDisplay.ing;
       html += `<li><span class="ing-item-name">${name}</span><span class="ing-item-amt">${amt}</span></li>`;
     });
     html += '</ul>';
   });
+
   if (detail.placeholder) {
-    html += `<div class="ing-note">📌 Full ingredient list coming soon — follow on YouTube & TikTok for the full recipe video!</div>`;
+    html += `<div class="ing-note">📌 Full ingredient list coming soon — follow on YouTube & TikTok!</div>`;
   } else {
-    html += `<div class="ing-note">📌 Amounts shown for ${s} serving${s>1?'s':''} at your weights (${protG}g protein + ${carbG}g ${r.carb} per person).</div>`;
+    html += `<div class="ing-note">📌 Weights are global — changes apply to all recipes.</div>`;
   }
   document.getElementById('tab-ingredients').innerHTML = html;
 }
@@ -21484,7 +21657,44 @@ function buildRecipeTab(r) {
   if (detail.notes) {
     html += `<div class="ing-note" style="margin-top:16px;">📌 ${detail.notes}</div>`;
   }
+
+  // Equipment
+  const equipment = detectEquipment(detail.steps);
+  if (equipment.length) {
+    html += `<div class="equipment-row"><span class="equipment-label">🛠 Need:</span>`;
+    equipment.forEach(eq => {
+      html += `<span class="equipment-tag">${eq.icon} ${eq.label}</span>`;
+    });
+    html += `</div>`;
+  }
+
   document.getElementById('tab-recipe').innerHTML = html;
+}
+
+// Equipment keywords → label
+const EQUIPMENT_MAP = [
+  { icon:'🔥', label:'Oven',        keys:['oven','roast at','bake at','grill/broil','broil','180c','190c','200c','210c','220c','°c'] },
+  { icon:'🍳', label:'Pan / Wok',   keys:['pan','wok','skillet','sear','fry','sauté','saute','non-stick','cast iron'] },
+  { icon:'🫕', label:'Pot',         keys:['pot','boil','simmer','braise','soup','stock','poach','blanch'] },
+  { icon:'💨', label:'Air Fryer',   keys:['air fry','airfry','air-fry'] },
+  { icon:'🧈', label:'Grill',       keys:['grill','griddle','bbq','char mark','charcoal'] },
+  { icon:'⚡', label:'Blender',     keys:['blend','blender','food processor','stick blender'] },
+  { icon:'🔪', label:'Sharp Knife', keys:['julienne','mince','finely','thin slice','shave','julien'] },
+  { icon:'⏲️', label:'Timer',       keys:['12 min','15 min','20 min','25 min','30 min','35 min','40 min','45 min','50 min'] },
+  { icon:'🥣', label:'Mixing Bowl', keys:['mixing bowl','in a bowl','toss in','combine in'] },
+  { icon:'🫙', label:'Sandwich Press', keys:['sandwich press','press down','panini'] },
+];
+
+function detectEquipment(steps) {
+  if (!steps || !steps.length) return [];
+  const text = steps.join(' ').toLowerCase();
+  const found = [];
+  EQUIPMENT_MAP.forEach(eq => {
+    if (eq.keys.some(k => text.includes(k))) {
+      found.push(eq);
+    }
+  });
+  return found;
 }
 
 function buildVideoTab(r) {
@@ -21502,105 +21712,155 @@ function buildVideoTab(r) {
 // ══════════════════════════════════════════════════
 const PANTRY_ITEMS = {
   sauces: [
-    {id:'soy_sauce',       name:'Soy Sauce'},
-    {id:'oyster_sauce',    name:'Oyster Sauce'},
-    {id:'fish_sauce',      name:'Fish Sauce'},
-    {id:'hoisin',          name:'Hoisin Sauce'},
-    {id:'gochujang',       name:'Gochujang'},
-    {id:'miso',            name:'Miso Paste'},
-    {id:'teriyaki',        name:'Teriyaki Sauce'},
-    {id:'sesame_oil',      name:'Sesame Oil'},
-    {id:'sriracha',        name:'Sriracha'},
-    {id:'tahini',          name:'Tahini'},
-    {id:'harissa',         name:'Harissa'},
-    {id:'worcestershire',  name:'Worcestershire'},
-    {id:'ketchup',         name:'Ketchup / Tomato Paste'},
-    {id:'mayo',            name:'Mayonnaise'},
-    {id:'hot_sauce',       name:'Hot Sauce'},
-    {id:'peanut_butter',   name:'Peanut Butter'},
-    {id:'coconut_milk',    name:'Coconut Milk'},
-    {id:'rice_vinegar',    name:'Rice Vinegar'},
-    {id:'apple_cider_vinegar', name:'Apple Cider Vinegar'},
-    {id:'mirin',           name:'Mirin'},
-    {id:'sake',            name:'Sake / Dry White Wine'},
-    {id:'toum',            name:'Toum / Garlic Sauce'},
+    {id:'soy_sauce',          name:'Soy Sauce'},
+    {id:'oyster_sauce',       name:'Oyster Sauce'},
+    {id:'fish_sauce',         name:'Fish Sauce'},
+    {id:'hoisin',             name:'Hoisin Sauce'},
+    {id:'gochujang',          name:'Gochujang'},
+    {id:'miso',               name:'Miso Paste'},
+    {id:'doenjang',           name:'Doenjang (Korean Soybean Paste)'},
+    {id:'teriyaki',           name:'Teriyaki Sauce'},
+    {id:'sesame_oil',         name:'Sesame Oil'},
+    {id:'sriracha',           name:'Sriracha'},
+    {id:'tahini',             name:'Tahini'},
+    {id:'harissa',            name:'Harissa'},
+    {id:'worcestershire',     name:'Worcestershire'},
+    {id:'ketchup',            name:'Ketchup / Tomato Paste'},
+    {id:'mayo',               name:'Mayonnaise'},
+    {id:'hot_sauce',          name:'Hot Sauce'},
+    {id:'peanut_butter',      name:'Peanut Butter'},
+    {id:'coconut_milk',       name:'Coconut Milk'},
+    {id:'rice_vinegar',       name:'Rice Vinegar'},
+    {id:'apple_cider_vinegar',name:'Apple Cider Vinegar'},
+    {id:'mirin',              name:'Mirin'},
+    {id:'sake',               name:'Sake / Dry White Wine'},
+    {id:'toum',               name:'Toum / Garlic Sauce'},
+    {id:'dijon',              name:'Dijon / Whole Grain Mustard'},
+    {id:'bbq_sauce',          name:'BBQ Sauce'},
+    {id:'chipotle_adobo',     name:'Chipotle in Adobo'},
+    {id:'sweet_soy',          name:'Sweet Soy Sauce (Kecap Manis)'},
+    {id:'ponzu',              name:'Ponzu Sauce'},
+    {id:'shio_koji',          name:'Shio Koji'},
+    {id:'yuzu_kosho',         name:'Yuzu Kosho'},
+    {id:'tamarind',           name:'Tamarind Paste'},
+    {id:'balsamic_glaze',     name:'Balsamic Glaze'},
+    {id:'chili_oil',          name:'Chili Oil'},
   ],
   spices: [
-    {id:'gochugaru',       name:'Gochugaru (Korean Chili)'},
-    {id:'cumin',           name:'Cumin'},
-    {id:'coriander',       name:'Ground Coriander'},
-    {id:'turmeric',        name:'Turmeric'},
-    {id:'smoked_paprika',  name:'Smoked Paprika'},
-    {id:'paprika',         name:'Paprika'},
-    {id:'chili_flakes',    name:'Chili Flakes'},
-    {id:'five_spice',      name:'Chinese 5-Spice'},
-    {id:'zaatar',          name:"Za'atar"},
-    {id:'sumac',           name:'Sumac'},
-    {id:'baharat',         name:'Baharat'},
-    {id:'ras_el_hanout',   name:'Ras el Hanout'},
-    {id:'curry_powder',    name:'Curry Powder'},
-    {id:'garam_masala',    name:'Garam Masala'},
-    {id:'oregano',         name:'Dried Oregano'},
-    {id:'thyme',           name:'Dried Thyme'},
-    {id:'bay_leaf',        name:'Bay Leaves'},
-    {id:'cinnamon',        name:'Cinnamon'},
-    {id:'cardamom',        name:'Cardamom'},
-    {id:'star_anise',      name:'Star Anise'},
-    {id:'msg',             name:'MSG'},
-    {id:'saffron',         name:'Saffron'},
-    {id:'jerk_seasoning',  name:'Jerk Seasoning'},
+    {id:'gochugaru',          name:'Gochugaru (Korean Chili)'},
+    {id:'cumin',              name:'Cumin'},
+    {id:'coriander',          name:'Ground Coriander'},
+    {id:'turmeric',           name:'Turmeric'},
+    {id:'smoked_paprika',     name:'Smoked Paprika'},
+    {id:'paprika',            name:'Paprika'},
+    {id:'chili_flakes',       name:'Chili Flakes'},
+    {id:'five_spice',         name:'Chinese 5-Spice'},
+    {id:'zaatar',             name:"Za'atar"},
+    {id:'sumac',              name:'Sumac'},
+    {id:'baharat',            name:'Baharat'},
+    {id:'ras_el_hanout',      name:'Ras el Hanout'},
+    {id:'curry_powder',       name:'Curry Powder'},
+    {id:'garam_masala',       name:'Garam Masala'},
+    {id:'tandoori_masala',    name:'Tandoori Masala'},
+    {id:'tikka_paste',        name:'Tikka Masala Paste'},
+    {id:'kasuri_methi',       name:'Kasuri Methi (Dried Fenugreek)'},
+    {id:'oregano',            name:'Dried Oregano'},
+    {id:'thyme',              name:'Dried Thyme'},
+    {id:'dill_dried',         name:'Dried Dill'},
+    {id:'bay_leaf',           name:'Bay Leaves'},
+    {id:'cinnamon',           name:'Cinnamon'},
+    {id:'cardamom',           name:'Cardamom'},
+    {id:'star_anise',         name:'Star Anise'},
+    {id:'allspice',           name:'Allspice'},
+    {id:'garlic_powder',      name:'Garlic Powder'},
+    {id:'onion_powder',       name:'Onion Powder'},
+    {id:'cayenne',            name:'Cayenne Pepper'},
+    {id:'black_pepper',       name:'Black Pepper'},
+    {id:'msg',                name:'MSG'},
+    {id:'saffron',            name:'Saffron'},
+    {id:'jerk_seasoning',     name:'Jerk Seasoning'},
+    {id:'dukkah',             name:'Dukkah'},
+    {id:'furikake',           name:'Furikake'},
+    {id:'tajin',              name:'Tajin / Chili Lime Seasoning'},
   ],
   fresh: [
-    {id:'garlic',          name:'Garlic'},
-    {id:'ginger',          name:'Fresh Ginger'},
-    {id:'scallion',        name:'Spring Onion / Scallion'},
-    {id:'onion',           name:'Onion'},
-    {id:'lemon',           name:'Lemon'},
-    {id:'lime',            name:'Lime'},
-    {id:'cilantro',        name:'Fresh Cilantro'},
-    {id:'parsley',         name:'Fresh Parsley'},
-    {id:'basil',           name:'Fresh Basil'},
-    {id:'lemongrass',      name:'Lemongrass'},
-    {id:'kaffir_lime',     name:'Kaffir Lime Leaves'},
-    {id:'thai_basil',      name:'Thai Basil'},
-    {id:'chili_fresh',     name:'Fresh Chili'},
-    {id:'tomato',          name:'Fresh Tomato'},
-    {id:'cucumber',        name:'Cucumber'},
-    {id:'mushroom',        name:'Mushrooms'},
-    {id:'spinach',         name:'Spinach'},
-    {id:'bok_choy',        name:'Bok Choy'},
-    {id:'kimchi',          name:'Kimchi'},
+    {id:'garlic',             name:'Garlic'},
+    {id:'ginger',             name:'Fresh Ginger'},
+    {id:'scallion',           name:'Spring Onion / Scallion'},
+    {id:'onion',              name:'Onion'},
+    {id:'lemon',              name:'Lemon'},
+    {id:'lime',               name:'Lime'},
+    {id:'cilantro',           name:'Fresh Cilantro'},
+    {id:'parsley',            name:'Fresh Parsley'},
+    {id:'basil',              name:'Fresh Basil'},
+    {id:'mint',               name:'Fresh Mint'},
+    {id:'rosemary',           name:'Fresh Rosemary'},
+    {id:'chives',             name:'Fresh Chives'},
+    {id:'dill_fresh',         name:'Fresh Dill'},
+    {id:'lemongrass',         name:'Lemongrass'},
+    {id:'kaffir_lime',        name:'Kaffir Lime Leaves'},
+    {id:'thai_basil',         name:'Thai Basil'},
+    {id:'pandan',             name:'Pandan Leaves'},
+    {id:'chili_fresh',        name:'Fresh Chili'},
+    {id:'tomato',             name:'Fresh Tomato'},
+    {id:'cucumber',           name:'Cucumber'},
+    {id:'avocado',            name:'Avocado'},
+    {id:'bell_pepper',        name:'Bell Pepper / Capsicum'},
+    {id:'cabbage',            name:'Cabbage (White / Red)'},
+    {id:'carrot',             name:'Carrot'},
+    {id:'corn',               name:'Corn (Fresh / Frozen)'},
+    {id:'leek',               name:'Leek'},
+    {id:'mushroom',           name:'Mushrooms'},
+    {id:'spinach',            name:'Spinach'},
+    {id:'bok_choy',           name:'Bok Choy'},
+    {id:'kimchi',             name:'Kimchi'},
   ],
   dairy: [
-    {id:'butter',          name:'Butter'},
-    {id:'cheese_parm',     name:'Parmesan'},
-    {id:'cheese_mozz',     name:'Mozzarella'},
-    {id:'cheese_feta',     name:'Feta'},
-    {id:'yogurt',          name:'Greek Yogurt'},
-    {id:'sour_cream',      name:'Sour Cream'},
-    {id:'cream_cheese',    name:'Cream Cheese'},
-    {id:'heavy_cream',     name:'Heavy Cream'},
-    {id:'labneh',          name:'Labneh'},
+    {id:'butter',             name:'Butter'},
+    {id:'eggs_dairy',         name:'Eggs'},
+    {id:'milk',               name:'Milk'},
+    {id:'heavy_cream',        name:'Heavy Cream'},
+    {id:'sour_cream',         name:'Sour Cream'},
+    {id:'cream_cheese',       name:'Cream Cheese'},
+    {id:'creme_fraiche',      name:'Crème Fraîche'},
+    {id:'yogurt',             name:'Greek Yogurt'},
+    {id:'labneh',             name:'Labneh'},
+    {id:'cheese_parm',        name:'Parmesan'},
+    {id:'cheese_mozz',        name:'Mozzarella'},
+    {id:'cheese_feta',        name:'Feta'},
+    {id:'cheese_cheddar',     name:'Cheddar'},
+    {id:'cheese_gruyere',     name:'Gruyère / Emmental'},
+    {id:'cheese_provolone',   name:'Provolone / Swiss'},
   ],
   staples: [
-    {id:'panko',           name:'Panko Breadcrumbs'},
-    {id:'flour',           name:'All-Purpose Flour'},
-    {id:'cornstarch',      name:'Cornstarch'},
-    {id:'honey',           name:'Honey'},
-    {id:'sugar',           name:'Sugar / Brown Sugar'},
-    {id:'sesame_seeds',    name:'Sesame Seeds'},
-    {id:'peanuts',         name:'Peanuts / Cashews'},
-    {id:'pine_nuts',       name:'Pine Nuts'},
-    {id:'chicken_stock',   name:'Chicken Stock / Broth'},
-    {id:'dashi',           name:'Dashi / Dashi Powder'},
-    {id:'canned_tomato',   name:'Canned Tomatoes'},
-    {id:'olive_oil',       name:'Olive Oil'},
-    {id:'neutral_oil',     name:'Neutral Oil (Sunflower etc.)'},
-    {id:'nori',            name:'Nori / Seaweed'},
-    {id:'pickled_veg',     name:'Pickled Veg / Kimchi'},
-    {id:'dried_chili',     name:'Dried Chili'},
-    {id:'pomegranate_mol', name:'Pomegranate Molasses'},
-    {id:'preserved_lemon', name:'Preserved Lemon'},
+    {id:'olive_oil',          name:'Olive Oil'},
+    {id:'neutral_oil',        name:'Neutral Oil (Sunflower etc.)'},
+    {id:'chicken_stock',      name:'Chicken Stock / Broth'},
+    {id:'canned_tomato',      name:'Canned Tomatoes'},
+    {id:'tomato_paste',       name:'Tomato Paste'},
+    {id:'black_beans',        name:'Black Beans (canned)'},
+    {id:'kidney_beans',       name:'Kidney Beans (canned)'},
+    {id:'coconut_cream',      name:'Coconut Cream'},
+    {id:'panko',              name:'Panko Breadcrumbs'},
+    {id:'breadcrumbs',        name:'Regular Breadcrumbs'},
+    {id:'flour',              name:'All-Purpose Flour'},
+    {id:'cornstarch',         name:'Cornstarch'},
+    {id:'honey',              name:'Honey'},
+    {id:'sugar',              name:'Sugar / Brown Sugar'},
+    {id:'sesame_seeds',       name:'Sesame Seeds'},
+    {id:'peanuts',            name:'Peanuts / Cashews'},
+    {id:'almonds',            name:'Almonds (blanched)'},
+    {id:'pine_nuts',          name:'Pine Nuts'},
+    {id:'raisins',            name:'Raisins'},
+    {id:'dashi',              name:'Dashi / Dashi Powder'},
+    {id:'japanese_curry_roux',name:'Japanese Curry Roux (S&B)'},
+    {id:'nori',               name:'Nori / Seaweed'},
+    {id:'glass_noodles',      name:'Glass Noodles'},
+    {id:'rice_paper',         name:'Rice Paper'},
+    {id:'pickled_veg',        name:'Pickled Veg / Gherkins'},
+    {id:'dried_chili',        name:'Dried Chili'},
+    {id:'pomegranate_mol',    name:'Pomegranate Molasses'},
+    {id:'preserved_lemon',    name:'Preserved Lemon'},
   ]
 };
 
@@ -21796,6 +22056,7 @@ function openAdminEdit(recipeId) {
   const overlay = document.getElementById('adminModalOverlay');
 
   // Title
+  document.getElementById('aRecipeNum').value = r.id;
   document.getElementById('aTitle').value = r.title;
   document.getElementById('aDesc').value = r.desc;
   document.getElementById('aTime').value = r.time;
@@ -21940,6 +22201,7 @@ function saveAdminEdit() {
   if (!r) return;
 
   // Update R array entry
+  const newNum = parseInt(document.getElementById('aRecipeNum').value) || r.id;
   r.title = document.getElementById('aTitle').value;
   r.desc = document.getElementById('aDesc').value;
   r.time = parseInt(document.getElementById('aTime').value) || r.time;
@@ -21975,10 +22237,27 @@ function saveAdminEdit() {
     const fat  = Math.round(m.f + r.sauce_f);
     card.querySelector('.card-title').textContent = r.title;
     card.querySelector('.card-desc').textContent = r.desc;
+    const numEl = card.querySelector('.card-num'); if(numEl) numEl.textContent = '#' + String(newNum).padStart(3,'0');
     const kEl = card.querySelector('[data-macro="kcal"]'); if(kEl) kEl.textContent = kcal;
     const pEl = card.querySelector('[data-macro="prot"]'); if(pEl) pEl.textContent = prot+'g';
     const cEl = card.querySelector('[data-macro="carb"]'); if(cEl) cEl.textContent = carbs+'g';
     const fEl = card.querySelector('[data-macro="fat"]');  if(fEl) fEl.textContent = fat+'g';
+  }
+
+  // Update thumbnail on card
+  const thumbWrap = card ? card.querySelector('.card-thumb-wrap') : null;
+  if (card) {
+    const existingThumb = card.querySelector('.card-thumb-wrap');
+    if (override.video) {
+      const newThumb = '<div class="card-thumb-wrap"><img class="card-thumb" src="https://img.youtube.com/vi/' + override.video + '/mqdefault.jpg" loading="lazy" alt="' + r.title + '"><div class="play-overlay"><span>▶️</span></div></div>';
+      if (existingThumb) {
+        existingThumb.outerHTML = newThumb;
+      } else {
+        card.insertAdjacentHTML('afterbegin', newThumb);
+      }
+    } else if (existingThumb) {
+      existingThumb.remove();
+    }
   }
 
   closeAdminEdit();
@@ -22040,6 +22319,7 @@ filterRecipes();
 updatePillStates();
 // Pantry init — build dietary grid (hidden until tab opened)
 buildDietaryGrid();
+applyDietaryToProteinFilters();
 // Apply saved dietary filters on load
 activeDietary.forEach(id => {
   const def = DIETARY_FILTERS.find(d=>d.id===id);
@@ -22056,7 +22336,10 @@ activeDietary.forEach(id => {
     <h2 id="adminRecipeTitle">Recipe bearbeiten</h2>
 
     <div class="admin-section-title">📋 Basis-Info</div>
-    <div class="admin-field"><label>Titel</label><input type="text" id="aTitle"></div>
+    <div style="display:grid;grid-template-columns:80px 1fr;gap:12px;">
+      <div class="admin-field"><label>Rezept #</label><input type="number" id="aRecipeNum" min="1" max="9999"></div>
+      <div class="admin-field"><label>Titel</label><input type="text" id="aTitle"></div>
+    </div>
     <div class="admin-field"><label>Beschreibung</label><input type="text" id="aDesc"></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
       <div class="admin-field"><label>Zeit (min)</label><input type="number" id="aTime"></div>
@@ -22088,11 +22371,4 @@ activeDietary.forEach(id => {
 
     <button class="admin-save-btn" onclick="saveAdminEdit()">💾 SPEICHERN</button>
     <div style="display:flex;gap:8px;margin-top:10px;">
-      <button class="admin-cancel-btn" style="flex:1" onclick="closeAdminEdit()">Abbrechen</button>
-      <button class="admin-export-btn" style="flex:1" onclick="exportAdminHTML()">⬇️ HTML exportieren</button>
-    </div>
-  </div>
-</div>
-
-</body>
-</html>
+      <butto
