@@ -8,7 +8,7 @@
 <style>
   :root {
     --bg:#0e0e0e; --surface:#161616; --card:#1c1c1c; --border:#2a2a2a;
-    --accent:#e8ff47; --accent2:#ff6b35; --accent3:#47e8a3; --text:#f0f0f0; --muted:#888;
+    --accent:#ff8c00; --accent2:#ff6b35; --accent3:#47e8a3; --text:#f0f0f0; --muted:#888;
     --tag-asian:#47b3e8; --tag-american:#e84747; --tag-korean:#c847e8;
     --tag-mexican:#e8a347; --tag-middle-eastern:#47e8a3; --tag-mediterranean:#4789e8;
     --tag-comfort:#e84789; --tag-fusion:#e8e847; --tag-japanese:#ff9eb5; --tag-chinese:#ff6b35;
@@ -23,6 +23,7 @@
   .nav-tab{padding:15px 28px;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;white-space:nowrap;}
   .nav-tab:hover{color:var(--text);}
   .nav-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+  .header-social{display:flex;gap:10px;margin-bottom:16px;}
   .nav-social{display:flex;align-items:center;gap:8px;margin-left:auto;padding:0 20px;}
   .social-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:20px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;text-decoration:none;transition:all .2s;border:1.5px solid transparent;white-space:nowrap;}
   .social-btn:hover{transform:translateY(-1px);}
@@ -199,6 +200,70 @@
   footer{padding:28px 40px;border-top:1px solid var(--border);text-align:center;font-size:12px;color:var(--muted);}
   footer strong{color:var(--accent);}
 
+  /* ── MODAL ── */
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s;}
+  .modal-overlay.open{opacity:1;pointer-events:all;}
+  .modal{background:#1a1a1a;border:1px solid #333;border-radius:16px;width:100%;max-width:720px;max-height:90vh;display:flex;flex-direction:column;transform:translateY(20px);transition:transform .25s;overflow:hidden;}
+  .modal-overlay.open .modal{transform:translateY(0);}
+  .modal-header{padding:24px 28px 0;flex-shrink:0;}
+  .modal-close{position:absolute;top:16px;right:20px;background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;line-height:1;padding:4px 8px;border-radius:6px;transition:all .15s;}
+  .modal-close:hover{color:var(--text);background:rgba(255,255,255,.07);}
+  .modal-meta{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
+  .modal-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:.5px;color:var(--text);margin-bottom:4px;line-height:1.1;padding-right:40px;}
+  .modal-desc{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.5;}
+  .modal-macro-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px;}
+  .modal-macro{background:rgba(255,255,255,.04);border:1px solid #2a2a2a;border-radius:8px;padding:10px;text-align:center;}
+  .modal-macro .mv{font-family:'Bebas Neue',sans-serif;font-size:22px;display:block;}
+  .modal-macro .ml{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-top:2px;display:block;}
+  .modal-macro.mk .mv{color:var(--accent2);}
+  .modal-macro.mp .mv{color:var(--accent3);}
+  .modal-macro.mc .mv{color:#47b3e8;}
+  .modal-macro.mf .mv{color:#e8a347;}
+  .modal-tabs{display:flex;border-bottom:1px solid #2a2a2a;margin:0 -28px;padding:0 28px;}
+  .modal-tab{padding:10px 18px;font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:1px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;}
+  .modal-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+  .modal-body{overflow-y:auto;padding:24px 28px;flex:1;}
+  .modal-tab-content{display:none;}
+  .modal-tab-content.active{display:block;}
+  /* Ingredients tab */
+  .ing-section-title{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:1px;color:var(--muted);margin:18px 0 8px;text-transform:uppercase;}
+  .ing-section-title:first-child{margin-top:0;}
+  .ing-list{list-style:none;display:flex;flex-direction:column;gap:6px;}
+  .ing-list li{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:7px;font-size:13px;}
+  .ing-list li .ing-item-name{color:var(--text);}
+  .ing-list li .ing-item-amt{color:var(--accent);font-weight:700;font-family:'Bebas Neue',sans-serif;font-size:15px;}
+  .ing-note{font-size:11px;color:#555;margin-top:16px;padding:10px 14px;border:1px solid #2a2a2a;border-radius:8px;}
+  .serving-control{display:flex;align-items:center;gap:10px;margin-bottom:20px;padding:12px 16px;background:rgba(255,255,255,.03);border:1px solid #2a2a2a;border-radius:10px;}
+  .serving-control label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;font-weight:500;}
+  .serving-stepper{display:flex;align-items:center;gap:0;margin-left:auto;}
+  .step-btn{width:30px;height:30px;background:var(--card);border:1px solid #333;color:var(--text);font-size:18px;cursor:pointer;transition:all .15s;line-height:1;display:flex;align-items:center;justify-content:center;}
+  .step-btn:first-child{border-radius:6px 0 0 6px;}
+  .step-btn:last-child{border-radius:0 6px 6px 0;}
+  .step-btn:hover{background:#333;border-color:var(--accent);}
+  .serving-val{width:36px;height:30px;background:var(--surface);border:1px solid #333;border-left:none;border-right:none;color:var(--text);font-family:'Bebas Neue',sans-serif;font-size:18px;text-align:center;line-height:30px;}
+  /* Recipe tab */
+  .step-list{display:flex;flex-direction:column;gap:14px;margin-bottom:24px;}
+  .step{display:flex;gap:14px;align-items:flex-start;}
+  .step-num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#000;font-family:'Bebas Neue',sans-serif;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+  .step-text{font-size:13px;color:var(--text);line-height:1.6;flex:1;}
+  .hack-box{background:rgba(255,140,0,.06);border:1px solid rgba(255,140,0,.2);border-radius:8px;padding:12px 14px;font-size:12px;color:#ffb347;line-height:1.6;margin-bottom:10px;}
+  .hack-box strong{color:var(--accent);}
+  .video-section{margin-top:24px;}
+  .video-section h4{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;color:var(--muted);margin-bottom:12px;}
+  .video-placeholder{background:rgba(255,255,255,.03);border:2px dashed #333;border-radius:10px;padding:32px;text-align:center;color:#555;font-size:13px;}
+  .video-placeholder strong{display:block;font-family:'Bebas Neue',sans-serif;font-size:18px;color:#444;margin-bottom:6px;}
+  .video-embed{position:relative;padding-bottom:56.25%;border-radius:10px;overflow:hidden;}
+  .video-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:none;}
+  /* Card click hint */
+  .card{cursor:pointer;}
+  .card-click-hint{font-size:10px;color:#444;text-align:right;margin-top:8px;transition:color .15s;}
+  .card:hover .card-click-hint{color:var(--muted);}
+
+  @media(max-width:600px){
+    .modal{max-height:95vh;border-radius:12px 12px 0 0;position:fixed;bottom:0;left:0;right:0;max-width:100%;}
+    .modal-overlay{align-items:flex-end;padding:0;}
+  }
+
   .no-results{padding:60px 40px;text-align:center;color:var(--muted);font-size:14px;grid-column:1/-1;}
   .no-results strong{color:var(--accent);display:block;font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:1px;margin-bottom:8px;}
 
@@ -257,6 +322,11 @@
   .pantry-info{background:rgba(232,255,71,.04);border:1px solid rgba(232,255,71,.12);border-radius:8px;padding:14px 16px;font-size:12px;color:#aaa;line-height:1.6;margin-top:16px;}
   .pantry-info strong{color:var(--accent);}
   .missing-count{font-size:12px;color:var(--accent2);font-weight:700;margin-left:auto;}
+  .pantry-search-wrap{position:relative;max-width:320px;margin-bottom:20px;}
+  .pantry-search-wrap input{width:100%;background:var(--card);border:1px solid var(--border);color:var(--text);padding:10px 16px 10px 38px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;}
+  .pantry-search-wrap input:focus{border-color:var(--accent);}
+  .pantry-search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px;}
+  .ing-item.hidden{display:none;}
   .mf-range-row{display:flex;align-items:center;gap:5px;}
   .mf-num{width:50px;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:4px 5px;border-radius:5px;font-family:'Bebas Neue',sans-serif;font-size:15px;text-align:center;outline:none;-moz-appearance:textfield;transition:border-color .2s;}
   .mf-num:focus{border-color:var(--accent);}
@@ -299,28 +369,28 @@
 <body>
 
 <div class="nav-tabs">
-  <button class="nav-tab active" onclick="switchTab('recipes',this)">📋 500 Recipes</button>
-  <button class="nav-tab" onclick="switchTab('calculator',this)">⚖️ Macro Calculator</button>
+  <button class="nav-tab active" onclick="switchTab('recipes',this)">📋 Recipes</button>
+  <button class="nav-tab" onclick="switchTab('calculator',this)">⚖️ Weights & Filters</button>
   <button class="nav-tab" onclick="switchTab('pantry',this)">🧺 My Pantry</button>
-  <div class="nav-social">
-    <a class="social-btn youtube" href="https://www.youtube.com/@fitniikiter/shorts" target="_blank" rel="noopener">
-      <span class="social-icon">▶️</span> YouTube
-    </a>
-    <a class="social-btn tiktok" href="https://www.tiktok.com/@fitniikiter" target="_blank" rel="noopener">
-      <span class="social-icon">🎵</span> TikTok
-    </a>
-  </div>
+
 </div>
 
 <!-- ══════════════════════ RECIPES PAGE ══════════════════════ -->
 <div class="page active" id="page-recipes">
 
   <header>
+    <div class="header-social">
+      <a class="social-btn youtube" href="https://www.youtube.com/@fitniikiter/shorts" target="_blank" rel="noopener">
+        <span class="social-icon">▶️</span> YouTube
+      </a>
+      <a class="social-btn tiktok" href="https://www.tiktok.com/@fitniikiter" target="_blank" rel="noopener">
+        <span class="social-icon">🎵</span> TikTok
+      </a>
+    </div>
     <div class="header-top">
-      <div class="recipe-count">500</div>
       <div class="header-title">
-        <h1>FIT NIIKITER'S<br>RECIPE VAULT</h1>
-        <p>Boneless · Skinless · High Protein · Potato / Rice / Noodle / Bread · Macros update live from Calculator tab</p>
+        <h1>FIT <span style="color:var(--accent)">NIIKITER'S</span><br>RECIPE VAULT</h1>
+        <p>Your high-protein recipe library. Real food, real macros.</p>
       </div>
     </div>
   </header>
@@ -503,8 +573,12 @@
     <div class="calc-section">
       <h3><span class="dot"></span> Number of Servings</h3>
       <div class="servings-row">
-        <input type="number" class="servings-num" id="servingsInput" value="2" min="1" max="10" oninput="updateCalc()">
-        <span class="servings-label">portions<br><span style="color:#555;font-size:11px">Batch is split equally</span></span>
+        <div class="serving-stepper">
+          <button class="step-btn" onclick="changeServings(-1)">−</button>
+          <span class="serving-val" id="servingsInput" style="width:48px;height:48px;font-size:26px;line-height:48px;">2</span>
+          <button class="step-btn" onclick="changeServings(1)" style="width:48px;height:48px;font-size:22px;">+</button>
+        </div>
+        <span class="servings-label" style="margin-left:14px;">portions<br><span style="color:#555;font-size:11px">Batch is split equally</span></span>
       </div>
     </div>
 
@@ -565,6 +639,10 @@
       Your selections are saved in the browser.</p>
     </div>
 
+    <div class="pantry-search-wrap">
+      <span class="pantry-search-icon">🔍</span>
+      <input type="text" id="pantrySearch" placeholder="Search ingredients..." oninput="pantrySearchFilter()">
+    </div>
     <div class="pantry-actions">
       <button class="pantry-btn primary" onclick="pantrySelectAll()">✓ All available</button>
       <button class="pantry-btn" onclick="pantrySelectNone()">✗ Clear all</button>
@@ -600,6 +678,33 @@
   </div>
 </div>
 
+
+<!-- ══════════ RECIPE MODAL ══════════ -->
+<div class="modal-overlay" id="recipeModal" onclick="closeModal(event)">
+  <div class="modal" role="dialog">
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <div class="modal-header">
+      <div class="modal-meta">
+        <span class="carb-badge" id="modalCarbBadge"></span>
+        <span class="card-time" id="modalTime"></span>
+      </div>
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-desc" id="modalDesc"></div>
+      <div class="modal-macro-row">
+        <div class="modal-macro mk"><span class="mv" id="mKcal">—</span><span class="ml">kcal</span></div>
+        <div class="modal-macro mp"><span class="mv" id="mProt">—</span><span class="ml">protein</span></div>
+        <div class="modal-macro mc"><span class="mv" id="mCarbs">—</span><span class="ml">carbs</span></div>
+        <div class="modal-macro mf"><span class="mv" id="mFat">—</span><span class="ml">fat</span></div>
+      </div>
+      <div class="modal-tabs" id="modalTabs"></div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-tab-content active" id="tab-ingredients"></div>
+      <div class="modal-tab-content" id="tab-recipe"></div>
+      <div class="modal-tab-content" id="tab-video"></div>
+    </div>
+  </div>
+</div>
 
 <footer>Built for <strong>FIT NIIKITER'S</strong> · 500 recipes · Boneless skinless chicken thighs · All weights raw · 4 carb sources</footer>
 
@@ -1251,6 +1356,7 @@ function buildAllCards() {
     const div = document.createElement('div');
     div.className = 'card';
     div.dataset.id = r.id;
+    div.onclick = () => openModal(r.id);
     const tagsHtml = r.tags.map(t=>`<span class="tag tag-${t}">${t.replace('-',' ')}</span>`).join('');
     div.innerHTML = `
       <div class="card-top">
@@ -1271,7 +1377,8 @@ function buildAllCards() {
         <div class="score-bar-bg"><div class="score-bar-fill" data-fill></div></div>
         <span class="score-label" data-scorelabel></span>
       </div>
-      <div class="card-bottom"><div class="tags">${tagsHtml}</div></div>`;
+      <div class="card-bottom"><div class="tags">${tagsHtml}</div></div>
+      <div class="card-click-hint">tap to open recipe →</div>`;
     frag.appendChild(div);
   });
   grid.appendChild(frag);
@@ -1442,6 +1549,17 @@ function toggleCarb(type) {
   }, 0);
 }
 
+function changeServings(delta) {
+  const el = document.getElementById('servingsInput');
+  const current = parseInt(el.textContent) || 2;
+  const next = Math.max(1, Math.min(10, current + delta));
+  el.textContent = next;
+  weights.servings = next;
+  updateCardMacros();
+  filterRecipes();
+  updateCalcDisplay();
+}
+
 function updateCalc() {
   weights.chicken  = parseFloat(document.getElementById('chickenInput').value)||0;
   weights.potato   = parseFloat(document.getElementById('potatoInput').value)||0;
@@ -1449,7 +1567,7 @@ function updateCalc() {
   weights.noodle   = parseFloat(document.getElementById('noodleInput').value)||0;
   weights.bread    = parseFloat(document.getElementById('breadInput').value)||0;
   weights.eggs     = parseFloat(document.getElementById('eggsInput').value)||0;
-  weights.servings = parseInt(document.getElementById('servingsInput').value)||1;
+  weights.servings = parseInt(document.getElementById('servingsInput').textContent)||1;
 
   // sync carb checkboxes
   ['potato','rice','noodle','bread'].forEach(t => {
@@ -1514,6 +1632,383 @@ function updateCalcDisplay() {
       <td>${Math.round(totalC)}g</td>
       <td>${Math.round(totalF*10)/10}g</td>
     </tr>`;
+}
+
+
+// ══════════════════════════════════════════════════
+// RECIPE DETAIL DATA
+// ══════════════════════════════════════════════════
+const RECIPE_DETAILS = {
+  1: {
+    ingredients: [
+      { section:'Protein', items:[
+        { name:'Boneless skinless chicken thigh', amt:'{{proteinG}}g raw' },
+      ]},
+      { section:'Carb Base', items:[
+        { name:'Potato (raw, unpeeled)', amt:'{{carbG}}g' },
+        { name:'Sesame oil', amt:'1 tsp' },
+      ]},
+      { section:'Teriyaki Glaze', items:[
+        { name:'Soy sauce', amt:'3 tbsp' },
+        { name:'Mirin', amt:'2 tbsp' },
+        { name:'Honey', amt:'1 tbsp' },
+        { name:'Garlic (minced)', amt:'2 cloves' },
+        { name:'Cornstarch', amt:'1 tsp' },
+      ]},
+      { section:'To Serve', items:[
+        { name:'Spring onion (sliced)', amt:'2 stalks' },
+        { name:'Sesame seeds', amt:'1 tsp' },
+      ]},
+    ],
+    steps: [
+      'Preheat oven to 200°C. Cut potatoes lengthwise in thin slices stopping 1cm from the base — fan them slightly apart. Brush with sesame oil, season with salt and roast 35 min until crispy.',
+      'Mix soy sauce, mirin, honey, garlic and cornstarch in a small bowl until smooth.',
+      'Pat chicken dry and sear in a hot pan with a little oil, skin-side down, 4 min until golden.',
+      'Pour glaze over chicken, turn to coat, and bake alongside potatoes for the final 15 min until glaze is sticky and caramelised.',
+      'Rest chicken 3 min before slicing. Plate over hasselback potatoes, spoon extra glaze on top, finish with spring onion and sesame.',
+    ],
+    hacks: [
+      { title:'Glaze hack', text:'Add a tiny knob of butter to the glaze right before pouring — it makes it glossy and restaurant-quality. Adds ~30 kcal total, completely worth it.' },
+      { title:'Potato hack', text:'Stick a chopstick on each side of the potato before cutting — it stops the knife going all the way through. Foolproof hasselback every time.' },
+    ],
+    video: null,
+  },
+  8: {
+    ingredients: [
+      { section:'Protein', items:[
+        { name:'Boneless skinless chicken thigh', amt:'{{proteinG}}g raw' },
+      ]},
+      { section:'Carb Base', items:[
+        { name:'Potato (raw, wedge-cut)', amt:'{{carbG}}g' },
+      ]},
+      { section:'Marinade', items:[
+        { name:'Oyster sauce', amt:'3 tbsp' },
+        { name:'Soy sauce', amt:'1 tbsp' },
+        { name:'Garlic (minced)', amt:'3 cloves' },
+        { name:'Ginger (grated)', amt:'1 tsp' },
+        { name:'Sesame oil', amt:'1 tsp' },
+        { name:'Neutral oil', amt:'1 tbsp' },
+      ]},
+      { section:'To Serve', items:[
+        { name:'Spring onion', amt:'2 stalks' },
+        { name:'Chili flakes', amt:'pinch' },
+      ]},
+    ],
+    steps: [
+      'Mix oyster sauce, soy sauce, garlic, ginger, sesame oil and neutral oil in a bowl.',
+      'Coat chicken thighs in marinade, let rest 15 min (or overnight for deeper flavour).',
+      'Cut potatoes into wedges, toss in 1 tsp oil, salt and pepper.',
+      'Arrange potato wedges in a single layer on a tray, nestle marinated chicken on top.',
+      'Roast at 200°C for 30–35 min until chicken is caramelised and potatoes are golden. No flipping needed.',
+      'Scatter spring onion and chili flakes over the top. Serve straight from the tray.',
+    ],
+    hacks: [
+      { title:'One-tray hack', text:'Line the tray with baking paper — the oyster sauce caramelises hard and the paper saves 10 min of scrubbing.' },
+      { title:'Flavour hack', text:'A small splash of rice vinegar over the finished dish brightens the whole thing. Free flavour.' },
+    ],
+    video: null,
+  },
+  71: {
+    ingredients: [
+      { section:'Protein', items:[
+        { name:'Boneless skinless chicken thigh', amt:'{{proteinG}}g raw' },
+      ]},
+      { section:'Carb Base', items:[
+        { name:'Jasmine rice (dry)', amt:'{{carbG}}g' },
+        { name:'Chicken stock', amt:'400ml' },
+      ]},
+      { section:'Korean Glaze', items:[
+        { name:'Gochujang', amt:'2 tbsp' },
+        { name:'Soy sauce', amt:'2 tbsp' },
+        { name:'Honey', amt:'1 tbsp' },
+        { name:'Garlic (minced)', amt:'3 cloves' },
+        { name:'Rice vinegar', amt:'1 tbsp' },
+        { name:'Sesame oil', amt:'1 tsp' },
+      ]},
+      { section:'Quick Pickle', items:[
+        { name:'Cucumber (sliced thin)', amt:'½ cucumber' },
+        { name:'Rice vinegar', amt:'2 tbsp' },
+        { name:'Salt', amt:'pinch' },
+        { name:'Sugar', amt:'½ tsp' },
+      ]},
+      { section:'To Serve', items:[
+        { name:'Spring onion (sliced)', amt:'3 stalks' },
+        { name:'Sesame seeds', amt:'1 tsp' },
+      ]},
+    ],
+    steps: [
+      'Cook rice in chicken stock instead of water — bring to boil, cover, 12 min on low, rest 5 min off heat.',
+      'Mix cucumber with rice vinegar, salt and sugar. Set aside to quick-pickle while you cook.',
+      'Whisk gochujang, soy sauce, honey, garlic, rice vinegar and sesame oil into a glaze.',
+      'Pat chicken dry. Sear in hot pan skin-side down 4 min until golden and crispy.',
+      'Flip, pour glaze over, reduce heat to medium. Baste every minute for 5–6 min until sticky and cooked through.',
+      'Slice chicken. Spoon rice into bowls, top with chicken, pickled cucumber, spring onion and sesame.',
+    ],
+    hacks: [
+      { title:'Rice hack', text:'Cooking rice in chicken stock is a free flavour upgrade — costs nothing, adds a whole layer of depth that plain water never gives you.' },
+      { title:'Glaze hack', text:'Don\'t rush the basting step. Each minute of basting builds a thicker, stickier glaze. 5 minutes of attention = restaurant quality result.' },
+      { title:'Pickle hack', text:'Even 10 min of pickling transforms the cucumber — it cuts through the richness of the glaze and makes the whole bowl feel balanced.' },
+    ],
+    video: null,
+  },
+  141: {
+    ingredients: [
+      { section:'Protein', items:[
+        { name:'Boneless skinless chicken thigh', amt:'{{proteinG}}g raw' },
+      ]},
+      { section:'Noodles', items:[
+        { name:'Rice noodles (dry)', amt:'{{carbG}}g' },
+      ]},
+      { section:'Pad Thai Sauce', items:[
+        { name:'Fish sauce', amt:'2 tbsp' },
+        { name:'Tamarind paste', amt:'1.5 tbsp' },
+        { name:'Sugar', amt:'1 tbsp' },
+        { name:'Oyster sauce', amt:'1 tbsp' },
+      ]},
+      { section:'Stir-Fry', items:[
+        { name:'Eggs', amt:'2 whole' },
+        { name:'Bean sprouts', amt:'80g' },
+        { name:'Spring onion', amt:'3 stalks' },
+        { name:'Neutral oil', amt:'2 tbsp' },
+        { name:'Garlic (minced)', amt:'2 cloves' },
+      ]},
+      { section:'To Serve', items:[
+        { name:'Peanuts (crushed)', amt:'2 tbsp' },
+        { name:'Lime wedge', amt:'1 per portion' },
+        { name:'Chili flakes', amt:'to taste' },
+      ]},
+    ],
+    steps: [
+      'Soak rice noodles in cold water 30 min (or hot water 10 min) until pliable but not fully soft. Drain.',
+      'Mix fish sauce, tamarind, sugar and oyster sauce in a bowl — taste and adjust. This is your pad thai soul.',
+      'Slice chicken thigh thin. Heat wok on highest heat until smoking. Add oil, then chicken — spread and don\'t touch for 90 seconds to get colour.',
+      'Push chicken to side, add garlic, then noodles. Toss quickly 1 min.',
+      'Push everything to side again, crack eggs in, scramble 30 seconds until just set, then mix through.',
+      'Pour sauce over everything, toss hard 1–2 min until noodles are coated and slightly caramelised.',
+      'Off heat: add bean sprouts and spring onion, toss once. Plate immediately — noodles go soggy if they sit.',
+      'Top with crushed peanuts, lime wedge and chili. Serve right away.',
+    ],
+    hacks: [
+      { title:'Wok hack', text:'The single most important thing in pad thai is heat. If your pan is not screaming hot before the chicken goes in, you\'re steaming not stir-frying. Get it ripping hot.' },
+      { title:'Noodle hack', text:'Under-soak the noodles slightly — they finish cooking in the wok. Over-soaked noodles turn to mush when you toss them.' },
+      { title:'Sauce hack', text:'Make the sauce the day before and let it sit — the flavours meld and deepen overnight. Takes 2 min extra effort, tastes noticeably better.' },
+    ],
+    video: null,
+  },
+  183: {
+    ingredients: [
+      { section:'Protein', items:[
+        { name:'Boneless skinless chicken thigh', amt:'{{proteinG}}g raw' },
+      ]},
+      { section:'Bun', items:[
+        { name:'Brioche buns', amt:'{{servings}} buns' },
+        { name:'Butter (for toasting)', amt:'1 tsp' },
+      ]},
+      { section:'Smash Seasoning', items:[
+        { name:'Salt', amt:'1 tsp' },
+        { name:'Black pepper', amt:'½ tsp' },
+        { name:'Garlic powder', amt:'½ tsp' },
+        { name:'Smoked paprika', amt:'½ tsp' },
+      ]},
+      { section:'Special Sauce', items:[
+        { name:'Mayonnaise', amt:'2 tbsp' },
+        { name:'Ketchup', amt:'1 tbsp' },
+        { name:'Pickled jalapeño (chopped)', amt:'1 tbsp' },
+        { name:'Garlic powder', amt:'pinch' },
+      ]},
+      { section:'Toppings', items:[
+        { name:'American cheese slices', amt:'{{servings}} slices' },
+        { name:'Pickles', amt:'4 slices per burger' },
+        { name:'Iceberg lettuce', amt:'1 leaf per burger' },
+      ]},
+    ],
+    steps: [
+      'Mix special sauce ingredients together, refrigerate while you cook.',
+      'Divide chicken thigh into equal portions. Don\'t season yet.',
+      'Heat cast iron or heavy pan on high until very hot. Add a little oil.',
+      'Place chicken portion in pan and immediately smash down hard with a spatula or burger press. Hold 10 seconds — this is the key step.',
+      'Season the top with salt, pepper, garlic powder and paprika. Cook 3 min without touching until a crust forms.',
+      'Flip, immediately lay cheese on top, cover pan with lid 60 seconds to melt cheese.',
+      'Toast brioche buns cut-side down in butter 1 min until golden.',
+      'Build: sauce on both buns, lettuce, smash patty with melted cheese, pickles, top bun. Eat immediately.',
+    ],
+    hacks: [
+      { title:'Smash hack', text:'The smash has to happen in the first 30 seconds — that\'s when the meat is still malleable. After that it\'s too firm. Smash hard and fast.' },
+      { title:'Cheese hack', text:'American cheese melts better than any other cheese for burgers. Don\'t swap it for something "nicer" — it\'s specifically designed for this.' },
+      { title:'Sauce hack', text:'The jalapeño in the sauce is the 80/20 move — it adds brine, acid and heat in one go without any extra ingredients on the burger.' },
+    ],
+    video: null,
+  },
+};
+
+// Generate placeholder for recipes without detail data
+function getRecipeDetail(r) {
+  if (RECIPE_DETAILS[r.id]) return RECIPE_DETAILS[r.id];
+  // Smart placeholder based on carb + cuisine
+  const carbName = {potato:'potato', rice:'rice', noodle:'noodles', bread:'bread/wrap'}[r.carb];
+  const proteinName = activeProtein.replace('_',' ');
+  return {
+    ingredients: [
+      { section:'Protein', items:[{ name: proteinName + ' (raw)', amt:'{{proteinG}}g' }]},
+      { section:'Carb Base', items:[{ name: carbName + ' (raw)', amt:'{{carbG}}g' }]},
+      { section:'Sauce & Seasonings', items:[
+        { name:'See full recipe on YouTube', amt:'—' },
+        { name:'Key spices & sauce', amt:'per recipe' },
+      ]},
+    ],
+    steps: [
+      'Full step-by-step coming soon — subscribe on YouTube to be notified when this recipe drops! 🎬',
+      'In the meantime: season your ' + proteinName + ', cook your ' + carbName + ', and use the macro calculator to dial in your portions.',
+    ],
+    hacks: [],
+    video: null,
+    placeholder: true,
+  };
+}
+
+// ══════════════════════════════════════════════════
+// MODAL SYSTEM
+// ══════════════════════════════════════════════════
+let currentModalRecipe = null;
+
+function openModal(recipeId) {
+  const r = R.find(x => x.id === recipeId);
+  if (!r) return;
+  currentModalRecipe = r;
+
+  const m = baseMacros(r.carb);
+  const kcal  = Math.round(m.kcal + r.sauce_kcal);
+  const prot  = Math.round(m.p    + r.sauce_p);
+  const carbs = Math.round(m.c    + r.sauce_c);
+  const fat   = Math.round(m.f    + r.sauce_f);
+
+  // Header
+  document.getElementById('modalTitle').textContent = r.title;
+  document.getElementById('modalDesc').textContent  = r.desc;
+  document.getElementById('modalTime').innerHTML    = `<span class="time-icon">⏱</span>${r.time} min`;
+  const badge = document.getElementById('modalCarbBadge');
+  badge.className = 'carb-badge ' + r.carb;
+  badge.textContent = {potato:'🥔 Potato', rice:'🍚 Rice', noodle:'🍜 Noodle', bread:'🫓 Bread'}[r.carb];
+
+  // Macros
+  document.getElementById('mKcal').textContent  = kcal;
+  document.getElementById('mProt').textContent  = prot + 'g';
+  document.getElementById('mCarbs').textContent = carbs + 'g';
+  document.getElementById('mFat').textContent   = fat + 'g';
+
+  // Build dynamic tabs
+  const detail = getRecipeDetail(r);
+  const tabsEl = document.getElementById('modalTabs');
+  tabsEl.innerHTML = `
+    <div class="modal-tab active" onclick="switchModalTab('ingredients',this)">🥄 Ingredients</div>
+    <div class="modal-tab" onclick="switchModalTab('recipe',this)">👨‍🍳 Recipe</div>
+    ${detail.video ? `<div class="modal-tab" onclick="switchModalTab('video',this)">▶️ Video</div>` : ''}
+  `;
+
+  // Build content
+  const modalServings = weights.servings;
+  buildIngredientsTab(r, modalServings);
+  buildRecipeTab(r);
+  if (detail.video) buildVideoTab(r);
+
+  // Reset to first tab
+  switchModalTab('ingredients', tabsEl.querySelector('.modal-tab'));
+
+  document.getElementById('recipeModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('recipeModal')) closeModalDirect();
+}
+function closeModalDirect() {
+  document.getElementById('recipeModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
+
+function switchModalTab(tab, btn) {
+  document.querySelectorAll('#modalTabs .modal-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.modal-tab-content').forEach(t => t.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const el = document.getElementById('tab-' + tab);
+  if (el) el.classList.add('active');
+}
+
+let modalServings = 2;
+
+function buildIngredientsTab(r, servings) {
+  if (servings !== undefined) modalServings = Math.max(1, servings);
+  const detail = getRecipeDetail(r);
+  const s = modalServings;
+  const protG = Math.round(weights.chicken / s);
+  const carbG = Math.round(weights[r.carb] / s);
+
+  let html = `<div class="serving-control">
+    <label>🍽️ Servings</label>
+    <div class="serving-stepper">
+      <button class="step-btn" onclick="changeModalServings(-1, ${r.id})">−</button>
+      <span class="serving-val" id="modalServingVal">${s}</span>
+      <button class="step-btn" onclick="changeModalServings(1, ${r.id})">+</button>
+    </div>
+  </div>`;
+
+  detail.ingredients.forEach(sec => {
+    html += `<div class="ing-section-title">${sec.section}</div><ul class="ing-list">`;
+    sec.items.forEach(item => {
+      let amt = item.amt
+        .replace('{{proteinG}}', protG)
+        .replace('{{carbG}}', carbG)
+        .replace('{{servings}}', s);
+      html += `<li><span class="ing-item-name">${item.name}</span><span class="ing-item-amt">${amt}</span></li>`;
+    });
+    html += '</ul>';
+  });
+  if (detail.placeholder) {
+    html += `<div class="ing-note">📌 Full ingredient list coming soon — follow on YouTube & TikTok for the full recipe video!</div>`;
+  } else {
+    html += `<div class="ing-note">📌 Amounts shown for ${s} serving${s>1?'s':''} at your weights (${protG}g protein + ${carbG}g ${r.carb} per person).</div>`;
+  }
+  document.getElementById('tab-ingredients').innerHTML = html;
+}
+
+function changeModalServings(delta, recipeId) {
+  modalServings = Math.max(1, Math.min(10, modalServings + delta));
+  const r = R.find(x => x.id === recipeId);
+  if (r) buildIngredientsTab(r);
+}
+
+function buildRecipeTab(r) {
+  const detail = getRecipeDetail(r);
+  let html = '';
+
+  // Steps
+  if (detail.steps.length) {
+    html += '<div class="step-list">';
+    detail.steps.forEach((step, i) => {
+      html += `<div class="step"><div class="step-num">${i+1}</div><div class="step-text">${step}</div></div>`;
+    });
+    html += '</div>';
+  }
+
+  // 80/20 hacks
+  if (detail.hacks && detail.hacks.length) {
+    detail.hacks.forEach(h => {
+      html += `<div class="hack-box"><strong>💡 80/20 hack — ${h.title}:</strong> ${h.text}</div>`;
+    });
+  }
+
+  document.getElementById('tab-recipe').innerHTML = html;
+}
+
+function buildVideoTab(r) {
+  const detail = getRecipeDetail(r);
+  let html = '';
+  if (detail.video) {
+    html = `<div class="video-embed"><iframe src="https://www.youtube.com/embed/${detail.video}" allowfullscreen loading="lazy"></iframe></div>`;
+  }
+  document.getElementById('tab-video').innerHTML = html;
 }
 
 
@@ -1661,6 +2156,20 @@ let disabledIngredients = new Set(JSON.parse(localStorage.getItem('pantryDisable
 
 function savePantry() {
   try { localStorage.setItem('pantryDisabled', JSON.stringify([...disabledIngredients])); } catch(e){}
+}
+
+function pantrySearchFilter() {
+  const q = document.getElementById('pantrySearch')?.value.toLowerCase() || '';
+  document.querySelectorAll('.ing-item').forEach(el => {
+    const name = el.querySelector('.ing-name')?.textContent.toLowerCase() || '';
+    el.classList.toggle('hidden', q.length > 0 && !name.includes(q));
+  });
+  // hide/show section headers if all items in section are hidden
+  document.querySelectorAll('.pantry-section').forEach(sec => {
+    const items = sec.querySelectorAll('.ing-item');
+    const allHidden = [...items].every(i => i.classList.contains('hidden'));
+    sec.style.display = allHidden && q.length > 0 ? 'none' : '';
+  });
 }
 
 function renderPantry() {
