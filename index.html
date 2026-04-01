@@ -254,6 +254,10 @@
   .modal-header{padding:24px 28px 0;flex-shrink:0;}
   .modal-close{position:absolute;top:16px;right:20px;background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;line-height:1;padding:4px 8px;border-radius:6px;transition:all .15s;}
   .modal-close:hover{color:var(--text);background:rgba(255,255,255,.07);}
+  .modal-share-btn{position:absolute;top:16px;right:56px;display:flex;align-items:center;gap:5px;background:none;border:1px solid var(--border);color:var(--muted);font-size:11px;font-family:'DM Sans',sans-serif;font-weight:600;padding:5px 10px;border-radius:6px;cursor:pointer;transition:all .2s;letter-spacing:.3px;}
+  .modal-share-btn:hover{border-color:var(--accent);color:var(--accent);}
+  .modal-share-btn.copied{border-color:#47e8a3;color:#47e8a3;background:rgba(71,232,163,.08);}
+  .modal-share-btn .share-icon{font-size:13px;}
   .modal-meta{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
   .modal-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:.5px;color:var(--text);margin-bottom:4px;line-height:1.1;padding-right:40px;}
   .modal-desc{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.5;}
@@ -1233,6 +1237,7 @@
 <div class="modal-overlay" id="recipeModal" onclick="closeModal(event)">
   <div class="modal" role="dialog">
     <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <button class="modal-share-btn" id="modalShareBtn" onclick="shareRecipe()"><span class="share-icon">🔗</span> Share</button>
     <div class="modal-header">
       <div class="modal-meta">
         <span class="carb-badge" id="modalCarbBadge"></span>
@@ -23209,6 +23214,38 @@ function buildCompareTable() {
     </div>
   `}).join('');
 }
+
+
+// ── Share & Deep-link ──
+function shareRecipe() {
+  if (!currentModalRecipe) return;
+  const url = new URL(window.location.href);
+  url.searchParams.set('recipe', currentModalRecipe.id);
+  navigator.clipboard.writeText(url.toString()).then(() => {
+    const btn = document.getElementById('modalShareBtn');
+    btn.classList.add('copied');
+    btn.innerHTML = '<span class="share-icon">✓</span> Copied!';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = '<span class="share-icon">🔗</span> Share';
+    }, 2000);
+  }).catch(() => {
+    // Fallback for browsers that block clipboard
+    prompt('Copy this link:', url.toString());
+  });
+}
+
+// On load: check for ?recipe= param and open that modal
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const recipeId = parseInt(params.get('recipe'));
+  if (recipeId) {
+    // Wait for cards to be built, then open
+    requestAnimationFrame(() => {
+      setTimeout(() => openModal(recipeId), 100);
+    });
+  }
+})();
 
 // Init
 autoCalcCarbs();    // set initial carb weights based on default protein
