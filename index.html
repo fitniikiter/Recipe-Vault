@@ -361,7 +361,7 @@
   .compare-header h2{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--accent);letter-spacing:1px;line-height:1;margin-bottom:8px;}
   .compare-header p{color:var(--muted);font-size:13px;font-weight:300;line-height:1.6;}
   .compare-section-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;color:var(--text);margin-bottom:12px;padding-left:2px;}
-  .compare-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;margin-bottom:28px;}
+  .compare-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:28px;}
   .ccard{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;position:relative;overflow:hidden;transition:border-color .2s;}
   .ccard::after{content:'';position:absolute;bottom:0;left:0;height:2px;width:100%;background:var(--border);transition:background .2s;}
   .ccard.c-potato::after{background:var(--carb-potato);}
@@ -397,13 +397,119 @@
   .compare-note{margin-top:8px;background:rgba(255,140,0,.04);border:1px solid rgba(255,140,0,.12);border-radius:8px;padding:14px 16px;font-size:12px;color:#aaa;line-height:1.6;}
   .compare-note strong{color:var(--accent);}
   @media(max-width:480px){
-    .compare-page{padding:24px 14px;}
-    .compare-cards{grid-template-columns:1fr 1fr;}
-    .ccard{padding:13px 14px;}
-    .ccard-macros{gap:4px;}
-    .ccard-macro .mv{font-size:15px;}
+    .compare-page{padding:24px 12px;}
+    .compare-cards{grid-template-columns:repeat(2,1fr);gap:8px;}
+    .ccard{padding:11px 10px;}
+    .ccard-macros{gap:3px;}
+    .ccard-macro{padding:6px 4px;}
+    .ccard-macro .mv{font-size:14px;}
+    .ccard-macro .ml{font-size:8px;}
+    .ccard-name{font-size:14px;}
+    .best-tag{display:none;}
   }
 
+
+  /* ── CALORIE CALCULATOR ── */
+  .calc2-page{max-width:680px;margin:0 auto;padding:32px 20px 60px;}
+  .calc2-header{margin-bottom:28px;}
+  .calc2-header h2{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--accent);letter-spacing:1px;line-height:1;margin-bottom:8px;}
+  .calc2-header p{color:var(--muted);font-size:13px;font-weight:300;line-height:1.6;}
+
+  /* Goal selector */
+  .goal-selector{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px;}
+  .goal-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:18px 12px;background:var(--card);border:2px solid var(--border);border-radius:12px;cursor:pointer;transition:all .2s;user-select:none;}
+  .goal-btn:hover{border-color:#555;}
+  .goal-btn.active.fat-loss{border-color:#ff8c00;background:rgba(255,140,0,.07);}
+  .goal-btn.active.muscle{border-color:#47e8a3;background:rgba(71,232,163,.07);}
+  .goal-btn .goal-icon{font-size:28px;}
+  .goal-btn .goal-label{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:.5px;color:var(--text);}
+  .goal-btn .goal-sub{font-size:10px;color:var(--muted);text-align:center;line-height:1.4;}
+
+  /* Input section */
+  .calc2-section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:14px;}
+  .calc2-section-title{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1px;color:var(--muted);margin-bottom:16px;text-transform:uppercase;}
+  .calc2-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .calc2-field{display:flex;flex-direction:column;gap:6px;}
+  .calc2-field label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;font-weight:500;}
+  .calc2-field input,.calc2-field select{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;-moz-appearance:textfield;width:100%;}
+  .calc2-field input::-webkit-outer-spin-button,.calc2-field input::-webkit-inner-spin-button{-webkit-appearance:none;}
+  .calc2-field input:focus,.calc2-field select:focus{border-color:var(--accent);}
+  .calc2-field select option{background:#1c1c1c;}
+
+  /* Gender toggle */
+  .gender-toggle{display:flex;gap:8px;}
+  .gender-btn{flex:1;padding:10px;background:var(--surface);border:1px solid var(--border);color:var(--muted);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;text-align:center;}
+  .gender-btn.active{background:rgba(255,140,0,.12);border-color:var(--accent);color:var(--accent);}
+
+  /* Activity */
+  .activity-options{display:flex;flex-direction:column;gap:6px;}
+  .activity-opt{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .15s;user-select:none;}
+  .activity-opt:hover{border-color:#555;}
+  .activity-opt.active{border-color:var(--accent);background:rgba(255,140,0,.07);}
+  .activity-opt .ao-dot{width:10px;height:10px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;transition:all .15s;}
+  .activity-opt.active .ao-dot{border-color:var(--accent);background:var(--accent);}
+  .activity-opt .ao-label{font-size:13px;font-weight:600;color:var(--text);}
+  .activity-opt .ao-sub{font-size:11px;color:var(--muted);margin-left:auto;}
+
+  /* Calculate button */
+  .calc2-btn{width:100%;padding:16px;background:var(--accent);color:#000;border:none;border-radius:12px;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1px;cursor:pointer;transition:opacity .2s;margin-bottom:24px;}
+  .calc2-btn:hover{opacity:.88;}
+
+  /* Results */
+  .calc2-results{display:none;}
+  .calc2-results.show{display:block;}
+  .results-goal-label{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:12px;}
+
+  .result-hero{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+  .result-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;position:relative;overflow:hidden;}
+  .result-box::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;}
+  .result-box.rb-kcal::after{background:var(--accent);}
+  .result-box.rb-prot::after{background:#47e8a3;}
+  .result-box.rb-carb::after{background:#47b3e8;}
+  .result-box.rb-fat::after{background:#e84747;}
+  .result-box.rb-tdee::after{background:#888;}
+  .result-val{font-family:'Bebas Neue',sans-serif;font-size:34px;line-height:1;color:var(--text);display:block;}
+  .result-unit{font-size:11px;color:var(--muted);display:block;margin-top:4px;}
+  .result-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-top:6px;display:block;}
+
+  .result-macros{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+
+  .result-section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:12px;}
+  .result-section-title{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:1px;color:var(--muted);margin-bottom:12px;text-transform:uppercase;}
+  .result-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px;}
+  .result-row:last-child{border-bottom:none;}
+  .result-row .rr-label{color:var(--muted);}
+  .result-row .rr-val{font-weight:700;color:var(--text);}
+  .result-row .rr-val.green{color:#47e8a3;}
+  .result-row .rr-val.orange{color:var(--accent);}
+  .result-row .rr-val.red{color:#e84747;}
+
+
+
+  .calc2-note{margin-top:8px;background:rgba(255,140,0,.04);border:1px solid rgba(255,140,0,.12);border-radius:8px;padding:14px 16px;font-size:12px;color:#aaa;line-height:1.6;}
+  .calc2-note strong{color:var(--accent);}
+  .formula-accordion{margin-top:12px;border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+  .formula-accordion-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer;background:var(--card);transition:background .15s;user-select:none;}
+  .formula-accordion-header:hover{background:#222;}
+  .formula-accordion-title{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1px;color:var(--muted);}
+  .formula-accordion-arrow{color:var(--muted);font-size:11px;transition:transform .2s;}
+  .formula-accordion.open .formula-accordion-arrow{transform:rotate(180deg);}
+  .formula-accordion-body{display:none;padding:18px;background:var(--surface);border-top:1px solid var(--border);}
+  .formula-accordion.open .formula-accordion-body{display:block;}
+  .formula-block{margin-bottom:18px;}
+  .formula-block:last-child{margin-bottom:0;}
+  .formula-block-title{font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:1px;color:var(--accent);text-transform:uppercase;margin-bottom:8px;}
+  .formula-line{font-size:12px;color:var(--muted);line-height:1.7;padding:3px 0;}
+  .formula-line code{background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-family:monospace;font-size:11px;color:var(--text);}
+  .formula-line em{color:#aaa;font-style:normal;}
+
+  @media(max-width:480px){
+    .calc2-page{padding:20px 12px 48px;}
+    .result-hero{grid-template-columns:repeat(3,1fr);}
+    .result-val{font-size:26px;}
+    .calc2-grid{grid-template-columns:1fr 1fr;}
+    .recipe-fit-grid{grid-template-columns:repeat(2,1fr);}
+  }
   /* ── PANTRY PAGE ── */
   .pantry-page{max-width:860px;margin:0 auto;padding:44px 40px;}
   .pantry-header{margin-bottom:32px;}
@@ -591,6 +697,7 @@
   <button class="nav-tab active" onclick="switchTab('recipes',this)">📋 Recipes</button>
   <button class="nav-tab" onclick="switchTab('pantry',this)">🧺 My Pantry</button>
   <button class="nav-tab" onclick="switchTab('compare',this)">📊 Macro Compare</button>
+  <button class="nav-tab" onclick="switchTab('calc',this)">🔥 Calorie Calculator</button>
 
 </div>
 
@@ -792,6 +899,209 @@
 
 </div>
 
+<!-- ══════════════════════ CALORIE CALCULATOR PAGE ══════════════════════ -->
+<div class="page" id="page-calc">
+  <div class="calc2-page">
+
+    <div class="calc2-header">
+      <h2>Calorie Calculator</h2>
+      <p>Enter your stats and goal — get your daily calorie target, macros and how many recipes from this vault fit your plan.</p>
+    </div>
+
+    <!-- GOAL -->
+    <div class="goal-selector">
+      <div class="goal-btn fat-loss active" id="goalFatLoss" onclick="setGoal('fat_loss')">
+        <span class="goal-icon">🔥</span>
+        <span class="goal-label">Fat Loss</span>
+        <span class="goal-sub">Calorie deficit · preserve muscle</span>
+      </div>
+      <div class="goal-btn muscle" id="goalMuscle" onclick="setGoal('muscle')">
+        <span class="goal-icon">💪</span>
+        <span class="goal-label">Muscle Gain</span>
+        <span class="goal-sub">Calorie surplus · maximize growth</span>
+      </div>
+    </div>
+
+    <!-- PERSONAL DATA -->
+    <div class="calc2-section">
+      <div class="calc2-section-title">Your Stats</div>
+
+      <div style="margin-bottom:12px;">
+        <div class="calc2-field" style="margin-bottom:6px;"><label>Gender</label></div>
+        <div class="gender-toggle">
+          <div class="gender-btn active" id="genderM" onclick="setGender('m')">♂ Male</div>
+          <div class="gender-btn" id="genderF" onclick="setGender('f')">♀ Female</div>
+        </div>
+      </div>
+
+      <div class="calc2-grid">
+        <div class="calc2-field">
+          <label>Age</label>
+          <input type="number" id="c2Age" placeholder="25" min="14" max="90">
+        </div>
+        <div class="calc2-field">
+          <label>Weight (kg)</label>
+          <input type="number" id="c2Weight" placeholder="80" min="30" max="300">
+        </div>
+        <div class="calc2-field">
+          <label>Height (cm)</label>
+          <input type="number" id="c2Height" placeholder="175" min="100" max="250">
+        </div>
+        <div class="calc2-field">
+          <label>Body Fat % <span style="color:#555;font-size:10px;">(optional)</span></label>
+          <input type="number" id="c2BF" placeholder="e.g. 18" min="3" max="60">
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTIVITY -->
+    <div class="calc2-section">
+      <div class="calc2-section-title">Activity Level</div>
+      <div class="activity-options">
+        <div class="activity-opt" data-factor="1.2" onclick="setActivity(this)">
+          <div class="ao-dot"></div>
+          <span class="ao-label">Sedentary</span>
+          <span class="ao-sub">Desk job, no exercise</span>
+        </div>
+        <div class="activity-opt active" data-factor="1.375" onclick="setActivity(this)">
+          <div class="ao-dot"></div>
+          <span class="ao-label">Lightly Active</span>
+          <span class="ao-sub">1–3 workouts/week</span>
+        </div>
+        <div class="activity-opt" data-factor="1.55" onclick="setActivity(this)">
+          <div class="ao-dot"></div>
+          <span class="ao-label">Moderately Active</span>
+          <span class="ao-sub">3–5 workouts/week</span>
+        </div>
+        <div class="activity-opt" data-factor="1.725" onclick="setActivity(this)">
+          <div class="ao-dot"></div>
+          <span class="ao-label">Very Active</span>
+          <span class="ao-sub">6–7 workouts/week</span>
+        </div>
+        <div class="activity-opt" data-factor="1.9" onclick="setActivity(this)">
+          <div class="ao-dot"></div>
+          <span class="ao-label">Athlete</span>
+          <span class="ao-sub">2× daily or physical job</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="calc2-btn" onclick="runCalc()">Calculate My Plan →</button>
+
+    <!-- RESULTS -->
+    <div class="calc2-results" id="calc2Results">
+
+      <div class="results-goal-label" id="resultsGoalLabel"></div>
+
+      <!-- Hero numbers -->
+      <div class="result-hero">
+        <div class="result-box rb-tdee">
+          <span class="result-val" id="rTDEE">—</span>
+          <span class="result-unit">kcal/day</span>
+          <span class="result-lbl">Maintenance</span>
+        </div>
+        <div class="result-box rb-kcal">
+          <span class="result-val" id="rTarget">—</span>
+          <span class="result-unit">kcal/day</span>
+          <span class="result-lbl">Your Target</span>
+        </div>
+        <div class="result-box rb-prot">
+          <span class="result-val" id="rProtein">—</span>
+          <span class="result-unit">g/day</span>
+          <span class="result-lbl">Protein</span>
+        </div>
+      </div>
+
+      <!-- Macros -->
+      <div class="result-macros">
+        <div class="result-box rb-prot">
+          <span class="result-val" id="rProtG">—</span>
+          <span class="result-unit">g · <span id="rProtKcal">—</span> kcal</span>
+          <span class="result-lbl">Protein</span>
+        </div>
+        <div class="result-box rb-carb">
+          <span class="result-val" id="rCarbG">—</span>
+          <span class="result-unit">g · <span id="rCarbKcal">—</span> kcal</span>
+          <span class="result-lbl">Carbs</span>
+        </div>
+        <div class="result-box rb-fat">
+          <span class="result-val" id="rFatG">—</span>
+          <span class="result-unit">g · <span id="rFatKcal">—</span> kcal</span>
+          <span class="result-lbl">Fat</span>
+        </div>
+      </div>
+
+      <!-- Details -->
+      <div class="result-section">
+        <div class="result-section-title">Your Plan Breakdown</div>
+        <div class="result-row"><span class="rr-label">BMR (base metabolic rate)</span><span class="rr-val" id="rBMR">—</span></div>
+        <div class="result-row"><span class="rr-label">TDEE (maintenance)</span><span class="rr-val" id="rTDEE2">—</span></div>
+        <div class="result-row"><span class="rr-label">Calorie adjustment</span><span class="rr-val" id="rAdjust">—</span></div>
+        <div class="result-row"><span class="rr-label">Target calories</span><span class="rr-val orange" id="rTarget2">—</span></div>
+        <div class="result-row"><span class="rr-label">Estimated weekly change</span><span class="rr-val" id="rWeekly">—</span></div>
+        <div class="result-row"><span class="rr-label">Protein target</span><span class="rr-val green" id="rProtDetail">—</span></div>
+      </div>
+
+      <div class="calc2-note" id="calc2Tip"></div>
+
+      <div class="formula-accordion" id="formulaAccordion">
+        <div class="formula-accordion-header" onclick="document.getElementById('formulaAccordion').classList.toggle('open')">
+          <span class="formula-accordion-title">🧮 How is this calculated?</span>
+          <span class="formula-accordion-arrow">▼</span>
+        </div>
+        <div class="formula-accordion-body">
+
+          <div class="formula-block">
+            <div class="formula-block-title">Step 1 — BMR (Base Metabolic Rate)</div>
+            <div class="formula-line">Your BMR is how many calories your body burns at complete rest — just to keep you alive.</div>
+            <div class="formula-line" style="margin-top:6px;"><em>If body fat % is provided → Katch-McArdle (more accurate):</em></div>
+            <div class="formula-line"><code>LBM = weight × (1 − BF% ÷ 100)</code></div>
+            <div class="formula-line"><code>BMR = 370 + 21.6 × LBM</code></div>
+            <div class="formula-line" style="margin-top:6px;"><em>Otherwise → Mifflin-St Jeor:</em></div>
+            <div class="formula-line"><code>Male:   BMR = 10×weight + 6.25×height − 5×age + 5</code></div>
+            <div class="formula-line"><code>Female: BMR = 10×weight + 6.25×height − 5×age − 161</code></div>
+          </div>
+
+          <div class="formula-block">
+            <div class="formula-block-title">Step 2 — TDEE (Total Daily Energy Expenditure)</div>
+            <div class="formula-line">Multiply BMR by your activity factor to get your maintenance calories.</div>
+            <div class="formula-line" style="margin-top:6px;"><code>TDEE = BMR × activity factor</code></div>
+            <div class="formula-line" style="margin-top:6px;">
+              Activity factors: <em>Sedentary 1.2 · Light 1.375 · Moderate 1.55 · Very Active 1.725 · Athlete 1.9</em>
+            </div>
+          </div>
+
+          <div class="formula-block">
+            <div class="formula-block-title">Step 3 — Calorie Target</div>
+            <div class="formula-line"><em>Fat Loss:</em> <code>Target = TDEE − 20% (max 700 kcal deficit)</code></div>
+            <div class="formula-line">A 20% deficit is aggressive enough to lose fat but safe enough to preserve muscle.</div>
+            <div class="formula-line" style="margin-top:6px;"><em>Muscle Gain:</em> <code>Target = TDEE + 12%</code></div>
+            <div class="formula-line">A 12% lean surplus minimizes fat gain while giving your muscles enough fuel to grow.</div>
+          </div>
+
+          <div class="formula-block">
+            <div class="formula-block-title">Step 4 — Macros</div>
+            <div class="formula-line"><em>Protein:</em> <code>Fat Loss: 2.0g × bodyweight (kg) &nbsp;|&nbsp; Muscle Gain: 1.8g × bodyweight (kg)</code></div>
+            <div class="formula-line">Higher protein during a deficit protects muscle. During a bulk, slightly less is needed.</div>
+            <div class="formula-line" style="margin-top:6px;"><em>Fat:</em> <code>25% of target calories ÷ 9 = grams</code></div>
+            <div class="formula-line"><em>Carbs:</em> <code>(Target kcal − protein kcal − fat kcal) ÷ 4 = grams</code></div>
+            <div class="formula-line" style="margin-top:6px;">Protein = 4 kcal/g &nbsp;·&nbsp; Carbs = 4 kcal/g &nbsp;·&nbsp; Fat = 9 kcal/g</div>
+          </div>
+
+          <div class="formula-block">
+            <div class="formula-block-title">Step 5 — Weekly Change</div>
+            <div class="formula-line"><code>Weekly Δ = (daily adjustment × 7) ÷ 7700</code></div>
+            <div class="formula-line">~7700 kcal = 1 kg of body fat. This gives you an estimated weekly weight change.</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
 <!-- ══════════════════════ COMPARE PAGE ══════════════════════ -->
 <div class="page" id="page-compare">
   <div class="compare-page">
@@ -814,6 +1124,7 @@
 
     <div class="compare-note" style="margin-top:10px;">
       📊 <strong>Glycemic Index (GI) explained:</strong><br><br>
+      <strong style="color:#47e8a3;">Low GI (under 55)</strong> — Blood sugar rises slowly and steadily. Insulin stays low, energy lasts longer, and hunger is kept at bay. Ideal for fat loss and stable energy throughout the day. <em>None of the 4 carb sources here fall in this range — examples would be sweet potato, lentils or oats.</em><br><br>
       <strong style="color:#ff8c00;">Med GI (55–69)</strong> — Blood sugar rises moderately. The body gets a steady supply of energy without a sharp spike. Good choice around workouts or when you need sustained energy. <em>Potato (65) and Noodle (55) fall here.</em><br><br>
       <strong style="color:#e84747;">High GI (70+)</strong> — Blood sugar spikes quickly, triggering a large insulin response. Energy arrives fast but drops just as fast — leading to hunger, cravings and fatigue within 1–2 hours. <em>Rice (73) and Bread (70) fall here.</em><br><br>
       <strong style="color:#aaa;">In practice:</strong> GI matters less when carbs are eaten with protein and fat — both slow digestion and blunt the blood sugar response. In these recipes, the combination of chicken + sauce naturally lowers the effective GI of every meal.
@@ -22290,6 +22601,7 @@ function switchTab(tab, btn) {
   document.getElementById('page-'+tab).classList.add('active');
   if (tab === 'pantry') { renderPantry(); buildDietaryGrid(); }
   if (tab === 'compare') { buildCompareTable(); }
+  if (tab === 'calc') { /* results shown on button click */ }
 }
 
 
@@ -22684,6 +22996,134 @@ Object.entries(adminOverrides).forEach(([id, data]) => {
   RECIPE_DETAILS[parseInt(id)] = { ...(RECIPE_DETAILS[parseInt(id)] || {}), ...data };
 });
 
+
+
+// ══════════════════════════════════════════════════════
+// CALORIE CALCULATOR
+// ══════════════════════════════════════════════════════
+
+let c2Goal = 'fat_loss';
+let c2Gender = 'm';
+let c2ActivityFactor = 1.375;
+
+function setGoal(g) {
+  c2Goal = g;
+  document.getElementById('goalFatLoss').classList.toggle('active', g === 'fat_loss');
+  document.getElementById('goalMuscle').classList.toggle('active', g === 'muscle');
+}
+
+function setGender(g) {
+  c2Gender = g;
+  document.getElementById('genderM').classList.toggle('active', g === 'm');
+  document.getElementById('genderF').classList.toggle('active', g === 'f');
+}
+
+function setActivity(el) {
+  document.querySelectorAll('.activity-opt').forEach(o => o.classList.remove('active'));
+  el.classList.add('active');
+  c2ActivityFactor = parseFloat(el.dataset.factor);
+}
+
+function runCalc() {
+  const age    = parseFloat(document.getElementById('c2Age').value);
+  const weight = parseFloat(document.getElementById('c2Weight').value);
+  const height = parseFloat(document.getElementById('c2Height').value);
+  const bf     = parseFloat(document.getElementById('c2BF').value);
+
+  if (!age || !weight || !height) {
+    alert('Please fill in age, weight and height.');
+    return;
+  }
+
+  // BMR — use Katch-McArdle if body fat given, else Mifflin-St Jeor
+  let bmr;
+  if (!isNaN(bf) && bf > 3 && bf < 60) {
+    const lbm = weight * (1 - bf / 100);
+    bmr = 370 + 21.6 * lbm;
+  } else {
+    if (c2Gender === 'm') {
+      bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+    } else {
+      bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+    }
+  }
+
+  const tdee = Math.round(bmr * c2ActivityFactor);
+  bmr = Math.round(bmr);
+
+  // Goal adjustments
+  let adjustment, target, weeklyChange, adjustLabel;
+  if (c2Goal === 'fat_loss') {
+    // Moderate deficit: 20% or max 700 kcal
+    adjustment = Math.min(Math.round(tdee * 0.20), 700);
+    target = tdee - adjustment;
+    weeklyChange = -Math.round(adjustment * 7 / 7700 * 10) / 10; // kg/week
+    adjustLabel = `−${adjustment} kcal (deficit)`;
+  } else {
+    // Lean bulk: 10-15% surplus
+    adjustment = Math.round(tdee * 0.12);
+    target = tdee + adjustment;
+    weeklyChange = Math.round(adjustment * 7 / 7700 * 10) / 10;
+    adjustLabel = `+${adjustment} kcal (surplus)`;
+  }
+
+  // Protein: 2.0g/kg for fat loss (muscle preservation), 1.8g/kg for muscle gain
+  const protMultiplier = c2Goal === 'fat_loss' ? 2.0 : 1.8;
+  const protG = Math.round(weight * protMultiplier);
+  const protKcal = protG * 4;
+
+  // Fat: 25% of target calories
+  const fatKcal = Math.round(target * 0.25);
+  const fatG = Math.round(fatKcal / 9);
+
+  // Carbs: remainder
+  const carbKcal = target - protKcal - fatKcal;
+  const carbG = Math.round(carbKcal / 4);
+
+  // Fill hero
+  document.getElementById('rTDEE').textContent  = tdee;
+  document.getElementById('rTarget').textContent = target;
+  document.getElementById('rProtein').textContent = protG;
+
+  // Fill macro boxes
+  document.getElementById('rProtG').textContent    = protG;
+  document.getElementById('rProtKcal').textContent = protKcal;
+  document.getElementById('rCarbG').textContent    = Math.max(0, carbG);
+  document.getElementById('rCarbKcal').textContent = Math.max(0, carbKcal);
+  document.getElementById('rFatG').textContent     = fatG;
+  document.getElementById('rFatKcal').textContent  = fatKcal;
+
+  // Fill breakdown
+  document.getElementById('rBMR').textContent      = bmr + ' kcal';
+  document.getElementById('rTDEE2').textContent    = tdee + ' kcal';
+  document.getElementById('rAdjust').textContent   = adjustLabel;
+  document.getElementById('rTarget2').textContent  = target + ' kcal';
+  document.getElementById('rProtDetail').textContent = `${protG}g (${protMultiplier}g × ${weight}kg)`;
+
+  const dir = c2Goal === 'fat_loss' ? '−' : '+';
+  const changeColor = c2Goal === 'fat_loss' ? 'red' : 'green';
+  const weeklyEl = document.getElementById('rWeekly');
+  weeklyEl.textContent = `${dir}${Math.abs(weeklyChange)} kg/week`;
+  weeklyEl.className = 'rr-val ' + changeColor;
+
+  // Goal label
+  const goalLabels = {
+    fat_loss: '🔥 Fat Loss Plan',
+    muscle:   '💪 Muscle Gain Plan',
+  };
+  document.getElementById('resultsGoalLabel').textContent = goalLabels[c2Goal];
+
+  // Tip
+  const tips = {
+    fat_loss: `<strong>Fat Loss tip:</strong> At ${target} kcal/day you're in a ${adjustment} kcal deficit — enough to lose roughly ${Math.abs(weeklyChange)} kg/week without muscle loss. Hit your ${protG}g protein target every day — it's the most important number on this page. The recipes in this vault are built for exactly this: high protein, controlled calories.`,
+    muscle: `<strong>Muscle Gain tip:</strong> At ${target} kcal/day you're in a ${adjustment} kcal surplus — a lean bulk that minimizes fat gain. Prioritize your ${protG}g protein target and make sure you're training hard enough to use the extra calories for muscle. Expect roughly ${weeklyChange} kg gained per week, mostly muscle.`,
+  };
+  document.getElementById('calc2Tip').innerHTML = tips[c2Goal];
+
+  // Show results
+  document.getElementById('calc2Results').classList.add('show');
+  document.getElementById('calc2Results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
 // ══════════════════════════════════════════════════════
 // MACRO COMPARE TAB
