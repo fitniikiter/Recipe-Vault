@@ -355,6 +355,55 @@
   .carb-check-wrap.bread-check input:checked + .carb-checkbox{background:var(--carb-bread);border-color:var(--carb-bread);}
   .carb-check-label{font-size:12px;color:var(--text);}
 
+  /* ── COMPARE PAGE ── */
+  .compare-page{max-width:860px;margin:0 auto;padding:32px 20px;}
+  .compare-header{margin-bottom:28px;}
+  .compare-header h2{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--accent);letter-spacing:1px;line-height:1;margin-bottom:8px;}
+  .compare-header p{color:var(--muted);font-size:13px;font-weight:300;line-height:1.6;}
+  .compare-section-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;color:var(--text);margin-bottom:12px;padding-left:2px;}
+  .compare-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;margin-bottom:28px;}
+  .ccard{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;position:relative;overflow:hidden;transition:border-color .2s;}
+  .ccard::after{content:'';position:absolute;bottom:0;left:0;height:2px;width:100%;background:var(--border);transition:background .2s;}
+  .ccard.c-potato::after{background:var(--carb-potato);}
+  .ccard.c-rice::after{background:var(--carb-rice);}
+  .ccard.c-noodle::after{background:var(--carb-noodle);}
+  .ccard.c-bread::after{background:var(--carb-bread);}
+  .ccard.c-chicken::after,.ccard.c-chicken_breast::after{background:var(--carb-potato);}
+  .ccard.c-beef::after,.ccard.c-beef_lean::after{background:#e84747;}
+  .ccard.c-eggs::after{background:#ffb347;}
+  .ccard.c-salmon::after{background:var(--carb-rice);}
+  .ccard.c-tofu::after{background:var(--accent3);}
+  .ccard-name{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:.5px;color:var(--text);margin-bottom:2px;}
+  .ccard-sub{font-size:10px;color:var(--muted);font-weight:300;margin-bottom:14px;}
+  .ccard-macros{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px;}
+  .ccard-macro{background:var(--surface);border-radius:7px;padding:8px 6px;text-align:center;}
+  .ccard-macro .mv{font-family:'Bebas Neue',sans-serif;font-size:18px;line-height:1;display:block;}
+  .ccard-macro .ml{font-size:9px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);display:block;margin-top:2px;}
+  .ccard-macro.mk .mv{color:#ff8c00;}
+  .ccard-macro.mp .mv{color:#47e8a3;}
+  .ccard-macro.mc .mv{color:#47b3e8;}
+  .ccard-macro.mf .mv{color:#e84747;}
+  .ccard-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .satiety-dots{display:flex;gap:3px;align-items:center;}
+  .satiety-dot{width:8px;height:8px;border-radius:50%;background:var(--border);}
+  .satiety-dot.on{background:var(--accent);}
+  .satiety-label{font-size:10px;color:var(--muted);margin-left:2px;}
+  .gi-badge{font-size:10px;padding:2px 7px;border-radius:4px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+  .gi-low{background:rgba(71,232,163,.1);color:#47e8a3;border:1px solid rgba(71,232,163,.2);}
+  .gi-med{background:rgba(255,140,0,.1);color:#ff8c00;border:1px solid rgba(255,140,0,.2);}
+  .gi-high{background:rgba(232,71,71,.1);color:#e84747;border:1px solid rgba(232,71,71,.2);}
+  .pct-badge{font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(71,232,163,.1);color:#47e8a3;border:1px solid rgba(71,232,163,.2);font-weight:600;}
+  .best-tag{font-size:10px;background:rgba(255,140,0,.08);border:1px solid rgba(255,140,0,.18);color:var(--accent);padding:2px 8px;border-radius:20px;}
+  .compare-note{margin-top:8px;background:rgba(255,140,0,.04);border:1px solid rgba(255,140,0,.12);border-radius:8px;padding:14px 16px;font-size:12px;color:#aaa;line-height:1.6;}
+  .compare-note strong{color:var(--accent);}
+  @media(max-width:480px){
+    .compare-page{padding:24px 14px;}
+    .compare-cards{grid-template-columns:1fr 1fr;}
+    .ccard{padding:13px 14px;}
+    .ccard-macros{gap:4px;}
+    .ccard-macro .mv{font-size:15px;}
+  }
+
   /* ── PANTRY PAGE ── */
   .pantry-page{max-width:860px;margin:0 auto;padding:44px 40px;}
   .pantry-header{margin-bottom:32px;}
@@ -383,6 +432,30 @@
   .missing-count{font-size:12px;color:var(--accent2);font-weight:700;margin-left:auto;}
 
 
+  /* ── RESET CONFIRM MODAL ── */
+  .reset-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:15000;align-items:center;justify-content:center;}
+  .reset-modal-overlay.open{display:flex;}
+  .reset-modal{background:#1a1a1a;border:1px solid #333;border-radius:16px;padding:28px;width:100%;max-width:380px;text-align:center;}
+  .reset-modal h3{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--text);letter-spacing:1px;margin-bottom:8px;}
+  .reset-modal p{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.5;}
+  .reset-modal-btns{display:flex;gap:10px;}
+  .reset-confirm-btn{flex:1;background:#e84747;color:#fff;border:none;border-radius:10px;padding:11px;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;cursor:pointer;}
+  .reset-confirm-btn:hover{background:#ff5555;}
+  .reset-cancel-btn{flex:1;background:none;border:1px solid #333;color:var(--muted);border-radius:10px;padding:10px;font-size:13px;font-weight:600;cursor:pointer;}
+  .reset-cancel-btn:hover{border-color:#555;color:var(--text);}
+  /* ── ADMIN EXIT MODAL ── */
+  .exit-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:20000;align-items:center;justify-content:center;}
+  .exit-modal-overlay.open{display:flex;}
+  .exit-modal{background:#1a1a1a;border:1px solid var(--accent);border-radius:16px;padding:32px;width:100%;max-width:420px;text-align:center;}
+  .exit-modal h3{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--accent);letter-spacing:1px;margin-bottom:8px;}
+  .exit-modal p{font-size:13px;color:var(--muted);margin-bottom:24px;line-height:1.5;}
+  .exit-modal-btns{display:flex;flex-direction:column;gap:10px;}
+  .exit-btn-primary{background:var(--accent);color:#000;border:none;border-radius:10px;padding:12px;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:1px;cursor:pointer;width:100%;}
+  .exit-btn-primary:hover{background:#ffb347;}
+  .exit-btn-secondary{background:#2a2a2a;color:var(--text);border:1px solid #333;border-radius:10px;padding:11px;font-size:13px;font-weight:600;cursor:pointer;width:100%;}
+  .exit-btn-secondary:hover{border-color:#555;}
+  .exit-btn-danger{background:none;color:#e84747;border:1px solid #e84747;border-radius:10px;padding:10px;font-size:12px;cursor:pointer;width:100%;}
+  .exit-btn-danger:hover{background:#e84747;color:#fff;}
   /* ── ADMIN MODE ── */
   .admin-indicator{display:none;position:fixed;top:12px;right:12px;background:var(--accent);color:#000;font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:1px;padding:6px 14px;border-radius:20px;z-index:9999;cursor:pointer;}
   .admin-mode .admin-indicator{display:block;}
@@ -516,8 +589,8 @@
 
 <div class="nav-tabs">
   <button class="nav-tab active" onclick="switchTab('recipes',this)">📋 Recipes</button>
-  <button class="nav-tab" onclick="switchTab('calculator',this)">⚖️ Weights & Filters</button>
   <button class="nav-tab" onclick="switchTab('pantry',this)">🧺 My Pantry</button>
+  <button class="nav-tab" onclick="switchTab('compare',this)">📊 Macro Compare</button>
 
 </div>
 
@@ -529,7 +602,7 @@
       <a class="social-btn youtube" href="https://www.youtube.com/@fitniikiter/shorts" target="_blank" rel="noopener">
         <span class="social-icon">▶️</span> YouTube
       </a>
-      <a class="social-btn tiktok" href="https://www.tiktok.com/@fitniikiter" target="_blank" rel="noopener">
+      <a class="social-btn tiktok" href="https://www.tiktok.com/@fit.niikiter" target="_blank" rel="noopener">
         <span class="social-icon">🎵</span> TikTok
       </a>
     </div>
@@ -558,11 +631,20 @@
       <div class="filter-pill" id="pillProtein" onclick="toggleFilterPanel('protein')">
         🍗 Protein <span class="pill-arrow">▼</span>
       </div>
+      <div class="filter-pill" id="pillMacros" onclick="toggleFilterPanel('macros')">
+        📊 Macros <span class="pill-arrow">▼</span>
+      </div>
+      <div class="filter-pill" id="pillServings" onclick="toggleFilterPanel('servings')">
+        🍽️ <span id="pillServingsLabel">2 Servings</span> <span class="pill-arrow">▼</span>
+      </div>
       <label class="video-check-wrap" onclick="toggleVideoFilter()" style="margin-left:4px;">
         <input type="checkbox" id="chkVideoOnly">
         <span class="video-checkbox"></span>
         <span class="video-check-label">▶️ With Video</span>
       </label>
+      <button class="filter-pill" id="btnResetAll" onclick="resetAllFilters()" style="border-color:#444;color:#666;margin-left:4px;">
+        ↺ Reset
+      </button>
     </div>
 
     <!-- Cuisine dropdown -->
@@ -610,6 +692,68 @@
       </div>
     </div>
 
+    <!-- Makros dropdown -->
+    <div class="filter-dropdown" id="panel-macros">
+      <div class="filter-dropdown-inner" style="flex-wrap:wrap;gap:12px 20px;align-items:flex-end;">
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <label style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;">🔥 Max kcal</label>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <input type="number" id="mfKcalMax" class="mf-num" value="" placeholder="—" oninput="applyMacroFilterLive()">
+            <span style="font-size:11px;color:#555;">kcal</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <label style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;">💪 Min Protein</label>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <input type="number" id="mfProtMin" class="mf-num" value="" placeholder="—" oninput="applyMacroFilterLive()">
+            <span style="font-size:11px;color:#555;">g</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <label style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;">🍚 Max Carbs</label>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <input type="number" id="mfCarbMax" class="mf-num" value="" placeholder="—" oninput="applyMacroFilterLive()">
+            <span style="font-size:11px;color:#555;">g</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <label style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;">🧈 Max Fat</label>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <input type="number" id="mfFatMax" class="mf-num" value="" placeholder="—" oninput="applyMacroFilterLive()">
+            <span style="font-size:11px;color:#555;">g</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <label style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;">⏱ Max Zeit</label>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <input type="number" id="mfTimeMax" class="mf-num" value="" placeholder="—" oninput="applyMacroFilterLive()">
+            <span style="font-size:11px;color:#555;">min</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <label style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;">⭐ Min Saturation Score</label>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <input type="number" id="mfScoreMin" class="mf-num" value="" placeholder="—" min="1" max="10" oninput="applyMacroFilterLive()">
+            <span style="font-size:11px;color:#555;">/10</span>
+          </div>
+        </div>
+        <button class="mf-reset-btn" onclick="resetMacroFilter()" style="align-self:flex-end;">✕ Reset</button>
+      </div>
+    </div>
+
+    <!-- Servings dropdown -->
+    <div class="filter-dropdown" id="panel-servings">
+      <div class="filter-dropdown-inner" style="align-items:center;gap:14px;">
+        <span style="font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.6px;">🍽️ Servings</span>
+        <div class="serving-stepper">
+          <button class="step-btn" onclick="changeGlobalServings(-1)">−</button>
+          <span class="serving-val" id="globalServingVal" style="width:40px;height:36px;line-height:36px;font-size:20px;">2</span>
+          <button class="step-btn" onclick="changeGlobalServings(1)">+</button>
+        </div>
+        <span style="font-size:11px;color:#555;">Applies to all recipe macros</span>
+      </div>
+    </div>
+
     <!-- Protein dropdown -->
     <div class="filter-dropdown" id="panel-protein">
       <div class="filter-dropdown-inner">
@@ -648,163 +792,36 @@
 
 </div>
 
-<!-- ══════════════════════ CALCULATOR PAGE ══════════════════════ -->
-<div class="page" id="page-calculator">
-  <div class="calc-page">
+<!-- ══════════════════════ COMPARE PAGE ══════════════════════ -->
+<div class="page" id="page-compare">
+  <div class="compare-page">
 
-    <div class="calc-header">
-      <h2>Weights & Filters</h2>
-      <p>Set your protein source, weights and filters — everything updates instantly on the recipe tab.</p>
+    <div class="compare-header">
+      <h2>Macro Compare</h2>
+      <p>All values per 100g raw. At a glance.</p>
     </div>
 
-    <!-- FILTER FIRST -->
-    <div class="calc-section">
-      <h3><span class="dot"></span> 🎯 Filter Recipes</h3>
-      <div class="input-grid-4">
-        <div class="input-group">
-          <label class="mf-group-label kcal-lbl">Max Kcal</label>
-          <div class="input-wrap">
-            <input type="number" id="mfKcalMax" value="9999" min="0" max="9999" oninput="applyMacroFilter()">
-            <span class="unit">kcal</span>
-          </div>
-        </div>
-        <div class="input-group">
-          <label class="mf-group-label prot-lbl">Min Protein</label>
-          <div class="input-wrap">
-            <input type="number" id="mfProtMin" value="0" min="0" max="999" oninput="applyMacroFilter()">
-            <span class="unit">g</span>
-          </div>
-        </div>
-        <div class="input-group">
-          <label class="mf-group-label carbs-lbl">Max Carbs</label>
-          <div class="input-wrap">
-            <input type="number" id="mfCarbMax" value="999" min="0" max="999" oninput="applyMacroFilter()">
-            <span class="unit">g</span>
-          </div>
-        </div>
-        <div class="input-group">
-          <label class="mf-group-label fat-lbl">Max Fat</label>
-          <div class="input-wrap">
-            <input type="number" id="mfFatMax" value="999" min="0" max="999" oninput="applyMacroFilter()">
-            <span class="unit">g</span>
-          </div>
-        </div>
-        <div class="input-group">
-          <label class="mf-group-label score-lbl">Min Saturation Score</label>
-          <div class="input-wrap">
-            <input type="number" id="mfScoreMin" value="1" min="1" max="10" oninput="applyMacroFilter()">
-            <span class="unit">/ 10</span>
-          </div>
-        </div>
-        <div class="input-group">
-          <label class="mf-group-label time-lbl">Max Time</label>
-          <div class="input-wrap">
-            <input type="number" id="mfTimeMax" value="999" min="0" max="999" oninput="applyMacroFilter()">
-            <span class="unit">min</span>
-          </div>
-        </div>
-      </div>
-      <div style="margin-top:14px;">
-        <button class="mf-reset-btn" onclick="resetMacroFilter()">↺ Reset all filters</button>
-      </div>
+    <div class="compare-section-title">🥔 Carb Sources</div>
+    <div class="compare-cards" id="carbCards"></div>
+
+    <div class="compare-section-title">🍗 Protein Sources</div>
+    <div class="compare-cards" id="proteinCards"></div>
+
+    <div class="compare-note">
+      💡 <strong>Saturation Index</strong> (1–5 ●): rated on protein content, fiber, water content and volume per calorie. More dots = keeps you fuller longer. GI = Glycemic Index (raw/dry).<br><br>
+      🟢 <strong>% of kcal from protein</strong>: shows how protein-efficient a source is. Calculated as (protein × 4 ÷ total calories) × 100. A higher % means more of the calories you eat actually go toward muscle — not fat storage. Chicken Breast at ~84% is nearly pure protein fuel. Eggs at ~34% are lower because of their fat content, despite being a great food overall.
     </div>
 
-    <!-- PROTEIN SOURCE -->
-    <div class="calc-section">
-      <h3><span class="dot"></span> Protein Source</h3>
-      <div class="protein-selector" id="proteinSelector"></div>
-      <div class="protein-variant" id="variantRow" style="display:none;"></div>
-      <!-- Egg size + count — shown only when eggs is active protein -->
-      <div id="eggControls" style="display:none;">
-        <div class="egg-size-row">
-          <span style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;">Size:</span>
-          <button class="egg-size-btn" onclick="setEggSize('S')" id="eggS">S<span class="esz">~48g</span></button>
-          <button class="egg-size-btn active" onclick="setEggSize('M')" id="eggM">M<span class="esz">~58g</span></button>
-          <button class="egg-size-btn" onclick="setEggSize('L')" id="eggL">L<span class="esz">~68g</span></button>
-        </div>
-        <div class="egg-count-row">
-          <label>🥚 Number of eggs</label>
-          <div class="egg-stepper serving-stepper">
-            <button class="step-btn" onclick="changeEggCount(-1)">−</button>
-            <span class="serving-val" id="eggCountVal" style="width:40px;height:36px;line-height:36px;font-size:20px;">2</span>
-            <button class="step-btn" onclick="changeEggCount(1)">+</button>
-          </div>
-        </div>
-      </div>
-      <div id="proteinWeightSection" style="margin-top:16px;">
-        <div class="input-group">
-          <label id="proteinInputLabel">🍗 Protein — raw weight</label>
-          <div class="input-wrap">
-            <input type="number" id="chickenInput" value="500" min="0" max="3000" oninput="updateCalc()">
-            <span class="unit">g</span>
-          </div>
-          <div class="input-hint">Raw weight before cooking</div>
-        </div>
-      </div>
-    </div>
-
-
-
-    <div class="calc-section">
-      <h3><span class="dot"></span> Number of Servings</h3>
-      <div class="servings-row">
-        <div class="serving-stepper">
-          <button class="step-btn" onclick="changeServings(-1)">−</button>
-          <span class="serving-val" id="servingsInput" style="width:48px;height:48px;font-size:26px;line-height:48px;">2</span>
-          <button class="step-btn" onclick="changeServings(1)" style="width:48px;height:48px;font-size:22px;">+</button>
-        </div>
-        <span class="servings-label" style="margin-left:14px;">portions<br><span style="color:#555;font-size:11px">Batch is split equally</span></span>
-      </div>
-    </div>
-
-    <div class="results-box">
-      <h3>📊 Base Macros per Portion — shown per carb source</h3>
-      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:18px;">
-        <div>
-          <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--carb-potato);margin-bottom:8px;font-weight:700;">🥔 Potato Base</div>
-          <div class="results-grid" id="res-potato-grid" style="margin-bottom:0;"></div>
-        </div>
-        <div>
-          <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--carb-rice);margin-bottom:8px;font-weight:700;">🍚 Rice Base</div>
-          <div class="results-grid" id="res-rice-grid" style="margin-bottom:0;"></div>
-        </div>
-        <div>
-          <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--carb-noodle);margin-bottom:8px;font-weight:700;">🍜 Noodle Base</div>
-          <div class="results-grid" id="res-noodle-grid" style="margin-bottom:0;"></div>
-        </div>
-        <div>
-          <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--carb-bread);margin-bottom:8px;font-weight:700;">🫓 Bread/Wrap Base</div>
-          <div class="results-grid" id="res-bread-grid" style="margin-bottom:0;"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="calc-section">
-      <h3><span class="dot"></span> Full Breakdown per Portion</h3>
-      <table class="breakdown-table">
-        <thead>
-          <tr>
-            <th>Ingredient</th>
-            <th>Raw / portion</th>
-            <th>Kcal</th>
-            <th>Protein</th>
-            <th>Carbs</th>
-            <th>Fat</th>
-          </tr>
-        </thead>
-        <tbody id="breakdownBody"></tbody>
-      </table>
-    </div>
-
-
-    <div class="note-box">
-      <strong>📌 How macros work:</strong> Each recipe card shows: chicken base + the relevant carb source (at your weights) + a recipe-specific sauce/oil estimate. Carb amounts are calculated automatically based on your protein weight. Use the checkboxes on the recipe page to show/hide carb types.
+    <div class="compare-note" style="margin-top:10px;">
+      📊 <strong>Glycemic Index (GI) explained:</strong><br><br>
+      <strong style="color:#ff8c00;">Med GI (55–69)</strong> — Blood sugar rises moderately. The body gets a steady supply of energy without a sharp spike. Good choice around workouts or when you need sustained energy. <em>Potato (65) and Noodle (55) fall here.</em><br><br>
+      <strong style="color:#e84747;">High GI (70+)</strong> — Blood sugar spikes quickly, triggering a large insulin response. Energy arrives fast but drops just as fast — leading to hunger, cravings and fatigue within 1–2 hours. <em>Rice (73) and Bread (70) fall here.</em><br><br>
+      <strong style="color:#aaa;">In practice:</strong> GI matters less when carbs are eaten with protein and fat — both slow digestion and blunt the blood sugar response. In these recipes, the combination of chicken + sauce naturally lowers the effective GI of every meal.
     </div>
 
   </div>
 </div>
 
-<!-- ══════════════════════ PANTRY PAGE ══════════════════════ -->
 <div class="page" id="page-pantry">
   <div class="pantry-page">
 
@@ -948,7 +965,22 @@ NUT.egg = NUT.eggs;
 // carb: 'potato'|'rice'|'noodle'|'bread'
 // time: total minutes
 // sauce_*: per-portion sauce/oil additions on top of base
-const HIDDEN_RECIPE_IDS = new Set([22, 29, 43, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 74, 75, 84, 85, 88, 89, 90, 91, 92, 93, 94, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 189, 193, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 281, 283, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 323, 324, 325, 326, 327, 328, 329, 330, 334, 341, 342, 343, 344, 345, 346, 347, 348, 349, 351, 352, 353, 355, 356, 357, 359, 360, 361, 363, 364, 365, 366, 367, 368, 369, 371, 372, 373, 375, 376, 377, 379, 380, 381, 383, 384, 385, 387, 388, 389, 391, 392, 393, 395, 396, 397, 399, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 415, 416, 417, 419, 420, 421, 423, 424, 425, 426, 427, 428, 429, 431, 432, 433, 435, 436, 437, 439, 440, 441, 442, 443, 444, 445, 447, 448, 449, 451, 452, 453, 455, 456, 457, 458, 459, 460, 461, 463, 464, 465, 467, 468, 469, 470, 471, 472, 473, 475, 476, 477, 479, 480, 481, 483, 484, 485, 487, 488, 489, 491, 492, 493, 495, 496, 497, 499, 500]);
+// Load admin-toggled visibility from localStorage
+function loadHiddenIds() {
+  try {
+    const saved = localStorage.getItem('hiddenRecipeIds');
+    if (saved !== null) return new Set(JSON.parse(saved));
+  } catch(e){}
+  return null;
+}
+function saveHiddenIds() {
+  try { localStorage.setItem('hiddenRecipeIds', JSON.stringify([...HIDDEN_RECIPE_IDS])); } catch(e){}
+}
+
+const DEFAULT_HIDDEN_IDS = new Set([22, 29, 43, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 74, 75, 84, 85, 88, 89, 90, 91, 92, 93, 94, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 189, 193, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 281, 283, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 323, 324, 325, 326, 327, 328, 329, 330, 334, 341, 342, 343, 344, 345, 346, 347, 348, 349, 351, 352, 353, 355, 356, 357, 359, 360, 361, 363, 364, 365, 366, 367, 368, 369, 371, 372, 373, 375, 376, 377, 379, 380, 381, 383, 384, 385, 387, 388, 389, 391, 392, 393, 395, 396, 397, 399, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 415, 416, 417, 419, 420, 421, 423, 424, 425, 426, 427, 428, 429, 431, 432, 433, 435, 436, 437, 439, 440, 441, 442, 443, 444, 445, 447, 448, 449, 451, 452, 453, 455, 456, 457, 458, 459, 460, 461, 463, 464, 465, 467, 468, 469, 470, 471, 472, 473, 475, 476, 477, 479, 480, 481, 483, 484, 485, 487, 488, 489, 491, 492, 493, 495, 496, 497, 499, 500]);
+
+const _savedHidden = loadHiddenIds();
+let HIDDEN_RECIPE_IDS = _savedHidden !== null ? _savedHidden : new Set(DEFAULT_HIDDEN_IDS);
 
 const R = [
   // ═══════════ POTATO — ASIAN/KOREAN/JAPANESE (1-80) ═══════════
@@ -1679,8 +1711,8 @@ function getActiveProteinDisplay() {
 }
 
 function toggleFilterPanel(id) {
-  const panels = ['cuisine','carbs','protein'];
-  const pills  = {cuisine:'pillCuisine', carbs:'pillCarbs', protein:'pillProtein'};
+  const panels = ['cuisine','carbs','protein','macros','servings'];
+  const pills  = {cuisine:'pillCuisine', carbs:'pillCarbs', protein:'pillProtein', macros:'pillMacros', servings:'pillServings'};
   panels.forEach(p => {
     const panel = document.getElementById('panel-'+p);
     const pill  = document.getElementById(pills[p]);
@@ -1690,6 +1722,17 @@ function toggleFilterPanel(id) {
     } else {
       panel.classList.remove('open');
       pill.classList.remove('open');
+    }
+  });
+}
+
+function renumberCards() {
+  let pos = 1;
+  document.querySelectorAll('.card').forEach(card => {
+    if (card.style.display !== 'none') {
+      const numEl = card.querySelector('.card-num');
+      if (numEl) numEl.textContent = '#' + String(pos).padStart(3,'0');
+      pos++;
     }
   });
 }
@@ -1704,6 +1747,58 @@ function updatePillStates() {
   // Protein pill — active if any disabled
   const protPill = document.getElementById('pillProtein');
   if (protPill) protPill.classList.toggle('has-active', Object.values(proteinEnabled).some(v=>!v));
+  // Makros pill — active if any filter is set
+  const macroActive = macroFilter.kcalMax < 9999 || macroFilter.protMin > 0 || macroFilter.carbMax < 999 || macroFilter.fatMax < 999 || macroFilter.timeMax < 999;
+  const macroPill = document.getElementById('pillMacros');
+  if (macroPill) macroPill.classList.toggle('has-active', macroActive);
+}
+
+function adminToggleRecipe(recipeId) {
+  if (HIDDEN_RECIPE_IDS.has(recipeId)) {
+    HIDDEN_RECIPE_IDS.delete(recipeId);
+  } else {
+    HIDDEN_RECIPE_IDS.add(recipeId);
+  }
+  saveHiddenIds();
+  filterRecipes();
+  // Update toggle button state on this card
+  const card = document.querySelector(`.card[data-id="${recipeId}"]`);
+  if (card) {
+    const btn = card.querySelector('.admin-toggle-btn');
+    if (btn) {
+      const isHidden = HIDDEN_RECIPE_IDS.has(recipeId);
+      btn.textContent = isHidden ? '👁 Show' : '🚫 Hide';
+      btn.style.background = isHidden ? '#2a5a2a' : '#5a2a2a';
+      btn.style.color = isHidden ? '#47e8a3' : '#e84747';
+    }
+  }
+}
+
+function setModalEggSize(sizeG, recipeId) {
+  eggSizeG = sizeG;
+  // Sync W&F egg size buttons
+  const sizeMap = {48:'S', 58:'M', 68:'L'};
+  const label = sizeMap[sizeG];
+  document.querySelectorAll('.egg-size-btn').forEach(b => {
+    b.classList.toggle('active', b.id === 'egg' + label);
+  });
+  weights.eggs = eggCount;
+  const r = R.find(x => x.id === recipeId);
+  if (r) { buildIngredientsTab(r); updateModalMacros(r); }
+  updateCardMacros(); updateCalcDisplay();
+}
+
+function changeModalEggCount(delta, recipeId) {
+  eggCount = Math.max(1, Math.min(20, eggCount + delta));
+  const el = document.getElementById('modalEggCountVal');
+  if (el) el.textContent = eggCount;
+  // Sync W&F egg count
+  const wfEl = document.getElementById('eggCountVal');
+  if (wfEl) wfEl.textContent = eggCount;
+  weights.eggs = eggCount;
+  const r = R.find(x => x.id === recipeId);
+  if (r) { buildIngredientsTab(r); updateModalMacros(r); }
+  updateCardMacros(); updateCalcDisplay();
 }
 
 function selectModalVariant(variantKey, recipeId) {
@@ -1880,6 +1975,87 @@ function toggleDietary(id) {
   filterRecipes();
 }
 
+function isPantryModified() {
+  // Check if anything in pantry deviates from default (all enabled, no dietary)
+  if (disabledIngredients.size > 0) return true;
+  if (activeDietary.size > 0) return true;
+  return false;
+}
+
+function resetAllFilters() {
+  if (isPantryModified()) {
+    document.getElementById('resetConfirmOverlay').classList.add('open');
+  } else {
+    doResetAll();
+  }
+}
+
+function doResetAll() {
+  document.getElementById('resetConfirmOverlay').classList.remove('open');
+
+  // Reset cuisine filter
+  currentCuisineFilter = 'all';
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.filter-btn')?.classList.add('active');
+
+  // Reset carb checkboxes
+  ['Potato','Rice','Noodle','Bread'].forEach(c => {
+    const el = document.getElementById('chk'+c);
+    if (el) el.checked = true;
+    carbEnabled[c.toLowerCase()] = true;
+  });
+
+  // Reset protein checkboxes
+  ['Chicken','Beef','Eggs','Salmon','Tofu'].forEach(p => {
+    const el = document.getElementById('chkP'+p);
+    if (el) el.checked = true;
+    proteinEnabled[p.toLowerCase()] = true;
+  });
+
+  // Reset video filter
+  const vidChk = document.getElementById('chkVideoOnly');
+  if (vidChk) vidChk.checked = false;
+  videoFilterOnly = false;
+
+  // Reset macro filters
+  macroFilter = { kcalMax:9999, protMin:0, carbMax:999, fatMax:999, scoreMin:1, timeMax:999 };
+  ['mfKcalMax','mfProtMin','mfCarbMax','mfFatMax','mfTimeMax','mfScoreMin'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+
+  // Reset servings
+  weights.servings = 2;
+  const gsv = document.getElementById('globalServingVal');
+  if (gsv) gsv.textContent = '2';
+  const wfSrv = document.getElementById('servingsInput');
+  if (wfSrv) wfSrv.textContent = '2';
+  const pillLbl = document.getElementById('pillServingsLabel');
+  if (pillLbl) pillLbl.textContent = '2 Servings';
+
+  // Reset search
+  const srch = document.getElementById('searchInput');
+  if (srch) srch.value = '';
+
+  // Reset pantry
+  disabledIngredients.clear();
+  activeDietary.clear();
+  savePantry();
+  saveDietary();
+  try { localStorage.removeItem('dietaryFilters'); } catch(e){}
+
+  // Re-render pantry if visible
+  if (document.getElementById('pantry-sauces')?.children.length > 0) {
+    renderPantry();
+    buildDietaryGrid();
+  }
+
+  updatePillStates();
+  updateCardMacros();
+  filterRecipes();
+  updateCalcDisplay();
+}
+
 function applyDietaryToProteinFilters() {
   // Map dietary filter → which proteins to hide on main page
   const noBeef  = activeDietary.has('no_beef');
@@ -2015,8 +2191,18 @@ function filterRecipes() {
     const el = document.querySelector(`.card[data-id="${r.id}"]`);
     if (!el) return;
 
-    // hide placeholder/generic recipes
-    if (HIDDEN_RECIPE_IDS.has(r.id)) { el.style.display='none'; return; }
+    // hide toggled-off recipes (in admin mode show them dimmed)
+    if (HIDDEN_RECIPE_IDS.has(r.id)) {
+      if (adminMode) {
+        el.style.display = '';
+        el.style.opacity = '0.35';
+      } else {
+        el.style.display = 'none';
+        el.style.opacity = '';
+      }
+      return;
+    }
+    el.style.opacity = '';
     // carb enabled
     if (!carbEnabled[r.carb]) { el.style.display='none'; return; }
     // protein filter
@@ -2056,7 +2242,11 @@ function filterRecipes() {
   });
 
   document.getElementById('visibleCount').textContent = visible;
+  const totalEnabled = R.filter(r => !HIDDEN_RECIPE_IDS.has(r.id)).length;
+  const totalEl = document.getElementById('totalCount');
+  if (totalEl) totalEl.textContent = totalEnabled;
   if (noRes) noRes.style.display = visible === 0 ? 'block' : 'none';
+  renumberCards();
 }
 
 function setFilter(filter, btn) {
@@ -2090,7 +2280,7 @@ function calcScore(recipe, prot, fat) {
 function scoreLabel(s) {
   if (s <= 2) return 'Stays hungry';
   if (s <= 4) return 'Not very filling';
-  if (s <= 6) return 'Decent satiety';
+  if (s <= 6) return 'Decent saturation';
   if (s <= 8) return 'Keeps you full';
   return 'Very filling';
 }
@@ -2110,8 +2300,50 @@ function applyMacroFilter() {
   filterRecipes();
 }
 
+function applyMacroFilterLive() {
+  applyMacroFilter();
+  updatePillStates();
+}
+
+function applyMacroFilterLive() {
+  macroFilter.kcalMax = parseFloat(document.getElementById('mfKcalMax')?.value) || 9999;
+  macroFilter.protMin = parseFloat(document.getElementById('mfProtMin')?.value) || 0;
+  macroFilter.carbMax = parseFloat(document.getElementById('mfCarbMax')?.value) || 999;
+  macroFilter.fatMax  = parseFloat(document.getElementById('mfFatMax')?.value)  || 999;
+  macroFilter.timeMax  = parseFloat(document.getElementById('mfTimeMax')?.value)  || 999;
+  macroFilter.scoreMin = parseFloat(document.getElementById('mfScoreMin')?.value) || 1;
+  updatePillStates();
+  filterRecipes();
+}
+
+function resetMacroFilter() {
+  ['mfKcalMax','mfProtMin','mfCarbMax','mfFatMax','mfTimeMax','mfScoreMin'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  macroFilter = { kcalMax:9999, protMin:0, carbMax:999, fatMax:999, scoreMin:1, timeMax:999 };
+  updatePillStates();
+  filterRecipes();
+}
+
+function applyMacroFilterLive() {
+  macroFilter.kcalMax = parseFloat(document.getElementById('mfKcalMax')?.value) || 9999;
+  macroFilter.protMin = parseFloat(document.getElementById('mfProtMin')?.value) || 0;
+  macroFilter.carbMax = parseFloat(document.getElementById('mfCarbMax')?.value) || 999;
+  macroFilter.fatMax  = parseFloat(document.getElementById('mfFatMax')?.value)  || 999;
+  macroFilter.timeMax  = parseFloat(document.getElementById('mfTimeMax')?.value)  || 999;
+  macroFilter.scoreMin = parseFloat(document.getElementById('mfScoreMin')?.value) || 1;
+  updatePillStates();
+  filterRecipes();
+}
+
 function resetMacroFilter() {
   macroFilter = { kcalMax:9999, protMin:0, carbMax:999, fatMax:999, scoreMin:1, timeMax:999 };
+  // Clear pill inputs
+  ['mfKcalMax','mfProtMin','mfCarbMax','mfFatMax','mfTimeMax','mfScoreMin'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
   const vals = { mfKcalMax:9999, mfProtMin:0, mfCarbMax:999, mfFatMax:999, mfScoreMin:1, mfTimeMax:999 };
   Object.entries(vals).forEach(([id, val]) => {
     const el = document.getElementById(id);
@@ -2173,6 +2405,26 @@ function changeEggCount(delta) {
   const el = document.getElementById('eggCountVal');
   if (el) el.textContent = eggCount;
   weights.eggs = eggCount;
+  updateCardMacros();
+  filterRecipes();
+  updateCalcDisplay();
+}
+
+function changeGlobalServings(delta) {
+  const next = Math.max(1, Math.min(10, weights.servings + delta));
+  weights.servings = next;
+  // Sync W&F stepper
+  const wfEl = document.getElementById('servingsInput');
+  if (wfEl) wfEl.textContent = next;
+  // Sync global serving val
+  const gEl = document.getElementById('globalServingVal');
+  if (gEl) gEl.textContent = next;
+  // Update pill label
+  const pillLbl = document.getElementById('pillServingsLabel');
+  if (pillLbl) pillLbl.textContent = next + (next === 1 ? ' Serving' : ' Servings');
+  // Update pill active state
+  const pill = document.getElementById('pillServings');
+  if (pill) pill.classList.toggle('has-active', next !== 2);
   updateCardMacros();
   filterRecipes();
   updateCalcDisplay();
@@ -21551,22 +21803,46 @@ function buildIngredientsTab(r, servings) {
   if (servings !== undefined) modalServings = Math.max(1, servings);
   const detail = getRecipeDetail(r);
   const s = modalServings;
-  const protG = Math.round(weights.chicken / s);
-  const carbG = Math.round(weights[r.carb] / s);
-  const protDisplay = getActiveProteinDisplay();
 
-  // Protein emoji for label
-  const protEmoji = {chicken_thigh:'🍗',chicken_breast:'🍗',beef_regular:'🥩',beef_lean:'🥩',eggs:'🥚',salmon:'🐟',tofu:'🫘'}[activeProtein] || '🍗';
-  const carbEmoji  = {potato:'🥔',rice:'🍚',noodle:'🍜',bread:'🫓'}[r.carb] || '🍽️';
-  const carbLabel  = {potato:'Potato',rice:'Rice',noodle:'Noodles',bread:'Bread/Wrap'}[r.carb] || 'Carb';
-
-  // Build variant buttons if protein has variants
+  // ── Step 1: determine recipe protein ──
   const rProteinKey = r.protein || 'chicken';
   const protDef = PROTEIN_DEFS.find(p => p.key === rProteinKey);
+  const isEggRecipe = rProteinKey === 'eggs';
+
+  // ── Step 2: pick active variant for this protein ──
+  const recipeActiveProtein = isEggRecipe ? 'eggs'
+    : rProteinKey === 'salmon' ? 'salmon'
+    : rProteinKey === 'tofu'   ? 'tofu'
+    : (protDef && protDef.variants && protDef.variants.find(v => v.key === activeProtein))
+      ? activeProtein
+      : (protDef && protDef.variants ? protDef.variants[0].key : rProteinKey);
+
+  // ── Step 3: display names ──
+  const protNames = {
+    chicken_thigh:  { ing:'Chicken thigh (boneless, skinless, raw)', short:'Chicken Thigh' },
+    chicken_breast: { ing:'Chicken breast (boneless, skinless, raw)', short:'Chicken Breast' },
+    beef_regular:   { ing:'Ground beef (20% fat, raw)', short:'Ground Beef (20%)' },
+    beef_lean:      { ing:'Lean ground beef (5% fat, raw)', short:'Lean Ground Beef' },
+    eggs:           { ing:'Eggs (whole)', short:'Eggs' },
+    salmon:         { ing:'Salmon fillet (skin on, raw)', short:'Salmon' },
+    tofu:           { ing:'Firm tofu', short:'Tofu' },
+  };
+  const protDisplay = protNames[recipeActiveProtein] || protNames.chicken_thigh;
+
+  // ── Step 4: emojis & labels ──
+  const protEmoji = {chicken_thigh:'🍗',chicken_breast:'🍗',beef_regular:'🥩',beef_lean:'🥩',eggs:'🥚',salmon:'🐟',tofu:'🫘'}[recipeActiveProtein] || '🍗';
+  const carbEmoji = {potato:'🥔',rice:'🍚',noodle:'🍜',bread:'🫓'}[r.carb] || '🍽️';
+  const carbLabel = {potato:'Potato',rice:'Rice',noodle:'Noodles',bread:'Bread/Wrap'}[r.carb] || 'Carb';
+
+  // ── Step 5: weights per portion ──
+  const protG = isEggRecipe ? Math.round(eggCount * eggSizeG / s) : Math.round(weights.chicken / s);
+  const carbG = Math.round(weights[r.carb] / s);
+
+  // ── Step 6: variant selector HTML ──
   let variantHtml = '';
-  if (protDef && protDef.variants) {
+  if (!isEggRecipe && protDef && protDef.variants) {
     const btns = protDef.variants.map(v =>
-      `<button class="modal-variant-btn ${activeProtein === v.key ? 'active' : ''}"
+      `<button class="modal-variant-btn ${recipeActiveProtein === v.key ? 'active' : ''}"
         onclick="selectModalVariant('${v.key}', ${r.id})">${v.label}</button>`
     ).join('');
     variantHtml = `<div class="modal-variant-row">
@@ -21575,6 +21851,31 @@ function buildIngredientsTab(r, servings) {
     </div>`;
   }
 
+  // ── Step 7: egg selector HTML ──
+  let eggSelectorHtml = '';
+  if (isEggRecipe) {
+    const sizes = [{k:'S',g:48},{k:'M',g:58},{k:'L',g:68}];
+    const sbtns = sizes.map(sz =>
+      `<button class="modal-variant-btn ${eggSizeG===sz.g?'active':''}"
+        onclick="setModalEggSize(${sz.g}, ${r.id})">${sz.k} ~${sz.g}g</button>`
+    ).join('');
+    eggSelectorHtml = `<div class="modal-variant-row">
+      <label>🥚 Egg Size</label>
+      ${sbtns}
+    </div>
+    <div class="modal-weight-row">
+      <label>🥚 Egg Count</label>
+      <div class="serving-stepper">
+        <button class="step-btn" onclick="changeModalEggCount(-1, ${r.id})">−</button>
+        <span class="serving-val" id="modalEggCountVal" style="width:40px;height:36px;line-height:36px;font-size:20px;">${eggCount}</span>
+        <button class="step-btn" onclick="changeModalEggCount(1, ${r.id})">+</button>
+      </div>
+      <span class="modal-weight-unit">eggs</span>
+      <span class="modal-weight-hint">${protG}g per portion</span>
+    </div>`;
+  }
+
+  // ── Step 8: build HTML ──
   let html = `
   <div class="serving-control">
     <label>🍽️ Servings</label>
@@ -21586,6 +21887,7 @@ function buildIngredientsTab(r, servings) {
     <span class="modal-weight-hint">per portion</span>
   </div>
   ${variantHtml}
+  ${isEggRecipe ? eggSelectorHtml : `
   <div class="modal-weight-row">
     <label>${protEmoji} ${protDisplay.short}</label>
     <input type="number" class="modal-weight-input" id="mwProt" value="${weights.chicken}"
@@ -21593,7 +21895,7 @@ function buildIngredientsTab(r, servings) {
       onchange="updateModalWeight('prot', this.value, ${r.id})">
     <span class="modal-weight-unit">g batch total</span>
     <span class="modal-weight-hint">${protG}g per portion</span>
-  </div>
+  </div>`}
   <div class="modal-weight-row">
     <label>${carbEmoji} ${carbLabel}</label>
     <input type="number" class="modal-weight-input" id="mwCarb" value="${weights[r.carb]}"
@@ -21603,6 +21905,7 @@ function buildIngredientsTab(r, servings) {
     <span class="modal-weight-hint">${carbG}g per portion</span>
   </div>`;
 
+  // ── Step 9: ingredients list ──
   detail.ingredients.forEach(sec => {
     html += `<div class="ing-section-title">${sec.section}</div><ul class="ing-list">`;
     sec.items.forEach(item => {
@@ -21624,13 +21927,30 @@ function buildIngredientsTab(r, servings) {
   }
   document.getElementById('tab-ingredients').innerHTML = html;
 }
-
 function changeModalServings(delta, recipeId) {
   modalServings = Math.max(1, Math.min(10, modalServings + delta));
+
+  // Sync globally
+  weights.servings = modalServings;
+
+  // Sync W&F stepper
+  const wfEl = document.getElementById('servingsInput');
+  if (wfEl) wfEl.textContent = modalServings;
+
+  // Sync main page servings pill
+  const gsv = document.getElementById('globalServingVal');
+  if (gsv) gsv.textContent = modalServings;
+  const pillLbl = document.getElementById('pillServingsLabel');
+  if (pillLbl) pillLbl.textContent = modalServings + (modalServings === 1 ? ' Serving' : ' Servings');
+  const pill = document.getElementById('pillServings');
+  if (pill) pill.classList.toggle('has-active', modalServings !== 2);
+
   const r = R.find(x => x.id === recipeId);
   if (!r) return;
   buildIngredientsTab(r);
   updateModalMacros(r);
+  updateCardMacros();
+  updateCalcDisplay();
 }
 
 function buildRecipeTab(r) {
@@ -21968,8 +22288,8 @@ function switchTab(tab, btn) {
   btn.classList.add('active');
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+tab).classList.add('active');
-  if (tab === 'calculator') updateCalcDisplay();
   if (tab === 'pantry') { renderPantry(); buildDietaryGrid(); }
+  if (tab === 'compare') { buildCompareTable(); }
 }
 
 
@@ -22008,7 +22328,7 @@ function handleProfileClick() {
 
 async function promptAdminPassword() {
   if (adminMode) {
-    if (confirm('Admin-Modus deaktivieren?')) deactivateAdmin();
+    deactivateAdmin();
     return;
   }
   const pw = prompt('Admin-Passwort:');
@@ -22032,13 +22352,48 @@ function activateAdmin() {
       btn.textContent = '✏️ Edit';
       btn.onclick = (e) => { e.stopPropagation(); openAdminEdit(parseInt(card.dataset.id)); };
       card.appendChild(btn);
+
+      const toggleBtn = document.createElement('button');
+      const rid = parseInt(card.dataset.id);
+      const isHidden = HIDDEN_RECIPE_IDS.has(rid);
+      toggleBtn.className = 'admin-toggle-btn';
+      toggleBtn.textContent = isHidden ? '👁 Show' : '🚫 Hide';
+      toggleBtn.style.cssText = `position:absolute;top:8px;right:72px;border:none;border-radius:6px;font-size:10px;font-weight:700;padding:4px 8px;cursor:pointer;z-index:10;font-family:"DM Sans",sans-serif;text-transform:uppercase;letter-spacing:.5px;background:${isHidden?'#2a5a2a':'#5a2a2a'};color:${isHidden?'#47e8a3':'#e84747'};`;
+      toggleBtn.onclick = (e) => { e.stopPropagation(); adminToggleRecipe(rid); };
+      card.appendChild(toggleBtn);
     }
   });
 }
 
 function deactivateAdmin() {
+  // Show save prompt instead of immediately deactivating
+  document.getElementById('exitModalOverlay').classList.add('open');
+}
+
+function exitAdminSaveAndDownload() {
+  saveAdminOverrides();
+  try { localStorage.setItem('hiddenRecipes', JSON.stringify([...HIDDEN_RECIPE_IDS])); } catch(e){}
+  document.getElementById('exitModalOverlay').classList.remove('open');
   adminMode = false;
   document.body.classList.remove('admin-mode');
+  exportAdminHTML();
+}
+
+function exitAdminSaveOnly() {
+  saveAdminOverrides();
+  try { localStorage.setItem('hiddenRecipes', JSON.stringify([...HIDDEN_RECIPE_IDS])); } catch(e){}
+  document.getElementById('exitModalOverlay').classList.remove('open');
+  adminMode = false;
+  document.body.classList.remove('admin-mode');
+}
+
+function exitAdminDiscard() {
+  // Reload overrides from localStorage (revert unsaved changes)
+  try { adminOverrides = JSON.parse(localStorage.getItem('adminOverrides') || '{}'); } catch(e){}
+  document.getElementById('exitModalOverlay').classList.remove('open');
+  adminMode = false;
+  document.body.classList.remove('admin-mode');
+  filterRecipes();
 }
 
 function getEffectiveDetail(r) {
@@ -22080,6 +22435,7 @@ function openAdminEdit(recipeId) {
   renderAdminIngredients(detail.ingredients || []);
 
   document.getElementById('adminRecipeTitle').textContent = r.title;
+  updateAdminVisibilityBtn();
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -22196,6 +22552,30 @@ function getAdminIngredientsValue() {
   return sections;
 }
 
+function toggleRecipeVisibility() {
+  if (!editingRecipeId) return;
+  const isHidden = HIDDEN_RECIPE_IDS.has(editingRecipeId);
+  if (isHidden) {
+    HIDDEN_RECIPE_IDS.delete(editingRecipeId);
+  } else {
+    HIDDEN_RECIPE_IDS.add(editingRecipeId);
+  }
+  // Save to localStorage
+  try { localStorage.setItem('hiddenRecipes', JSON.stringify([...HIDDEN_RECIPE_IDS])); } catch(e){}
+  // Update button label
+  updateAdminVisibilityBtn();
+  filterRecipes();
+}
+
+function updateAdminVisibilityBtn() {
+  const btn = document.getElementById('adminVisibilityBtn');
+  if (!btn || !editingRecipeId) return;
+  const hidden = HIDDEN_RECIPE_IDS.has(editingRecipeId);
+  btn.textContent = hidden ? '👁 Show recipe' : '🚫 Hide recipe';
+  btn.style.borderColor = hidden ? '#47e8a3' : '#e84747';
+  btn.style.color = hidden ? '#47e8a3' : '#e84747';
+}
+
 function saveAdminEdit() {
   const r = R.find(x => x.id === editingRecipeId);
   if (!r) return;
@@ -22290,10 +22670,97 @@ function exportAdminHTML() {
   a.click();
 }
 
+// Load hidden recipes from localStorage (admin overrides)
+try {
+  const savedHidden = JSON.parse(localStorage.getItem('hiddenRecipes') || 'null');
+  if (savedHidden) {
+    // Merge: keep generated hidden list but allow admin to show/hide
+    savedHidden.forEach(id => HIDDEN_RECIPE_IDS.add(id));
+  }
+} catch(e){}
+
 // Apply overrides on startup
 Object.entries(adminOverrides).forEach(([id, data]) => {
   RECIPE_DETAILS[parseInt(id)] = { ...(RECIPE_DETAILS[parseInt(id)] || {}), ...data };
 });
+
+
+// ══════════════════════════════════════════════════════
+// MACRO COMPARE TAB
+// ══════════════════════════════════════════════════════
+
+const CARB_COMPARE = [
+  { key:'potato',  name:'Potato',     icon:'🥔', sub:'raw, unpeeled',         kcal:77,  p:2,  c:17, f:0.1, fiber:2.2, gi:65, giLabel:'med',  satiety:4, best:'Volume & fullness' },
+  { key:'rice',    name:'Rice',       icon:'🍚', sub:'white, dry weight',     kcal:356, p:7,  c:78, f:0.6, fiber:0.4, gi:73, giLabel:'high', satiety:2, best:'Quick energy' },
+  { key:'noodle',  name:'Noodle',     icon:'🍜', sub:'egg noodle, dry weight',kcal:352, p:12, c:71, f:1.5, fiber:2.1, gi:55, giLabel:'med',  satiety:3, best:'Higher protein carb' },
+  { key:'bread',   name:'Bread/Wrap', icon:'🫓', sub:'white wheat, baked',     kcal:260, p:9,  c:49, f:3,   fiber:2.7, gi:70, giLabel:'high', satiety:3, best:'Convenience & portability' },
+];
+
+const PROTEIN_COMPARE = [
+  { key:'chicken',        name:'Chicken Thigh',  icon:'🍗', sub:'boneless, skinless, raw',  kcal:150, p:17, c:0, f:9,   satiety:4, best:'Flavor & moisture' },
+  { key:'chicken_breast', name:'Chicken Breast', icon:'🍗', sub:'boneless, skinless, raw',  kcal:110, p:23, c:0, f:1.5, satiety:5, best:'Leanest protein' },
+  { key:'beef',           name:'Beef (Regular)', icon:'🥩', sub:'ground beef ~20% fat, raw',  kcal:215, p:17, c:0, f:16,  satiety:4, best:'Flavor & iron' },
+  { key:'beef_lean',      name:'Beef (Lean)',    icon:'🥩', sub:'ground beef ~5% fat, raw',   kcal:145, p:20, c:0, f:7,   satiety:4, best:'Lean + high protein' },
+  { key:'eggs',           name:'Eggs',           icon:'🥚', sub:'whole egg, raw (~58g each)',    kcal:155, p:13, c:1, f:11,  satiety:4, best:'Micronutrients & versatility' },
+  { key:'salmon',         name:'Salmon',         icon:'🐟', sub:'atlantic salmon, raw', kcal:208, p:20, c:0, f:13,  satiety:4, best:'Omega-3 & heart health' },
+  { key:'tofu',           name:'Tofu',           icon:'🫘', sub:'firm tofu',             kcal:76,  p:8,  c:2, f:4,   satiety:3, best:'Plant-based option' },
+];
+
+function buildCompareTable() {
+  const giClass = { low:'gi-low', med:'gi-med', high:'gi-high' };
+  const giText  = { low:'Low GI', med:'Med GI', high:'High GI' };
+
+  function satDots(n) {
+    return [1,2,3,4,5].map(i=>`<div class="satiety-dot ${i<=n?'on':''}"></div>`).join('');
+  }
+
+  // CARB CARDS
+  const carbEl = document.getElementById('carbCards');
+  if (!carbEl) return;
+  carbEl.innerHTML = CARB_COMPARE.map(d => `
+    <div class="ccard c-${d.key}">
+      <div class="ccard-name">${d.icon} ${d.name}</div>
+      <div class="ccard-sub">${d.sub}</div>
+      <div class="ccard-macros">
+        <div class="ccard-macro mk"><span class="mv">${d.kcal}</span><span class="ml">kcal</span></div>
+        <div class="ccard-macro mp"><span class="mv">${d.p}g</span><span class="ml">protein</span></div>
+        <div class="ccard-macro mc"><span class="mv">${d.c}g</span><span class="ml">carbs</span></div>
+        <div class="ccard-macro mf"><span class="mv">${d.f}g</span><span class="ml">fat</span></div>
+      </div>
+      <div class="ccard-meta">
+        <div class="satiety-dots">${satDots(d.satiety)}</div>
+        <span class="satiety-label">Saturation</span>
+        <span class="gi-badge ${giClass[d.giLabel]}">${giText[d.giLabel]}</span>
+        <span class="best-tag">${d.best}</span>
+      </div>
+    </div>
+  `).join('');
+
+  // PROTEIN CARDS
+  const protEl = document.getElementById('proteinCards');
+  if (!protEl) return;
+  protEl.innerHTML = PROTEIN_COMPARE.map(d => {
+    const totalMacroKcal = d.p*4 + d.c*4 + d.f*9;
+    const pct = totalMacroKcal > 0 ? Math.round((d.p*4)/totalMacroKcal*100) : 0;
+    return `
+    <div class="ccard c-${d.key}">
+      <div class="ccard-name">${d.icon} ${d.name}</div>
+      <div class="ccard-sub">${d.sub}</div>
+      <div class="ccard-macros">
+        <div class="ccard-macro mk"><span class="mv">${d.kcal}</span><span class="ml">kcal</span></div>
+        <div class="ccard-macro mp"><span class="mv">${d.p}g</span><span class="ml">protein</span></div>
+        <div class="ccard-macro mc"><span class="mv">${d.c}g</span><span class="ml">carbs</span></div>
+        <div class="ccard-macro mf"><span class="mv">${d.f}g</span><span class="ml">fat</span></div>
+      </div>
+      <div class="ccard-meta">
+        <div class="satiety-dots">${satDots(d.satiety)}</div>
+        <span class="satiety-label">Saturation</span>
+        <span class="pct-badge" title="% of total calories from protein">${pct}% of kcal from protein</span>
+        <span class="best-tag">${d.best}</span>
+      </div>
+    </div>
+  `}).join('');
+}
 
 // Init
 autoCalcCarbs();    // set initial carb weights based on default protein
@@ -22327,27 +22794,53 @@ activeDietary.forEach(id => {
 });
 </script>
 
+<!-- Reset Confirm Modal -->
+<div class="reset-modal-overlay" id="resetConfirmOverlay">
+  <div class="reset-modal">
+    <h3>⚠️ Reset Everything?</h3>
+    <p>This will also reset your <strong>My Pantry</strong> settings — including disabled ingredients and dietary preferences.</p>
+    <div class="reset-modal-btns">
+      <button class="reset-cancel-btn" onclick="document.getElementById('resetConfirmOverlay').classList.remove('open')">Cancel</button>
+      <button class="reset-confirm-btn" onclick="doResetAll()">Yes, Reset All</button>
+    </div>
+  </div>
+</div>
+
+<!-- Admin Exit Modal -->
+<div class="exit-modal-overlay" id="exitModalOverlay">
+  <div class="exit-modal">
+    <h3>Exit Admin Mode</h3>
+    <p>Save your changes?<br>
+    <span style="color:#555;font-size:11px;">Saved in browser (localStorage) + optional HTML download.</span></p>
+    <div class="exit-modal-btns">
+      <button class="exit-btn-primary" onclick="exitAdminSaveAndDownload()">💾 Save + Download HTML</button>
+      <button class="exit-btn-secondary" onclick="exitAdminSaveOnly()">✓ Nur im Browser speichern</button>
+      <button class="exit-btn-danger" onclick="exitAdminDiscard()">✕ Discard & exit</button>
+    </div>
+  </div>
+</div>
+
 <!-- Admin Indicator -->
-<div class="admin-indicator" onclick="promptAdminPassword()">🔐 ADMIN MODE — Klick zum Beenden</div>
+<div class="admin-indicator" onclick="promptAdminPassword()">🔐 ADMIN MODE — Click to exit</div>
 
 <!-- Admin Edit Modal -->
 <div class="admin-modal-overlay" id="adminModalOverlay" onclick="if(event.target===this)closeAdminEdit()">
   <div class="admin-modal">
-    <h2 id="adminRecipeTitle">Recipe bearbeiten</h2>
+    <h2 id="adminRecipeTitle">Edit Recipe</h2>
 
-    <div class="admin-section-title">📋 Basis-Info</div>
+    <div class="admin-section-title">📋 Basic Info</div>
     <div style="display:grid;grid-template-columns:80px 1fr;gap:12px;">
-      <div class="admin-field"><label>Rezept #</label><input type="number" id="aRecipeNum" min="1" max="9999"></div>
+      <div class="admin-field"><label>Recipe #</label><input type="number" id="aRecipeNum" min="1" max="9999"></div>
       <div class="admin-field"><label>Titel</label><input type="text" id="aTitle"></div>
     </div>
-    <div class="admin-field"><label>Beschreibung</label><input type="text" id="aDesc"></div>
+    <div class="admin-field"><label>Description</label><input type="text" id="aDesc"></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
       <div class="admin-field"><label>Zeit (min)</label><input type="number" id="aTime"></div>
       <div class="admin-field"><label>▶️ YouTube Video ID</label><input type="text" id="aVideoId" placeholder="z.B. I5BZybb9bpM"></div>
     </div>
-    <div class="admin-field"><label>Tags (komma-getrennt)</label><input type="text" id="aTags" placeholder="korean, comfort, fusion"></div>
+    <div class="admin-field"><label>Tags (comma-separated)</label><input type="text" id="aTags" placeholder="korean, comfort, fusion"></div>
 
-    <div class="admin-section-title">📊 Sauce Makros (Zusatz zu Protein+Carb)</div>
+    <div class="admin-section-title">📊 Sauce Macros (added on top of protein+carb)</div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;">
       <div class="admin-field"><label>+ kcal</label><input type="number" id="aSkcal"></div>
       <div class="admin-field"><label>+ Protein g</label><input type="number" id="aSp"></div>
@@ -22355,20 +22848,23 @@ activeDietary.forEach(id => {
       <div class="admin-field"><label>+ Fat g</label><input type="number" id="aSf"></div>
     </div>
 
-    <div class="admin-section-title">🥄 Zutaten</div>
+    <div class="admin-section-title">🥄 Ingredients</div>
     <div id="adminIngList"></div>
 
-    <div class="admin-section-title">👨‍🍳 Schritte</div>
+    <div class="admin-section-title">👨‍🍳 Steps</div>
     <div class="admin-steps-list" id="adminStepsList"></div>
-    <button class="admin-add-btn" onclick="addAdminStep()">+ Schritt hinzufügen</button>
+    <button class="admin-add-btn" onclick="addAdminStep()">+ Add step</button>
 
     <div class="admin-section-title">💡 80/20 Hacks</div>
     <div id="adminHacksList"></div>
-    <button class="admin-add-btn" onclick="addAdminHack()">+ Hack hinzufügen</button>
+    <button class="admin-add-btn" onclick="addAdminHack()">+ Add hack</button>
 
     <div class="admin-section-title">📌 Notes</div>
     <div class="admin-field"><textarea id="aNotes" placeholder="Storage tips, spice level, variations..."></textarea></div>
 
+    <div style="display:flex;gap:8px;margin-bottom:4px;">
+      <button id="adminVisibilityBtn" class="admin-add-btn" style="flex:1;padding:10px;" onclick="toggleRecipeVisibility()">👁 Hide recipe</button>
+    </div>
     <button class="admin-save-btn" onclick="saveAdminEdit()">💾 SPEICHERN</button>
     <div style="display:flex;gap:8px;margin-top:10px;">
       <butto
