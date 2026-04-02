@@ -16,6 +16,30 @@
     --tag-thai:#7be8a3; --tag-indian:#ffb347;
     --carb-potato:#e8a347; --carb-rice:#47b3e8; --carb-noodle:#c847e8; --carb-bread:#e84747;
   }
+  html.light {
+    --bg:#f5f5f0; --surface:#ebebе5; --card:#ffffff; --border:#ddd;
+    --text:#1a1a1a; --muted:#777;
+  }
+  html.light body{background:var(--bg);color:var(--text);}
+  html.light .nav-tabs{background:var(--bg);}
+  html.light .nav-tab{color:var(--muted);}
+  html.light .nav-tab:hover{color:var(--text);}
+  html.light .card{background:var(--card);}
+  html.light .card:hover{background:#f0efea;}
+  html.light .filter-bar,html.light .controls{background:rgba(245,245,240,.97);}
+  html.light .filter-dropdown{background:rgba(240,240,235,.98);}
+  html.light .carb-bar{background:rgba(245,245,240,.95);}
+  html.light .filter-pill,html.light .filter-btn{background:var(--card);color:var(--muted);}
+  html.light .search-wrap input{background:var(--card);color:var(--text);}
+  html.light .carb-num{background:var(--card);color:var(--text);}
+  html.light .social-btn.tiktok{background:rgba(0,0,0,.06);color:#333;border-color:rgba(0,0,0,.15);}
+  html.light .social-btn.tiktok:hover{background:rgba(0,0,0,.12);border-color:#333;}
+
+  /* THEME TOGGLE */
+  .theme-toggle{display:flex;align-items:center;margin-left:auto;padding:0 12px 0 4px;}
+  .theme-toggle-btn{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;border:1.5px solid var(--border);background:var(--card);color:var(--muted);}
+  .theme-toggle-btn:hover{border-color:var(--accent);color:var(--accent);}
+  .theme-icon{font-size:13px;}
   *{margin:0;padding:0;box-sizing:border-box;}
   body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
 
@@ -770,7 +794,12 @@
   <button class="nav-tab" onclick="switchTab('pantry',this)"><span class="tab-icon">🧺</span><span class="tab-label">My Pantry</span></button>
   <button class="nav-tab" onclick="switchTab('compare',this)"><span class="tab-icon">📊</span><span class="tab-label">Macro Compare</span></button>
   <button class="nav-tab" onclick="switchTab('calc',this)"><span class="tab-icon">🔥</span><span class="tab-label">Calorie Calculator</span></button>
-
+  <div class="theme-toggle">
+    <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">
+      <span class="theme-icon" id="themeIcon">☀️</span>
+      <span id="themeLabel">Light</span>
+    </button>
+  </div>
 </div>
 
 <!-- ══════════════════════ RECIPES PAGE ══════════════════════ -->
@@ -1324,11 +1353,11 @@
   </div>
 </div>
 
-<footer><strong>FIT NIIKITER'S RECIPE VAULT</strong> · HIGH PROTEIN · LOW CALORIE · HEALTHY · <a href="mailto:fitniikiter@gmail.com" style='color:var(--muted);text-decoration:none;'>fitniikiter@gmail.com</a>
+<footer><strong>FIT NIIKITER'S RECIPE VAULT</strong> · HIGH PROTEIN · LOW CALORIE · HEALTHY · <a href="/cdn-cgi/l/email-protection#dcbab5a8b2b5b5b7b5a8b9ae9cbbb1bdb5b0f2bfb3b1" style='color:var(--muted);text-decoration:none;'><span class="__cf_email__" data-cfemail="a4c2cdd0cacdcdcfcdd0c1d6e4c3c9c5cdc88ac7cbc9">[email&#160;protected]</span></a>
 <div style="margin-top:10px;font-size:10px;color:#444;font-weight:300;line-height:1.6;max-width:700px;margin-left:auto;margin-right:auto;">All macro and nutritional values are estimates based on standard raw ingredient data and may vary depending on brands, preparation methods and portion sizes. This website is for informational purposes only and does not constitute medical or nutritional advice. Consult a qualified professional before making significant dietary changes.</div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── Nutritional values per 100g RAW ──
 const NUT = {
   // proteins
@@ -24162,6 +24191,24 @@ function shareRecipe() {
   }
 })();
 
+// ── THEME TOGGLE ──
+function toggleTheme() {
+  const isLight = document.documentElement.classList.toggle('light');
+  document.getElementById('themeIcon').textContent = isLight ? '🌙' : '☀️';
+  document.getElementById('themeLabel').textContent = isLight ? 'Dark' : 'Light';
+  localStorage.setItem('fitniikiter_theme', isLight ? 'light' : 'dark');
+}
+// Restore saved theme on load
+(function() {
+  if (localStorage.getItem('fitniikiter_theme') === 'light') {
+    document.documentElement.classList.add('light');
+    const icon = document.getElementById('themeIcon');
+    const label = document.getElementById('themeLabel');
+    if (icon) icon.textContent = '🌙';
+    if (label) label.textContent = 'Dark';
+  }
+})();
+
 // Init
 autoCalcCarbs();    // set initial carb weights based on default protein
 buildAllCards();    // render all 500 cards once
@@ -24267,8 +24314,4 @@ activeDietary.forEach(id => {
     <div class="admin-field"><textarea id="aNotes" placeholder="Storage tips, spice level, variations..."></textarea></div>
 
     <div style="display:flex;gap:8px;margin-bottom:4px;">
-      <button id="adminVisibilityBtn" class="admin-add-btn" style="flex:1;padding:10px;" onclick="toggleRecipeVisibility()">👁 Hide recipe</button>
-    </div>
-    <button class="admin-save-btn" onclick="saveAdminEdit()">💾 SPEICHERN</button>
-    <div style="display:flex;gap:8px;margin-top:10px;">
-      <butto
+      <button id="adminVisibilityBtn" class="admin-add-btn" style="
