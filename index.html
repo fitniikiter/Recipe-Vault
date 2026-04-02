@@ -186,6 +186,7 @@
   .flavor-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:0;vertical-align:middle;}
   .flavor-badge.sweet{background:rgba(255,179,71,.12);color:#ffb347;border:1px solid rgba(255,179,71,.25);}
   .flavor-badge.savory{background:rgba(71,179,232,.12);color:#47b3e8;border:1px solid rgba(71,179,232,.25);}
+  .flavor-badge.alcohol{background:rgba(180,120,255,.12);color:#b478ff;border:1px solid rgba(180,120,255,.25);}
   .filter-btn.sweet.active{background:#ffb347;color:#000;border-color:#ffb347;}
   .filter-btn.savory.active{background:#47b3e8;color:#000;border-color:#47b3e8;}
 
@@ -219,6 +220,11 @@
   .protein-badge.eggs   {background:rgba(255,179,71,.12);color:#ffb347;            border:1px solid rgba(255,179,71,.2);}
   .protein-badge.salmon {background:rgba(71,179,232,.12);color:var(--carb-rice);   border:1px solid rgba(71,179,232,.2);}
   .protein-badge.tofu   {background:rgba(71,232,163,.12);color:var(--accent3);     border:1px solid rgba(71,232,163,.2);}
+  /* Uniform badge size inside modal tags row */
+  #modalTagsRow .carb-badge,
+  #modalTagsRow .protein-badge,
+  #modalTagsRow .flavor-badge,
+  #modalTagsRow .tag { font-size:10px; padding:4px 10px; margin-bottom:0; line-height:1.4; }
 
   .macro-row{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:12px;}
   .macro-box{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:5px;padding:6px 4px;text-align:center;}
@@ -1406,7 +1412,6 @@
     <button class="modal-share-btn" id="modalShareBtn" onclick="shareRecipe()"><span class="share-icon">🔗</span> Share</button>
     <div class="modal-header">
       <div class="modal-meta">
-        <span class="carb-badge" id="modalCarbBadge"></span>
         <span class="card-time" id="modalTime"></span>
       </div>
       <div class="modal-title" id="modalTitle"></div>
@@ -1417,6 +1422,7 @@
         <div class="modal-macro mc"><span class="mv" id="mCarbs">—</span><span class="ml">carbs</span></div>
         <div class="modal-macro mf"><span class="mv" id="mFat">—</span><span class="ml">fat</span></div>
       </div>
+      <div id="modalTagsRow" style="display:flex;flex-wrap:wrap;gap:5px;padding:10px 0 4px;"></div>
       <div class="modal-tabs" id="modalTabs"></div>
     </div>
     <div class="modal-body">
@@ -3058,6 +3064,7 @@ function buildAllCards() {
         <span class="carb-badge ${r.carb}" style="margin-bottom:0;vertical-align:middle;">${carbLabel[r.carb]}</span>
         <span class="protein-badge ${proteinKey}" style="margin-bottom:0;vertical-align:middle;">${proteinLabel}</span>
         <span class="flavor-badge ${r.flavor || 'savory'}" style="margin-bottom:0;">${r.flavor === 'sweet' ? '🍯 Sweet' : '🧂 Savory'}</span>
+        ${ALCOHOL_RECIPE_IDS.has(r.id) ? '<span class="flavor-badge alcohol" style="margin-bottom:0;">🍶 Alcohol</span>' : ''}
       </div>
       <div class="macro-row">
         <div class="macro-box kcal-box">    <span class="val" data-macro="kcal">—</span>  <span class="lbl">kcal</span></div>
@@ -22723,9 +22730,22 @@ function openModal(recipeId) {
   document.getElementById('modalTitle').textContent = r.title;
   document.getElementById('modalDesc').textContent  = r.desc;
   document.getElementById('modalTime').innerHTML    = `<span class="time-icon">⏱</span>${r.time} min`;
-  const badge = document.getElementById('modalCarbBadge');
-  badge.className = 'carb-badge ' + r.carb;
-  badge.textContent = {potato:'🥔 Potato', rice:'🍚 Rice', noodle:'🍜 Noodle', bread:'🫓 Bread'}[r.carb];
+  // Tags row — row 1: carb/protein/flavor/alcohol, row 2: cuisine tags
+  const proteinKey = r.protein || 'chicken';
+  const proteinLabel = {chicken:'🍗 Chicken', beef:'🥩 Beef', eggs:'🥚 Eggs', salmon:'🐟 Salmon', tofu:'🫘 Tofu'}[proteinKey] || '🍗 Chicken';
+  const carbLabelMap = {potato:'🥔 Potato', rice:'🍚 Rice', noodle:'🍜 Noodle', bread:'🫓 Bread'};
+  const proteinBadgeClass = {chicken:'chicken', beef:'beef', eggs:'eggs', salmon:'salmon', tofu:'tofu'}[proteinKey] || 'chicken';
+  const tagsRow = document.getElementById('modalTagsRow');
+  const cuisineTags = (r.tags||[]).map(t => `<span class="tag tag-${t}">${t}</span>`).join('');
+  tagsRow.innerHTML = `
+    <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:${cuisineTags ? '6px' : '0'};">
+      <span class="carb-badge ${r.carb}" style="font-size:10px;padding:4px 10px;">${carbLabelMap[r.carb]}</span>
+      <span class="protein-badge ${proteinBadgeClass}" style="font-size:10px;padding:4px 10px;">${proteinLabel}</span>
+      <span class="flavor-badge ${r.flavor || 'savory'}" style="font-size:10px;padding:4px 10px;">${r.flavor === 'sweet' ? '🍯 Sweet' : '🧂 Savory'}</span>
+      ${ALCOHOL_RECIPE_IDS.has(r.id) ? '<span class="flavor-badge alcohol" style="font-size:10px;padding:4px 10px;">🍶 Alcohol</span>' : ''}
+    </div>
+    ${cuisineTags ? `<div style="display:flex;flex-wrap:wrap;gap:5px;">${cuisineTags}</div>` : ''}
+  `;
 
   // Macros — computed fresh each time (respects modalServings)
   updateModalMacros(r);
@@ -23474,6 +23494,13 @@ const INGREDIENT_RECIPE_MAP = {
   peanut_butter:  [6,73,133,150,175,207,266,398],
   panko:          [83,107,112,193,329,384,392,448],
 };
+
+// Recipe IDs that contain alcohol (sake, mirin, white_wine)
+const ALCOHOL_RECIPE_IDS = new Set([
+  ...( INGREDIENT_RECIPE_MAP.sake        || []),
+  ...( INGREDIENT_RECIPE_MAP.mirin       || []),
+  ...( INGREDIENT_RECIPE_MAP.white_wine  || []),
+]);
 
 // Disabled ingredients state
 let disabledIngredients = new Set(JSON.parse(localStorage.getItem('pantryDisabled') || '[]'));
