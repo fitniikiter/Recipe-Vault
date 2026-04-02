@@ -1508,7 +1508,7 @@ Promise.all([
     const sel = document.getElementById('proteinSelector');
     if (sel) {
       sel.innerHTML = PROTEIN_DEFS.map(p =>
-        '<div class="protein-btn ' + (p.key==='chicken'?'active':'') + '" data-protein="' + p.key + '" onclick="selectProtein('' + p.key + '')"><span class="pb-icon">' + p.icon + '</span><span class="pb-name">' + p.name + '</span></div>'
+        '<div class="protein-btn ' + (p.key==='chicken'?'active':'') + '" data-protein="' + p.key + '" onclick="selectProtein(\'' + p.key + '\')"><span class="pb-icon">' + p.icon + '</span><span class="pb-name">' + p.name + '</span></div>'
       ).join('');
       selectProtein('chicken');
     }
