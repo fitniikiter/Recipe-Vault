@@ -1324,11 +1324,11 @@
   </div>
 </div>
 
-<footer><strong>FIT NIIKITER'S RECIPE VAULT</strong> · HIGH PROTEIN · LOW CALORIE · HEALTHY · <a href="/cdn-cgi/l/email-protection#c4a2adb0aaadadafadb0a1b684a3a9a5ada8eaa7aba9" style='color:var(--muted);text-decoration:none;'><span class="__cf_email__" data-cfemail="701619041e19191b1904150230171d11191c5e131f1d">[email&#160;protected]</span></a>
+<footer><strong>FIT NIIKITER'S RECIPE VAULT</strong> · HIGH PROTEIN · LOW CALORIE · HEALTHY · <a href="mailto:fitniikiter@gmail.com" style='color:var(--muted);text-decoration:none;'>fitniikiter@gmail.com</a>
 <div style="margin-top:10px;font-size:10px;color:#444;font-weight:300;line-height:1.6;max-width:700px;margin-left:auto;margin-right:auto;">All macro and nutritional values are estimates based on standard raw ingredient data and may vary depending on brands, preparation methods and portion sizes. This website is for informational purposes only and does not constitute medical or nutritional advice. Consult a qualified professional before making significant dietary changes.</div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // ── Nutritional values per 100g RAW ──
 const NUT = {
   // proteins
@@ -2510,6 +2510,8 @@ function updateGlobalWeight(val) {
   const g = Math.max(50, Math.min(3000, parseInt(val) || 500));
   weights.chicken = g;
   autoCalcCarbs();
+  // Clear sauce cache since it depends on servings/weights
+  Object.keys(_sauceMacroCache).forEach(k => delete _sauceMacroCache[k]);
   // Sync the main input in W&F tab
   const mainInput = document.getElementById('chickenInput');
   if (mainInput) mainInput.value = g;
@@ -3215,6 +3217,8 @@ function changeServings(delta) {
   const next = Math.max(1, Math.min(10, current + delta));
   el.textContent = next;
   weights.servings = next;
+  // Clear sauce cache since it depends on servings
+  Object.keys(_sauceMacroCache).forEach(k => delete _sauceMacroCache[k]);
   updateCardMacros();
   filterRecipes();
   updateCalcDisplay();
@@ -3303,6 +3307,7 @@ function updateCalcDisplay() {
 // ══════════════════════════════════════════════════
 const RECIPE_DETAILS = {
   71: {
+    image: 'https://pub-bc6707297a024aa19ff31c3e4a36c1a9.r2.dev/Recipes/default_1.65.1.jpg',
     ingredients: [
       { section:'Rice', items:[
         { name:'Jasmine rice (dry)', amt:'{{carbG}}g' },
@@ -23839,6 +23844,7 @@ function calcSauceMacros(r) {
   const detail = getRecipeDetail(r);
   if (!detail || !detail.ingredients) return { kcal: r.sauce_kcal, p: r.sauce_p, c: r.sauce_c, f: r.sauce_f };
 
+  const s = Math.max(weights.servings, 1);
   let kcal = 0, p = 0, c = 0, f = 0, found = 0;
 
   detail.ingredients.forEach(sec => {
@@ -23852,10 +23858,11 @@ function calcSauceMacros(r) {
       const macros = calcIngredientMacros(ingId, item.amt || '');
       if (!macros) return;
 
-      kcal += macros.kcal;
-      p    += macros.p;
-      c    += macros.c;
-      f    += macros.f;
+      // Divide by servings — recipe amounts are for the whole batch
+      kcal += macros.kcal / s;
+      p    += macros.p    / s;
+      c    += macros.c    / s;
+      f    += macros.f    / s;
       found++;
     });
   });
