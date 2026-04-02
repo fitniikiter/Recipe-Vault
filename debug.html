@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recipe Vault - DEBUG</title>
+<style>
+  body {
+    background: #0e0e0e;
+    color: #f0f0f0;
+    font-family: monospace;
+    padding: 20px;
+    line-height: 1.6;
+  }
+  .log {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+  }
+  .success {
+    color: #47e8a3;
+  }
+  .error {
+    color: #ff6b35;
+  }
+  .info {
+    color: #47b3e8;
+  }
+  h2 {
+    color: #ff8c00;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+  }
+</style>
+</head>
+<body>
+
+<h1>🔍 Recipe Vault - Debug Info</h1>
+
+<h2>Loading Status</h2>
+<div id="status" class="log"></div>
+
+<h2>File Availability</h2>
+<div id="files" class="log"></div>
+
+<h2>Console Logs</h2>
+<div id="console" class="log"></div>
+
+<script>
+const status = document.getElementById('status');
+const files = document.getElementById('files');
+const consoleDiv = document.getElementById('console');
+
+function log(type, msg) {
+  const line = document.createElement('div');
+  line.className = type;
+  line.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+  consoleDiv.appendChild(line);
+  console.log(msg);
+}
+
+log('info', '🚀 Starting debug...');
+
+// Check current location
+log('info', `📍 Current URL: ${window.location.href}`);
+log('info', `📁 Base path: ${window.location.pathname}`);
+
+// Test fetch
+async function testFetch() {
+  log('info', '🔄 Testing file loads...');
+  
+  // Test 1: recipes.json
+  try {
+    log('info', '⏳ Fetching recipes.json...');
+    const recipesResp = await fetch('recipes.json');
+    log(recipesResp.ok ? 'success' : 'error', 
+      `recipes.json: ${recipesResp.status} ${recipesResp.statusText}`);
+    
+    if (recipesResp.ok) {
+      const recipes = await recipesResp.json();
+      log('success', `✅ recipes.json loaded! Found ${recipes.length} recipes`);
+      files.innerHTML += `<div class="success">✅ recipes.json: ${recipes.length} recipes loaded</div>`;
+    } else {
+      log('error', `❌ recipes.json failed: ${recipesResp.status}`);
+      files.innerHTML += `<div class="error">❌ recipes.json: HTTP ${recipesResp.status}</div>`;
+    }
+  } catch(e) {
+    log('error', `❌ recipes.json error: ${e.message}`);
+    files.innerHTML += `<div class="error">❌ recipes.json: ${e.message}</div>`;
+  }
+  
+  // Test 2: config.json
+  try {
+    log('info', '⏳ Fetching config.json...');
+    const configResp = await fetch('config.json');
+    log(configResp.ok ? 'success' : 'error',
+      `config.json: ${configResp.status} ${configResp.statusText}`);
+    
+    if (configResp.ok) {
+      const config = await configResp.json();
+      log('success', `✅ config.json loaded!`);
+      files.innerHTML += `<div class="success">✅ config.json: loaded (${config.proteinDefs?.length || 0} proteins)</div>`;
+    } else {
+      log('error', `❌ config.json failed: ${configResp.status}`);
+      files.innerHTML += `<div class="error">❌ config.json: HTTP ${configResp.status}</div>`;
+    }
+  } catch(e) {
+    log('error', `❌ config.json error: ${e.message}`);
+    files.innerHTML += `<div class="error">❌ config.json: ${e.message}</div>`;
+  }
+  
+  // Test 3: index.html
+  try {
+    log('info', '⏳ Checking index.html...');
+    const indexResp = await fetch('index.html');
+    log(indexResp.ok ? 'success' : 'error',
+      `index.html: ${indexResp.status} ${indexResp.statusText}`);
+    
+    if (indexResp.ok) {
+      log('success', `✅ index.html exists`);
+      files.innerHTML += `<div class="success">✅ index.html: accessible</div>`;
+    }
+  } catch(e) {
+    log('error', `❌ index.html error: ${e.message}`);
+  }
+}
+
+// Run tests
+testFetch().then(() => {
+  log('info', '✅ Debug complete! Check results above.');
+  status.innerHTML = '<div class="success">✅ Debug script finished</div>';
+});
+
+// Also capture any global errors
+window.addEventListener('error', (e) => {
+  log('error', `Global error: ${e.message}`);
+});
+
+</script>
+
+</body>
+</html>
