@@ -2686,7 +2686,7 @@ function updateCardMacros() {
 
 function refreshOpenSaucePanels() {
   document.querySelectorAll('.card-sauce-panel.open').forEach(panel => {
-    const recipeId = parseInt(panel.id.replace('sauce-panel-', ''));
+    const recipeId = panel.id.replace('sauce-panel-', '');
     if (!recipeId) return;
     const detail = RECIPE_DETAILS[recipeId];
     if (!detail || !detail.ingredients) return;
@@ -8706,7 +8706,7 @@ function buildIngredientsTab(r, servings) {
   if (!isEggRecipe && protDef && protDef.variants) {
     const btns = protDef.variants.map(v =>
       `<button class="modal-variant-btn ${recipeActiveProtein === v.key ? 'active' : ''}"
-        onclick="selectModalVariant('${v.key}', ${r.id})">${v.label}</button>`
+        onclick="selectModalVariant('${v.key}', '${r.id}')">${v.label}</button>`
     ).join('');
     variantHtml = `<div class="modal-variant-row">
       <label>${protEmoji} Variant</label>
@@ -8720,7 +8720,7 @@ function buildIngredientsTab(r, servings) {
     const sizes = [{k:'S',g:48},{k:'M',g:58},{k:'L',g:68}];
     const sbtns = sizes.map(sz =>
       `<button class="modal-variant-btn ${eggSizeG===sz.g?'active':''}"
-        onclick="setModalEggSize(${sz.g}, ${r.id})">${sz.k} ~${sz.g}g</button>`
+        onclick="setModalEggSize(${sz.g}, '${r.id}')">${sz.k} ~${sz.g}g</button>`
     ).join('');
     eggSelectorHtml = `<div class="modal-variant-row">
       <label>🥚 Egg Size</label>
@@ -8729,9 +8729,9 @@ function buildIngredientsTab(r, servings) {
     <div class="modal-weight-row">
       <label>🥚 Egg Count</label>
       <div class="serving-stepper">
-        <button class="step-btn" onclick="changeModalEggCount(-1, ${r.id})">−</button>
+        <button class="step-btn" onclick="changeModalEggCount(-1, '${r.id}')">−</button>
         <span class="serving-val" id="modalEggCountVal" style="width:40px;height:36px;line-height:36px;font-size:20px;">${eggCount}</span>
-        <button class="step-btn" onclick="changeModalEggCount(1, ${r.id})">+</button>
+        <button class="step-btn" onclick="changeModalEggCount(1, '${r.id}')">+</button>
       </div>
       <span class="modal-weight-unit">eggs</span>
       <span class="modal-weight-hint">${protG}g per portion</span>
@@ -8743,9 +8743,9 @@ function buildIngredientsTab(r, servings) {
   <div class="serving-control">
     <label>🍽️ Servings</label>
     <div class="serving-stepper">
-      <button class="step-btn" onclick="changeModalServings(-1, ${r.id})">−</button>
+      <button class="step-btn" onclick="changeModalServings(-1, '${r.id}')">−</button>
       <span class="serving-val" id="modalServingVal">${s}</span>
-      <button class="step-btn" onclick="changeModalServings(1, ${r.id})">+</button>
+      <button class="step-btn" onclick="changeModalServings(1, '${r.id}')">+</button>
     </div>
     <span class="modal-weight-hint">per portion</span>
   </div>
@@ -8763,7 +8763,7 @@ function buildIngredientsTab(r, servings) {
       <input type="number" class="modal-weight-input" id="mwProt" value="${weights.chicken}"
         min="50" max="3000"
         onclick="event.stopPropagation()"
-        onchange="updateModalWeight('prot', this.value, ${r.id})">
+        oninput="updateModalWeight('prot', this.value, '${r.id}')">
       <span class="modal-weight-unit">g batch total</span>
       <span class="modal-weight-hint">${protG}g per portion</span>
       <span class="modal-weight-expand">▼</span>
@@ -8792,7 +8792,7 @@ function buildIngredientsTab(r, servings) {
       <input type="number" class="modal-weight-input" id="mwCarb" value="${weights[r.carb]}"
         min="0" max="3000"
         onclick="event.stopPropagation()"
-        onchange="updateModalWeight('carb', this.value, ${r.id})">
+        oninput="updateModalWeight('carb', this.value, '${r.id}')">
       <span class="modal-weight-unit">g batch total</span>
       <span class="modal-weight-hint">${carbG}g per portion</span>
       <span class="modal-weight-expand">▼</span>
@@ -9489,11 +9489,11 @@ function activateAdmin() {
       const btn = document.createElement('button');
       btn.className = 'admin-edit-btn';
       btn.textContent = '✏️ Edit';
-      btn.onclick = (e) => { e.stopPropagation(); openAdminEdit(parseInt(card.dataset.id)); };
+      btn.onclick = (e) => { e.stopPropagation(); openAdminEdit(card.dataset.id); };
       card.appendChild(btn);
 
       const toggleBtn = document.createElement('button');
-      const rid = parseInt(card.dataset.id);
+      const rid = card.dataset.id;
       const isHidden = HIDDEN_RECIPE_IDS.has(rid);
       toggleBtn.className = 'admin-toggle-btn';
       toggleBtn.textContent = isHidden ? '👁 Show' : '🚫 Hide';
