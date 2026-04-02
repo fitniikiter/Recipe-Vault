@@ -1,0 +1,2421 @@
+[
+  {
+    "id": "korean-glazed-chicken-bowl",
+    "displayNum": 1,
+    "carb": "rice",
+    "time": 30,
+    "title": "Korean Glazed Chicken Bowl",
+    "desc": "Boneless thighs with quick-pickled cucumber, spring onions and Korean glaze over jasmine rice.",
+    "tags": [
+      "korean"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 95,
+    "sauce_p": 2,
+    "sauce_c": 12,
+    "sauce_f": 3
+  },
+  {
+    "id": "teriyaki-chicken-hasselback-potatoes",
+    "displayNum": 2,
+    "carb": "potato",
+    "time": 35,
+    "title": "Teriyaki Chicken & Hasselback Potatoes",
+    "desc": "Glazed thighs in homemade teriyaki with fanned hasselback potatoes roasted in sesame butter.",
+    "tags": [
+      "asian",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 110,
+    "sauce_p": 2,
+    "sauce_c": 14,
+    "sauce_f": 5
+  },
+  {
+    "id": "soy-garlic-braised-chicken-baby-potatoes",
+    "displayNum": 3,
+    "carb": "potato",
+    "time": 30,
+    "title": "Soy Garlic Braised Chicken & Baby Potatoes",
+    "desc": "Slow-braised thighs in soy, garlic and mirin with tender baby potatoes soaking up the sauce.",
+    "tags": [
+      "asian"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 80,
+    "sauce_p": 3,
+    "sauce_c": 10,
+    "sauce_f": 2
+  },
+  {
+    "id": "chinese-5spice-chicken-potato-stirfry",
+    "displayNum": 4,
+    "carb": "potato",
+    "time": 25,
+    "title": "Chinese 5-Spice Chicken Potato Stir-Fry",
+    "desc": "Wok-tossed diced chicken and matchstick potatoes in five-spice hoisin glaze.",
+    "tags": [
+      "chinese"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 90,
+    "sauce_p": 2,
+    "sauce_c": 12,
+    "sauce_f": 3
+  },
+  {
+    "id": "japanese-nikujaga-chicken-style",
+    "displayNum": 5,
+    "carb": "potato",
+    "time": 40,
+    "title": "Japanese Nikujaga Chicken Style",
+    "desc": "Classic Japanese meat-and-potato stew adapted with chicken thighs, dashi and mirin.",
+    "tags": [
+      "japanese"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 70,
+    "sauce_p": 2,
+    "sauce_c": 10,
+    "sauce_f": 1
+  },
+  {
+    "id": "ginger-scallion-chicken-smashed-potatoes",
+    "displayNum": 6,
+    "carb": "potato",
+    "time": 25,
+    "title": "Ginger Scallion Chicken Smashed Potatoes",
+    "desc": "Poached chicken thighs over crispy smashed potatoes drenched in ginger-scallion oil.",
+    "tags": [
+      "asian",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 120,
+    "sauce_p": 1,
+    "sauce_c": 2,
+    "sauce_f": 13
+  },
+  {
+    "id": "oyster-sauce-braised-chicken-potato-tray",
+    "displayNum": 7,
+    "carb": "potato",
+    "time": 30,
+    "title": "Oyster Sauce Braised Chicken Potato Tray",
+    "desc": "One-tray bake with oyster sauce marinade, garlic and wedge-cut potatoes.",
+    "tags": [
+      "chinese"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 75,
+    "sauce_p": 1,
+    "sauce_c": 9,
+    "sauce_f": 2
+  },
+  {
+    "id": "miso-butter-chicken-thighs-roasted-fingerlings",
+    "displayNum": 8,
+    "carb": "potato",
+    "time": 35,
+    "title": "Miso Butter Chicken Thighs & Roasted Fingerlings",
+    "desc": "White miso compound butter melted over pan-seared thighs with crispy fingerling potatoes.",
+    "tags": [
+      "japanese",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 100,
+    "sauce_p": 2,
+    "sauce_c": 5,
+    "sauce_f": 8
+  },
+  {
+    "id": "dakgalbi-spicy-stirfried-chicken-potato",
+    "displayNum": 9,
+    "carb": "potato",
+    "time": 25,
+    "title": "Dakgalbi Spicy Stir-Fried Chicken & Potato",
+    "desc": "Fiery Korean gochujang stir-fry with thick-cut potatoes, cabbage and scallions.",
+    "tags": [
+      "korean"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 90,
+    "sauce_p": 2,
+    "sauce_c": 13,
+    "sauce_f": 2
+  },
+  {
+    "id": "jjimdak-korean-braised-soy-chicken",
+    "displayNum": 10,
+    "carb": "potato",
+    "time": 50,
+    "title": "Jjimdak Korean Braised Soy Chicken",
+    "desc": "Iconic Korean soy-braised chicken thighs with glass noodles, potato chunks and dried chili.",
+    "tags": [
+      "korean"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 95,
+    "sauce_p": 3,
+    "sauce_c": 12,
+    "sauce_f": 2
+  },
+  {
+    "id": "korean-army-stew-chicken-version",
+    "displayNum": 11,
+    "carb": "potato",
+    "time": 40,
+    "title": "Korean Army Stew Chicken Version",
+    "desc": "Budae jjigae-inspired hotpot with chicken thighs, sliced potato, kimchi and gochujang broth.",
+    "tags": [
+      "korean"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 80,
+    "sauce_p": 3,
+    "sauce_c": 9,
+    "sauce_f": 2
+  },
+  {
+    "id": "galbijjim-style-chicken-thigh-potato-braise",
+    "displayNum": 12,
+    "carb": "potato",
+    "time": 55,
+    "title": "Galbi-Jjim Style Chicken Thigh Potato Braise",
+    "desc": "Slow-braised short-rib-style sauce applied to chicken thighs with golden potato and daikon.",
+    "tags": [
+      "korean"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 100,
+    "sauce_p": 2,
+    "sauce_c": 14,
+    "sauce_f": 2
+  },
+  {
+    "id": "korean-crispy-potato-chicken-pancake-bowl",
+    "displayNum": 13,
+    "carb": "potato",
+    "time": 35,
+    "title": "Korean Crispy Potato Chicken Pancake Bowl",
+    "desc": "Shredded crispy chicken thigh over gamjajeon-inspired crispy potato cake with dipping sauce.",
+    "tags": [
+      "korean",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 110,
+    "sauce_p": 2,
+    "sauce_c": 12,
+    "sauce_f": 5
+  },
+  {
+    "id": "gochujang-butter-chicken-potato-tray",
+    "displayNum": 14,
+    "carb": "potato",
+    "time": 30,
+    "title": "Gochujang Butter Chicken & Potato Tray",
+    "desc": "Spicy-sweet Korean butter glaze on chicken thighs and chunky potato — one tray, maximum flavour.",
+    "tags": [
+      "korean",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 120,
+    "sauce_p": 1,
+    "sauce_c": 10,
+    "sauce_f": 8
+  },
+  {
+    "id": "korean-soy-honey-glazed-thighs-potato-wedges",
+    "displayNum": 15,
+    "carb": "potato",
+    "time": 30,
+    "title": "Korean Soy Honey Glazed Thighs & Potato Wedges",
+    "desc": "Thick soy-honey glaze caramelised over thighs with roasted wedge potatoes and sesame.",
+    "tags": [
+      "korean"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 105,
+    "sauce_p": 2,
+    "sauce_c": 15,
+    "sauce_f": 3
+  },
+  {
+    "id": "doenjang-braised-chicken-potato",
+    "displayNum": 16,
+    "carb": "potato",
+    "time": 40,
+    "title": "Doenjang Braised Chicken & Potato",
+    "desc": "Korean fermented soybean paste braised chicken with chunky potato and mushrooms.",
+    "tags": [
+      "korean"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 80,
+    "sauce_p": 3,
+    "sauce_c": 8,
+    "sauce_f": 3
+  },
+  {
+    "id": "japanese-karaagestyle-chicken-potato-salad",
+    "displayNum": 17,
+    "carb": "potato",
+    "time": 35,
+    "title": "Japanese Karaage-Style Chicken & Potato Salad",
+    "desc": "Crispy karaage-seasoned thigh bites with Japanese-style potato salad and kewpie drizzle.",
+    "tags": [
+      "japanese"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 130,
+    "sauce_p": 2,
+    "sauce_c": 10,
+    "sauce_f": 10
+  },
+  {
+    "id": "shio-koji-chicken-roasted-new-potatoes",
+    "displayNum": 18,
+    "carb": "potato",
+    "time": 30,
+    "title": "Shio Koji Chicken Roasted New Potatoes",
+    "desc": "Umami-rich shio koji marinated thighs over crispy roasted new potatoes with yuzu ponzu.",
+    "tags": [
+      "japanese"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 70,
+    "sauce_p": 2,
+    "sauce_c": 5,
+    "sauce_f": 3
+  },
+  {
+    "id": "japanese-curry-chicken-potato-stew",
+    "displayNum": 19,
+    "carb": "potato",
+    "time": 45,
+    "title": "Japanese Curry Chicken Potato Stew",
+    "desc": "S&B curry roux with tender chicken thighs and chunky potato, the Japanese home-cooking classic.",
+    "tags": [
+      "japanese"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 150,
+    "sauce_p": 3,
+    "sauce_c": 18,
+    "sauce_f": 5
+  },
+  {
+    "id": "yuzu-kosho-chicken-smashed-potatoes",
+    "displayNum": 20,
+    "carb": "potato",
+    "time": 30,
+    "title": "Yuzu Kosho Chicken & Smashed Potatoes",
+    "desc": "Citrusy-spicy yuzu kosho paste rubbed thighs over crispy smashed potatoes with ponzu.",
+    "tags": [
+      "japanese",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 80,
+    "sauce_p": 1,
+    "sauce_c": 2,
+    "sauce_f": 6
+  },
+  {
+    "id": "thai-basil-chicken-potato-stirfry",
+    "displayNum": 21,
+    "carb": "potato",
+    "time": 35,
+    "title": "Thai Basil Chicken Potato Stir-Fry",
+    "desc": "Pad kra pao-inspired stir-fry with chicken thigh mince, potato cubes, Thai basil and fish sauce.",
+    "tags": [
+      "thai"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 100,
+    "sauce_p": 2,
+    "sauce_c": 8,
+    "sauce_f": 5
+  },
+  {
+    "id": "crispy-smothered-chicken-mashed-potato",
+    "displayNum": 22,
+    "carb": "potato",
+    "time": 40,
+    "title": "Crispy Smothered Chicken & Mashed Potato",
+    "desc": "Pan-fried chicken thigh with mushroom cream gravy over ultra-smooth mashed potato.",
+    "tags": [
+      "american",
+      "comfort"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 180,
+    "sauce_p": 3,
+    "sauce_c": 8,
+    "sauce_f": 16
+  },
+  {
+    "id": "buffalo-chicken-loaded-potato-skins",
+    "displayNum": 23,
+    "carb": "potato",
+    "time": 30,
+    "title": "Buffalo Chicken Loaded Potato Skins",
+    "desc": "Spicy buffalo chicken filling stuffed into crispy roasted potato skin boats.",
+    "tags": [
+      "american",
+      "comfort"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 110,
+    "sauce_p": 2,
+    "sauce_c": 4,
+    "sauce_f": 9
+  },
+  {
+    "id": "nashville-hot-chicken-wedge-fries",
+    "displayNum": 24,
+    "carb": "potato",
+    "time": 35,
+    "title": "Nashville Hot Chicken & Wedge Fries",
+    "desc": "Spice-crusted crispy chicken thigh over thick-cut wedge fries with honey drizzle.",
+    "tags": [
+      "american",
+      "comfort"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 170,
+    "sauce_p": 1,
+    "sauce_c": 12,
+    "sauce_f": 13
+  },
+  {
+    "id": "chicken-pot-pie-stuffed-potato",
+    "displayNum": 25,
+    "carb": "potato",
+    "time": 50,
+    "title": "Chicken Pot Pie Stuffed Potato",
+    "desc": "Creamy chicken pot-pie filling spooned into a crispy roasted baked potato.",
+    "tags": [
+      "american",
+      "comfort"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 150,
+    "sauce_p": 4,
+    "sauce_c": 10,
+    "sauce_f": 10
+  },
+  {
+    "id": "ranch-chicken-potato-bake",
+    "displayNum": 26,
+    "carb": "potato",
+    "time": 30,
+    "title": "Ranch Chicken Potato Bake",
+    "desc": "Thighs and chunky potato tossed in ranch seasoning and roasted until golden.",
+    "tags": [
+      "american"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 80,
+    "sauce_p": 1,
+    "sauce_c": 3,
+    "sauce_f": 7
+  },
+  {
+    "id": "smoked-paprika-chicken-wedge-fries",
+    "displayNum": 27,
+    "carb": "potato",
+    "time": 35,
+    "title": "Smoked Paprika Chicken Wedge Fries",
+    "desc": "Pan-roasted thighs with thick-cut potato wedges and a chipotle mayo dip.",
+    "tags": [
+      "american",
+      "comfort"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 130,
+    "sauce_p": 1,
+    "sauce_c": 4,
+    "sauce_f": 12
+  },
+  {
+    "id": "honey-mustard-chicken-roasted-potato-tray",
+    "displayNum": 28,
+    "carb": "potato",
+    "time": 30,
+    "title": "Honey Mustard Chicken Roasted Potato Tray",
+    "desc": "Sweet-tangy honey mustard glaze coating chicken and small diced roasted potatoes.",
+    "tags": [
+      "american"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 90,
+    "sauce_p": 1,
+    "sauce_c": 11,
+    "sauce_f": 4
+  },
+  {
+    "id": "chicken-thigh-philly-potato-bowl",
+    "displayNum": 29,
+    "carb": "potato",
+    "time": 30,
+    "title": "Chicken Thigh Philly Potato Bowl",
+    "desc": "Sautéed chicken, peppers and onions over seasoned roasted potatoes with provolone.",
+    "tags": [
+      "american",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 130,
+    "sauce_p": 6,
+    "sauce_c": 6,
+    "sauce_f": 9
+  },
+  {
+    "id": "sour-cream-chive-chicken-baked-potato",
+    "displayNum": 30,
+    "carb": "potato",
+    "time": 35,
+    "title": "Sour Cream & Chive Chicken Baked Potato",
+    "desc": "Perfectly roasted thigh sliced over a fluffy baked potato with sour cream and crispy chives.",
+    "tags": [
+      "american",
+      "comfort"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 110,
+    "sauce_p": 2,
+    "sauce_c": 2,
+    "sauce_f": 9
+  },
+  {
+    "id": "garlic-parmesan-chicken-crispy-potatoes",
+    "displayNum": 31,
+    "carb": "potato",
+    "time": 30,
+    "title": "Garlic Parmesan Chicken & Crispy Potatoes",
+    "desc": "Pan-seared thighs and crispy diced potatoes tossed in garlic butter and parmesan.",
+    "tags": [
+      "american",
+      "comfort"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 140,
+    "sauce_p": 5,
+    "sauce_c": 3,
+    "sauce_f": 11
+  },
+  {
+    "id": "chicken-thigh-stroganoff-mashed-potato",
+    "displayNum": 32,
+    "carb": "potato",
+    "time": 40,
+    "title": "Chicken Thigh Stroganoff & Mashed Potato",
+    "desc": "Creamy paprika-mushroom stroganoff sauce over chicken thighs with buttery mash.",
+    "tags": [
+      "comfort",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 170,
+    "sauce_p": 4,
+    "sauce_c": 7,
+    "sauce_f": 14
+  },
+  {
+    "id": "periperi-chicken-crispy-potato",
+    "displayNum": 33,
+    "carb": "potato",
+    "time": 35,
+    "title": "Peri-Peri Chicken & Crispy Potato",
+    "desc": "Nando's-style peri-peri marinated thighs with thick-cut crispy roasted potato.",
+    "tags": [
+      "comfort",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 85,
+    "sauce_p": 1,
+    "sauce_c": 5,
+    "sauce_f": 6
+  },
+  {
+    "id": "french-onion-chicken-potato-gratin",
+    "displayNum": 34,
+    "carb": "potato",
+    "time": 55,
+    "title": "French Onion Chicken Potato Gratin",
+    "desc": "Chicken thighs baked in caramelised French onion sauce under a Gruyère potato gratin.",
+    "tags": [
+      "comfort",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 200,
+    "sauce_p": 6,
+    "sauce_c": 12,
+    "sauce_f": 14
+  },
+  {
+    "id": "cajun-chicken-dirty-potato-hash",
+    "displayNum": 35,
+    "carb": "potato",
+    "time": 30,
+    "title": "Cajun Chicken & Dirty Potato Hash",
+    "desc": "Cajun-rubbed thighs over a smoky dirty rice-inspired potato hash with andouille seasoning.",
+    "tags": [
+      "american"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 110,
+    "sauce_p": 2,
+    "sauce_c": 10,
+    "sauce_f": 7
+  },
+  {
+    "id": "chicken-thigh-philly-cheesesteak-potato-bowl",
+    "displayNum": 36,
+    "carb": "potato",
+    "time": 35,
+    "title": "Chicken Thigh Philly Cheesesteak Potato Bowl",
+    "desc": "Shaved chicken thigh, peppers, onions and melted cheese whiz over roasted potato.",
+    "tags": [
+      "american",
+      "comfort"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 160,
+    "sauce_p": 7,
+    "sauce_c": 6,
+    "sauce_f": 12
+  },
+  {
+    "id": "chicken-potato-leek-soup",
+    "displayNum": 37,
+    "carb": "potato",
+    "time": 40,
+    "title": "Chicken & Potato Leek Soup",
+    "desc": "Creamy leek and potato soup with shredded chicken thigh, thyme and crème fraîche.",
+    "tags": [
+      "comfort"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 130,
+    "sauce_p": 3,
+    "sauce_c": 8,
+    "sauce_f": 9
+  },
+  {
+    "id": "crispy-chicken-thigh-breakfast-potato-hash",
+    "displayNum": 38,
+    "carb": "potato",
+    "time": 30,
+    "title": "Crispy Chicken Thigh & Breakfast Potato Hash",
+    "desc": "Seared thigh slices over crispy morning-style potato hash with peppers and fried egg.",
+    "tags": [
+      "american",
+      "comfort"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 120,
+    "sauce_p": 3,
+    "sauce_c": 9,
+    "sauce_f": 8
+  },
+  {
+    "id": "chicken-thigh-roast-potato-traybake",
+    "displayNum": 39,
+    "carb": "potato",
+    "time": 25,
+    "title": "Chicken Thigh & Roast Potato Traybake",
+    "desc": "One-tray roasted thighs and chunky potatoes with herbs, olive oil and lemon.",
+    "tags": [
+      "comfort"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 90,
+    "sauce_p": 1,
+    "sauce_c": 3,
+    "sauce_f": 9
+  },
+  {
+    "id": "greek-lemon-chicken-thighs-roast-potatoes",
+    "displayNum": 40,
+    "carb": "potato",
+    "time": 40,
+    "title": "Greek Lemon Chicken Thighs & Roast Potatoes",
+    "desc": "Classic Greek lemon-oregano chicken over ultra-crispy olive oil roasted potatoes.",
+    "tags": [
+      "mediterranean"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 100,
+    "sauce_p": 1,
+    "sauce_c": 3,
+    "sauce_f": 10
+  },
+  {
+    "id": "spanish-chicken-patatas-bravas",
+    "displayNum": 41,
+    "carb": "potato",
+    "time": 35,
+    "title": "Spanish Chicken & Patatas Bravas",
+    "desc": "Pan-seared thighs served alongside crispy bravas potatoes with smoky tomato aioli.",
+    "tags": [
+      "mediterranean"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 140,
+    "sauce_p": 1,
+    "sauce_c": 8,
+    "sauce_f": 12
+  },
+  {
+    "id": "chicken-souvlaki-potato-bowl",
+    "displayNum": 42,
+    "carb": "potato",
+    "time": 30,
+    "title": "Chicken Souvlaki Potato Bowl",
+    "desc": "Griddled skewered chicken thigh over crispy lemon potato with tzatziki.",
+    "tags": [
+      "mediterranean"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 80,
+    "sauce_p": 4,
+    "sauce_c": 4,
+    "sauce_f": 5
+  },
+  {
+    "id": "romesco-chicken-smashed-potato",
+    "displayNum": 43,
+    "carb": "potato",
+    "time": 35,
+    "title": "Romesco Chicken & Smashed Potato",
+    "desc": "Pan-seared chicken thigh with smoky Romesco sauce over smashed crispy potatoes.",
+    "tags": [
+      "mediterranean",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 120,
+    "sauce_p": 2,
+    "sauce_c": 7,
+    "sauce_f": 9
+  },
+  {
+    "id": "shawarma-chicken-thigh-potato",
+    "displayNum": 44,
+    "carb": "potato",
+    "time": 40,
+    "title": "Shawarma Chicken Thigh & Potato",
+    "desc": "Spiced shawarma thighs with roasted potato chunks, toum and pickled veg.",
+    "tags": [
+      "middle-eastern"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 140,
+    "sauce_p": 2,
+    "sauce_c": 10,
+    "sauce_f": 10
+  },
+  {
+    "id": "chicken-potato-tagine-style",
+    "displayNum": 45,
+    "carb": "potato",
+    "time": 55,
+    "title": "Chicken & Potato Tagine Style",
+    "desc": "North African braised chicken with ras el hanout, preserved lemon and potato.",
+    "tags": [
+      "middle-eastern"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 100,
+    "sauce_p": 2,
+    "sauce_c": 8,
+    "sauce_f": 7
+  },
+  {
+    "id": "zaatar-roasted-chicken-thigh-baby-potatoes",
+    "displayNum": 46,
+    "carb": "potato",
+    "time": 35,
+    "title": "Za'atar Roasted Chicken Thigh & Baby Potatoes",
+    "desc": "Za'atar-crusted thighs roasted over lemon-olive oil baby potatoes.",
+    "tags": [
+      "middle-eastern"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 90,
+    "sauce_p": 1,
+    "sauce_c": 2,
+    "sauce_f": 9
+  },
+  {
+    "id": "lebanese-sumac-chicken-potato-bake",
+    "displayNum": 47,
+    "carb": "potato",
+    "time": 35,
+    "title": "Lebanese Sumac Chicken Potato Bake",
+    "desc": "Musakhan-inspired sumac and caramelised onion chicken over golden roasted potato.",
+    "tags": [
+      "middle-eastern"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 130,
+    "sauce_p": 2,
+    "sauce_c": 14,
+    "sauce_f": 6
+  },
+  {
+    "id": "harissa-honey-chicken-roasted-potato",
+    "displayNum": 48,
+    "carb": "potato",
+    "time": 30,
+    "title": "Harissa Honey Chicken & Roasted Potato",
+    "desc": "Sweet heat harissa-honey glaze over chicken thighs and wedge potatoes.",
+    "tags": [
+      "middle-eastern",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 90,
+    "sauce_p": 1,
+    "sauce_c": 13,
+    "sauce_f": 3
+  },
+  {
+    "id": "chicken-kofta-style-thigh-spiced-potato-wedges",
+    "displayNum": 49,
+    "carb": "potato",
+    "time": 35,
+    "title": "Chicken Kofta Style Thigh & Spiced Potato Wedges",
+    "desc": "Ground-seasoned chicken thigh patties over harissa-spiced wedge fries.",
+    "tags": [
+      "middle-eastern",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 110,
+    "sauce_p": 2,
+    "sauce_c": 6,
+    "sauce_f": 8
+  },
+  {
+    "id": "chicken-tikka-potato-bake",
+    "displayNum": 50,
+    "carb": "potato",
+    "time": 35,
+    "title": "Chicken Tikka Potato Bake",
+    "desc": "Tikka-spiced thighs over cubed potato roasted in a yogurt-tomato masala.",
+    "tags": [
+      "indian"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 130,
+    "sauce_p": 3,
+    "sauce_c": 8,
+    "sauce_f": 8
+  },
+  {
+    "id": "chicken-aloo-curry",
+    "displayNum": 51,
+    "carb": "potato",
+    "time": 55,
+    "title": "Chicken Aloo Curry",
+    "desc": "Classic South Asian chicken and potato curry with warming spices and fresh coriander.",
+    "tags": [
+      "indian"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 140,
+    "sauce_p": 3,
+    "sauce_c": 10,
+    "sauce_f": 9
+  },
+  {
+    "id": "tandoori-chicken-roasted-spiced-potatoes",
+    "displayNum": 52,
+    "carb": "potato",
+    "time": 30,
+    "title": "Tandoori Chicken & Roasted Spiced Potatoes",
+    "desc": "Tandoori-marinated thighs with cumin-roasted potato wedges and mint raita.",
+    "tags": [
+      "indian"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 90,
+    "sauce_p": 3,
+    "sauce_c": 5,
+    "sauce_f": 5
+  },
+  {
+    "id": "chicken-saag-potato",
+    "displayNum": 53,
+    "carb": "potato",
+    "time": 35,
+    "title": "Chicken Saag Potato",
+    "desc": "Creamy spinach saag sauce with chicken thigh and cubed potato, served with naan croutons.",
+    "tags": [
+      "indian"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 150,
+    "sauce_p": 4,
+    "sauce_c": 8,
+    "sauce_f": 10
+  },
+  {
+    "id": "thai-green-curry-chicken-rice-bowl",
+    "displayNum": 54,
+    "carb": "rice",
+    "time": 35,
+    "title": "Thai Green Curry Chicken Rice Bowl",
+    "desc": "Coconut-based green curry with chicken thigh over jasmine rice with Thai basil.",
+    "tags": [
+      "thai"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 160,
+    "sauce_p": 3,
+    "sauce_c": 8,
+    "sauce_f": 13
+  },
+  {
+    "id": "thai-massaman-chicken-rice-bowl",
+    "displayNum": 55,
+    "carb": "rice",
+    "time": 50,
+    "title": "Thai Massaman Chicken Rice Bowl",
+    "desc": "Rich peanut-kissed massaman curry over fragrant jasmine rice with peanut crumble.",
+    "tags": [
+      "thai"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 180,
+    "sauce_p": 4,
+    "sauce_c": 10,
+    "sauce_f": 15
+  },
+  {
+    "id": "japanese-oyakodon-chicken-rice-bowl",
+    "displayNum": 56,
+    "carb": "rice",
+    "time": 30,
+    "title": "Japanese Oyakodon Chicken Rice Bowl",
+    "desc": "Chicken thigh simmered in dashi-mirin broth with egg, onion and nori over steamed rice.",
+    "tags": [
+      "japanese"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 90,
+    "sauce_p": 5,
+    "sauce_c": 8,
+    "sauce_f": 5
+  },
+  {
+    "id": "japanese-teriyaki-chicken-rice-bowl",
+    "displayNum": 57,
+    "carb": "rice",
+    "time": 25,
+    "title": "Japanese Teriyaki Chicken Rice Bowl",
+    "desc": "Pan-glazed teriyaki thighs over steamed rice with sesame, pickled ginger and scallion.",
+    "tags": [
+      "japanese"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 100,
+    "sauce_p": 2,
+    "sauce_c": 14,
+    "sauce_f": 3
+  },
+  {
+    "id": "korean-bibimbap-chicken-bowl",
+    "displayNum": 58,
+    "carb": "rice",
+    "time": 30,
+    "title": "Korean Bibimbap Chicken Bowl",
+    "desc": "Seasoned chicken thigh over rice with gochujang, namul vegetables and a crispy fried egg.",
+    "tags": [
+      "korean"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 120,
+    "sauce_p": 4,
+    "sauce_c": 14,
+    "sauce_f": 5
+  },
+  {
+    "id": "chicken-fried-rice",
+    "displayNum": 59,
+    "carb": "rice",
+    "time": 20,
+    "title": "Chicken Fried Rice",
+    "desc": "Wok-blasted chicken thigh fried rice with egg, scallion, soy and sesame oil.",
+    "tags": [
+      "chinese"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 130,
+    "sauce_p": 5,
+    "sauce_c": 10,
+    "sauce_f": 8
+  },
+  {
+    "id": "thai-pineapple-fried-rice-with-chicken",
+    "displayNum": 60,
+    "carb": "rice",
+    "time": 35,
+    "title": "Thai Pineapple Fried Rice with Chicken",
+    "desc": "Wok-fried rice with chicken thigh, pineapple chunks, cashews and curry powder.",
+    "tags": [
+      "thai"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 140,
+    "sauce_p": 3,
+    "sauce_c": 18,
+    "sauce_f": 5
+  },
+  {
+    "id": "soy-garlic-chicken-rice-bowl",
+    "displayNum": 61,
+    "carb": "rice",
+    "time": 25,
+    "title": "Soy Garlic Chicken Rice Bowl",
+    "desc": "Caramelised soy-garlic glazed thighs over steamed rice with sesame oil and scallion.",
+    "tags": [
+      "asian"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 80,
+    "sauce_p": 2,
+    "sauce_c": 10,
+    "sauce_f": 3
+  },
+  {
+    "id": "hainanese-chicken-rice",
+    "displayNum": 62,
+    "carb": "rice",
+    "time": 40,
+    "title": "Hainanese Chicken Rice",
+    "desc": "Poached chicken thigh over fragrant pandan-ginger rice with chili sauce and ginger paste.",
+    "tags": [
+      "asian"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 110,
+    "sauce_p": 2,
+    "sauce_c": 12,
+    "sauce_f": 5
+  },
+  {
+    "id": "chicken-katsu-curry-rice",
+    "displayNum": 63,
+    "carb": "rice",
+    "time": 30,
+    "title": "Chicken Katsu Curry Rice",
+    "desc": "Panko-crusted chicken thigh over Japanese curry sauce and steamed rice with pickled daikon.",
+    "tags": [
+      "japanese"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 180,
+    "sauce_p": 3,
+    "sauce_c": 22,
+    "sauce_f": 8
+  },
+  {
+    "id": "chicken-tikka-masala-rice-bowl",
+    "displayNum": 64,
+    "carb": "rice",
+    "time": 35,
+    "title": "Chicken Tikka Masala Rice Bowl",
+    "desc": "Tikka masala sauce over grilled chicken thighs with fragrant basmati rice.",
+    "tags": [
+      "indian"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 150,
+    "sauce_p": 3,
+    "sauce_c": 8,
+    "sauce_f": 12
+  },
+  {
+    "id": "chicken-biryani",
+    "displayNum": 65,
+    "carb": "rice",
+    "time": 50,
+    "title": "Chicken Biryani",
+    "desc": "Slow-layered spiced basmati rice with marinated chicken thigh, fried onions and saffron.",
+    "tags": [
+      "indian"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 160,
+    "sauce_p": 3,
+    "sauce_c": 20,
+    "sauce_f": 6
+  },
+  {
+    "id": "chicken-chipotle-rice-bowl",
+    "displayNum": 66,
+    "carb": "rice",
+    "time": 35,
+    "title": "Chicken Chipotle Rice Bowl",
+    "desc": "Smoky chipotle chicken thigh over cilantro lime rice with black beans and corn.",
+    "tags": [
+      "mexican"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 120,
+    "sauce_p": 4,
+    "sauce_c": 16,
+    "sauce_f": 5
+  },
+  {
+    "id": "chicken-burrito-bowl",
+    "displayNum": 67,
+    "carb": "rice",
+    "time": 30,
+    "title": "Chicken Burrito Bowl",
+    "desc": "Cumin-lime chicken thigh over Mexican rice, black beans, pico, guac and sour cream.",
+    "tags": [
+      "mexican"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 160,
+    "sauce_p": 5,
+    "sauce_c": 18,
+    "sauce_f": 8
+  },
+  {
+    "id": "chicken-pad-thai",
+    "displayNum": 68,
+    "carb": "noodle",
+    "time": 25,
+    "title": "Chicken Pad Thai",
+    "desc": "Classic stir-fried rice noodles with chicken thigh, bean sprouts, egg, peanut and lime.",
+    "tags": [
+      "thai"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 150,
+    "sauce_p": 5,
+    "sauce_c": 14,
+    "sauce_f": 7
+  },
+  {
+    "id": "chicken-shawarma-wrap",
+    "displayNum": 69,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Shawarma Wrap",
+    "desc": "Spiced shawarma thigh, toum, pickled turnip and herb salad in a flatbread wrap.",
+    "tags": [
+      "middle-eastern"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 130,
+    "sauce_p": 2,
+    "sauce_c": 8,
+    "sauce_f": 9
+  },
+  {
+    "id": "chicken-gyros",
+    "displayNum": 70,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Gyros",
+    "desc": "Tzatziki, tomato, onion and grilled chicken thigh in a warm pita with chips.",
+    "tags": [
+      "mediterranean"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 110,
+    "sauce_p": 3,
+    "sauce_c": 6,
+    "sauce_f": 7
+  },
+  {
+    "id": "chicken-smash-burger",
+    "displayNum": 71,
+    "carb": "bread",
+    "time": 30,
+    "title": "Chicken Smash Burger",
+    "desc": "Smashed chicken thigh patty, American cheese, pickles and special sauce in a brioche bun.",
+    "tags": [
+      "american",
+      "comfort"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 200,
+    "sauce_p": 4,
+    "sauce_c": 16,
+    "sauce_f": 15
+  },
+  {
+    "id": "spicy-chicken-sandwich",
+    "displayNum": 72,
+    "carb": "bread",
+    "time": 25,
+    "title": "Spicy Chicken Sandwich",
+    "desc": "Crispy-fried chicken thigh with hot honey, pickles and slaw on a brioche bun.",
+    "tags": [
+      "american",
+      "comfort"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 210,
+    "sauce_p": 3,
+    "sauce_c": 18,
+    "sauce_f": 14
+  },
+  {
+    "id": "chicken-caesar-wrap",
+    "displayNum": 73,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Caesar Wrap",
+    "desc": "Grilled chicken thigh, romaine, parmesan, crouton bits and Caesar dressing in a tortilla.",
+    "tags": [
+      "american"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 150,
+    "sauce_p": 4,
+    "sauce_c": 12,
+    "sauce_f": 10
+  },
+  {
+    "id": "chicken-fajita-wrap",
+    "displayNum": 74,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Fajita Wrap",
+    "desc": "Seared chicken thigh with peppers, onions, sour cream and salsa in a flour tortilla.",
+    "tags": [
+      "mexican"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 130,
+    "sauce_p": 3,
+    "sauce_c": 14,
+    "sauce_f": 7
+  },
+  {
+    "id": "chicken-banh-mi",
+    "displayNum": 75,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Banh Mi",
+    "desc": "Marinated chicken thigh with pâté, pickled daikon, carrot, cucumber and jalapeño in a baguette.",
+    "tags": [
+      "asian",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 110,
+    "sauce_p": 2,
+    "sauce_c": 20,
+    "sauce_f": 4
+  },
+  {
+    "id": "chicken-pita-pocket",
+    "displayNum": 76,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Pita Pocket",
+    "desc": "Spiced chicken thigh strips, hummus, tabbouleh and tahini in a warm pita.",
+    "tags": [
+      "middle-eastern"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 120,
+    "sauce_p": 4,
+    "sauce_c": 10,
+    "sauce_f": 7
+  },
+  {
+    "id": "chicken-tacos-birria-style",
+    "displayNum": 77,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Tacos (Birria Style)",
+    "desc": "Braised chicken thigh in adobo consommé in crispy dipped-and-fried corn tortillas.",
+    "tags": [
+      "mexican"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 130,
+    "sauce_p": 3,
+    "sauce_c": 12,
+    "sauce_f": 7
+  },
+  {
+    "id": "chicken-tikka-naan-wrap",
+    "displayNum": 78,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Tikka Naan Wrap",
+    "desc": "Tikka-spiced chicken thigh with mint chutney, red onion and yogurt in naan.",
+    "tags": [
+      "indian"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 130,
+    "sauce_p": 3,
+    "sauce_c": 14,
+    "sauce_f": 6
+  },
+  {
+    "id": "bbq-chicken-ciabatta",
+    "displayNum": 79,
+    "carb": "bread",
+    "time": 25,
+    "title": "BBQ Chicken Ciabatta",
+    "desc": "Pulled BBQ chicken thigh with coleslaw, pickled jalapeño in toasted ciabatta.",
+    "tags": [
+      "american"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 140,
+    "sauce_p": 2,
+    "sauce_c": 14,
+    "sauce_f": 6
+  },
+  {
+    "id": "chicken-souvlaki-pita",
+    "displayNum": 80,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Souvlaki Pita",
+    "desc": "Marinated grilled chicken thigh skewer, tzatziki and salad in a warm pita.",
+    "tags": [
+      "mediterranean"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 90,
+    "sauce_p": 3,
+    "sauce_c": 8,
+    "sauce_f": 5
+  },
+  {
+    "id": "chicken-club-sandwich",
+    "displayNum": 81,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Club Sandwich",
+    "desc": "Double-decker toasted bread with chicken thigh, bacon, lettuce, tomato and mayo.",
+    "tags": [
+      "american",
+      "comfort"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 200,
+    "sauce_p": 5,
+    "sauce_c": 18,
+    "sauce_f": 12
+  },
+  {
+    "id": "chicken-quesadilla",
+    "displayNum": 82,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Quesadilla",
+    "desc": "Seared chicken thigh with cheese and chipotle in a toasted flour tortilla.",
+    "tags": [
+      "mexican"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 150,
+    "sauce_p": 6,
+    "sauce_c": 12,
+    "sauce_f": 10
+  },
+  {
+    "id": "chicken-flatbread-pizza",
+    "displayNum": 83,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Flatbread Pizza",
+    "desc": "Grilled flatbread with tomato, mozzarella and seasoned chicken thigh slices.",
+    "tags": [
+      "mediterranean",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 160,
+    "sauce_p": 6,
+    "sauce_c": 16,
+    "sauce_f": 8
+  },
+  {
+    "id": "chicken-musubi",
+    "displayNum": 84,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Musubi",
+    "desc": "Hawaii-style chicken thigh teriyaki pressed with rice in a nori wrap.",
+    "tags": [
+      "asian",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 90,
+    "sauce_p": 2,
+    "sauce_c": 14,
+    "sauce_f": 3
+  },
+  {
+    "id": "chicken-lettuce-cups-with-wrap-option",
+    "displayNum": 85,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Lettuce Cups with Wrap Option",
+    "desc": "Asian chicken thigh mince in butter lettuce or rice paper wrap with hoisin-lime.",
+    "tags": [
+      "asian"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 100,
+    "sauce_p": 2,
+    "sauce_c": 8,
+    "sauce_f": 5
+  },
+  {
+    "id": "chicken-schnitzel-brtchen",
+    "displayNum": 86,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Schnitzel Brötchen",
+    "desc": "Breaded chicken thigh schnitzel in a crusty German bread roll with remoulade.",
+    "tags": [
+      "comfort",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 150,
+    "sauce_p": 3,
+    "sauce_c": 18,
+    "sauce_f": 8
+  },
+  {
+    "id": "chicken-banh-mi-vietnamese",
+    "displayNum": 87,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Banh Mi Vietnamese",
+    "desc": "Char siu-style chicken thigh with pickled veg and jalapeño in French baguette.",
+    "tags": [
+      "asian",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 110,
+    "sauce_p": 2,
+    "sauce_c": 18,
+    "sauce_f": 4
+  },
+  {
+    "id": "chicken-avocado-wrap",
+    "displayNum": 88,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Avocado Wrap",
+    "desc": "Grilled chicken thigh with avocado, tomato, romaine and chipotle mayo in tortilla.",
+    "tags": [
+      "american",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 150,
+    "sauce_p": 2,
+    "sauce_c": 10,
+    "sauce_f": 12
+  },
+  {
+    "id": "chicken-parmesan-sub",
+    "displayNum": 89,
+    "carb": "bread",
+    "time": 30,
+    "title": "Chicken Parmesan Sub",
+    "desc": "Breaded chicken thigh, marinara, melted mozzarella in a toasted hoagie.",
+    "tags": [
+      "american",
+      "comfort"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 200,
+    "sauce_p": 6,
+    "sauce_c": 18,
+    "sauce_f": 11
+  },
+  {
+    "id": "chicken-torta",
+    "displayNum": 90,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Torta",
+    "desc": "Mexican telera roll with chipotle chicken thigh, avocado, jalapeño and crema.",
+    "tags": [
+      "mexican"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 160,
+    "sauce_p": 3,
+    "sauce_c": 16,
+    "sauce_f": 10
+  },
+  {
+    "id": "chicken-kati-roll",
+    "displayNum": 91,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Kati Roll",
+    "desc": "Indian egg-paratha wrap with spiced chicken thigh, chutney and onion.",
+    "tags": [
+      "indian",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 130,
+    "sauce_p": 3,
+    "sauce_c": 16,
+    "sauce_f": 6
+  },
+  {
+    "id": "chicken-tahini-flatbread",
+    "displayNum": 92,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Tahini Flatbread",
+    "desc": "Za'atar chicken thigh on lavash with tahini, pickled onion and parsley.",
+    "tags": [
+      "middle-eastern"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 120,
+    "sauce_p": 3,
+    "sauce_c": 12,
+    "sauce_f": 8
+  },
+  {
+    "id": "chicken-sabichstyle-pitta",
+    "displayNum": 93,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Sabich-Style Pitta",
+    "desc": "Israeli-inspired chicken thigh with amba, tahini, egg and roasted aubergine in pita.",
+    "tags": [
+      "middle-eastern"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 130,
+    "sauce_p": 4,
+    "sauce_c": 10,
+    "sauce_f": 8
+  },
+  {
+    "id": "chicken-croque-monsieurstyle-toast",
+    "displayNum": 94,
+    "carb": "bread",
+    "time": 30,
+    "title": "Chicken Croque Monsieur-Style Toast",
+    "desc": "Béchamel-topped chicken thigh and cheese open toast, grilled until golden.",
+    "tags": [
+      "comfort",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 200,
+    "sauce_p": 6,
+    "sauce_c": 14,
+    "sauce_f": 14
+  },
+  {
+    "id": "chicken-tacos-dorados",
+    "displayNum": 95,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Tacos Dorados",
+    "desc": "Crispy fried corn tortilla with shredded chicken thigh, salsa verde and crema.",
+    "tags": [
+      "mexican"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 120,
+    "sauce_p": 2,
+    "sauce_c": 14,
+    "sauce_f": 6
+  },
+  {
+    "id": "chicken-pesto-ciabatta",
+    "displayNum": 96,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Pesto Ciabatta",
+    "desc": "Grilled chicken thigh with pesto, sun-dried tomato and mozzarella in ciabatta.",
+    "tags": [
+      "mediterranean"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 160,
+    "sauce_p": 5,
+    "sauce_c": 14,
+    "sauce_f": 10
+  },
+  {
+    "id": "chicken-reuben-sandwich",
+    "displayNum": 97,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Reuben Sandwich",
+    "desc": "Chicken thigh pastrami-style, swiss cheese, sauerkraut and thousand island on rye.",
+    "tags": [
+      "american",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 180,
+    "sauce_p": 4,
+    "sauce_c": 14,
+    "sauce_f": 12
+  },
+  {
+    "id": "chicken-tacos-al-carbn",
+    "displayNum": 98,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Tacos al Carbón",
+    "desc": "Grilled chicken thigh in corn tortilla with salsa roja, cilantro and onion.",
+    "tags": [
+      "mexican"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 90,
+    "sauce_p": 1,
+    "sauce_c": 12,
+    "sauce_f": 3
+  },
+  {
+    "id": "chicken-chimichanga",
+    "displayNum": 99,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Chimichanga",
+    "desc": "Fried flour tortilla stuffed with chipotle chicken thigh, rice and cheese.",
+    "tags": [
+      "mexican",
+      "comfort"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 200,
+    "sauce_p": 4,
+    "sauce_c": 16,
+    "sauce_f": 14
+  },
+  {
+    "id": "chicken-naan-pizza",
+    "displayNum": 100,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Naan Pizza",
+    "desc": "Naan bread base with tikka chicken thigh, mozzarella and fresh coriander.",
+    "tags": [
+      "indian",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 140,
+    "sauce_p": 5,
+    "sauce_c": 16,
+    "sauce_f": 6
+  },
+  {
+    "id": "chicken-sriracha-honey-wrap",
+    "displayNum": 101,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Sriracha Honey Wrap",
+    "desc": "Crispy chicken thigh with sriracha honey, slaw and sesame in a flour tortilla.",
+    "tags": [
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 140,
+    "sauce_p": 2,
+    "sauce_c": 16,
+    "sauce_f": 6
+  },
+  {
+    "id": "chicken-banh-cuon-wrap",
+    "displayNum": 102,
+    "carb": "bread",
+    "time": 30,
+    "title": "Chicken Banh Cuon Wrap",
+    "desc": "Vietnamese steamed rice roll with spiced chicken thigh, wood ear mushroom and herbs.",
+    "tags": [
+      "asian"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 90,
+    "sauce_p": 2,
+    "sauce_c": 16,
+    "sauce_f": 2
+  },
+  {
+    "id": "chicken-garlic-bread-sub",
+    "displayNum": 103,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Garlic Bread Sub",
+    "desc": "Herb-buttered toasted baguette with seared chicken thigh, cheese and arugula.",
+    "tags": [
+      "comfort",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 180,
+    "sauce_p": 4,
+    "sauce_c": 18,
+    "sauce_f": 10
+  },
+  {
+    "id": "chicken-banh-mi-meatball-baguette",
+    "displayNum": 104,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Banh Mi Meatball Baguette",
+    "desc": "Minced chicken thigh meatballs in Vietnamese-style baguette with pickles.",
+    "tags": [
+      "asian",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 120,
+    "sauce_p": 3,
+    "sauce_c": 18,
+    "sauce_f": 5
+  },
+  {
+    "id": "chicken-hummus-toast",
+    "displayNum": 105,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Hummus Toast",
+    "desc": "Za'atar chicken thigh over thick-spread hummus toast with pomegranate molasses.",
+    "tags": [
+      "middle-eastern"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 130,
+    "sauce_p": 4,
+    "sauce_c": 14,
+    "sauce_f": 8
+  },
+  {
+    "id": "chicken-smashed-avo-wrap",
+    "displayNum": 106,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Smashed Avo Wrap",
+    "desc": "Grilled chicken thigh with smashed avocado, lime, chili flakes in wholegrain wrap.",
+    "tags": [
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 130,
+    "sauce_p": 1,
+    "sauce_c": 10,
+    "sauce_f": 10
+  },
+  {
+    "id": "chicken-gua-bao",
+    "displayNum": 107,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Gua Bao",
+    "desc": "Taiwanese steamed bao with soy-braised chicken thigh, pickled mustard and peanut.",
+    "tags": [
+      "asian",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 120,
+    "sauce_p": 2,
+    "sauce_c": 20,
+    "sauce_f": 3
+  },
+  {
+    "id": "chicken-currywurst-brtchen",
+    "displayNum": 108,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Currywurst Brötchen",
+    "desc": "Pan-fried chicken thigh with curry ketchup sauce in a crusty German bread roll.",
+    "tags": [
+      "comfort",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 120,
+    "sauce_p": 1,
+    "sauce_c": 16,
+    "sauce_f": 5
+  },
+  {
+    "id": "chicken-dukkah-flatbread",
+    "displayNum": 109,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Dukkah Flatbread",
+    "desc": "Egyptian dukkah-spiced chicken thigh on flatbread with labneh and olive oil.",
+    "tags": [
+      "middle-eastern"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 140,
+    "sauce_p": 3,
+    "sauce_c": 10,
+    "sauce_f": 10
+  },
+  {
+    "id": "chicken-harissa-flatbread",
+    "displayNum": 110,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Harissa Flatbread",
+    "desc": "Harissa chicken thigh on grilled flatbread with cooling yogurt and herbs.",
+    "tags": [
+      "middle-eastern"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 110,
+    "sauce_p": 2,
+    "sauce_c": 10,
+    "sauce_f": 7
+  },
+  {
+    "id": "chicken-blt-sandwich",
+    "displayNum": 111,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken BLT Sandwich",
+    "desc": "Grilled chicken thigh with bacon, lettuce, tomato and aioli on sourdough.",
+    "tags": [
+      "american",
+      "comfort"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 170,
+    "sauce_p": 3,
+    "sauce_c": 14,
+    "sauce_f": 11
+  },
+  {
+    "id": "chicken-tikka-pita",
+    "displayNum": 112,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Tikka Pita",
+    "desc": "Tikka-spiced grilled chicken thigh with mint raita and shredded onion in pita.",
+    "tags": [
+      "indian",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 100,
+    "sauce_p": 3,
+    "sauce_c": 10,
+    "sauce_f": 5
+  },
+  {
+    "id": "chicken-elote-taco",
+    "displayNum": 113,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Elote Taco",
+    "desc": "Mexican street corn-style chicken thigh taco with cotija, chili and lime.",
+    "tags": [
+      "mexican"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 120,
+    "sauce_p": 2,
+    "sauce_c": 14,
+    "sauce_f": 6
+  },
+  {
+    "id": "chicken-durum-kebab-wrap",
+    "displayNum": 114,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Durum Kebab Wrap",
+    "desc": "Turkish durum-style chicken thigh kebab with cacık, fresh tomato and parsley.",
+    "tags": [
+      "middle-eastern"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 100,
+    "sauce_p": 2,
+    "sauce_c": 14,
+    "sauce_f": 4
+  },
+  {
+    "id": "chicken-manchego-toastie",
+    "displayNum": 115,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Manchego Toastie",
+    "desc": "Seared chicken thigh with manchego, membrillo and arugula on sourdough.",
+    "tags": [
+      "mediterranean"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 180,
+    "sauce_p": 5,
+    "sauce_c": 14,
+    "sauce_f": 12
+  },
+  {
+    "id": "chicken-periperi-bun",
+    "displayNum": 116,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Peri-Peri Bun",
+    "desc": "Spicy peri-peri chicken thigh with coriander mayo in a toasted sesame bun.",
+    "tags": [
+      "fusion",
+      "comfort"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 140,
+    "sauce_p": 2,
+    "sauce_c": 14,
+    "sauce_f": 8
+  },
+  {
+    "id": "chicken-chimichurri-baguette",
+    "displayNum": 117,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Chimichurri Baguette",
+    "desc": "Grilled chicken thigh with chimichurri, roasted pepper and provolone in baguette.",
+    "tags": [
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 140,
+    "sauce_p": 3,
+    "sauce_c": 16,
+    "sauce_f": 8
+  },
+  {
+    "id": "chicken-muhammara-flatbread",
+    "displayNum": 118,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Muhammara Flatbread",
+    "desc": "Walnut-red pepper muhammara paste chicken thigh on grilled flatbread.",
+    "tags": [
+      "middle-eastern"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 130,
+    "sauce_p": 3,
+    "sauce_c": 10,
+    "sauce_f": 10
+  },
+  {
+    "id": "chicken-chimichurri-ciabatta",
+    "displayNum": 119,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Chimichurri Ciabatta",
+    "desc": "Herb chimichurri chicken thigh with smoked provolone in toasted ciabatta.",
+    "tags": [
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 150,
+    "sauce_p": 4,
+    "sauce_c": 14,
+    "sauce_f": 9
+  },
+  {
+    "id": "chicken-lahmacun",
+    "displayNum": 120,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Lahmacun",
+    "desc": "Turkish minced chicken thigh on crispy flatbread with parsley and lemon.",
+    "tags": [
+      "middle-eastern"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 90,
+    "sauce_p": 2,
+    "sauce_c": 14,
+    "sauce_f": 3
+  },
+  {
+    "id": "chicken-tostada",
+    "displayNum": 121,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Tostada",
+    "desc": "Crispy corn tostada with chicken thigh, black beans, cotija and crema.",
+    "tags": [
+      "mexican"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 130,
+    "sauce_p": 4,
+    "sauce_c": 14,
+    "sauce_f": 6
+  },
+  {
+    "id": "chicken-kofta-pita",
+    "displayNum": 122,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Kofta Pita",
+    "desc": "Minced chicken thigh kofta in pita with tahini, onion-parsley salad.",
+    "tags": [
+      "middle-eastern"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 120,
+    "sauce_p": 3,
+    "sauce_c": 10,
+    "sauce_f": 7
+  },
+  {
+    "id": "chicken-muhammara-wrap",
+    "displayNum": 123,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Muhammara Wrap",
+    "desc": "Smoky walnut-pepper chicken wrap with fresh herbs in a wholegrain tortilla.",
+    "tags": [
+      "middle-eastern"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 130,
+    "sauce_p": 3,
+    "sauce_c": 12,
+    "sauce_f": 9
+  },
+  {
+    "id": "chicken-smash-wrap",
+    "displayNum": 124,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Smash Wrap",
+    "desc": "Smashed chicken thigh with crispy edges in a toasted flour tortilla with chipotle.",
+    "tags": [
+      "american",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 150,
+    "sauce_p": 2,
+    "sauce_c": 12,
+    "sauce_f": 10
+  },
+  {
+    "id": "chicken-shawarma-pide",
+    "displayNum": 125,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Shawarma Pide",
+    "desc": "Turkish pide bread base with chicken shawarma, cheese and egg.",
+    "tags": [
+      "middle-eastern",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 150,
+    "sauce_p": 4,
+    "sauce_c": 16,
+    "sauce_f": 7
+  },
+  {
+    "id": "chicken-kafta-flatbread",
+    "displayNum": 126,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Kafta Flatbread",
+    "desc": "Lebanese kafta-spiced chicken thigh on flatbread with fresh tomato and parsley.",
+    "tags": [
+      "middle-eastern"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 90,
+    "sauce_p": 2,
+    "sauce_c": 12,
+    "sauce_f": 4
+  },
+  {
+    "id": "chicken-adanastyle-wrap",
+    "displayNum": 127,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Adana-Style Wrap",
+    "desc": "Turkish adana-spiced minced chicken thigh in flatbread with sumac onion.",
+    "tags": [
+      "middle-eastern"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 90,
+    "sauce_p": 2,
+    "sauce_c": 12,
+    "sauce_f": 4
+  },
+  {
+    "id": "chicken-muffuletta-inspired-sandwich",
+    "displayNum": 128,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Muffuletta Inspired Sandwich",
+    "desc": "Olive salad, chicken thigh, provolone and salami on a round sesame roll.",
+    "tags": [
+      "american",
+      "comfort"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 190,
+    "sauce_p": 5,
+    "sauce_c": 14,
+    "sauce_f": 13
+  },
+  {
+    "id": "chicken-tzatziki-wrap",
+    "displayNum": 129,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Tzatziki Wrap",
+    "desc": "Greek-spiced chicken thigh with tzatziki, tomato and olives in a pita wrap.",
+    "tags": [
+      "mediterranean"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 90,
+    "sauce_p": 3,
+    "sauce_c": 8,
+    "sauce_f": 5
+  },
+  {
+    "id": "chicken-satay-bao",
+    "displayNum": 130,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Satay Bao",
+    "desc": "Chicken thigh satay with peanut sauce in steamed bao with cucumber.",
+    "tags": [
+      "asian",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 150,
+    "sauce_p": 4,
+    "sauce_c": 20,
+    "sauce_f": 6
+  },
+  {
+    "id": "chicken-souvlaki-flatbread",
+    "displayNum": 131,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Souvlaki Flatbread",
+    "desc": "Grilled chicken thigh souvlaki over flatbread with tzatziki and tomato.",
+    "tags": [
+      "mediterranean"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 90,
+    "sauce_p": 3,
+    "sauce_c": 10,
+    "sauce_f": 4
+  },
+  {
+    "id": "chicken-cemita-sandwich",
+    "displayNum": 132,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Cemita Sandwich",
+    "desc": "Mexican cemita bun with chicken thigh, chipotle, avocado and queso panela.",
+    "tags": [
+      "mexican"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 170,
+    "sauce_p": 4,
+    "sauce_c": 16,
+    "sauce_f": 10
+  },
+  {
+    "id": "chicken-arayes",
+    "displayNum": 133,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Arayes",
+    "desc": "Lebanese minced chicken thigh in grilled flatbread with parsley and pomegranate.",
+    "tags": [
+      "middle-eastern"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 110,
+    "sauce_p": 2,
+    "sauce_c": 14,
+    "sauce_f": 5
+  },
+  {
+    "id": "chicken-al-forno-flatbread",
+    "displayNum": 134,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Al Forno Flatbread",
+    "desc": "Oven-baked flatbread with chicken thigh, ricotta, spinach and chili oil.",
+    "tags": [
+      "mediterranean"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 140,
+    "sauce_p": 5,
+    "sauce_c": 14,
+    "sauce_f": 7
+  },
+  {
+    "id": "chicken-pepperonistyle-flatbread",
+    "displayNum": 135,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Pepperoni-Style Flatbread",
+    "desc": "Crispy flatbread with chicken thigh, pepperoni-spiced oil, tomato and mozzarella.",
+    "tags": [
+      "comfort",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 160,
+    "sauce_p": 5,
+    "sauce_c": 14,
+    "sauce_f": 9
+  },
+  {
+    "id": "chicken-souvlaki-sandwich",
+    "displayNum": 136,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Souvlaki Sandwich",
+    "desc": "Marinated chicken thigh skewer in a sesame bun with tzatziki and tomato.",
+    "tags": [
+      "mediterranean"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 100,
+    "sauce_p": 3,
+    "sauce_c": 12,
+    "sauce_f": 5
+  },
+  {
+    "id": "chicken-piripiri-wrap",
+    "displayNum": 137,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Piri-Piri Wrap",
+    "desc": "Chargrilled piri-piri chicken thigh with coriander mayo in a flour tortilla.",
+    "tags": [
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 120,
+    "sauce_p": 2,
+    "sauce_c": 12,
+    "sauce_f": 7
+  },
+  {
+    "id": "chicken-caprese-toastie",
+    "displayNum": 138,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Caprese Toastie",
+    "desc": "Mozzarella, tomato and chicken thigh on sourdough with fresh basil and balsamic.",
+    "tags": [
+      "mediterranean"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 150,
+    "sauce_p": 5,
+    "sauce_c": 12,
+    "sauce_f": 10
+  },
+  {
+    "id": "chicken-tikka-masala-naan-wrap",
+    "displayNum": 139,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Tikka Masala Naan Wrap",
+    "desc": "Tikka masala chicken thigh folded in garlic naan with mint raita.",
+    "tags": [
+      "indian"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 150,
+    "sauce_p": 3,
+    "sauce_c": 16,
+    "sauce_f": 7
+  },
+  {
+    "id": "chicken-falafelstyle-pita",
+    "displayNum": 140,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Falafel-Style Pita",
+    "desc": "Spiced chicken thigh patties in pita with tahini, salad and harissa.",
+    "tags": [
+      "middle-eastern",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 120,
+    "sauce_p": 3,
+    "sauce_c": 12,
+    "sauce_f": 6
+  },
+  {
+    "id": "chicken-aa-bowl-inspiration-wrap",
+    "displayNum": 141,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Açaí Bowl Inspiration Wrap",
+    "desc": "Brazilian-fusion chicken thigh in wrap with mango, lime cream and crispy granola.",
+    "tags": [
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 130,
+    "sauce_p": 2,
+    "sauce_c": 16,
+    "sauce_f": 5
+  },
+  {
+    "id": "chicken-parmastyle-panini",
+    "displayNum": 142,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Parma-Style Panini",
+    "desc": "Chicken thigh with prosciutto, pesto and mozzarella in toasted ciabatta.",
+    "tags": [
+      "mediterranean"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 160,
+    "sauce_p": 5,
+    "sauce_c": 14,
+    "sauce_f": 9
+  },
+  {
+    "id": "chicken-elote-bowl-wrap",
+    "displayNum": 143,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Elote Bowl Wrap",
+    "desc": "Mexican street corn-inspired chicken thigh wrap with cotija, chili mayo and lime.",
+    "tags": [
+      "mexican"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 140,
+    "sauce_p": 3,
+    "sauce_c": 14,
+    "sauce_f": 8
+  },
+  {
+    "id": "chicken-banh-trang-cuon",
+    "displayNum": 144,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Banh Trang Cuon",
+    "desc": "Vietnamese rice paper rolls with chicken thigh, herbs, rice noodle and peanut hoisin.",
+    "tags": [
+      "asian"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 100,
+    "sauce_p": 2,
+    "sauce_c": 14,
+    "sauce_f": 4
+  },
+  {
+    "id": "chicken-sabich-upgraded",
+    "displayNum": 145,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Sabich Upgraded",
+    "desc": "Upgraded sabich with chicken thigh, amba, fried egg and tahini in pita.",
+    "tags": [
+      "middle-eastern"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 140,
+    "sauce_p": 5,
+    "sauce_c": 10,
+    "sauce_f": 9
+  },
+  {
+    "id": "chicken-tahini-pita",
+    "displayNum": 146,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Tahini Pita",
+    "desc": "Baked chicken thigh with lemon-garlic tahini and fresh herbs in pita.",
+    "tags": [
+      "middle-eastern"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 110,
+    "sauce_p": 3,
+    "sauce_c": 10,
+    "sauce_f": 7
+  },
+  {
+    "id": "chicken-shawarma-toast",
+    "displayNum": 147,
+    "carb": "bread",
+    "time": 20,
+    "title": "Chicken Shawarma Toast",
+    "desc": "Shawarma chicken thigh on toast with toum garlic spread and pickled turnip.",
+    "tags": [
+      "middle-eastern"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 120,
+    "sauce_p": 2,
+    "sauce_c": 14,
+    "sauce_f": 6
+  },
+  {
+    "id": "chicken-cubano",
+    "displayNum": 148,
+    "carb": "bread",
+    "time": 25,
+    "title": "Chicken Cubano",
+    "desc": "Cuban-style chicken thigh sandwich with pickles, mustard and Swiss cheese.",
+    "tags": [
+      "american",
+      "fusion"
+    ],
+    "flavor": "savory",
+    "sauce_kcal": 180,
+    "sauce_p": 5,
+    "sauce_c": 16,
+    "sauce_f": 11
+  }
+]
