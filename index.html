@@ -17,21 +17,76 @@
     --carb-potato:#e8a347; --carb-rice:#47b3e8; --carb-noodle:#c847e8; --carb-bread:#e84747;
   }
   html.light {
-    --bg:#f5f5f0; --surface:#ebebе5; --card:#ffffff; --border:#ddd;
+    --bg:#f4f4ef; --surface:#eaeae4; --card:#ffffff; --border:#ddd;
     --text:#1a1a1a; --muted:#777;
   }
+  /* Base */
   html.light body{background:var(--bg);color:var(--text);}
   html.light .nav-tabs{background:var(--bg);}
   html.light .nav-tab{color:var(--muted);}
   html.light .nav-tab:hover{color:var(--text);}
+
+  /* Cards */
   html.light .card{background:var(--card);}
-  html.light .card:hover{background:#f0efea;}
-  html.light .filter-bar,html.light .controls{background:rgba(245,245,240,.97);}
-  html.light .filter-dropdown{background:rgba(240,240,235,.98);}
-  html.light .carb-bar{background:rgba(245,245,240,.95);}
+  html.light .card:hover{background:#f7f6f1;}
+  html.light .macro-box{background:rgba(0,0,0,.03);border-color:#e0e0e0;}
+  html.light .macro-bar{background:rgba(0,0,0,.07);}
+  html.light .card-sauce-btn{background:rgba(0,0,0,.04);border-color:#e0e0e0;}
+  html.light .card-sauce-panel{background:rgba(0,0,0,.03);border-color:#e5e5e5;}
+  html.light .card-thumb{background:#ddd;}
+  html.light .score-bar-bg{background:rgba(0,0,0,.08);}
+
+  /* Filter bars */
+  html.light .filter-bar,html.light .controls{background:rgba(244,244,239,.97);}
+  html.light .filter-dropdown{background:rgba(238,238,233,.98);}
+  html.light .carb-bar{background:rgba(244,244,239,.95);}
   html.light .filter-pill,html.light .filter-btn{background:var(--card);color:var(--muted);}
+  html.light .filter-pill:hover{border-color:#aaa;color:var(--text);}
+  html.light .filter-btn:hover{border-color:var(--accent);color:var(--accent);}
   html.light .search-wrap input{background:var(--card);color:var(--text);}
   html.light .carb-num{background:var(--card);color:var(--text);}
+
+  /* Modal */
+  html.light .modal{background:#fff;border-color:#ddd;}
+  html.light .modal-close:hover{background:rgba(0,0,0,.06);}
+  html.light .modal-macro{background:rgba(0,0,0,.03);border-color:#ddd;}
+  html.light .modal-tabs{border-color:#ddd;}
+  html.light .ing-list li{background:rgba(0,0,0,.03);}
+  html.light .ing-list li.has-macros:hover{background:rgba(0,0,0,.06);}
+  html.light .ing-macro-panel{border-color:rgba(0,0,0,.07);}
+  html.light .ing-macro-cell,.ing-total-bar{background:var(--surface);}
+  html.light .ing-total-bar{background:var(--surface);border-color:#ddd;}
+  html.light .ing-note{color:#999;border-color:#ddd;}
+  html.light .modal-variant-row{background:rgba(0,0,0,.03);border-color:#ddd;}
+  html.light .modal-variant-btn{background:var(--surface);border-color:#ddd;}
+  html.light .modal-variant-btn:hover{border-color:#aaa;color:var(--text);}
+  html.light .modal-weight-row{background:rgba(0,0,0,.03);border-color:#ddd;}
+  html.light .modal-weight-row-main:hover{background:rgba(0,0,0,.05);}
+  html.light .serving-control{background:rgba(0,0,0,.03);border-color:#ddd;}
+  html.light .step-btn:hover{background:#eee;}
+  html.light .step-ing-btn{background:rgba(0,0,0,.04);border-color:#ddd;}
+  html.light .video-placeholder{background:rgba(0,0,0,.03);border-color:#ccc;color:#aaa;}
+  html.light .equipment-tag{background:rgba(0,0,0,.04);border-color:#ddd;}
+  html.light .note-box{background:rgba(255,140,0,.04);border-color:rgba(255,140,0,.18);}
+  html.light .note-box{color:#666;}
+
+  /* Reset / Exit modals */
+  html.light .reset-modal{background:#fff;border-color:#ddd;}
+  html.light .exit-modal{background:#fff;}
+  html.light .exit-btn-secondary{background:#eee;color:var(--text);border-color:#ddd;}
+
+  /* Calc / Formula */
+  html.light .calc2-field select option{background:#fff;}
+  html.light .formula-accordion-header:hover{background:#eee;}
+  html.light .formula-line code{background:rgba(0,0,0,.05);border-color:#ddd;}
+
+  /* Pantry */
+  html.light .pantry-section-header:hover{background:rgba(0,0,0,.03);}
+  html.light .pantry-section-count{background:rgba(0,0,0,.06);}
+  html.light .dietary-panel-header:hover{background:rgba(0,0,0,.03);}
+  html.light .video-check-wrap{background:rgba(0,0,0,.04);}
+
+  /* Social nav */
   html.light .social-btn.tiktok{background:rgba(0,0,0,.06);color:#333;border-color:rgba(0,0,0,.15);}
   html.light .social-btn.tiktok:hover{background:rgba(0,0,0,.12);border-color:#333;}
 
