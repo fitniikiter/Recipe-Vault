@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FIT NIIKITER'S RECIPE VAULT</title>
@@ -864,8 +865,19 @@
     .tab-icon{font-size:20px;}
   }
 </style>
+
 </head>
 <body>
+
+<!-- LOADING SCREEN -->
+<div id="loadingScreen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#0e0e0e;display:flex;align-items:center;justify-content:center;z-index:9999;font-family:'DM Sans',sans-serif;color:#f0f0f0;">
+  <div style="text-align:center;">
+    <div style="font-size:48px;margin-bottom:16px;">👨‍🍳</div>
+    <div style="font-size:14px;color:#888;">Loading Recipe Vault...</div>
+  </div>
+</div>
+
+
 
 <div class="nav-tabs">
   <button class="nav-tab active" onclick="switchTab('recipes',this)"><span class="tab-icon">📋</span><span class="tab-label">Recipes</span></button>
@@ -1455,7 +1467,83 @@
 <div style="margin-top:10px;font-size:10px;color:#444;font-weight:300;line-height:1.6;max-width:700px;margin-left:auto;margin-right:auto;">All macro and nutritional values are estimates based on standard raw ingredient data and may vary depending on brands, preparation methods and portion sizes. This website is for informational purposes only and does not constitute medical or nutritional advice. Consult a qualified professional before making significant dietary changes.</div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js">
+
+// ========== DATA LOADING ==========
+// Global state - will be filled by fetch
+let R = [];
+window.PROTEIN_DEFS = [];
+window.DIETARY_FILTERS = [];
+window.ADMIN_NOTES_MAP = {};
+
+// Load recipes and config from JSON files
+Promise.all([
+  fetch('recipes.json').then(r => {
+    if (!r.ok) throw new Error('Failed to load recipes.json');
+    return r.json();
+  }),
+  fetch('config.json').then(r => {
+    if (!r.ok) throw new Error('Failed to load config.json');
+    return r.json();
+  })
+])
+.then(([recipes, config]) => {
+  console.log('✅ Loaded ' + recipes.length + ' recipes');
+  
+  // Set globals
+  R = recipes;
+  window.PROTEIN_DEFS = config.proteinDefs;
+  window.DIETARY_FILTERS = config.dietaryFilters;
+  
+  // Hide loading
+  document.getElementById('loadingScreen').style.display = 'none';
+  
+  // Initialize app after short delay
+  setTimeout(() => {
+    autoCalcCarbs();
+    buildAllCards();
+    buildDisplayNumbers();
+    
+    // Build protein selector
+    const sel = document.getElementById('proteinSelector');
+    if (sel) {
+      sel.innerHTML = PROTEIN_DEFS.map(p =>
+        '<div class="protein-btn ' + (p.key==='chicken'?'active':'') + '" data-protein="' + p.key + '" onclick="selectProtein('' + p.key + '')"><span class="pb-icon">' + p.icon + '</span><span class="pb-name">' + p.name + '</span></div>'
+      ).join('');
+      selectProtein('chicken');
+    }
+    
+    updateCardMacros();
+    updateCalcDisplay();
+    filterRecipes();
+    updatePillStates();
+    buildDietaryGrid();
+    applyDietaryToProteinFilters();
+    
+    // Apply saved dietary
+    activeDietary.forEach(id => {
+      const def = DIETARY_FILTERS.find(d=>d.id===id);
+      if (def) def.blocks.forEach(ingId => disabledIngredients.add(ingId));
+    });
+    
+    // Handle URL param
+    const recipeParam = new URL(window.location).searchParams.get('recipe');
+    if (recipeParam) {
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          const r = R.find(x => x.id === recipeParam || String(x.displayNum) === recipeParam);
+          if (r) openModal(r.id);
+        }, 100);
+      });
+    }
+  }, 50);
+})
+.catch(err => {
+  console.error('❌ Error loading data:', err);
+  document.getElementById('loadingScreen').innerHTML = '<div style="text-align:center;color:#ff6b35;"><div style="font-size:48px;margin-bottom:16px;">⚠️</div><div style="font-size:14px;">Failed to load recipe data</div><div style="font-size:12px;color:#888;margin-top:8px;">' + err.message + '</div><div style="font-size:12px;color:#888;margin-top:16px;">Make sure recipes.json and config.json are in the same folder as index.html</div></div>';
+});
+
+</script><script>
 // ── Nutritional values per 100g RAW ──
 const NUT = {
   // proteins
@@ -1760,166 +1848,6 @@ const DEFAULT_HIDDEN_IDS = new Set([]); // all recipes visible by default
 const _savedHidden = loadHiddenIds();
 let HIDDEN_RECIPE_IDS = _savedHidden !== null ? _savedHidden : new Set(DEFAULT_HIDDEN_IDS);
 
-const R = [
-  {id:'korean-glazed-chicken-bowl',displayNum:1,  carb:'rice', time:30, title:"Korean Glazed Chicken Bowl",                  desc:"Boneless thighs with quick-pickled cucumber, spring onions and Korean glaze over jasmine rice.",  tags:["korean"],          flavor:'savory',sauce_kcal:95, sauce_p:2,sauce_c:12,sauce_f:3},
-  // ═══════════ POTATO — ASIAN/KOREAN/JAPANESE (1-80) ═══════════
-  {id:'teriyaki-chicken-hasselback-potatoes',displayNum:2,   carb:'potato', time:35, title:"Teriyaki Chicken & Hasselback Potatoes",        desc:"Glazed thighs in homemade teriyaki with fanned hasselback potatoes roasted in sesame butter.",           tags:["asian","fusion"],  flavor:'savory',sauce_kcal:110,sauce_p:2,sauce_c:14,sauce_f:5},
-  {id:'soy-garlic-braised-chicken-baby-potatoes',displayNum:3,   carb:'potato', time:30, title:"Soy Garlic Braised Chicken & Baby Potatoes",    desc:"Slow-braised thighs in soy, garlic and mirin with tender baby potatoes soaking up the sauce.",         tags:["asian"],           flavor:'savory',sauce_kcal:80, sauce_p:3,sauce_c:10,sauce_f:2},
-  {id:'chinese-5spice-chicken-potato-stirfry',displayNum:4,   carb:'potato', time:25, title:"Chinese 5-Spice Chicken Potato Stir-Fry",       desc:"Wok-tossed diced chicken and matchstick potatoes in five-spice hoisin glaze.",                          tags:["chinese"],         flavor:'savory',sauce_kcal:90, sauce_p:2,sauce_c:12,sauce_f:3},
-  {id:'japanese-nikujaga-chicken-style',displayNum:5,   carb:'potato', time:40, title:"Japanese Nikujaga Chicken Style",                desc:"Classic Japanese meat-and-potato stew adapted with chicken thighs, dashi and mirin.",                  tags:["japanese"],        flavor:'savory',sauce_kcal:70, sauce_p:2,sauce_c:10,sauce_f:1},
-  {id:'ginger-scallion-chicken-smashed-potatoes',displayNum:6,   carb:'potato', time:25, title:"Ginger Scallion Chicken Smashed Potatoes",      desc:"Poached chicken thighs over crispy smashed potatoes drenched in ginger-scallion oil.",                 tags:["asian","fusion"],  flavor:'savory',sauce_kcal:120,sauce_p:1,sauce_c:2, sauce_f:13},
-  {id:'oyster-sauce-braised-chicken-potato-tray',displayNum:7,   carb:'potato', time:30, title:"Oyster Sauce Braised Chicken Potato Tray",      desc:"One-tray bake with oyster sauce marinade, garlic and wedge-cut potatoes.",                              tags:["chinese"],         flavor:'savory',sauce_kcal:75, sauce_p:1,sauce_c:9, sauce_f:2},
-  {id:'miso-butter-chicken-thighs-roasted-fingerlings',displayNum:8,   carb:'potato', time:35, title:"Miso Butter Chicken Thighs & Roasted Fingerlings",desc:"White miso compound butter melted over pan-seared thighs with crispy fingerling potatoes.",          tags:["japanese","fusion"],flavor:'savory',sauce_kcal:100,sauce_p:2,sauce_c:5, sauce_f:8},
-  {id:'dakgalbi-spicy-stirfried-chicken-potato',displayNum:9,   carb:'potato', time:25, title:"Dakgalbi Spicy Stir-Fried Chicken & Potato",    desc:"Fiery Korean gochujang stir-fry with thick-cut potatoes, cabbage and scallions.",                     tags:["korean"],          flavor:'savory',sauce_kcal:90, sauce_p:2,sauce_c:13,sauce_f:2},
-  {id:'jjimdak-korean-braised-soy-chicken',displayNum:10,   carb:'potato', time:50, title:"Jjimdak Korean Braised Soy Chicken",             desc:"Iconic Korean soy-braised chicken thighs with glass noodles, potato chunks and dried chili.",         tags:["korean"],          flavor:'savory',sauce_kcal:95, sauce_p:3,sauce_c:12,sauce_f:2},
-  {id:'korean-army-stew-chicken-version',displayNum:11,  carb:'potato', time:40, title:"Korean Army Stew Chicken Version",               desc:"Budae jjigae-inspired hotpot with chicken thighs, sliced potato, kimchi and gochujang broth.",        tags:["korean"],          flavor:'savory',sauce_kcal:80, sauce_p:3,sauce_c:9, sauce_f:2},
-  {id:'galbijjim-style-chicken-thigh-potato-braise',displayNum:12,  carb:'potato', time:55, title:"Galbi-Jjim Style Chicken Thigh Potato Braise",  desc:"Slow-braised short-rib-style sauce applied to chicken thighs with golden potato and daikon.",         tags:["korean"],          flavor:'savory',sauce_kcal:100,sauce_p:2,sauce_c:14,sauce_f:2},
-  {id:'korean-crispy-potato-chicken-pancake-bowl',displayNum:13,  carb:'potato', time:35, title:"Korean Crispy Potato Chicken Pancake Bowl",     desc:"Shredded crispy chicken thigh over gamjajeon-inspired crispy potato cake with dipping sauce.",        tags:["korean","fusion"],  flavor:'savory',sauce_kcal:110,sauce_p:2,sauce_c:12,sauce_f:5},
-  {id:'gochujang-butter-chicken-potato-tray',displayNum:14,  carb:'potato', time:30, title:"Gochujang Butter Chicken & Potato Tray",        desc:"Spicy-sweet Korean butter glaze on chicken thighs and chunky potato — one tray, maximum flavour.",   tags:["korean","fusion"],  flavor:'savory',sauce_kcal:120,sauce_p:1,sauce_c:10,sauce_f:8},
-  {id:'korean-soy-honey-glazed-thighs-potato-wedges',displayNum:15,  carb:'potato', time:30, title:"Korean Soy Honey Glazed Thighs & Potato Wedges",desc:"Thick soy-honey glaze caramelised over thighs with roasted wedge potatoes and sesame.",               tags:["korean"],           flavor:'savory',sauce_kcal:105,sauce_p:2,sauce_c:15,sauce_f:3},
-  {id:'doenjang-braised-chicken-potato',displayNum:16,  carb:'potato', time:40, title:"Doenjang Braised Chicken & Potato",              desc:"Korean fermented soybean paste braised chicken with chunky potato and mushrooms.",                     tags:["korean"],           flavor:'savory',sauce_kcal:80, sauce_p:3,sauce_c:8, sauce_f:3},
-  {id:'japanese-karaagestyle-chicken-potato-salad',displayNum:17,  carb:'potato', time:35, title:"Japanese Karaage-Style Chicken & Potato Salad", desc:"Crispy karaage-seasoned thigh bites with Japanese-style potato salad and kewpie drizzle.",            tags:["japanese"],         flavor:'savory',sauce_kcal:130,sauce_p:2,sauce_c:10,sauce_f:10},
-  {id:'shio-koji-chicken-roasted-new-potatoes',displayNum:18,  carb:'potato', time:30, title:"Shio Koji Chicken Roasted New Potatoes",        desc:"Umami-rich shio koji marinated thighs over crispy roasted new potatoes with yuzu ponzu.",             tags:["japanese"],         flavor:'savory',sauce_kcal:70, sauce_p:2,sauce_c:5, sauce_f:3},
-  {id:'japanese-curry-chicken-potato-stew',displayNum:19,  carb:'potato', time:45, title:"Japanese Curry Chicken Potato Stew",            desc:"S&B curry roux with tender chicken thighs and chunky potato, the Japanese home-cooking classic.",     tags:["japanese"],         flavor:'savory',sauce_kcal:150,sauce_p:3,sauce_c:18,sauce_f:5},
-  {id:'yuzu-kosho-chicken-smashed-potatoes',displayNum:20,  carb:'potato', time:30, title:"Yuzu Kosho Chicken & Smashed Potatoes",         desc:"Citrusy-spicy yuzu kosho paste rubbed thighs over crispy smashed potatoes with ponzu.",              tags:["japanese","fusion"], flavor:'savory',sauce_kcal:80, sauce_p:1,sauce_c:2, sauce_f:6},
-  {id:'thai-basil-chicken-potato-stirfry',displayNum:21,  carb:'potato', time:35, title:"Thai Basil Chicken Potato Stir-Fry",            desc:"Pad kra pao-inspired stir-fry with chicken thigh mince, potato cubes, Thai basil and fish sauce.",   tags:["thai"],             flavor:'savory',sauce_kcal:100,sauce_p:2,sauce_c:8, sauce_f:5},
-  // POTATO — AMERICAN/COMFORT (21-60)
-  {id:'crispy-smothered-chicken-mashed-potato',displayNum:22,  carb:'potato', time:40, title:"Crispy Smothered Chicken & Mashed Potato",      desc:"Pan-fried chicken thigh with mushroom cream gravy over ultra-smooth mashed potato.",                  tags:["american","comfort"],flavor:'savory',sauce_kcal:180,sauce_p:3,sauce_c:8,sauce_f:16},
-  {id:'buffalo-chicken-loaded-potato-skins',displayNum:23,  carb:'potato', time:30, title:"Buffalo Chicken Loaded Potato Skins",           desc:"Spicy buffalo chicken filling stuffed into crispy roasted potato skin boats.",                         tags:["american","comfort"],flavor:'savory',sauce_kcal:110,sauce_p:2,sauce_c:4,sauce_f:9},
-  {id:'nashville-hot-chicken-wedge-fries',displayNum:24,  carb:'potato', time:35, title:"Nashville Hot Chicken & Wedge Fries",           desc:"Spice-crusted crispy chicken thigh over thick-cut wedge fries with honey drizzle.",                   tags:["american","comfort"],flavor:'savory',sauce_kcal:170,sauce_p:1,sauce_c:12,sauce_f:13},
-  {id:'chicken-pot-pie-stuffed-potato',displayNum:25,  carb:'potato', time:50, title:"Chicken Pot Pie Stuffed Potato",                desc:"Creamy chicken pot-pie filling spooned into a crispy roasted baked potato.",                          tags:["american","comfort"],flavor:'savory',sauce_kcal:150,sauce_p:4,sauce_c:10,sauce_f:10},
-  {id:'ranch-chicken-potato-bake',displayNum:26,  carb:'potato', time:30, title:"Ranch Chicken Potato Bake",                     desc:"Thighs and chunky potato tossed in ranch seasoning and roasted until golden.",                        tags:["american"],         flavor:'savory',sauce_kcal:80, sauce_p:1,sauce_c:3, sauce_f:7},
-  {id:'smoked-paprika-chicken-wedge-fries',displayNum:27,  carb:'potato', time:35, title:"Smoked Paprika Chicken Wedge Fries",            desc:"Pan-roasted thighs with thick-cut potato wedges and a chipotle mayo dip.",                           tags:["american","comfort"],flavor:'savory',sauce_kcal:130,sauce_p:1,sauce_c:4,sauce_f:12},
-  {id:'honey-mustard-chicken-roasted-potato-tray',displayNum:28,  carb:'potato', time:30, title:"Honey Mustard Chicken Roasted Potato Tray",     desc:"Sweet-tangy honey mustard glaze coating chicken and small diced roasted potatoes.",                  tags:["american"],         flavor:'savory',sauce_kcal:90, sauce_p:1,sauce_c:11,sauce_f:4},
-  {id:'chicken-thigh-philly-potato-bowl',displayNum:29,  carb:'potato', time:30, title:"Chicken Thigh Philly Potato Bowl",              desc:"Sautéed chicken, peppers and onions over seasoned roasted potatoes with provolone.",                 tags:["american","fusion"], flavor:'savory',sauce_kcal:130,sauce_p:6,sauce_c:6, sauce_f:9},
-  {id:'sour-cream-chive-chicken-baked-potato',displayNum:30,  carb:'potato', time:35, title:"Sour Cream & Chive Chicken Baked Potato",       desc:"Perfectly roasted thigh sliced over a fluffy baked potato with sour cream and crispy chives.",      tags:["american","comfort"],flavor:'savory',sauce_kcal:110,sauce_p:2,sauce_c:2, sauce_f:9},
-  {id:'garlic-parmesan-chicken-crispy-potatoes',displayNum:31,  carb:'potato', time:30, title:"Garlic Parmesan Chicken & Crispy Potatoes",     desc:"Pan-seared thighs and crispy diced potatoes tossed in garlic butter and parmesan.",                 tags:["american","comfort"],flavor:'savory',sauce_kcal:140,sauce_p:5,sauce_c:3, sauce_f:11},
-  {id:'chicken-thigh-stroganoff-mashed-potato',displayNum:32,  carb:'potato', time:40, title:"Chicken Thigh Stroganoff & Mashed Potato",      desc:"Creamy paprika-mushroom stroganoff sauce over chicken thighs with buttery mash.",                    tags:["comfort","fusion"],  flavor:'savory',sauce_kcal:170,sauce_p:4,sauce_c:7, sauce_f:14},
-  {id:'periperi-chicken-crispy-potato',displayNum:33,  carb:'potato', time:35, title:"Peri-Peri Chicken & Crispy Potato",             desc:"Nando's-style peri-peri marinated thighs with thick-cut crispy roasted potato.",                    tags:["comfort","fusion"],  flavor:'savory',sauce_kcal:85, sauce_p:1,sauce_c:5, sauce_f:6},
-  {id:'french-onion-chicken-potato-gratin',displayNum:34,  carb:'potato', time:55, title:"French Onion Chicken Potato Gratin",            desc:"Chicken thighs baked in caramelised French onion sauce under a Gruyère potato gratin.",             tags:["comfort","fusion"],  flavor:'savory',sauce_kcal:200,sauce_p:6,sauce_c:12,sauce_f:14},
-  {id:'cajun-chicken-dirty-potato-hash',displayNum:35,  carb:'potato', time:30, title:"Cajun Chicken & Dirty Potato Hash",             desc:"Cajun-rubbed thighs over a smoky dirty rice-inspired potato hash with andouille seasoning.",        tags:["american"],         flavor:'savory',sauce_kcal:110,sauce_p:2,sauce_c:10,sauce_f:7},
-  {id:'chicken-thigh-philly-cheesesteak-potato-bowl',displayNum:36,  carb:'potato', time:35, title:"Chicken Thigh Philly Cheesesteak Potato Bowl",  desc:"Shaved chicken thigh, peppers, onions and melted cheese whiz over roasted potato.",                tags:["american","comfort"],flavor:'savory',sauce_kcal:160,sauce_p:7,sauce_c:6, sauce_f:12},
-  {id:'chicken-potato-leek-soup',displayNum:37,  carb:'potato', time:40, title:"Chicken & Potato Leek Soup",                    desc:"Creamy leek and potato soup with shredded chicken thigh, thyme and crème fraîche.",                 tags:["comfort"],           flavor:'savory',sauce_kcal:130,sauce_p:3,sauce_c:8, sauce_f:9},
-  {id:'crispy-chicken-thigh-breakfast-potato-hash',displayNum:38,  carb:'potato', time:30, title:"Crispy Chicken Thigh & Breakfast Potato Hash",  desc:"Seared thigh slices over crispy morning-style potato hash with peppers and fried egg.",            tags:["american","comfort"],flavor:'savory',sauce_kcal:120,sauce_p:3,sauce_c:9, sauce_f:8},
-  {id:'chicken-thigh-roast-potato-traybake',displayNum:39,  carb:'potato', time:25, title:"Chicken Thigh & Roast Potato Traybake",         desc:"One-tray roasted thighs and chunky potatoes with herbs, olive oil and lemon.",                      tags:["comfort"],           flavor:'savory',sauce_kcal:90, sauce_p:1,sauce_c:3, sauce_f:9},
-  // POTATO — MEDITERRANEAN/MIDDLE EASTERN (41-70)
-  {id:'greek-lemon-chicken-thighs-roast-potatoes',displayNum:40,  carb:'potato', time:40, title:"Greek Lemon Chicken Thighs & Roast Potatoes",   desc:"Classic Greek lemon-oregano chicken over ultra-crispy olive oil roasted potatoes.",                 tags:["mediterranean"],    flavor:'savory',sauce_kcal:100,sauce_p:1,sauce_c:3, sauce_f:10},
-  {id:'spanish-chicken-patatas-bravas',displayNum:41,  carb:'potato', time:35, title:"Spanish Chicken & Patatas Bravas",              desc:"Pan-seared thighs served alongside crispy bravas potatoes with smoky tomato aioli.",                tags:["mediterranean"],    flavor:'savory',sauce_kcal:140,sauce_p:1,sauce_c:8, sauce_f:12},
-  {id:'chicken-souvlaki-potato-bowl',displayNum:42,  carb:'potato', time:30, title:"Chicken Souvlaki Potato Bowl",                  desc:"Griddled skewered chicken thigh over crispy lemon potato with tzatziki.",                          tags:["mediterranean"],    flavor:'savory',sauce_kcal:80, sauce_p:4,sauce_c:4, sauce_f:5},
-  {id:'romesco-chicken-smashed-potato',displayNum:43,  carb:'potato', time:35, title:"Romesco Chicken & Smashed Potato",              desc:"Pan-seared chicken thigh with smoky Romesco sauce over smashed crispy potatoes.",                   tags:["mediterranean","fusion"],flavor:'savory',sauce_kcal:120,sauce_p:2,sauce_c:7,sauce_f:9},
-  {id:'shawarma-chicken-thigh-potato',displayNum:44,  carb:'potato', time:40, title:"Shawarma Chicken Thigh & Potato",               desc:"Spiced shawarma thighs with roasted potato chunks, toum and pickled veg.",                         tags:["middle-eastern"],   flavor:'savory',sauce_kcal:140,sauce_p:2,sauce_c:10,sauce_f:10},
-  {id:'chicken-potato-tagine-style',displayNum:45,  carb:'potato', time:55, title:"Chicken & Potato Tagine Style",                 desc:"North African braised chicken with ras el hanout, preserved lemon and potato.",                     tags:["middle-eastern"],   flavor:'savory',sauce_kcal:100,sauce_p:2,sauce_c:8, sauce_f:7},
-  {id:'zaatar-roasted-chicken-thigh-baby-potatoes',displayNum:46,  carb:'potato', time:35, title:"Za'atar Roasted Chicken Thigh & Baby Potatoes", desc:"Za'atar-crusted thighs roasted over lemon-olive oil baby potatoes.",                               tags:["middle-eastern"],   flavor:'savory',sauce_kcal:90, sauce_p:1,sauce_c:2, sauce_f:9},
-  {id:'lebanese-sumac-chicken-potato-bake',displayNum:47,  carb:'potato', time:35, title:"Lebanese Sumac Chicken Potato Bake",            desc:"Musakhan-inspired sumac and caramelised onion chicken over golden roasted potato.",                tags:["middle-eastern"],   flavor:'savory',sauce_kcal:130,sauce_p:2,sauce_c:14,sauce_f:6},
-  {id:'harissa-honey-chicken-roasted-potato',displayNum:48,  carb:'potato', time:30, title:"Harissa Honey Chicken & Roasted Potato",        desc:"Sweet heat harissa-honey glaze over chicken thighs and wedge potatoes.",                           tags:["middle-eastern","fusion"],flavor:'savory',sauce_kcal:90,sauce_p:1,sauce_c:13,sauce_f:3},
-  {id:'chicken-kofta-style-thigh-spiced-potato-wedges',displayNum:49,  carb:'potato', time:35, title:"Chicken Kofta Style Thigh & Spiced Potato Wedges",desc:"Ground-seasoned chicken thigh patties over harissa-spiced wedge fries.",                        tags:["middle-eastern","fusion"],flavor:'savory',sauce_kcal:110,sauce_p:2,sauce_c:6,sauce_f:8},
-  {id:'chicken-tikka-potato-bake',displayNum:50,  carb:'potato', time:35, title:"Chicken Tikka Potato Bake",                     desc:"Tikka-spiced thighs over cubed potato roasted in a yogurt-tomato masala.",                         tags:["indian"],           flavor:'savory',sauce_kcal:130,sauce_p:3,sauce_c:8, sauce_f:8},
-  {id:'chicken-aloo-curry',displayNum:51,  carb:'potato', time:55, title:"Chicken Aloo Curry",                            desc:"Classic South Asian chicken and potato curry with warming spices and fresh coriander.",            tags:["indian"],           flavor:'savory',sauce_kcal:140,sauce_p:3,sauce_c:10,sauce_f:9},
-  {id:'tandoori-chicken-roasted-spiced-potatoes',displayNum:52,  carb:'potato', time:30, title:"Tandoori Chicken & Roasted Spiced Potatoes",    desc:"Tandoori-marinated thighs with cumin-roasted potato wedges and mint raita.",                      tags:["indian"],           flavor:'savory',sauce_kcal:90, sauce_p:3,sauce_c:5, sauce_f:5},
-  {id:'chicken-saag-potato',displayNum:53,  carb:'potato', time:35, title:"Chicken Saag Potato",                           desc:"Creamy spinach saag sauce with chicken thigh and cubed potato, served with naan croutons.",       tags:["indian"],           flavor:'savory',sauce_kcal:150,sauce_p:4,sauce_c:8, sauce_f:10},
-  // POTATO — MEXICAN (56-70)
-  {id:'thai-green-curry-chicken-rice-bowl',displayNum:54,  carb:'rice', time:35, title:"Thai Green Curry Chicken Rice Bowl",               desc:"Coconut-based green curry with chicken thigh over jasmine rice with Thai basil.",                  tags:["thai"],            flavor:'savory',sauce_kcal:160,sauce_p:3,sauce_c:8, sauce_f:13},
-  {id:'thai-massaman-chicken-rice-bowl',displayNum:55,  carb:'rice', time:50, title:"Thai Massaman Chicken Rice Bowl",                  desc:"Rich peanut-kissed massaman curry over fragrant jasmine rice with peanut crumble.",               tags:["thai"],            flavor:'savory',sauce_kcal:180,sauce_p:4,sauce_c:10,sauce_f:15},
-  {id:'japanese-oyakodon-chicken-rice-bowl',displayNum:56,  carb:'rice', time:30, title:"Japanese Oyakodon Chicken Rice Bowl",              desc:"Chicken thigh simmered in dashi-mirin broth with egg, onion and nori over steamed rice.",        tags:["japanese"],        flavor:'savory',sauce_kcal:90, sauce_p:5,sauce_c:8, sauce_f:5},
-  {id:'japanese-teriyaki-chicken-rice-bowl',displayNum:57,  carb:'rice', time:25, title:"Japanese Teriyaki Chicken Rice Bowl",              desc:"Pan-glazed teriyaki thighs over steamed rice with sesame, pickled ginger and scallion.",         tags:["japanese"],        flavor:'savory',sauce_kcal:100,sauce_p:2,sauce_c:14,sauce_f:3},
-  {id:'korean-bibimbap-chicken-bowl',displayNum:58,  carb:'rice', time:30, title:"Korean Bibimbap Chicken Bowl",                     desc:"Seasoned chicken thigh over rice with gochujang, namul vegetables and a crispy fried egg.",      tags:["korean"],          flavor:'savory',sauce_kcal:120,sauce_p:4,sauce_c:14,sauce_f:5},
-  {id:'chicken-fried-rice',displayNum:59,  carb:'rice', time:20, title:"Chicken Fried Rice",                               desc:"Wok-blasted chicken thigh fried rice with egg, scallion, soy and sesame oil.",                   tags:["chinese"],         flavor:'savory',sauce_kcal:130,sauce_p:5,sauce_c:10,sauce_f:8},
-  {id:'thai-pineapple-fried-rice-with-chicken',displayNum:60,  carb:'rice', time:35, title:"Thai Pineapple Fried Rice with Chicken",           desc:"Wok-fried rice with chicken thigh, pineapple chunks, cashews and curry powder.",                 tags:["thai"],            flavor:'savory',sauce_kcal:140,sauce_p:3,sauce_c:18,sauce_f:5},
-  {id:'soy-garlic-chicken-rice-bowl',displayNum:61,  carb:'rice', time:25, title:"Soy Garlic Chicken Rice Bowl",                    desc:"Caramelised soy-garlic glazed thighs over steamed rice with sesame oil and scallion.",           tags:["asian"],           flavor:'savory',sauce_kcal:80, sauce_p:2,sauce_c:10,sauce_f:3},
-  {id:'hainanese-chicken-rice',displayNum:62,  carb:'rice', time:40, title:"Hainanese Chicken Rice",                           desc:"Poached chicken thigh over fragrant pandan-ginger rice with chili sauce and ginger paste.",      tags:["asian"],           flavor:'savory',sauce_kcal:110,sauce_p:2,sauce_c:12,sauce_f:5},
-  {id:'chicken-katsu-curry-rice',displayNum:63,  carb:'rice', time:30, title:"Chicken Katsu Curry Rice",                         desc:"Panko-crusted chicken thigh over Japanese curry sauce and steamed rice with pickled daikon.",     tags:["japanese"],        flavor:'savory',sauce_kcal:180,sauce_p:3,sauce_c:22,sauce_f:8},
-  {id:'chicken-tikka-masala-rice-bowl',displayNum:64,  carb:'rice', time:35, title:"Chicken Tikka Masala Rice Bowl",                   desc:"Tikka masala sauce over grilled chicken thighs with fragrant basmati rice.",                     tags:["indian"],          flavor:'savory',sauce_kcal:150,sauce_p:3,sauce_c:8, sauce_f:12},
-  {id:'chicken-biryani',displayNum:65,  carb:'rice', time:50, title:"Chicken Biryani",                                  desc:"Slow-layered spiced basmati rice with marinated chicken thigh, fried onions and saffron.",       tags:["indian"],          flavor:'savory',sauce_kcal:160,sauce_p:3,sauce_c:20,sauce_f:6},
-  {id:'chicken-chipotle-rice-bowl',displayNum:66,  carb:'rice', time:35, title:"Chicken Chipotle Rice Bowl",                       desc:"Smoky chipotle chicken thigh over cilantro lime rice with black beans and corn.",              tags:["mexican"],         flavor:'savory',sauce_kcal:120,sauce_p:4,sauce_c:16,sauce_f:5},
-  {id:'chicken-burrito-bowl',displayNum:67,  carb:'rice', time:30, title:"Chicken Burrito Bowl",                             desc:"Cumin-lime chicken thigh over Mexican rice, black beans, pico, guac and sour cream.",          tags:["mexican"],         flavor:'savory',sauce_kcal:160,sauce_p:5,sauce_c:18,sauce_f:8},
-  {id:'chicken-pad-thai',displayNum:68, carb:'noodle', time:25, title:"Chicken Pad Thai",                               desc:"Classic stir-fried rice noodles with chicken thigh, bean sprouts, egg, peanut and lime.",   tags:["thai"],            flavor:'savory',sauce_kcal:150,sauce_p:5,sauce_c:14,sauce_f:7},
-  {id:'chicken-shawarma-wrap',displayNum:69, carb:'bread', time:25, title:"Chicken Shawarma Wrap",                           desc:"Spiced shawarma thigh, toum, pickled turnip and herb salad in a flatbread wrap.",           tags:["middle-eastern"],  flavor:'savory',sauce_kcal:130,sauce_p:2,sauce_c:8, sauce_f:9},
-  {id:'chicken-gyros',displayNum:70, carb:'bread', time:25, title:"Chicken Gyros",                                   desc:"Tzatziki, tomato, onion and grilled chicken thigh in a warm pita with chips.",              tags:["mediterranean"],   flavor:'savory',sauce_kcal:110,sauce_p:3,sauce_c:6, sauce_f:7},
-  {id:'chicken-smash-burger',displayNum:71, carb:'bread', time:30, title:"Chicken Smash Burger",                            desc:"Smashed chicken thigh patty, American cheese, pickles and special sauce in a brioche bun.", tags:["american","comfort"],flavor:'savory',sauce_kcal:200,sauce_p:4,sauce_c:16,sauce_f:15},
-  {id:'spicy-chicken-sandwich',displayNum:72, carb:'bread', time:25, title:"Spicy Chicken Sandwich",                          desc:"Crispy-fried chicken thigh with hot honey, pickles and slaw on a brioche bun.",            tags:["american","comfort"],flavor:'savory',sauce_kcal:210,sauce_p:3,sauce_c:18,sauce_f:14},
-  {id:'chicken-caesar-wrap',displayNum:73, carb:'bread', time:20, title:"Chicken Caesar Wrap",                             desc:"Grilled chicken thigh, romaine, parmesan, crouton bits and Caesar dressing in a tortilla.", tags:["american"],        flavor:'savory',sauce_kcal:150,sauce_p:4,sauce_c:12,sauce_f:10},
-  {id:'chicken-fajita-wrap',displayNum:74, carb:'bread', time:25, title:"Chicken Fajita Wrap",                             desc:"Seared chicken thigh with peppers, onions, sour cream and salsa in a flour tortilla.",     tags:["mexican"],         flavor:'savory',sauce_kcal:130,sauce_p:3,sauce_c:14,sauce_f:7},
-  {id:'chicken-banh-mi',displayNum:75, carb:'bread', time:25, title:"Chicken Banh Mi",                                 desc:"Marinated chicken thigh with pâté, pickled daikon, carrot, cucumber and jalapeño in a baguette.", tags:["asian","fusion"],flavor:'savory',sauce_kcal:110,sauce_p:2,sauce_c:20,sauce_f:4},
-  {id:'chicken-pita-pocket',displayNum:76, carb:'bread', time:20, title:"Chicken Pita Pocket",                             desc:"Spiced chicken thigh strips, hummus, tabbouleh and tahini in a warm pita.",                tags:["middle-eastern"],  flavor:'savory',sauce_kcal:120,sauce_p:4,sauce_c:10,sauce_f:7},
-  {id:'chicken-tacos-birria-style',displayNum:77, carb:'bread', time:25, title:"Chicken Tacos (Birria Style)",                    desc:"Braised chicken thigh in adobo consommé in crispy dipped-and-fried corn tortillas.",       tags:["mexican"],         flavor:'savory',sauce_kcal:130,sauce_p:3,sauce_c:12,sauce_f:7},
-  {id:'chicken-tikka-naan-wrap',displayNum:78, carb:'bread', time:20, title:"Chicken Tikka Naan Wrap",                         desc:"Tikka-spiced chicken thigh with mint chutney, red onion and yogurt in naan.",              tags:["indian"],          flavor:'savory',sauce_kcal:130,sauce_p:3,sauce_c:14,sauce_f:6},
-  {id:'bbq-chicken-ciabatta',displayNum:79, carb:'bread', time:25, title:"BBQ Chicken Ciabatta",                            desc:"Pulled BBQ chicken thigh with coleslaw, pickled jalapeño in toasted ciabatta.",            tags:["american"],        flavor:'savory',sauce_kcal:140,sauce_p:2,sauce_c:14,sauce_f:6},
-  {id:'chicken-souvlaki-pita',displayNum:80, carb:'bread', time:20, title:"Chicken Souvlaki Pita",                           desc:"Marinated grilled chicken thigh skewer, tzatziki and salad in a warm pita.",               tags:["mediterranean"],   flavor:'savory',sauce_kcal:90, sauce_p:3,sauce_c:8, sauce_f:5},
-  {id:'chicken-club-sandwich',displayNum:81, carb:'bread', time:25, title:"Chicken Club Sandwich",                           desc:"Double-decker toasted bread with chicken thigh, bacon, lettuce, tomato and mayo.",         tags:["american","comfort"],flavor:'savory',sauce_kcal:200,sauce_p:5,sauce_c:18,sauce_f:12},
-  {id:'chicken-quesadilla',displayNum:82, carb:'bread', time:25, title:"Chicken Quesadilla",                              desc:"Seared chicken thigh with cheese and chipotle in a toasted flour tortilla.",               tags:["mexican"],         flavor:'savory',sauce_kcal:150,sauce_p:6,sauce_c:12,sauce_f:10},
-  {id:'chicken-flatbread-pizza',displayNum:83, carb:'bread', time:20, title:"Chicken Flatbread Pizza",                         desc:"Grilled flatbread with tomato, mozzarella and seasoned chicken thigh slices.",             tags:["mediterranean","fusion"],flavor:'savory',sauce_kcal:160,sauce_p:6,sauce_c:16,sauce_f:8},
-  {id:'chicken-musubi',displayNum:84, carb:'bread', time:25, title:"Chicken Musubi",                                  desc:"Hawaii-style chicken thigh teriyaki pressed with rice in a nori wrap.",                    tags:["asian","fusion"],   flavor:'savory',sauce_kcal:90, sauce_p:2,sauce_c:14,sauce_f:3},
-  {id:'chicken-lettuce-cups-with-wrap-option',displayNum:85, carb:'bread', time:20, title:"Chicken Lettuce Cups with Wrap Option",           desc:"Asian chicken thigh mince in butter lettuce or rice paper wrap with hoisin-lime.",         tags:["asian"],           flavor:'savory',sauce_kcal:100,sauce_p:2,sauce_c:8, sauce_f:5},
-  {id:'chicken-schnitzel-brtchen',displayNum:86, carb:'bread', time:25, title:"Chicken Schnitzel Brötchen",                      desc:"Breaded chicken thigh schnitzel in a crusty German bread roll with remoulade.",            tags:["comfort","fusion"],  flavor:'savory',sauce_kcal:150,sauce_p:3,sauce_c:18,sauce_f:8},
-
-  // ═══════════ MORE POTATO (201–280) ═══════════
-  {id:'chicken-banh-mi-vietnamese',displayNum:87, carb:'bread', time:25, title:"Chicken Banh Mi Vietnamese",                      desc:"Char siu-style chicken thigh with pickled veg and jalapeño in French baguette.",         tags:["asian","fusion"],  flavor:'savory',sauce_kcal:110,sauce_p:2,sauce_c:18,sauce_f:4},
-  {id:'chicken-avocado-wrap',displayNum:88, carb:'bread', time:20, title:"Chicken Avocado Wrap",                            desc:"Grilled chicken thigh with avocado, tomato, romaine and chipotle mayo in tortilla.",     tags:["american","fusion"],flavor:'savory',sauce_kcal:150,sauce_p:2,sauce_c:10,sauce_f:12},
-  {id:'chicken-parmesan-sub',displayNum:89, carb:'bread', time:30, title:"Chicken Parmesan Sub",                            desc:"Breaded chicken thigh, marinara, melted mozzarella in a toasted hoagie.",               tags:["american","comfort"],flavor:'savory',sauce_kcal:200,sauce_p:6,sauce_c:18,sauce_f:11},
-  {id:'chicken-torta',displayNum:90, carb:'bread', time:25, title:"Chicken Torta",                                   desc:"Mexican telera roll with chipotle chicken thigh, avocado, jalapeño and crema.",         tags:["mexican"],         flavor:'savory',sauce_kcal:160,sauce_p:3,sauce_c:16,sauce_f:10},
-  {id:'chicken-kati-roll',displayNum:91, carb:'bread', time:20, title:"Chicken Kati Roll",                               desc:"Indian egg-paratha wrap with spiced chicken thigh, chutney and onion.",                 tags:["indian","fusion"],  flavor:'savory',sauce_kcal:130,sauce_p:3,sauce_c:16,sauce_f:6},
-  {id:'chicken-tahini-flatbread',displayNum:92, carb:'bread', time:20, title:"Chicken Tahini Flatbread",                        desc:"Za'atar chicken thigh on lavash with tahini, pickled onion and parsley.",               tags:["middle-eastern"],  flavor:'savory',sauce_kcal:120,sauce_p:3,sauce_c:12,sauce_f:8},
-  {id:'chicken-sabichstyle-pitta',displayNum:93, carb:'bread', time:25, title:"Chicken Sabich-Style Pitta",                      desc:"Israeli-inspired chicken thigh with amba, tahini, egg and roasted aubergine in pita.",  tags:["middle-eastern"],  flavor:'savory',sauce_kcal:130,sauce_p:4,sauce_c:10,sauce_f:8},
-  {id:'chicken-croque-monsieurstyle-toast',displayNum:94, carb:'bread', time:30, title:"Chicken Croque Monsieur-Style Toast",             desc:"Béchamel-topped chicken thigh and cheese open toast, grilled until golden.",            tags:["comfort","fusion"], flavor:'savory',sauce_kcal:200,sauce_p:6,sauce_c:14,sauce_f:14},
-  {id:'chicken-tacos-dorados',displayNum:95, carb:'bread', time:25, title:"Chicken Tacos Dorados",                           desc:"Crispy fried corn tortilla with shredded chicken thigh, salsa verde and crema.",        tags:["mexican"],         flavor:'savory',sauce_kcal:120,sauce_p:2,sauce_c:14,sauce_f:6},
-  {id:'chicken-pesto-ciabatta',displayNum:96, carb:'bread', time:20, title:"Chicken Pesto Ciabatta",                          desc:"Grilled chicken thigh with pesto, sun-dried tomato and mozzarella in ciabatta.",        tags:["mediterranean"],   flavor:'savory',sauce_kcal:160,sauce_p:5,sauce_c:14,sauce_f:10},
-  {id:'chicken-reuben-sandwich',displayNum:97, carb:'bread', time:20, title:"Chicken Reuben Sandwich",                         desc:"Chicken thigh pastrami-style, swiss cheese, sauerkraut and thousand island on rye.",    tags:["american","fusion"],flavor:'savory',sauce_kcal:180,sauce_p:4,sauce_c:14,sauce_f:12},
-  {id:'chicken-tacos-al-carbn',displayNum:98, carb:'bread', time:25, title:"Chicken Tacos al Carbón",                         desc:"Grilled chicken thigh in corn tortilla with salsa roja, cilantro and onion.",           tags:["mexican"],         flavor:'savory',sauce_kcal:90, sauce_p:1,sauce_c:12,sauce_f:3},
-  {id:'chicken-chimichanga',displayNum:99, carb:'bread', time:25, title:"Chicken Chimichanga",                             desc:"Fried flour tortilla stuffed with chipotle chicken thigh, rice and cheese.",            tags:["mexican","comfort"],flavor:'savory',sauce_kcal:200,sauce_p:4,sauce_c:16,sauce_f:14},
-  {id:'chicken-naan-pizza',displayNum:100, carb:'bread', time:25, title:"Chicken Naan Pizza",                              desc:"Naan bread base with tikka chicken thigh, mozzarella and fresh coriander.",             tags:["indian","fusion"],  flavor:'savory',sauce_kcal:140,sauce_p:5,sauce_c:16,sauce_f:6},
-  {id:'chicken-sriracha-honey-wrap',displayNum:101, carb:'bread', time:20, title:"Chicken Sriracha Honey Wrap",                     desc:"Crispy chicken thigh with sriracha honey, slaw and sesame in a flour tortilla.",        tags:["fusion"],          flavor:'savory',sauce_kcal:140,sauce_p:2,sauce_c:16,sauce_f:6},
-  {id:'chicken-banh-cuon-wrap',displayNum:102, carb:'bread', time:30, title:"Chicken Banh Cuon Wrap",                          desc:"Vietnamese steamed rice roll with spiced chicken thigh, wood ear mushroom and herbs.",  tags:["asian"],           flavor:'savory',sauce_kcal:90, sauce_p:2,sauce_c:16,sauce_f:2},
-  {id:'chicken-garlic-bread-sub',displayNum:103, carb:'bread', time:20, title:"Chicken Garlic Bread Sub",                        desc:"Herb-buttered toasted baguette with seared chicken thigh, cheese and arugula.",         tags:["comfort","fusion"], flavor:'savory',sauce_kcal:180,sauce_p:4,sauce_c:18,sauce_f:10},
-  {id:'chicken-banh-mi-meatball-baguette',displayNum:104, carb:'bread', time:25, title:"Chicken Banh Mi Meatball Baguette",               desc:"Minced chicken thigh meatballs in Vietnamese-style baguette with pickles.",             tags:["asian","fusion"],  flavor:'savory',sauce_kcal:120,sauce_p:3,sauce_c:18,sauce_f:5},
-  {id:'chicken-hummus-toast',displayNum:105, carb:'bread', time:20, title:"Chicken Hummus Toast",                            desc:"Za'atar chicken thigh over thick-spread hummus toast with pomegranate molasses.",       tags:["middle-eastern"],  flavor:'savory',sauce_kcal:130,sauce_p:4,sauce_c:14,sauce_f:8},
-  {id:'chicken-smashed-avo-wrap',displayNum:106, carb:'bread', time:20, title:"Chicken Smashed Avo Wrap",                        desc:"Grilled chicken thigh with smashed avocado, lime, chili flakes in wholegrain wrap.",    tags:["fusion"],          flavor:'savory',sauce_kcal:130,sauce_p:1,sauce_c:10,sauce_f:10},
-  {id:'chicken-gua-bao',displayNum:107, carb:'bread', time:25, title:"Chicken Gua Bao",                                 desc:"Taiwanese steamed bao with soy-braised chicken thigh, pickled mustard and peanut.",     tags:["asian","fusion"],  flavor:'savory',sauce_kcal:120,sauce_p:2,sauce_c:20,sauce_f:3},
-  {id:'chicken-currywurst-brtchen',displayNum:108, carb:'bread', time:25, title:"Chicken Currywurst Brötchen",                     desc:"Pan-fried chicken thigh with curry ketchup sauce in a crusty German bread roll.",       tags:["comfort","fusion"], flavor:'savory',sauce_kcal:120,sauce_p:1,sauce_c:16,sauce_f:5},
-  {id:'chicken-dukkah-flatbread',displayNum:109, carb:'bread', time:20, title:"Chicken Dukkah Flatbread",                        desc:"Egyptian dukkah-spiced chicken thigh on flatbread with labneh and olive oil.",          tags:["middle-eastern"],  flavor:'savory',sauce_kcal:140,sauce_p:3,sauce_c:10,sauce_f:10},
-
-  // ═══════════ FINAL MIX (301–500) ═══════════
-  // More Potato
-  {id:'chicken-harissa-flatbread',displayNum:110, carb:'bread', time:25, title:"Chicken Harissa Flatbread",                       desc:"Harissa chicken thigh on grilled flatbread with cooling yogurt and herbs.",             tags:["middle-eastern"],   flavor:'savory',sauce_kcal:110,sauce_p:2,sauce_c:10,sauce_f:7},
-  {id:'chicken-blt-sandwich',displayNum:111, carb:'bread', time:20, title:"Chicken BLT Sandwich",                            desc:"Grilled chicken thigh with bacon, lettuce, tomato and aioli on sourdough.",            tags:["american","comfort"],flavor:'savory',sauce_kcal:170,sauce_p:3,sauce_c:14,sauce_f:11},
-  {id:'chicken-tikka-pita',displayNum:112, carb:'bread', time:25, title:"Chicken Tikka Pita",                              desc:"Tikka-spiced grilled chicken thigh with mint raita and shredded onion in pita.",       tags:["indian","fusion"],   flavor:'savory',sauce_kcal:100,sauce_p:3,sauce_c:10,sauce_f:5},
-  {id:'chicken-elote-taco',displayNum:113, carb:'bread', time:25, title:"Chicken Elote Taco",                              desc:"Mexican street corn-style chicken thigh taco with cotija, chili and lime.",            tags:["mexican"],          flavor:'savory',sauce_kcal:120,sauce_p:2,sauce_c:14,sauce_f:6},
-  {id:'chicken-durum-kebab-wrap',displayNum:114, carb:'bread', time:20, title:"Chicken Durum Kebab Wrap",                        desc:"Turkish durum-style chicken thigh kebab with cacık, fresh tomato and parsley.",        tags:["middle-eastern"],   flavor:'savory',sauce_kcal:100,sauce_p:2,sauce_c:14,sauce_f:4},
-  {id:'chicken-manchego-toastie',displayNum:115, carb:'bread', time:25, title:"Chicken Manchego Toastie",                        desc:"Seared chicken thigh with manchego, membrillo and arugula on sourdough.",              tags:["mediterranean"],    flavor:'savory',sauce_kcal:180,sauce_p:5,sauce_c:14,sauce_f:12},
-  {id:'chicken-periperi-bun',displayNum:116, carb:'bread', time:20, title:"Chicken Peri-Peri Bun",                           desc:"Spicy peri-peri chicken thigh with coriander mayo in a toasted sesame bun.",           tags:["fusion","comfort"],  flavor:'savory',sauce_kcal:140,sauce_p:2,sauce_c:14,sauce_f:8},
-  {id:'chicken-chimichurri-baguette',displayNum:117, carb:'bread', time:25, title:"Chicken Chimichurri Baguette",                    desc:"Grilled chicken thigh with chimichurri, roasted pepper and provolone in baguette.",    tags:["fusion"],           flavor:'savory',sauce_kcal:140,sauce_p:3,sauce_c:16,sauce_f:8},
-  {id:'chicken-muhammara-flatbread',displayNum:118, carb:'bread', time:20, title:"Chicken Muhammara Flatbread",                     desc:"Walnut-red pepper muhammara paste chicken thigh on grilled flatbread.",                tags:["middle-eastern"],   flavor:'savory',sauce_kcal:130,sauce_p:3,sauce_c:10,sauce_f:10},
-  // Continuing mix (341-500)
-  {id:'chicken-chimichurri-ciabatta',displayNum:119, carb:'bread',  time:25, title:"Chicken Chimichurri Ciabatta",                   desc:"Herb chimichurri chicken thigh with smoked provolone in toasted ciabatta.",            tags:["fusion"],           flavor:'savory',sauce_kcal:150,sauce_p:4,sauce_c:14,sauce_f:9},
-  {id:'chicken-lahmacun',displayNum:120, carb:'bread',  time:25, title:"Chicken Lahmacun",                               desc:"Turkish minced chicken thigh on crispy flatbread with parsley and lemon.",             tags:["middle-eastern"],   flavor:'savory',sauce_kcal:90, sauce_p:2,sauce_c:14,sauce_f:3},
-  {id:'chicken-tostada',displayNum:121, carb:'bread',  time:20, title:"Chicken Tostada",                                desc:"Crispy corn tostada with chicken thigh, black beans, cotija and crema.",               tags:["mexican"],          flavor:'savory',sauce_kcal:130,sauce_p:4,sauce_c:14,sauce_f:6},
-  {id:'chicken-kofta-pita',displayNum:122, carb:'bread',  time:25, title:"Chicken Kofta Pita",                             desc:"Minced chicken thigh kofta in pita with tahini, onion-parsley salad.",                tags:["middle-eastern"],   flavor:'savory',sauce_kcal:120,sauce_p:3,sauce_c:10,sauce_f:7},
-  {id:'chicken-muhammara-wrap',displayNum:123, carb:'bread',  time:25, title:"Chicken Muhammara Wrap",                         desc:"Smoky walnut-pepper chicken wrap with fresh herbs in a wholegrain tortilla.",          tags:["middle-eastern"],   flavor:'savory',sauce_kcal:130,sauce_p:3,sauce_c:12,sauce_f:9},
-  {id:'chicken-smash-wrap',displayNum:124, carb:'bread',  time:20, title:"Chicken Smash Wrap",                             desc:"Smashed chicken thigh with crispy edges in a toasted flour tortilla with chipotle.",  tags:["american","fusion"], flavor:'savory',sauce_kcal:150,sauce_p:2,sauce_c:12,sauce_f:10},
-  {id:'chicken-shawarma-pide',displayNum:125, carb:'bread',  time:25, title:"Chicken Shawarma Pide",                          desc:"Turkish pide bread base with chicken shawarma, cheese and egg.",                      tags:["middle-eastern","fusion"],flavor:'savory',sauce_kcal:150,sauce_p:4,sauce_c:16,sauce_f:7},
-  {id:'chicken-kafta-flatbread',displayNum:126, carb:'bread',  time:25, title:"Chicken Kafta Flatbread",                        desc:"Lebanese kafta-spiced chicken thigh on flatbread with fresh tomato and parsley.",     tags:["middle-eastern"],   flavor:'savory',sauce_kcal:90, sauce_p:2,sauce_c:12,sauce_f:4},
-  {id:'chicken-adanastyle-wrap',displayNum:127, carb:'bread',  time:25, title:"Chicken Adana-Style Wrap",                       desc:"Turkish adana-spiced minced chicken thigh in flatbread with sumac onion.",            tags:["middle-eastern"],   flavor:'savory',sauce_kcal:90, sauce_p:2,sauce_c:12,sauce_f:4},
-  {id:'chicken-muffuletta-inspired-sandwich',displayNum:128, carb:'bread',  time:25, title:"Chicken Muffuletta Inspired Sandwich",           desc:"Olive salad, chicken thigh, provolone and salami on a round sesame roll.",             tags:["american","comfort"],flavor:'savory',sauce_kcal:190,sauce_p:5,sauce_c:14,sauce_f:13},
-  {id:'chicken-tzatziki-wrap',displayNum:129, carb:'bread',  time:20, title:"Chicken Tzatziki Wrap",                          desc:"Greek-spiced chicken thigh with tzatziki, tomato and olives in a pita wrap.",         tags:["mediterranean"],    flavor:'savory',sauce_kcal:90, sauce_p:3,sauce_c:8, sauce_f:5},
-  {id:'chicken-satay-bao',displayNum:130, carb:'bread',  time:25, title:"Chicken Satay Bao",                              desc:"Chicken thigh satay with peanut sauce in steamed bao with cucumber.",                 tags:["asian","fusion"],   flavor:'savory',sauce_kcal:150,sauce_p:4,sauce_c:20,sauce_f:6},
-  {id:'chicken-souvlaki-flatbread',displayNum:131, carb:'bread',  time:20, title:"Chicken Souvlaki Flatbread",                     desc:"Grilled chicken thigh souvlaki over flatbread with tzatziki and tomato.",             tags:["mediterranean"],    flavor:'savory',sauce_kcal:90, sauce_p:3,sauce_c:10,sauce_f:4},
-  {id:'chicken-cemita-sandwich',displayNum:132, carb:'bread',  time:25, title:"Chicken Cemita Sandwich",                        desc:"Mexican cemita bun with chicken thigh, chipotle, avocado and queso panela.",          tags:["mexican"],          flavor:'savory',sauce_kcal:170,sauce_p:4,sauce_c:16,sauce_f:10},
-  {id:'chicken-arayes',displayNum:133, carb:'bread',  time:25, title:"Chicken Arayes",                                 desc:"Lebanese minced chicken thigh in grilled flatbread with parsley and pomegranate.",    tags:["middle-eastern"],   flavor:'savory',sauce_kcal:110,sauce_p:2,sauce_c:14,sauce_f:5},
-  {id:'chicken-al-forno-flatbread',displayNum:134, carb:'bread',  time:25, title:"Chicken Al Forno Flatbread",                     desc:"Oven-baked flatbread with chicken thigh, ricotta, spinach and chili oil.",             tags:["mediterranean"],    flavor:'savory',sauce_kcal:140,sauce_p:5,sauce_c:14,sauce_f:7},
-  {id:'chicken-pepperonistyle-flatbread',displayNum:135, carb:'bread',  time:20, title:"Chicken Pepperoni-Style Flatbread",              desc:"Crispy flatbread with chicken thigh, pepperoni-spiced oil, tomato and mozzarella.",   tags:["comfort","fusion"],  flavor:'savory',sauce_kcal:160,sauce_p:5,sauce_c:14,sauce_f:9},
-  {id:'chicken-souvlaki-sandwich',displayNum:136, carb:'bread',  time:20, title:"Chicken Souvlaki Sandwich",                      desc:"Marinated chicken thigh skewer in a sesame bun with tzatziki and tomato.",            tags:["mediterranean"],    flavor:'savory',sauce_kcal:100,sauce_p:3,sauce_c:12,sauce_f:5},
-  {id:'chicken-piripiri-wrap',displayNum:137, carb:'bread',  time:25, title:"Chicken Piri-Piri Wrap",                         desc:"Chargrilled piri-piri chicken thigh with coriander mayo in a flour tortilla.",       tags:["fusion"],           flavor:'savory',sauce_kcal:120,sauce_p:2,sauce_c:12,sauce_f:7},
-  {id:'chicken-caprese-toastie',displayNum:138, carb:'bread',  time:20, title:"Chicken Caprese Toastie",                        desc:"Mozzarella, tomato and chicken thigh on sourdough with fresh basil and balsamic.",    tags:["mediterranean"],    flavor:'savory',sauce_kcal:150,sauce_p:5,sauce_c:12,sauce_f:10},
-  {id:'chicken-tikka-masala-naan-wrap',displayNum:139, carb:'bread',  time:25, title:"Chicken Tikka Masala Naan Wrap",                 desc:"Tikka masala chicken thigh folded in garlic naan with mint raita.",                   tags:["indian"],           flavor:'savory',sauce_kcal:150,sauce_p:3,sauce_c:16,sauce_f:7},
-  {id:'chicken-falafelstyle-pita',displayNum:140, carb:'bread',  time:25, title:"Chicken Falafel-Style Pita",                     desc:"Spiced chicken thigh patties in pita with tahini, salad and harissa.",               tags:["middle-eastern","fusion"],flavor:'savory',sauce_kcal:120,sauce_p:3,sauce_c:12,sauce_f:6},
-  {id:'chicken-aa-bowl-inspiration-wrap',displayNum:141, carb:'bread',  time:20, title:"Chicken Açaí Bowl Inspiration Wrap",             desc:"Brazilian-fusion chicken thigh in wrap with mango, lime cream and crispy granola.",  tags:["fusion"],           flavor:'savory',sauce_kcal:130,sauce_p:2,sauce_c:16,sauce_f:5},
-  {id:'chicken-parmastyle-panini',displayNum:142, carb:'bread',  time:25, title:"Chicken Parma-Style Panini",                     desc:"Chicken thigh with prosciutto, pesto and mozzarella in toasted ciabatta.",            tags:["mediterranean"],    flavor:'savory',sauce_kcal:160,sauce_p:5,sauce_c:14,sauce_f:9},
-  {id:'chicken-elote-bowl-wrap',displayNum:143, carb:'bread',  time:25, title:"Chicken Elote Bowl Wrap",                        desc:"Mexican street corn-inspired chicken thigh wrap with cotija, chili mayo and lime.",   tags:["mexican"],          flavor:'savory',sauce_kcal:140,sauce_p:3,sauce_c:14,sauce_f:8},
-  {id:'chicken-banh-trang-cuon',displayNum:144, carb:'bread',  time:25, title:"Chicken Banh Trang Cuon",                        desc:"Vietnamese rice paper rolls with chicken thigh, herbs, rice noodle and peanut hoisin.", tags:["asian"],           flavor:'savory',sauce_kcal:100,sauce_p:2,sauce_c:14,sauce_f:4},
-  {id:'chicken-sabich-upgraded',displayNum:145, carb:'bread',  time:25, title:"Chicken Sabich Upgraded",                        desc:"Upgraded sabich with chicken thigh, amba, fried egg and tahini in pita.",             tags:["middle-eastern"],   flavor:'savory',sauce_kcal:140,sauce_p:5,sauce_c:10,sauce_f:9},
-  {id:'chicken-tahini-pita',displayNum:146, carb:'bread',  time:20, title:"Chicken Tahini Pita",                            desc:"Baked chicken thigh with lemon-garlic tahini and fresh herbs in pita.",              tags:["middle-eastern"],   flavor:'savory',sauce_kcal:110,sauce_p:3,sauce_c:10,sauce_f:7},
-  {id:'chicken-shawarma-toast',displayNum:147, carb:'bread',  time:20, title:"Chicken Shawarma Toast",                         desc:"Shawarma chicken thigh on toast with toum garlic spread and pickled turnip.",         tags:["middle-eastern"],   flavor:'savory',sauce_kcal:120,sauce_p:2,sauce_c:14,sauce_f:6},
-  {id:'chicken-cubano',displayNum:148, carb:'bread',  time:25, title:"Chicken Cubano",                                 desc:"Cuban-style chicken thigh sandwich with pickles, mustard and Swiss cheese.",           tags:["american","fusion"], flavor:'savory',sauce_kcal:180,sauce_p:5,sauce_c:16,sauce_f:11},];
-
 // ── State ──
 let currentCuisineFilter = 'all';
 let weights = { chicken:500, potato:500, rice:200, noodle:150, bread:80, eggs:0, servings:2 };
@@ -1967,20 +1895,6 @@ function baseMacros(carbType) {
 }
 
 // ── Protein selection ──
-const PROTEIN_DEFS = [
-  { key:'chicken', icon:'🍗', name:'Chicken', variants:[
-    { key:'chicken_thigh',  label:'Thigh',  sub:'150 kcal · 17g P · 9g F per 100g' },
-    { key:'chicken_breast', label:'Breast', sub:'110 kcal · 23g P · 1.5g F per 100g' },
-  ]},
-  { key:'beef', icon:'🥩', name:'Beef', variants:[
-    { key:'beef_regular', label:'Regular (20% fat)', sub:'215 kcal · 17g P · 16g F per 100g' },
-    { key:'beef_lean',    label:'Lean (5% fat)',     sub:'145 kcal · 20g P · 7g F per 100g' },
-  ]},
-  { key:'eggs',   icon:'🥚', name:'Eggs',   variants:null },
-  { key:'salmon', icon:'🐟', name:'Salmon', variants:null },
-  { key:'tofu',   icon:'🫘', name:'Tofu',   variants:null },
-];
-
 function selectProtein(key) {
   const def = PROTEIN_DEFS.find(p => p.key === key);
   if (!def) return;
@@ -2252,43 +2166,6 @@ function toggleVideoFilter() {
 }
 
 // ── Dietary filter data ──
-const DIETARY_FILTERS = [
-  { id:'no_alcohol',   icon:'🍶', label:'No Alcohol',       sub:'No sake/wine/mirin',
-    blocks:['sake','white_wine','mirin'] },
-  { id:'halal',        icon:'☪️',  label:'Halal',            sub:'No alcohol, no pork',
-    blocks:['sake','white_wine','mirin'] },
-  { id:'gluten_free',  icon:'🌾', label:'Gluten-Free',      sub:'No wheat/barley/rye',
-    blocks:['panko','flour','worcestershire','hoisin'] },
-  { id:'dairy_free',   icon:'🥛', label:'Dairy-Free',       sub:'No milk/cheese/butter',
-    blocks:['butter','milk','heavy_cream','cream_cheese','sour_cream','creme_fraiche','labneh',
-            'cheese_parm','cheese_mozz','cheese_feta','cheese_cheddar','cheese_gruyere','cheese_provolone',
-            'yogurt','quark_low_fat','skyr','cottage_cheese','ricotta'] },
-  { id:'nut_free',     icon:'🥜', label:'Nut-Free',         sub:'No peanuts/tree nuts',
-    blocks:['peanuts','pine_nuts','peanut_butter','almonds','tahini'] },
-  { id:'no_soy',       icon:'🫘', label:'No Soy',           sub:'No soy sauce/tofu',
-    blocks:['soy_sauce','hoisin','miso','doenjang','teriyaki','oyster_sauce','tofu'] },
-  { id:'no_fish',      icon:'🐟', label:'No Fish/Seafood',  sub:'No fish/seafood',
-    blocks:['fish_sauce','dashi','salmon','shrimp','cod','tuna_canned'] },
-  { id:'no_eggs',      icon:'🥚', label:'No Eggs',          sub:'Egg-free recipes only',
-    blocks:['eggs','eggs_dairy'] },
-  { id:'no_beef',      icon:'🐄', label:'No Beef',          sub:'Beef-free only',
-    blocks:['beef_regular','beef_lean'] },
-  { id:'no_pork',      icon:'🐷', label:'No Pork',          sub:'Pork-free only',
-    blocks:[] },
-  { id:'low_spice',    icon:'🌶️', label:'Low Spice',        sub:'Mild recipes only',
-    blocks:['gochujang','gochugaru','harissa','sriracha','hot_sauce','chili_flakes','dried_chili','chili_fresh','chipotle_adobo','cayenne'] },
-  { id:'no_garlic',    icon:'🧄', label:'No Garlic/Onion',  sub:'FODMAP-friendly',
-    blocks:['garlic','onion','garlic_powder','onion_powder'] },
-  { id:'vegetarian',   icon:'🌱', label:'Vegetarian',       sub:'No meat',
-    blocks:['chicken_thigh','chicken_breast','beef_regular','beef_lean','salmon','shrimp','cod','tuna_canned','turkey_mince','fish_sauce','dashi'] },
-  { id:'vegan',        icon:'🌿', label:'Vegan',            sub:'No animal products',
-    blocks:['chicken_thigh','chicken_breast','beef_regular','beef_lean','salmon','shrimp','cod','tuna_canned','turkey_mince',
-            'fish_sauce','dashi','oyster_sauce','eggs','eggs_dairy',
-            'butter','milk','heavy_cream','cream_cheese','sour_cream','creme_fraiche','labneh',
-            'cheese_parm','cheese_mozz','cheese_feta','cheese_cheddar','cheese_gruyere','cheese_provolone',
-            'yogurt','quark_low_fat','skyr','cottage_cheese','ricotta','honey'] },
-];
-
 let activeDietary = new Set(JSON.parse(localStorage.getItem('dietaryFilters') || '[]'));
 
 function saveDietary() {
@@ -9807,651 +9684,7 @@ function exportAdminHTML() {
   });
 })();
 <\/script>`;
-  exportHtml = exportHtml.replace('</body>', overrideScript + '</body>');
+  exportHtml = exportHtml.replace('
 
-  const blob = new Blob([exportHtml], {type:'text/html'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'fitniikiter-recipes.html';
-  a.click();
-}
-
-// Load hidden recipes from localStorage (admin overrides)
-try {
-  const savedHidden = JSON.parse(localStorage.getItem('hiddenRecipes') || 'null');
-  if (savedHidden) {
-    // Merge: keep generated hidden list but allow admin to show/hide
-    savedHidden.forEach(id => HIDDEN_RECIPE_IDS.add(id));
-  }
-} catch(e){}
-
-// Apply overrides on startup
-Object.entries(adminOverrides).forEach(([id, data]) => {
-  RECIPE_DETAILS[parseInt(id)] = { ...(RECIPE_DETAILS[parseInt(id)] || {}), ...data };
-});
-
-
-
-// ══════════════════════════════════════════════════════
-// CALORIE CALCULATOR
-// ══════════════════════════════════════════════════════
-
-let c2Goal = 'fat_loss';
-let c2Gender = 'm';
-let c2ActivityFactor = 1.375;
-
-function setGoal(g) {
-  c2Goal = g;
-  document.getElementById('goalFatLoss').classList.toggle('active', g === 'fat_loss');
-  document.getElementById('goalMuscle').classList.toggle('active', g === 'muscle');
-}
-
-function setGender(g) {
-  c2Gender = g;
-  document.getElementById('genderM').classList.toggle('active', g === 'm');
-  document.getElementById('genderF').classList.toggle('active', g === 'f');
-}
-
-function setActivity(el) {
-  document.querySelectorAll('.activity-opt').forEach(o => o.classList.remove('active'));
-  el.classList.add('active');
-  c2ActivityFactor = parseFloat(el.dataset.factor);
-}
-
-function runCalc() {
-  const age    = parseFloat(document.getElementById('c2Age').value);
-  const weight = parseFloat(document.getElementById('c2Weight').value);
-  const height = parseFloat(document.getElementById('c2Height').value);
-  const bf     = parseFloat(document.getElementById('c2BF').value);
-
-  if (!age || !weight || !height) {
-    alert('Please fill in age, weight and height.');
-    return;
-  }
-
-  // BMR — use Katch-McArdle if body fat given, else Mifflin-St Jeor
-  let bmr;
-  if (!isNaN(bf) && bf > 3 && bf < 60) {
-    const lbm = weight * (1 - bf / 100);
-    bmr = 370 + 21.6 * lbm;
-  } else {
-    if (c2Gender === 'm') {
-      bmr = 10 * weight + 6.25 * height - 5 * age + 5;
-    } else {
-      bmr = 10 * weight + 6.25 * height - 5 * age - 161;
-    }
-  }
-
-  const tdee = Math.round(bmr * c2ActivityFactor);
-  bmr = Math.round(bmr);
-
-  // Goal adjustments
-  let adjustment, target, weeklyChange, adjustLabel;
-  if (c2Goal === 'fat_loss') {
-    // Moderate deficit: 20% or max 700 kcal
-    adjustment = Math.min(Math.round(tdee * 0.20), 700);
-    target = tdee - adjustment;
-    weeklyChange = -Math.round(adjustment * 7 / 7700 * 10) / 10; // kg/week
-    adjustLabel = `−${adjustment} kcal (deficit)`;
-  } else {
-    // Lean bulk: 10-15% surplus
-    adjustment = Math.round(tdee * 0.12);
-    target = tdee + adjustment;
-    weeklyChange = Math.round(adjustment * 7 / 7700 * 10) / 10;
-    adjustLabel = `+${adjustment} kcal (surplus)`;
-  }
-
-  // Protein: 2.0g/kg for fat loss (muscle preservation), 1.8g/kg for muscle gain
-  const protMultiplier = c2Goal === 'fat_loss' ? 2.0 : 1.8;
-  const protG = Math.round(weight * protMultiplier);
-  const protKcal = protG * 4;
-
-  // Fat: 25% of target calories
-  const fatKcal = Math.round(target * 0.25);
-  const fatG = Math.round(fatKcal / 9);
-
-  // Carbs: remainder
-  const carbKcal = target - protKcal - fatKcal;
-  const carbG = Math.round(carbKcal / 4);
-
-  // Fill hero
-  document.getElementById('rTDEE').textContent  = tdee;
-  document.getElementById('rTarget').textContent = target;
-  document.getElementById('rProtein').textContent = protG;
-
-  // Fill macro boxes
-  document.getElementById('rProtG').textContent    = protG;
-  document.getElementById('rProtKcal').textContent = protKcal;
-  document.getElementById('rCarbG').textContent    = Math.max(0, carbG);
-  document.getElementById('rCarbKcal').textContent = Math.max(0, carbKcal);
-  document.getElementById('rFatG').textContent     = fatG;
-  document.getElementById('rFatKcal').textContent  = fatKcal;
-
-  // Fill breakdown
-  document.getElementById('rBMR').textContent      = bmr + ' kcal';
-  document.getElementById('rTDEE2').textContent    = tdee + ' kcal';
-  document.getElementById('rAdjust').textContent   = adjustLabel;
-  document.getElementById('rTarget2').textContent  = target + ' kcal';
-  document.getElementById('rProtDetail').textContent = `${protG}g (${protMultiplier}g × ${weight}kg)`;
-
-  const dir = c2Goal === 'fat_loss' ? '−' : '+';
-  const changeColor = c2Goal === 'fat_loss' ? 'red' : 'green';
-  const weeklyEl = document.getElementById('rWeekly');
-  weeklyEl.textContent = `${dir}${Math.abs(weeklyChange)} kg/week`;
-  weeklyEl.className = 'rr-val ' + changeColor;
-
-  // Goal label
-  const goalLabels = {
-    fat_loss: '🔥 Fat Loss Plan',
-    muscle:   '💪 Muscle Gain Plan',
-  };
-  document.getElementById('resultsGoalLabel').textContent = goalLabels[c2Goal];
-
-  // Tip
-  const tips = {
-    fat_loss: `<strong>Fat Loss tip:</strong> At ${target} kcal/day you're in a ${adjustment} kcal deficit — enough to lose roughly ${Math.abs(weeklyChange)} kg/week without muscle loss. Hit your ${protG}g protein target every day — it's the most important number on this page. The recipes in this vault are built for exactly this: high protein, controlled calories.`,
-    muscle: `<strong>Muscle Gain tip:</strong> At ${target} kcal/day you're in a ${adjustment} kcal surplus — a lean bulk that minimizes fat gain. Prioritize your ${protG}g protein target and make sure you're training hard enough to use the extra calories for muscle. Expect roughly ${weeklyChange} kg gained per week, mostly muscle.`,
-  };
-  document.getElementById('calc2Tip').innerHTML = tips[c2Goal];
-
-  // Show results
-  document.getElementById('calc2Results').classList.add('show');
-  document.getElementById('calc2Results').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-
-function setFlavorFilter(flavor, btn) {
-  flavorFilter = flavor;
-  // deactivate other flavor buttons, activate this one
-  document.querySelectorAll('.filter-btn.sweet, .filter-btn.savory').forEach(b => b.classList.remove('active'));
-  if (flavor !== 'all') btn.classList.add('active');
-  // update cuisine pill to show active state if flavor is set
-  const cuisinePill = document.getElementById('pillCuisine');
-  if (cuisinePill) {
-    if (flavorFilter !== 'all' || currentCuisineFilter !== 'all') {
-      cuisinePill.classList.add('has-active');
-    } else {
-      cuisinePill.classList.remove('has-active');
-    }
-  }
-  filterRecipes();
-}
-
-
-
-// ── Dynamic sauce macro calculation ──
-// Replaces hardcoded sauce_kcal/p/c/f with live calculation from ingredient list
-function calcSauceMacros(r) {
-  const detail = getRecipeDetail(r);
-  if (!detail || !detail.ingredients) return { kcal: r.sauce_kcal, p: r.sauce_p, c: r.sauce_c, f: r.sauce_f };
-
-  const s = Math.max(weights.servings, 1);
-  let kcal = 0, p = 0, c = 0, f = 0, found = 0;
-
-  detail.ingredients.forEach(sec => {
-    sec.items.forEach(item => {
-      // Skip protein and carb placeholders — those are handled by baseMacros()
-      if (item.amt && (item.amt.includes('{{proteinG}}') || item.amt.includes('{{carbG}}'))) return;
-
-      const ingId = item.id || findIngredientId(item.name);
-      if (!ingId) return;
-
-      const macros = calcIngredientMacros(ingId, item.amt || '');
-      if (!macros) return;
-
-      // Divide by servings — recipe amounts are for the whole batch
-      kcal += macros.kcal / s;
-      p    += macros.p    / s;
-      c    += macros.c    / s;
-      f    += macros.f    / s;
-      found++;
-    });
-  });
-
-  // If we found enough ingredients to make a meaningful calculation, use it
-  // Otherwise fall back to hardcoded sauce values
-  if (found >= 2) {
-    return {
-      kcal: Math.round(kcal),
-      p:    Math.round(p * 10) / 10,
-      c:    Math.round(c * 10) / 10,
-      f:    Math.round(f * 10) / 10,
-    };
-  }
-  return { kcal: r.sauce_kcal, p: r.sauce_p, c: r.sauce_c, f: r.sauce_f };
-}
-
-// Cache sauce macros per recipe ID to avoid recalculating every render
-const _sauceMacroCache = {};
-function getSauceMacros(r) {
-  if (_sauceMacroCache[r.id]) return _sauceMacroCache[r.id];
-  const m = calcSauceMacros(r);
-  _sauceMacroCache[r.id] = m;
-  return m;
-}
-
-// ── Ingredient macro helpers ──
-function toggleIngMacro(li) {
-  li.classList.toggle('open');
-}
-
-function toggleWeightRow(id) {
-  const row = document.getElementById(id);
-  if (row) row.classList.toggle('open');
-}
-
-// Map common ingredient name keywords → INGREDIENT_DB id
-const ING_NAME_MAP = {
-  'soy sauce': 'soy_sauce', 'soy sauce (low-sodium)': 'soy_sauce',
-  'oyster sauce': 'oyster_sauce', 'fish sauce': 'fish_sauce',
-  'hoisin': 'hoisin', 'gochujang': 'gochujang', 'miso': 'miso',
-  'doenjang': 'doenjang', 'teriyaki': 'teriyaki', 'sesame oil': 'sesame_oil',
-  'sriracha': 'sriracha', 'tahini': 'tahini', 'harissa': 'harissa',
-  'worcestershire': 'worcestershire', 'ketchup': 'ketchup', 'mayo': 'mayo',
-  'mayonnaise': 'mayo', 'hot sauce': 'hot_sauce',
-  'peanut butter': 'peanut_butter', 'coconut milk': 'coconut_milk',
-  'rice vinegar': 'rice_vinegar', 'apple cider vinegar': 'apple_cider_vinegar',
-  'mirin': 'mirin', 'sake': 'sake', 'toum': 'toum', 'dijon': 'dijon',
-  'bbq sauce': 'bbq_sauce', 'chipotle': 'chipotle_adobo',
-  'ponzu': 'ponzu', 'shio koji': 'shio_koji', 'yuzu kosho': 'yuzu_kosho',
-  'tamarind': 'tamarind', 'balsamic': 'balsamic_glaze', 'chili oil': 'chili_oil',
-  'gochugaru': 'gochugaru', 'cumin': 'cumin', 'coriander': 'coriander',
-  'turmeric': 'turmeric', 'smoked paprika': 'smoked_paprika', 'paprika': 'paprika',
-  'chili flakes': 'chili_flakes', 'red pepper flakes': 'chili_flakes',
-  'five spice': 'five_spice', '5-spice': 'five_spice', 'zaatar': 'zaatar',
-  "za'atar": 'zaatar', 'sumac': 'sumac', 'baharat': 'baharat',
-  'ras el hanout': 'ras_el_hanout', 'curry powder': 'curry_powder',
-  'garam masala': 'garam_masala', 'tandoori': 'tandoori_masala',
-  'tikka paste': 'tikka_paste', 'oregano': 'oregano', 'thyme': 'thyme',
-  'dill': 'dill_dried', 'bay leaf': 'bay_leaf', 'cinnamon': 'cinnamon',
-  'cardamom': 'cardamom', 'star anise': 'star_anise', 'allspice': 'allspice',
-  'garlic powder': 'garlic_powder', 'onion powder': 'onion_powder',
-  'cayenne': 'cayenne', 'black pepper': 'black_pepper', 'pepper': 'black_pepper',
-  'msg': 'msg', 'saffron': 'saffron', 'jerk seasoning': 'jerk_seasoning',
-  'dukkah': 'dukkah', 'furikake': 'furikake', 'tajin': 'tajin',
-  'garlic': 'garlic', 'garlic clove': 'garlic', 'garlic (minced)': 'garlic',
-  'ginger': 'ginger', 'spring onion': 'scallion', 'scallion': 'scallion',
-  'green onion': 'scallion', 'onion': 'onion', 'lemon': 'lemon', 'lime': 'lime',
-  'cilantro': 'cilantro', 'coriander leaves': 'cilantro',
-  'parsley': 'parsley', 'basil': 'basil', 'mint': 'mint', 'rosemary': 'rosemary',
-  'chives': 'chives', 'fresh dill': 'dill_fresh', 'lemongrass': 'lemongrass',
-  'kaffir lime': 'kaffir_lime', 'thai basil': 'thai_basil', 'pandan': 'pandan',
-  'fresh chili': 'chili_fresh', 'chili': 'chili_fresh',
-  'tomato': 'tomato', 'cucumber': 'cucumber', 'avocado': 'avocado',
-  'bell pepper': 'bell_pepper', 'cabbage': 'cabbage', 'carrot': 'carrot',
-  'corn': 'corn', 'leek': 'leek', 'mushroom': 'mushroom', 'spinach': 'spinach',
-  'bok choy': 'bok_choy', 'kimchi': 'kimchi',
-  'butter': 'butter', 'egg': 'eggs_dairy', 'eggs': 'eggs_dairy',
-  'milk': 'milk', 'heavy cream': 'heavy_cream', 'sour cream': 'sour_cream',
-  'cream cheese': 'cream_cheese', 'crème fraîche': 'creme_fraiche',
-  'creme fraiche': 'creme_fraiche', 'yogurt': 'yogurt', 'labneh': 'labneh',
-  'parmesan': 'cheese_parm', 'mozzarella': 'cheese_mozz', 'feta': 'cheese_feta',
-  'cheddar': 'cheese_cheddar', 'gruyere': 'cheese_gruyere',
-  'provolone': 'cheese_provolone',
-  'olive oil': 'olive_oil', 'neutral oil': 'neutral_oil', 'cooking spray': 'neutral_oil',
-  'chicken broth': 'chicken_stock', 'chicken stock': 'chicken_stock',
-  'canned tomato': 'canned_tomato', 'crushed tomato': 'canned_tomato',
-  'tomato paste': 'tomato_paste', 'black beans': 'black_beans',
-  'kidney beans': 'kidney_beans', 'coconut cream': 'coconut_cream',
-  'panko': 'panko', 'breadcrumbs': 'breadcrumbs', 'flour': 'flour',
-  'cornstarch': 'cornstarch', 'corn starch': 'cornstarch',
-  'honey': 'honey', 'sugar': 'sugar', 'sesame seeds': 'sesame_seeds',
-  'peanuts': 'peanuts', 'almonds': 'almonds', 'pine nuts': 'pine_nuts',
-  'raisins': 'raisins', 'dashi': 'dashi',
-  'japanese curry': 'japanese_curry_roux', 'curry roux': 'japanese_curry_roux',
-  'nori': 'nori', 'glass noodles': 'glass_noodles', 'rice paper': 'rice_paper',
-  'pickled': 'pickled_veg', 'dried chili': 'dried_chili',
-  'pomegranate molasses': 'pomegranate_mol', 'preserved lemon': 'preserved_lemon',
-  'broccoli': 'broccoli', 'broccolini': 'broccoli', 'cauliflower': 'broccoli',
-  'zucchini': 'zucchini', 'courgette': 'zucchini',
-  'eggplant': 'eggplant', 'aubergine': 'eggplant',
-  'bean sprouts': 'bean_sprouts', 'bean sprout': 'bean_sprouts', 'mung bean sprouts': 'bean_sprouts',
-  'edamame': 'edamame',
-  'snap peas': 'snap_peas', 'snow peas': 'snap_peas', 'sugar snap': 'snap_peas',
-  'kale': 'kale', 'swiss chard': 'kale', 'chard': 'kale',
-  'lettuce': 'lettuce', 'iceberg': 'lettuce', 'romaine': 'lettuce', 'arugula': 'lettuce', 'rocket': 'lettuce',
-  'daikon': 'daikon', 'mooli': 'daikon',
-  'jalapeño': 'jalapeño', 'jalapeno': 'jalapeño', 'serrano': 'jalapeño',
-  'red wine vinegar': 'red_wine_vinegar', 'sherry vinegar': 'red_wine_vinegar',
-  'capers': 'capers',
-  'white wine': 'white_wine', 'dry white wine': 'white_wine', 'red wine': 'white_wine',
-  'curry paste': 'curry_paste', 'thai curry paste': 'curry_paste',
-  'massaman curry paste': 'curry_paste', 'green curry paste': 'curry_paste',
-  'red curry paste': 'curry_paste', 'tikka masala paste': 'curry_paste',
-
-  // Carb placeholders variants
-  'potato (raw, unpeeled)': 'potato', 'potato (raw)': 'potato', 'potato (diced': 'potato',
-  'rice (dry)': 'rice', 'jasmine rice': 'rice', 'basmati rice': 'rice',
-  'jasmine / basmati rice': 'rice', 'short grain rice': 'rice', 'day-old cooked rice': 'rice',
-  'noodles / pasta': 'noodle', 'noodles': 'noodle', 'pasta': 'noodle',
-  'rice noodles': 'noodle', 'ramen noodles': 'noodle', 'wheat noodles': 'noodle',
-  'egg noodles': 'noodle', 'udon noodles': 'noodle', 'soba noodles': 'noodle',
-  'bread / flatbread': 'bread', 'flatbread': 'bread', 'wrap': 'bread',
-  'brioche buns': 'bread', 'bao buns': 'bread', 'steamed bao': 'bread',
-  'french baguette': 'bread', 'pita': 'bread', 'tortilla': 'bread',
-  // Protein variants
-  'boneless skinless chicken thighs': 'chicken', 'chicken thighs': 'chicken',
-  'chicken breast': 'chicken', 'chicken mince': 'chicken',
-  'ground beef (lean)': 'beef_lean', 'lean ground': 'beef_lean',
-  'beef sirloin': 'beef', 'beef flank': 'beef', 'beef mince': 'beef',
-  'salmon fillet': 'salmon', 'salmon (skin': 'salmon',
-  'firm tofu': 'tofu', 'extra firm tofu': 'tofu', 'silken tofu': 'tofu',
-  // Fresh produce additions
-  'pomegranate seeds': 'pomegranate_mol', 'pomegranate': 'pomegranate_mol',
-  'bean sprouts': 'bok_choy', 'sprouts': 'bok_choy',
-  'daikon': 'pickled_veg', 'radish': 'pickled_veg',
-  'jalapeño': 'chili_fresh', 'jalapeno': 'chili_fresh', 'serrano': 'chili_fresh',
-  'edamame': 'bok_choy', 'snap peas': 'bok_choy', 'snow peas': 'bok_choy',
-  'zucchini': 'cucumber', 'courgette': 'cucumber',
-  'eggplant': 'bell_pepper', 'aubergine': 'bell_pepper',
-  'broccoli': 'bok_choy', 'cauliflower': 'bok_choy', 'broccolini': 'bok_choy',
-  'kale': 'spinach', 'swiss chard': 'spinach', 'arugula': 'spinach', 'rocket': 'spinach',
-  'iceberg lettuce': 'spinach', 'romaine': 'spinach', 'lettuce': 'spinach',
-  'shallot': 'onion', 'red onion': 'onion', 'white onion': 'onion',
-  'cherry tomato': 'tomato', 'grape tomato': 'tomato', 'sun-dried tomato': 'tomato',
-  'pear': 'apple_cider_vinegar', 'apple (grated)': 'apple_cider_vinegar',
-  // Sauces & condiments additions
-  'thai curry paste': 'tikka_paste', 'massaman curry paste': 'tikka_paste',
-  'green curry paste': 'tikka_paste', 'red curry paste': 'tikka_paste',
-  'tikka masala paste': 'tikka_paste', 'curry paste': 'tikka_paste',
-  'red wine vinegar': 'apple_cider_vinegar', 'white wine vinegar': 'apple_cider_vinegar',
-  'sherry vinegar': 'apple_cider_vinegar', 'vinegar': 'apple_cider_vinegar',
-  'capers': 'pickled_veg', 'pickles': 'pickled_veg', 'gherkins': 'pickled_veg',
-  'dry white wine': 'sake', 'white wine': 'sake', 'red wine': 'sake',
-  'beef stock': 'chicken_stock', 'vegetable stock': 'chicken_stock',
-  'water or stock': 'chicken_stock', 'chicken or vegetable stock': 'chicken_stock',
-  'beef broth': 'chicken_stock', 'vegetable broth': 'chicken_stock',
-  'american cheese': 'cheese_cheddar', 'cheese slices': 'cheese_cheddar',
-  'velveeta': 'cheese_cheddar', 'cheese sauce': 'cheese_cheddar',
-  // Basics
-  'salt': 'msg', 'kosher salt': 'msg', 'sea salt': 'msg', 'flaky salt': 'msg',
-  'fresh herbs': 'parsley', 'mixed herbs': 'parsley', 'herb': 'parsley',
-  'water': 'chicken_stock', 'hot water': 'chicken_stock',
-  'neutral cooking oil': 'neutral_oil', 'vegetable oil': 'neutral_oil',
-  'canola oil': 'neutral_oil', 'sunflower oil': 'neutral_oil',
-  'cooking oil': 'neutral_oil', 'oil': 'neutral_oil',
-  'unsalted butter': 'butter', 'salted butter': 'butter',
-  'whole egg': 'eggs_dairy', 'egg yolk': 'eggs_dairy', 'egg white': 'eggs_dairy',
-  'light soy': 'soy_sauce', 'dark soy': 'soy_sauce', 'tamari': 'soy_sauce',
-  'low-sodium soy': 'soy_sauce',
-  'spring roll wrapper': 'rice_paper', 'wonton wrapper': 'rice_paper',
-  'gyoza wrapper': 'rice_paper', 'dumpling wrapper': 'rice_paper',
-  // extra proteins & dairy
-  'quark': 'quark_low_fat', 'magerquark': 'quark_low_fat', 'low-fat quark': 'quark_low_fat',
-  'quark (low-fat)': 'quark_low_fat', 'skyr': 'skyr', 'icelandic yogurt': 'skyr',
-  'cottage cheese': 'cottage_cheese', 'hüttenkäse': 'cottage_cheese',
-  'ricotta': 'ricotta', 'ricotta cheese': 'ricotta',
-  'tuna': 'tuna_canned', 'canned tuna': 'tuna_canned', 'tuna (canned)': 'tuna_canned',
-  'tuna in water': 'tuna_canned', 'thunfisch': 'tuna_canned',
-  'shrimp': 'shrimp', 'prawns': 'shrimp', 'shrimps': 'shrimp', 'garnelen': 'shrimp',
-  'cod': 'cod', 'kabeljau': 'cod', 'white fish': 'cod', 'tilapia': 'cod',
-  'turkey mince': 'turkey_mince', 'ground turkey': 'turkey_mince', 'turkey': 'turkey_mince',
-  'putenhack': 'turkey_mince', 'pute': 'turkey_mince',
-};
-
-function findIngredientId(name) {
-  if (!name) return null;
-  const lower = name.toLowerCase().trim();
-  // Direct match
-  if (ING_NAME_MAP[lower]) return ING_NAME_MAP[lower];
-  // Partial match — find longest key that appears in name
-  let best = null, bestLen = 0;
-  for (const [key, id] of Object.entries(ING_NAME_MAP)) {
-    if (lower.includes(key) && key.length > bestLen) {
-      best = id;
-      bestLen = key.length;
-    }
-  }
-  return best;
-}
-
-// ══════════════════════════════════════════════════════
-// MACRO COMPARE TAB
-// ══════════════════════════════════════════════════════
-
-const CARB_COMPARE = [
-  { key:'potato',  name:'Potato',     icon:'🥔', sub:'raw, unpeeled',         kcal:77,  p:2,  c:17, f:0.1, fiber:2.2, gi:65, giLabel:'med',  satiety:4, best:'Volume & fullness' },
-  { key:'rice',    name:'Rice',       icon:'🍚', sub:'white, dry weight',     kcal:356, p:7,  c:78, f:0.6, fiber:0.4, gi:73, giLabel:'high', satiety:2, best:'Quick energy' },
-  { key:'noodle',  name:'Noodle',     icon:'🍜', sub:'egg noodle, dry weight',kcal:352, p:12, c:71, f:1.5, fiber:2.1, gi:55, giLabel:'med',  satiety:3, best:'Higher protein carb' },
-  { key:'bread',   name:'Bread/Wrap', icon:'🫓', sub:'white wheat, baked',     kcal:260, p:9,  c:49, f:3,   fiber:2.7, gi:70, giLabel:'high', satiety:3, best:'Convenience & portability' },
-];
-
-const PROTEIN_COMPARE = [
-  { key:'chicken',        name:'Chicken Thigh',  icon:'🍗', sub:'boneless, skinless, raw',  kcal:150, p:17, c:0, f:9,   satiety:4, best:'Flavor & moisture' },
-  { key:'chicken_breast', name:'Chicken Breast', icon:'🍗', sub:'boneless, skinless, raw',  kcal:110, p:23, c:0, f:1.5, satiety:5, best:'Leanest protein' },
-  { key:'beef',           name:'Beef (Regular)', icon:'🥩', sub:'ground beef ~20% fat, raw',  kcal:215, p:17, c:0, f:16,  satiety:4, best:'Flavor & iron' },
-  { key:'beef_lean',      name:'Beef (Lean)',    icon:'🥩', sub:'ground beef ~5% fat, raw',   kcal:145, p:20, c:0, f:7,   satiety:4, best:'Lean + high protein' },
-  { key:'eggs',           name:'Eggs',           icon:'🥚', sub:'whole egg, raw (~58g each)',    kcal:155, p:13, c:1, f:11,  satiety:4, best:'Micronutrients & versatility' },
-  { key:'salmon',         name:'Salmon',         icon:'🐟', sub:'atlantic salmon, raw', kcal:208, p:20, c:0, f:13,  satiety:4, best:'Omega-3 & heart health' },
-  { key:'tofu',           name:'Tofu',           icon:'🫘', sub:'firm tofu',             kcal:76,  p:8,  c:2, f:4,   satiety:3, best:'Plant-based option' },
-];
-
-function buildCompareTable() {
-  const giClass = { low:'gi-low', med:'gi-med', high:'gi-high' };
-  const giText  = { low:'Low GI', med:'Med GI', high:'High GI' };
-
-  function satDots(n) {
-    return [1,2,3,4,5].map(i=>`<div class="satiety-dot ${i<=n?'on':''}"></div>`).join('');
-  }
-
-  // CARB CARDS
-  const carbEl = document.getElementById('carbCards');
-  if (!carbEl) return;
-  carbEl.innerHTML = CARB_COMPARE.map(d => `
-    <div class="ccard c-${d.key}">
-      <div class="ccard-name">${d.icon} ${d.name}</div>
-      <div class="ccard-sub">${d.sub}</div>
-      <div class="ccard-macros">
-        <div class="ccard-macro mk"><span class="mv">${d.kcal}</span><span class="ml">kcal</span></div>
-        <div class="ccard-macro mp"><span class="mv">${d.p}g</span><span class="ml">protein</span></div>
-        <div class="ccard-macro mc"><span class="mv">${d.c}g</span><span class="ml">carbs</span></div>
-        <div class="ccard-macro mf"><span class="mv">${d.f}g</span><span class="ml">fat</span></div>
-      </div>
-      <div class="ccard-meta">
-        <div class="satiety-dots">${satDots(d.satiety)}</div>
-        <span class="satiety-label">Saturation</span>
-        <span class="gi-badge ${giClass[d.giLabel]}">${giText[d.giLabel]}</span>
-        <span class="best-tag">${d.best}</span>
-      </div>
-    </div>
-  `).join('');
-
-  // PROTEIN CARDS
-  const protEl = document.getElementById('proteinCards');
-  if (!protEl) return;
-  protEl.innerHTML = PROTEIN_COMPARE.map(d => {
-    const totalMacroKcal = d.p*4 + d.c*4 + d.f*9;
-    const pct = totalMacroKcal > 0 ? Math.round((d.p*4)/totalMacroKcal*100) : 0;
-    return `
-    <div class="ccard c-${d.key}">
-      <div class="ccard-name">${d.icon} ${d.name}</div>
-      <div class="ccard-sub">${d.sub}</div>
-      <div class="ccard-macros">
-        <div class="ccard-macro mk"><span class="mv">${d.kcal}</span><span class="ml">kcal</span></div>
-        <div class="ccard-macro mp"><span class="mv">${d.p}g</span><span class="ml">protein</span></div>
-        <div class="ccard-macro mc"><span class="mv">${d.c}g</span><span class="ml">carbs</span></div>
-        <div class="ccard-macro mf"><span class="mv">${d.f}g</span><span class="ml">fat</span></div>
-      </div>
-      <div class="ccard-meta">
-        <div class="satiety-dots">${satDots(d.satiety)}</div>
-        <span class="satiety-label">Saturation</span>
-        <span class="pct-badge" title="% of total calories from protein">${pct}% of kcal from protein</span>
-        <span class="best-tag">${d.best}</span>
-      </div>
-    </div>
-  `}).join('');
-}
-
-
-// ── Share & Deep-link ──
-function shareRecipe() {
-  if (!currentModalRecipe) return;
-  const url = new URL(window.location.href);
-  url.searchParams.set('recipe', currentModalRecipe.id);
-  navigator.clipboard.writeText(url.toString()).then(() => {
-    const btn = document.getElementById('modalShareBtn');
-    btn.classList.add('copied');
-    btn.innerHTML = '<span class="share-icon">✓</span> Copied!';
-    setTimeout(() => {
-      btn.classList.remove('copied');
-      btn.innerHTML = '<span class="share-icon">🔗</span> Share';
-    }, 2000);
-  }).catch(() => {
-    // Fallback for browsers that block clipboard
-    prompt('Copy this link:', url.toString());
-  });
-}
-
-// On load: check for ?recipe= param and open that modal
-(function() {
-  const params = new URLSearchParams(window.location.search);
-  const recipeParam = params.get('recipe');
-  if (recipeParam) {
-    requestAnimationFrame(() => {
-      setTimeout(() => {
-        // Support both slug and legacy numeric ID
-        const r = R.find(x => x.id === recipeParam || String(x.displayNum) === recipeParam);
-        if (r) openModal(r.id);
-      }, 100);
-    });
-  }
-})();
-
-// ── THEME TOGGLE ──
-function toggleTheme() {
-  const isLight = document.documentElement.classList.toggle('light');
-  document.getElementById('themeIcon').textContent = isLight ? '🌙' : '☀️';
-  document.getElementById('themeLabel').textContent = isLight ? 'Dark' : 'Light';
-  localStorage.setItem('fitniikiter_theme', isLight ? 'light' : 'dark');
-}
-// Init theme: localStorage overrides system preference
-(function() {
-  const saved = localStorage.getItem('fitniikiter_theme');
-  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const isLight = saved ? saved === 'light' : !prefersDark;
-  if (isLight) document.documentElement.classList.add('light');
-  const icon  = document.getElementById('themeIcon');
-  const label = document.getElementById('themeLabel');
-  if (icon)  icon.textContent  = isLight ? '🌙' : '☀️';
-  if (label) label.textContent = isLight ? 'Dark' : 'Light';
-
-  // Also respond live to system changes (only if user hasn't manually set a preference)
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-    if (localStorage.getItem('fitniikiter_theme')) return; // user has a saved preference — don't override
-    const nowLight = !e.matches;
-    document.documentElement.classList.toggle('light', nowLight);
-    const ic = document.getElementById('themeIcon');
-    const lb = document.getElementById('themeLabel');
-    if (ic) ic.textContent  = nowLight ? '🌙' : '☀️';
-    if (lb) lb.textContent  = nowLight ? 'Dark' : 'Light';
-  });
-})();
-
-// Init
-// display order managed via r.displayNum
-
-autoCalcCarbs();    // set initial carb weights based on default protein
-buildAllCards();    // render all 500 cards once
-buildDisplayNumbers(); // assign permanent display numbers to visible recipes
-
-// Build protein selector buttons
-(function() {
-  const sel = document.getElementById('proteinSelector');
-  if (!sel) return;
-  sel.innerHTML = PROTEIN_DEFS.map(p =>
-    `<div class="protein-btn ${p.key==='chicken'?'active':''}" data-protein="${p.key}" onclick="selectProtein('${p.key}')">
-      <span class="pb-icon">${p.icon}</span>
-      <span class="pb-name">${p.name}</span>
-    </div>`
-  ).join('');
-  // trigger chicken selected to show variants
-  selectProtein('chicken');
-})();
-
-updateCardMacros();
-updateCalcDisplay();
-filterRecipes();
-updatePillStates();
-// Pantry init — build dietary grid (hidden until tab opened)
-buildDietaryGrid();
-applyDietaryToProteinFilters();
-// Apply saved dietary filters on load
-activeDietary.forEach(id => {
-  const def = DIETARY_FILTERS.find(d=>d.id===id);
-  if (def) def.blocks.forEach(ingId => disabledIngredients.add(ingId));
-});
-</script>
-
-<!-- Reset Confirm Modal -->
-<div class="reset-modal-overlay" id="resetConfirmOverlay">
-  <div class="reset-modal">
-    <h3>⚠️ Reset Everything?</h3>
-    <p>This will also reset your <strong>My Pantry</strong> settings — including disabled ingredients and dietary preferences.</p>
-    <div class="reset-modal-btns">
-      <button class="reset-cancel-btn" onclick="document.getElementById('resetConfirmOverlay').classList.remove('open')">Cancel</button>
-      <button class="reset-confirm-btn" onclick="doResetAll()">Yes, Reset All</button>
-    </div>
-  </div>
-</div>
-
-<!-- Admin Exit Modal -->
-<div class="exit-modal-overlay" id="exitModalOverlay">
-  <div class="exit-modal">
-    <h3>Exit Admin Mode</h3>
-    <p>Save your changes?<br>
-    <span style="color:#555;font-size:11px;">Saved in browser (localStorage) + optional HTML download.</span></p>
-    <div class="exit-modal-btns">
-      <button class="exit-btn-primary" onclick="exitAdminSaveAndDownload()">💾 Save + Download HTML</button>
-      <button class="exit-btn-secondary" onclick="exitAdminSaveOnly()">✓ Nur im Browser speichern</button>
-      <button class="exit-btn-danger" onclick="exitAdminDiscard()">✕ Discard & exit</button>
-    </div>
-  </div>
-</div>
-
-<!-- Admin Indicator -->
-<div class="admin-indicator" onclick="promptAdminPassword()">🔐 ADMIN MODE — Click to exit</div>
-
-<!-- Admin Edit Modal -->
-<div class="admin-modal-overlay" id="adminModalOverlay" onclick="if(event.target===this)closeAdminEdit()">
-  <div class="admin-modal">
-    <h2 id="adminRecipeTitle">Edit Recipe</h2>
-
-    <div class="admin-section-title">📋 Basic Info</div>
-    <div style="display:grid;grid-template-columns:80px 1fr;gap:12px;">
-      <div class="admin-field"><label>Recipe #</label><input type="number" id="aRecipeNum" min="1" max="9999"></div>
-      <div class="admin-field"><label>Titel</label><input type="text" id="aTitle"></div>
-    </div>
-    <div class="admin-field"><label>Description</label><input type="text" id="aDesc"></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-      <div class="admin-field"><label>Zeit (min)</label><input type="number" id="aTime"></div>
-      <div class="admin-field"><label>▶️ YouTube Video ID</label><input type="text" id="aVideoId" placeholder="e.g. I5BZybb9bpM"></div>
-    </div>
-    <div class="admin-field"><label>🖼️ Image URL <span style="color:#555;font-size:10px;">(Cloudflare R2, Imgur, etc.)</span></label><input type="text" id="aImageUrl" placeholder="https://..."></div>
-    <div style="font-size:10px;color:#555;margin-top:-8px;margin-bottom:8px;">Own image takes priority over YouTube thumbnail. Recommended: 1280×720px or larger.</div>
-    <div style="display:grid;grid-template-columns:80px 1fr;gap:12px;">
-    <div class="admin-field"><label>Tags (comma-separated)</label><input type="text" id="aTags" placeholder="korean, comfort, fusion"></div>
-
-    <div class="admin-section-title">📊 Sauce Macros (added on top of protein+carb)</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;">
-      <div class="admin-field"><label>+ kcal</label><input type="number" id="aSkcal"></div>
-      <div class="admin-field"><label>+ Protein g</label><input type="number" id="aSp"></div>
-      <div class="admin-field"><label>+ Carbs g</label><input type="number" id="aSc"></div>
-      <div class="admin-field"><label>+ Fat g</label><input type="number" id="aSf"></div>
-    </div>
-
-    <div class="admin-section-title">🥄 Ingredients</div>
-    <div id="adminIngList"></div>
-
-    <div class="admin-section-title">👨‍🍳 Steps</div>
-    <div class="admin-steps-list" id="adminStepsList"></div>
-    <button class="admin-add-btn" onclick="addAdminStep()">+ Add step</button>
-
-    <div class="admin-section-title">💡 80/20 Hacks</div>
-    <div id="adminHacksList"></div>
-    <button class="admin-add-btn" onclick="addAdminHack()">+ Add hack</button>
-
-    <div class="admin-section-title">📌 Notes</div>
-    <div class="admin-field"><textarea id="aNotes" placeholder="Storage tips, spice level, variations..."></textarea></div>
-
-    <div style="display:flex;gap:8px;margin-bottom:4px;">
-      <button id="adminVisibilityBtn" class="admin-add-btn" style="
+</body>
+</html>
