@@ -1864,7 +1864,7 @@ const RECIPE_DETAILS = {
   ],
   steps: [
     "Preheat oven to 200°C. Cut potatoes into wedges, toss with olive oil, salt, cumin, and smoked paprika — roast 30–35 minutes until golden.",
-    "While potatoes roast, combine ground beef with all kofta mix ingredients — mix well but don't overwork the meat.",
+    { text: "While potatoes roast, combine ground beef with all kofta mix ingredients — mix well but don't overwork the meat.", ing: ["{{protein}}", "Garlic (minced)", "Cumin", "Coriander (ground)", "Cinnamon", "Smoked paprika", "Fresh parsley (chopped)", "Salt & black pepper"] },
     "Shape into 6–8 oval patties and refrigerate 10 minutes to firm up.",
     "Mix yogurt, tahini, garlic, lemon juice, and salt for the dip.",
     "Cook kofta patties in a hot pan or grill pan over medium-high heat — 3–4 minutes per side until browned and cooked through.",
