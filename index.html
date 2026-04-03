@@ -1660,6 +1660,7 @@
         width: 100%;
         max-width: 720px;
         max-height: 90vh;
+        max-height: 90dvh;
         display: flex;
         flex-direction: column;
         transform: translateY(20px);
@@ -1818,7 +1819,7 @@
       }
       .modal-body {
         overflow-y: auto;
-        padding: 24px 28px;
+        padding: 24px 28px 40px;
         flex: 1;
       }
       .modal-body::-webkit-scrollbar {
@@ -6150,7 +6151,7 @@
             : r &&
               r.video &&
               (c = `<div class="card-thumb-wrap"><img class="card-thumb" src="https://img.youtube.com/vi/${r.video}/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/${r.video}/hqdefault.jpg'" loading="lazy" alt="${e.title}"><div class="play-overlay"><span>▶️</span></div></div>`),
-            (i.innerHTML = `${c}\n      <div class="card-top">\n        <div class="card-num">#${String(e.displayNum).padStart(3, "0")}</div>\n        <div class="card-time"><span class="time-icon">${clockEmoji(e.time)}</span>${e.time} min</div>\n      </div>\n      <div class="card-title">${e.title}</div>\n      <div class="card-desc">${e.desc}</div>\n      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin-bottom:10px;">\n        <span class="carb-badge ${e.carb}" style="margin-bottom:0;vertical-align:middle;">${a[e.carb]}</span>\n        <span class="protein-badge ${s}" style="margin-bottom:0;vertical-align:middle;">${o}</span>\n        <span class="flavor-badge ${e.flavor || "savory"}" style="margin-bottom:0;">${"sweet" === e.flavor ? "🍯 Sweet" : "🧂 Savory"}</span>\n        ${ALCOHOL_RECIPE_IDS.has(e.id) ? '<span class="flavor-badge alcohol" style="margin-bottom:0;">🍶 Alcohol</span>' : ""}\n      </div>\n      <div class="macro-row">\n        <div class="macro-box kcal-box">    <span class="val" data-macro="kcal">—</span>  <span class="lbl">kcal</span></div>\n        <div class="macro-box protein-box"> <span class="val" data-macro="prot">—</span> <span class="lbl">protein</span></div>\n        <div class="macro-box carbs-box">   <span class="val" data-macro="carbs">—</span><span class="lbl">carbs</span></div>\n        <div class="macro-box fat-box">     <span class="val" data-macro="fat">—</span>  <span class="lbl">fat</span></div>\n      </div>\n      <div style="font-size:9px;color:#555;text-align:right;margin-top:-8px;margin-bottom:6px;" data-macro-context>per portion · <span data-serving-label>1 serving</span></div>\n      <div class="score-row">\n        <span class="score-badge" data-score></span>\n        <div class="score-bar-bg"><div class="score-bar-fill" data-fill></div></div>\n        <span class="score-label" data-scorelabel></span>\n      </div>\n      <div class="card-bottom"><div class="tags">${n}</div></div>\n      <div class="card-click-hint">tap to open recipe →</div>`),
+            (i.innerHTML = `${c}\n      <div class="card-top">\n        <div class="card-num">#${String(e.displayNum).padStart(3, "0")}</div>\n        <div class="card-time"><span class="time-icon">${clockEmoji(e.time)}</span>${e.time} min</div>\n      </div>\n      <div class="card-title">${e.title}</div>\n      <div class="card-desc">${e.desc}</div>\n      <div class="macro-row">\n        <div class="macro-box kcal-box">    <span class="val" data-macro="kcal">—</span>  <span class="lbl">kcal</span></div>\n        <div class="macro-box protein-box"> <span class="val" data-macro="prot">—</span> <span class="lbl">protein</span></div>\n        <div class="macro-box carbs-box">   <span class="val" data-macro="carbs">—</span><span class="lbl">carbs</span></div>\n        <div class="macro-box fat-box">     <span class="val" data-macro="fat">—</span>  <span class="lbl">fat</span></div>\n      </div>\n      <div style="font-size:9px;color:#555;text-align:right;margin-top:-8px;margin-bottom:10px;" data-macro-context>per portion · <span data-serving-label>1 serving</span></div>\n      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin-bottom:10px;">\n        <span class="carb-badge ${e.carb}" style="margin-bottom:0;vertical-align:middle;">${a[e.carb]}</span>\n        <span class="protein-badge ${s}" style="margin-bottom:0;vertical-align:middle;">${o}</span>\n        <span class="flavor-badge ${e.flavor || "savory"}" style="margin-bottom:0;">${"sweet" === e.flavor ? "🍯 Sweet" : "🧂 Savory"}</span>\n        ${ALCOHOL_RECIPE_IDS.has(e.id) ? '<span class="flavor-badge alcohol" style="margin-bottom:0;">🍶 Alcohol</span>' : ""}\n      </div>\n      <div class="score-row">\n        <span class="score-badge" data-score></span>\n        <div class="score-bar-bg"><div class="score-bar-fill" data-fill></div></div>\n        <span class="score-label" data-scorelabel></span>\n      </div>\n      <div class="card-bottom"><div class="tags">${n}</div></div>\n      <div class="card-click-hint">tap to open recipe →</div>`),
             t.appendChild(i));
         }),
           e.appendChild(t));
@@ -6930,7 +6931,16 @@
         (a.steps.length &&
           ((t += '<div class="step-list">'),
           a.steps.forEach((a, r) => {
-            const c = a.toLowerCase(),
+            const stepText = typeof a === "object" ? a.text : a;
+            const c = stepText.toLowerCase();
+            let l;
+            if (typeof a === "object" && Array.isArray(a.ing)) {
+              l = a.ing.map((ingName) => {
+                if (ingName === "{{protein}}") return { name: _proteinLabel, amt: "{{proteinG}}g raw" };
+                if (ingName === "{{carb}}")    return { name: _carbLabel, amt: "{{carbG}}" };
+                return i.find((x) => x.name.toLowerCase() === ingName.toLowerCase()) || { name: ingName, amt: "" };
+              });
+            } else {
               l = i.filter((a) =>
                 a.name
                   .toLowerCase()
@@ -6942,6 +6952,7 @@
                   .filter((e) => e.length > 3)
                   .some((e) => c.includes(e)),
               );
+            }
             let d = "";
             if (l.length > 0) {
               const a = "step-ing-" + e.id + "-" + r,
@@ -6963,7 +6974,7 @@
                   .join("");
               d = `\n          <div class="step-ing-btn" onclick="toggleStepIng(this,'${a}')">\n            🥄 ${l.length} ingredient${l.length > 1 ? "s" : ""} <span class="sia-arrow">▼</span>\n          </div>\n          <div class="step-ing-panel" id="${a}">\n            ${t}\n          </div>`;
             }
-            t += `<div class="step">\n        <div class="step-num">${r + 1}</div>\n        <div class="step-text">\n          <div>${a}</div>\n          ${d}\n        </div>\n      </div>`;
+            t += `<div class="step">\n        <div class="step-num">${r + 1}</div>\n        <div class="step-text">\n          <div>${stepText}</div>\n          ${d}\n        </div>\n      </div>`;
           }),
           (t += "</div>")),
           a.hacks &&
