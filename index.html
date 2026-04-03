@@ -5144,8 +5144,8 @@
       </div>
     </footer>
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-    <script src="nutrition.js"></script>
-  <script src="recipes.js"></script>
+    <script src="nutrition.js?v=202604031347"></script>
+  <script src="recipes.js?v=202604031347"></script>
     <script>
       const NUT = {
         chicken_thigh: { kcal: 149, p: 18.6, c: 0, f: 7.92 },
@@ -6015,15 +6015,19 @@
           d = t || i || n,
           m = t || i || n,
           h = i || n,
-          p = (e, a) => {
-            const t = document.getElementById(e);
-            if (t && t.checked !== a) {
-              t.checked = a;
-              const i = e.replace("chkP", "").toLowerCase();
-              proteinEnabled[i] = a;
+          p = (e, shouldDisable) => {
+            // Only force-disable when dietary requires it
+            // Never re-enable — respect user's manual protein filter state
+            if (shouldDisable) {
+              const t = document.getElementById(e);
+              if (t && t.checked) {
+                t.checked = false;
+                const i = e.replace("chkP", "").toLowerCase();
+                proteinEnabled[i] = false;
+              }
             }
           };
-        (p("chkPChicken", !s), p("chkPBeef", !o), p("chkPEggs", !r), p("chkPFish", !c));
+        (p("chkPChicken", s), p("chkPBeef", o), p("chkPEggs", r), p("chkPFish", c));
         const u = {
           chicken_thigh: s,
           chicken_breast: s,
