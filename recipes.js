@@ -1,15 +1,114 @@
 // ============================================================
-//  recipes.js — Recipe Vault Data
-//  Edit this file to add/remove/change recipes.
-//  This file is loaded by index.html via <script src="recipes.js">
+//  recipes.js — FIT NIIKITER'S RECIPE VAULT
+//  Version: 2.0 | Maintainer: fitniikiter
+// ============================================================
+//
+//  IMPORTANT — READ BEFORE EDITING
+//
+//  This file contains all recipe data for the Recipe Vault app.
+//  It is loaded by index.html via <script src="recipes.js">
+//
+//  HOW IT WORKS:
+//  - PART 1 (const R):              Recipe cards shown on the main page
+//  - PART 2 (const RECIPE_DETAILS): Full recipe data (ingredients, steps, hacks)
+//  - Every recipe needs an entry in BOTH parts with the SAME id.
+//
+// ============================================================
+//  RULES FOR ADDING RECIPES
+// ============================================================
+//
+//  1. ID:
+//     - Lowercase, hyphens only, no spaces or special chars
+//     - Must be unique and identical in R[] and RECIPE_DETAILS
+//     - Example: "korean-beef-bibimbap-bowl"
+//
+//  2. displayNum:
+//     - Sequential number shown as #001, #002 etc.
+//     - Always increment from the last recipe (currently last is 41)
+//     - Next recipe = displayNum: 42
+//
+//  3. carb:
+//     - ONLY these 4 values allowed: "rice" | "potato" | "noodle" | "bread"
+//
+//  4. flavor:
+//     - ONLY: "savory" | "sweet"
+//
+//  5. tags:
+//     - Choose from: "korean" | "japanese" | "chinese" | "thai" | "asian" |
+//       "american" | "mexican" | "indian" | "middle-eastern" |
+//       "mediterranean" | "comfort" | "fusion"
+//
+//  6. sauce_kcal / sauce_p / sauce_c / sauce_f:
+//     - Estimated macros from sauce/seasonings ONLY
+//     - Do NOT include protein source or carb base here
+//     - Keep realistic: most sauces = 50-150 kcal
+//
+//  7. {{proteinG}} and {{carbG}}:
+//     - Always write EXACTLY like this in ingredient amounts
+//     - The app replaces them with the user's selected gram values
+//     - Example: amt: "{{proteinG}}g raw"  or  amt: "{{carbG}}g"
+//
+//  8. Ingredient names:
+//     - Write in ENGLISH using standard names
+//     - The app auto-maps ingredient names to filter categories
+//     - Use common names: "Soy sauce", "Butter", "Fish sauce", "Mirin" etc.
+//     - WRONG: "Sojasauce", "Beurre", "Nam pla" — filters won't work
+//     - Protein section name should always be one of:
+//       "Boneless skinless chicken thighs"  (chicken recipes)
+//       "Ground beef (20% fat)"             (beef recipes)
+//       These get dynamically replaced by the app based on user selection
+//
+//  9. steps:
+//     - Array of strings, each step a complete sentence or short paragraph
+//     - No numbering needed, the app adds numbers automatically
+//
+//  10. hacks:
+//      - Max 2-3 per recipe
+//      - title: short label (e.g. "Wok hack")
+//      - text: the actual 80/20 tip, 1-3 sentences
+//
+//  11. notes:
+//      - Optional. Storage tips, spice level, substitutions
+//      - Use null if nothing to add
+//
+//  12. video:
+//      - YouTube video ID only (e.g. "I5BZybb9bpM")
+//      - NOT the full URL — just the part after "?v="
+//      - Use null if no video
+//
+//  13. image:
+//      - Full URL to image (Cloudflare R2, Imgur, etc.)
+//      - Use null if no image (app uses YouTube thumbnail if video exists)
+//
+// ============================================================
+//  FILTERS — FULLY AUTOMATIC
+// ============================================================
+//
+//  You do NOT need to manually update any filter maps.
+//  The app automatically scans all ingredient names and maps them
+//  to the correct dietary filters at runtime.
+//
+//  As long as you use standard English ingredient names, all filters
+//  work correctly: No Alcohol, Gluten-Free, Dairy-Free, No Soy,
+//  No Fish, Nut-Free, Vegetarian, Vegan, Low Spice, etc.
+//
+//  Alcohol badge is automatic:
+//  Any recipe with "Mirin", "Sake", or "White wine" in ingredients
+//  automatically gets the Alcohol badge — no extra work needed.
+//
+// ============================================================
+//  WHEN ASKING AN AI TO GENERATE RECIPES
+// ============================================================
+//
+//  Give the AI this file + your list of recipe ideas.
+//  Ask for output in two blocks:
+//  1. All PART 1 entries (to insert into const R = [...])
+//  2. All PART 2 entries (to insert into const RECIPE_DETAILS = {...})
+//  Pure JavaScript only — no markdown, no extra text.
+//  The AI should follow all rules above exactly.
+//
 // ============================================================
 
-// --- RECIPE CARDS (shown on main page) ---
-
-// ============================================================
-//  MASTER TEMPLATES — KI Referenz (nicht im Browser sichtbar)
-//  Diese Karten zeigen die Struktur — nicht in R[] eingebunden
-// ============================================================
 /*
 MASTER CARD EXAMPLES:
   {
