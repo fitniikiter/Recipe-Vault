@@ -6930,7 +6930,16 @@
         (a.steps.length &&
           ((t += '<div class="step-list">'),
           a.steps.forEach((a, r) => {
-            const c = a.toLowerCase(),
+            const stepText = typeof a === "object" ? a.text : a;
+            const c = stepText.toLowerCase();
+            let l;
+            if (typeof a === "object" && Array.isArray(a.ing)) {
+              l = a.ing.map((ingName) => {
+                if (ingName === "{{protein}}") return { name: _proteinLabel, amt: "{{proteinG}}g raw" };
+                if (ingName === "{{carb}}")    return { name: _carbLabel, amt: "{{carbG}}" };
+                return i.find((x) => x.name.toLowerCase() === ingName.toLowerCase()) || { name: ingName, amt: "" };
+              });
+            } else {
               l = i.filter((a) =>
                 a.name
                   .toLowerCase()
@@ -6942,6 +6951,7 @@
                   .filter((e) => e.length > 3)
                   .some((e) => c.includes(e)),
               );
+            }
             let d = "";
             if (l.length > 0) {
               const a = "step-ing-" + e.id + "-" + r,
@@ -6963,7 +6973,7 @@
                   .join("");
               d = `\n          <div class="step-ing-btn" onclick="toggleStepIng(this,'${a}')">\n            🥄 ${l.length} ingredient${l.length > 1 ? "s" : ""} <span class="sia-arrow">▼</span>\n          </div>\n          <div class="step-ing-panel" id="${a}">\n            ${t}\n          </div>`;
             }
-            t += `<div class="step">\n        <div class="step-num">${r + 1}</div>\n        <div class="step-text">\n          <div>${a}</div>\n          ${d}\n        </div>\n      </div>`;
+            t += `<div class="step">\n        <div class="step-num">${r + 1}</div>\n        <div class="step-text">\n          <div>${stepText}</div>\n          ${d}\n        </div>\n      </div>`;
           }),
           (t += "</div>")),
           a.hacks &&
