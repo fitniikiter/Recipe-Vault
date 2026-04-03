@@ -5144,20 +5144,21 @@
       </div>
     </footer>
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-    <script src="recipes.js"></script>
+    <script src="nutrition.js"></script>
+  <script src="recipes.js"></script>
     <script>
       const NUT = {
-        chicken_thigh: { kcal: 144, p: 18.6, c: 0, f: 7.9 },
-        chicken_breast: { kcal: 106, p: 23.2, c: 0, f: 1.9 },
-        beef_regular: { kcal: 254, p: 17.2, c: 0, f: 20 },
-        beef_lean: { kcal: 137, p: 21.4, c: 0, f: 5.5 },
-        eggs: { kcal: 143, p: 12.6, c: 0.7, f: 9.5 },
-        salmon: { kcal: 208, p: 20.4, c: 0, f: 13.4 },
-        tofu: { kcal: 76, p: 8.1, c: 1.9, f: 4.8 },
+        chicken_thigh: { kcal: 149, p: 18.6, c: 0, f: 7.92 },
+        chicken_breast: { kcal: 112, p: 22.5, c: 0, f: 1.93 },
+        beef_regular: { kcal: 248, p: 17.5, c: 0, f: 19.4 },
+        beef_lean: { kcal: 137, p: 21.4, c: 0, f: 5 },
+        eggs: { kcal: 147, p: 12.4, c: 0.96, f: 9.96 },
+        salmon: { kcal: 203, p: 20.3, c: 0, f: 13.1 },
+        tofu: { kcal: 144, p: 17.3, c: 2.78, f: 8.72 },
         potato: { kcal: 77, p: 2, c: 17.5, f: 0.1 },
         rice: { kcal: 365, p: 7.1, c: 80, f: 0.7 },
         noodle: { kcal: 357, p: 13, c: 71, f: 1.5 },
-        bread: { kcal: 265, p: 9, c: 51, f: 3 },
+        bread: { kcal: 265, p: 9, c: 51, f: 3.2 },
       };
       ((NUT.chicken = NUT.chicken_thigh), (NUT.egg = NUT.eggs));
       const INGREDIENT_DB = {
@@ -5952,7 +5953,7 @@
             const a = document.getElementById("chk" + e);
             (a && (a.checked = !0), (carbEnabled[e.toLowerCase()] = !0));
           }),
-          ["Chicken", "Beef", "Eggs", "Salmon", "Tofu"].forEach((e) => {
+          ["Chicken", "Beef", "Eggs", "Fish", "Tofu"].forEach((e) => {
             const a = document.getElementById("chkP" + e);
             (a && (a.checked = !0), (proteinEnabled[e.toLowerCase()] = !0));
           }));
@@ -5993,6 +5994,19 @@
           i = activeDietary.has("vegetarian"),
           n = activeDietary.has("vegan");
         activeDietary.has("halal") && ["sake", "white_wine", "mirin"].forEach((e) => disabledIngredients.add(e));
+        // Gluten-free: disable bread/noodle carb options
+        if (activeDietary.has("gluten_free")) {
+          carbEnabled["bread"] = false;
+          carbEnabled["noodle"] = false;
+          const chkBread = document.getElementById("chkBread");
+          const chkNoodle = document.getElementById("chkNoodle");
+          if (chkBread) chkBread.checked = false;
+          if (chkNoodle) chkNoodle.checked = false;
+        } else {
+          // Only re-enable if not manually disabled
+          if (!localStorage.getItem("carbManualDisabled_bread")) carbEnabled["bread"] = true;
+          if (!localStorage.getItem("carbManualDisabled_noodle")) carbEnabled["noodle"] = true;
+        }
         const s = i || n,
           o = e || i || n,
           r = a || n,
@@ -6632,11 +6646,10 @@
           s = document.getElementById("modalTagsRow"),
           o = (a.tags || []).map((e) => `<span class="tag tag-${e}">${e}</span>`).join("");
         ((s.innerHTML = `\n    <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:${o ? "6px" : "0"};">\n      <span class="carb-badge ${a.carb}" style="font-size:10px;padding:4px 10px;">${{ potato: "🥔 Potato", rice: "🍚 Rice", noodle: "🍜 Noodle", bread: "🫓 Bread" }[a.carb]}</span>\n      <span class="protein-badge ${n}" style="font-size:10px;padding:4px 10px;">${i}</span>\n      <span class="flavor-badge ${a.flavor || "savory"}" style="font-size:10px;padding:4px 10px;">${"sweet" === a.flavor ? "🍯 Sweet" : "🧂 Savory"}</span>\n      ${ALCOHOL_RECIPE_IDS.has(a.id) ? '<span class="flavor-badge alcohol" style="font-size:10px;padding:4px 10px;">🍶 Alcohol</span>' : ""}\n    </div>\n    ${o ? `<div style="display:flex;flex-wrap:wrap;gap:5px;">${o}</div>` : ""}\n  `),
-          updateModalMacros(a));
+          (modalServings = weights.servings), updateModalMacros(a));
         const r = getRecipeDetail(a),
           c = document.getElementById("modalTabs");
         ((c.innerHTML = `\n    <div class="modal-tab active" onclick="switchModalTab('ingredients',this)">🥄 Ingredients</div>\n    <div class="modal-tab" onclick="switchModalTab('recipe',this)">👨‍🍳 Recipe</div>\n    ${r.video ? '<div class="modal-tab" onclick="switchModalTab(\'video\',this)">▶️ Video</div>' : ""}\n  `),
-          (modalServings = weights.servings),
           buildIngredientsTab(a, modalServings),
           buildRecipeTab(a),
           r.video && buildVideoTab(a),
@@ -8346,10 +8359,10 @@
             name: "Chicken Thigh",
             icon: "🍗",
             sub: "boneless, skinless, raw",
-            kcal: 144,
+            kcal: 149,
             p: 18.6,
             c: 0,
-            f: 7.9,
+            f: 7.92,
             satiety: 4,
             best: "Flavor & moisture",
           },
@@ -8358,10 +8371,10 @@
             name: "Chicken Breast",
             icon: "🍗",
             sub: "boneless, skinless, raw",
-            kcal: 106,
-            p: 23.2,
+            kcal: 112,
+            p: 22.5,
             c: 0,
-            f: 1.9,
+            f: 1.93,
             satiety: 5,
             best: "Leanest protein",
           },
@@ -8370,10 +8383,10 @@
             name: "Beef (Regular)",
             icon: "🥩",
             sub: "ground beef ~20% fat, raw",
-            kcal: 254,
-            p: 17.2,
+            kcal: 248,
+            p: 17.5,
             c: 0,
-            f: 20,
+            f: 19.4,
             satiety: 4,
             best: "Flavor & iron",
           },
@@ -8430,10 +8443,10 @@
             name: "Eggs",
             icon: "🥚",
             sub: "whole egg, raw (~58g each)",
-            kcal: 143,
-            p: 12.6,
-            c: 0.7,
-            f: 9.5,
+            kcal: 147,
+            p: 12.4,
+            c: 0.96,
+            f: 9.96,
             satiety: 4,
             best: "Micronutrients & versatility",
           },
@@ -8454,10 +8467,10 @@
             name: "Tofu",
             icon: "🫘",
             sub: "firm tofu",
-            kcal: 76,
-            p: 8.1,
-            c: 1.9,
-            f: 4.8,
+            kcal: 144,
+            p: 17.3,
+            c: 2.78,
+            f: 8.72,
             satiety: 3,
             best: "Plant-based option",
           },
