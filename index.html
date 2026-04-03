@@ -1660,7 +1660,6 @@
         width: 100%;
         max-width: 720px;
         max-height: 90vh;
-        max-height: 90dvh;
         display: flex;
         flex-direction: column;
         transform: translateY(20px);
@@ -1676,9 +1675,9 @@
       }
       .modal-header-collapsible {
         transition:
-          max-height 0.25s ease,
-          opacity 0.25s ease,
-          margin 0.25s ease;
+          max-height 0.35s ease-in-out,
+          opacity 0.3s ease-in-out,
+          margin 0.35s ease-in-out;
         overflow: hidden;
         max-height: 300px;
         opacity: 1;
@@ -1819,7 +1818,7 @@
       }
       .modal-body {
         overflow-y: auto;
-        padding: 24px 28px 40px;
+        padding: 24px 28px;
         flex: 1;
       }
       .modal-body::-webkit-scrollbar {
@@ -6666,7 +6665,7 @@
         l &&
           d &&
           ((l.onscroll = () => {
-            d.classList.toggle("collapsed", l.scrollTop > 40);
+            d.classList.toggle("collapsed", l.scrollTop > 80);
           }),
           (l.scrollTop = 0),
           d.classList.remove("collapsed"));
