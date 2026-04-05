@@ -1725,7 +1725,7 @@ const RECIPE_DETAILS = {
     { section: "Sauce", items: [
       { name: "Gochujang", amt: "2 tbsp" },
       { name: "Soy sauce", amt: "1 tbsp" },
-      { name: "Honey", amt: "1 tbsp" },
+      { name: "Honey", amt: "0.5 tbsp" },
       { name: "Garlic (minced)", amt: "3 cloves" },
       { name: "Sesame oil", amt: "1 tsp" },
       { name: "Rice vinegar", amt: "1 tsp" },
@@ -1848,7 +1848,7 @@ const RECIPE_DETAILS = {
     { section: "Teriyaki Sauce", items: [
       { name: "Soy sauce", amt: "3 tbsp" },
       { name: "Mirin", amt: "2 tbsp" },
-      { name: "Honey", amt: "1 tbsp" },
+      { name: "Honey", amt: "0.5 tbsp" },
       { name: "Garlic (minced)", amt: "2 cloves" },
       { name: "Fresh ginger (grated)", amt: "1 tsp" },
       { name: "Cornstarch", amt: "1 tsp" },
@@ -3075,7 +3075,7 @@ const RECIPE_DETAILS = {
       { name: "Gochugaru (chili flakes)", amt: "1 tsp" },
       { name: "Sesame oil", amt: "1 tsp" },
       { name: "Garlic (minced)", amt: "3 cloves" },
-      { name: "Honey", amt: "1 tbsp" },
+      { name: "Honey", amt: "0.5 tbsp" },
       { name: "Rice vinegar", amt: "1 tsp" },
     ]},
     { section: "Vegetables", items: [
