@@ -2247,6 +2247,9 @@
         gap: 0;
         margin-left: auto;
       }
+      .modal-weight-row-main .serving-stepper {
+        margin-left: 0;
+      }
       .step-btn {
         width: 30px;
         height: 30px;
@@ -6855,7 +6858,7 @@
             )
             .join(
               "",
-            )}\n    </div>\n    <div class="modal-weight-row">\n      <label>🥚 Egg Count</label>\n      <div class="serving-stepper">\n        <button class="step-btn" onclick="changeModalEggCount(-1, '${e.id}')">−</button>\n        <span class="serving-val" id="modalEggCountVal" style="width:40px;height:36px;line-height:36px;font-size:20px;">${eggCount}</span>\n        <button class="step-btn" onclick="changeModalEggCount(1, '${e.id}')">+</button>\n      </div>\n      \n      <span class="modal-weight-hint">${p}g per portion</span>\n    </div>`;
+            )}\n    </div>\n    <div class="modal-weight-row">\n      <div class="modal-weight-row-main" style="cursor:default;flex-wrap:nowrap;align-items:center;gap:8px;">\n        <label style="flex-shrink:0;white-space:nowrap;">🥚 Egg Count</label>\n        <div class="serving-stepper" style="margin-left:0;">\n          <button class="step-btn" onclick="changeModalEggCount(-1, '${e.id}')">−</button>\n          <span class="serving-val" id="modalEggCountVal" style="width:36px;height:30px;line-height:30px;font-size:15px;">${eggCount}</span>\n          <button class="step-btn" onclick="changeModalEggCount(1, '${e.id}')">+</button>\n        </div>\n        <span class="modal-weight-hint" style="margin-left:auto;">${p}g per portion</span>\n      </div>\n    </div>`;
         }
         let y = `\n  <div class="serving-control">\n    <label>🍽️ Servings</label>\n    <div class="serving-stepper">\n      <button class="step-btn" onclick="changeModalServings(-1, '${e.id}')">−</button>\n      <span class="serving-val" id="modalServingVal">${i}</span>\n      <button class="step-btn" onclick="changeModalServings(1, '${e.id}')">+</button>\n    </div>\n    <span class="modal-weight-hint">per portion</span>\n  </div>\n  ${g}\n  ${
             o
