@@ -365,6 +365,7 @@ const R = [
   sauce_p: 2,
   sauce_c: 12,
   sauce_f: 3,
+  hint: "",
 },
 {
   id: "korean-gochujang-chicken-bowl",
@@ -374,12 +375,13 @@ const R = [
   time: 30,
   title: "Korean Gochujang Chicken Bowl",
   desc: "Sticky, spicy-sweet gochujang glazed chicken over fluffy rice with a sesame cucumber crunch.",
-  tags: ["korean"],
+  tags: ["korean", "spicy"],
   flavor: "savory",
   sauce_kcal: 110,
   sauce_p: 3,
   sauce_c: 14,
   sauce_f: 4,
+  hint: "",
 },
 {
   id: "thai-basil-chicken-rice",
@@ -395,6 +397,7 @@ const R = [
   sauce_p: 2,
   sauce_c: 8,
   sauce_f: 5,
+  hint: "",
 },
 {
   id: "shawarma-chicken-wrap",
@@ -410,6 +413,7 @@ const R = [
   sauce_p: 4,
   sauce_c: 10,
   sauce_f: 7,
+  hint: "",
 },
 {
   id: "japanese-teriyaki-chicken",
@@ -425,6 +429,7 @@ const R = [
   sauce_p: 2,
   sauce_c: 16,
   sauce_f: 2,
+  hint: "",
 },
 {
   id: "chipotle-lime-chicken-bowl",
@@ -440,6 +445,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 9,
   sauce_f: 6,
+  hint: "",
 },
 {
   id: "honey-garlic-chicken-noodles",
@@ -455,6 +461,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 20,
   sauce_f: 4,
+  hint: "",
 },
 {
   id: "mediterranean-chicken-potato",
@@ -470,6 +477,7 @@ const R = [
   sauce_p: 1,
   sauce_c: 4,
   sauce_f: 8,
+  hint: "",
 },
 {
   id: "indian-tikka-chicken-rice",
@@ -485,6 +493,7 @@ const R = [
   sauce_p: 5,
   sauce_c: 11,
   sauce_f: 8,
+  hint: "",
 },
 {
   id: "chinese-five-spice-chicken-rice",
@@ -500,6 +509,7 @@ const R = [
   sauce_p: 2,
   sauce_c: 12,
   sauce_f: 5,
+  hint: "",
 },
 {
   id: "bbq-chicken-smashed-potato",
@@ -515,6 +525,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 18,
   sauce_f: 4,
+  hint: "",
 },
 
 
@@ -532,6 +543,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 14,
   sauce_f: 4,
+  hint: "",
 },
 {
   id: "smash-burger-brioche",
@@ -547,6 +559,7 @@ const R = [
   sauce_p: 4,
   sauce_c: 8,
   sauce_f: 12,
+  hint: "",
 },
 {
   id: "mexican-taco-beef-bowl",
@@ -562,6 +575,7 @@ const R = [
   sauce_p: 2,
   sauce_c: 10,
   sauce_f: 5,
+  hint: "",
 },
 {
   id: "chinese-mapo-tofu-beef-rice",
@@ -577,6 +591,7 @@ const R = [
   sauce_p: 4,
   sauce_c: 8,
   sauce_f: 7,
+  hint: "",
 },
 {
   id: "thai-larb-beef-rice",
@@ -586,12 +601,13 @@ const R = [
   time: 20,
   title: "Thai Larb Beef Bowl",
   desc: "Minced beef larb with toasted rice powder, fresh mint, lime, and chili — bright, herby, and punchy.",
-  tags: ["thai"],
+  tags: ["thai", "spicy"],
   flavor: "savory",
   sauce_kcal: 85,
   sauce_p: 2,
   sauce_c: 9,
   sauce_f: 3,
+  hint: "",
 },
 {
   id: "middle-eastern-kofta-potato",
@@ -607,6 +623,7 @@ const R = [
   sauce_p: 5,
   sauce_c: 7,
   sauce_f: 9,
+  hint: "",
 },
 {
   id: "japanese-beef-rice-bowl-gyudon",
@@ -622,6 +639,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 13,
   sauce_f: 4,
+  hint: "",
 },
 {
   id: "beef-bolognese-protein-pasta",
@@ -637,6 +655,7 @@ const R = [
   sauce_p: 6,
   sauce_c: 12,
   sauce_f: 7,
+  hint: "",
 },
 {
   id: "beef-bibimbap-bowl",
@@ -646,12 +665,13 @@ const R = [
   time: 30,
   title: "Beef Bibimbap Bowl",
   desc: "Ground beef bibimbap with gochujang, sautéed veggies, a crispy fried egg, and sesame oil — restaurant vibes at home.",
-  tags: ["korean"],
+  tags: ["korean", "spicy"],
   flavor: "savory",
   sauce_kcal: 120,
   sauce_p: 4,
   sauce_c: 12,
   sauce_f: 6,
+  hint: "",
 },
 {
   id: "beef-stuffed-potato-skins",
@@ -667,6 +687,7 @@ const R = [
   sauce_p: 5,
   sauce_c: 6,
   sauce_f: 10,
+  hint: "",
 },
 {
   id: "indian-beef-keema-curry-rice",
@@ -682,6 +703,7 @@ const R = [
   sauce_p: 4,
   sauce_c: 9,
   sauce_f: 5,
+  hint: "",
 },
 {
   id: "vietnamese-lemongrass-beef-noodles",
@@ -697,6 +719,7 @@ const R = [
   sauce_p: 2,
   sauce_c: 9,
   sauce_f: 3,
+  hint: "",
 },
 {
   id: "turkish-beef-lahmacun-wrap",
@@ -712,6 +735,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 8,
   sauce_f: 4,
+  hint: "",
 },
 {
   id: "greek-beef-yuvarlakia-potato-bowl",
@@ -727,6 +751,7 @@ const R = [
   sauce_p: 4,
   sauce_c: 7,
   sauce_f: 4,
+  hint: "",
 },
 {
   id: "taiwanese-beef-scallion-noodles",
@@ -742,6 +767,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 10,
   sauce_f: 4,
+  hint: "",
 },
 {
   id: "peruvian-lomo-saltado-bowl",
@@ -757,6 +783,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 11,
   sauce_f: 4,
+  hint: "",
 },
 {
   id: "mexican-beef-black-bean-burrito-bowl",
@@ -772,6 +799,7 @@ const R = [
   sauce_p: 4,
   sauce_c: 12,
   sauce_f: 5,
+  hint: "",
 },
 {
   id: "japanese-beef-tantanmen-noodles",
@@ -781,12 +809,13 @@ const R = [
   time: 30,
   title: "Beef Tantanmen Ramen",
   desc: "Lean ground beef in a light sesame-miso-chili broth with ramen noodles and bok choy — a high-protein take on the Japanese classic without the heavy fat.",
-  tags: ["japanese"],
+  tags: ["japanese", "spicy"],
   flavor: "savory",
   sauce_kcal: 130,
   sauce_p: 5,
   sauce_c: 11,
   sauce_f: 6,
+  hint: "",
 },
 {
   id: "north-african-harissa-beef-flatbread",
@@ -796,12 +825,13 @@ const R = [
   time: 25,
   title: "Harissa Beef Flatbread",
   desc: "Spiced ground beef with fiery harissa paste on warm flatbread, topped with cool yogurt and fresh mint — bold North African flavors in every bite.",
-  tags: ["north-african"],
+  tags: ["north-african", "spicy"],
   flavor: "savory",
   sauce_kcal: 100,
   sauce_p: 3,
   sauce_c: 8,
   sauce_f: 5,
+  hint: "",
 },
 {
   id: "indonesian-beef-rendang-bowl",
@@ -811,12 +841,13 @@ const R = [
   time: 35,
   title: "Indonesian Beef Rendang Bowl",
   desc: "Ground beef slow-simmered in a rich coconut-chili paste with lemongrass and galangal over steamed rice — intensely aromatic and unlike anything else in the vault.",
-  tags: ["indonesian"],
+  tags: ["indonesian", "spicy"],
   flavor: "savory",
   sauce_kcal: 140,
   sauce_p: 4,
   sauce_c: 8,
   sauce_f: 9,
+  hint: "",
 },
 {
   id: "ethiopian-beef-tibs-potato-bowl",
@@ -832,6 +863,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 9,
   sauce_f: 5,
+  hint: "",
 },
 {
   id: "vietnamese-beef-pho-noodle-bowl",
@@ -847,6 +879,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 8,
   sauce_f: 3,
+  hint: "",
 },
 {
   id: "argentinian-chimichurri-beef-rice-bowl",
@@ -862,6 +895,7 @@ const R = [
   sauce_p: 1,
   sauce_c: 2,
   sauce_f: 7,
+  hint: "",
 },
 {
   id: "vietnamese-beef-banh-mi-wrap",
@@ -877,6 +911,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 10,
   sauce_f: 7,
+  hint: "",
 },
 
 
@@ -888,12 +923,13 @@ const R = [
   time: 30,
   title: "Korean Dakgalbi Chicken Noodles",
   desc: "Spicy stir-fried chicken in gochujang dakgalbi sauce with chewy glass noodles and cabbage.",
-  tags: ["korean"],
+  tags: ["korean", "spicy"],
   flavor: "savory",
   sauce_kcal: 110,
   sauce_p: 3,
   sauce_c: 14,
   sauce_f: 4,
+  hint: "",
 },
 {
   id: "chicken-caesar-wrap",
@@ -909,6 +945,7 @@ const R = [
   sauce_p: 6,
   sauce_c: 6,
   sauce_f: 9,
+  hint: "",
 },
 {
   id: "thai-peanut-chicken-rice",
@@ -918,12 +955,13 @@ const R = [
   time: 25,
   title: "Thai Peanut Chicken Bowl",
   desc: "Sliced chicken over jasmine rice with a creamy spicy peanut sauce and quick-pickled cucumber.",
-  tags: ["thai"],
+  tags: ["thai", "spicy"],
   flavor: "savory",
   sauce_kcal: 145,
   sauce_p: 5,
   sauce_c: 11,
   sauce_f: 9,
+  hint: "",
 },
 {
   id: "lemon-herb-chicken-potato",
@@ -939,6 +977,7 @@ const R = [
   sauce_p: 2,
   sauce_c: 5,
   sauce_f: 6,
+  hint: "",
 },
 {
   id: "chinese-kung-pao-chicken-rice",
@@ -948,12 +987,13 @@ const R = [
   time: 25,
   title: "Kung Pao Chicken",
   desc: "Classic kung pao with chicken, toasted peanuts, and dried chili — sweet, sour, spicy, and crunchy.",
-  tags: ["chinese"],
+  tags: ["chinese", "spicy"],
   flavor: "savory",
   sauce_kcal: 120,
   sauce_p: 4,
   sauce_c: 13,
   sauce_f: 5,
+  hint: "",
 },
 {
   id: "chicken-tikka-naan",
@@ -969,6 +1009,7 @@ const R = [
   sauce_p: 4,
   sauce_c: 12,
   sauce_f: 6,
+  hint: "",
 },
 {
   id: "japanese-chicken-katsu-rice",
@@ -984,6 +1025,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 17,
   sauce_f: 3,
+  hint: "",
 },
 {
   id: "mexican-chicken-burrito-bowl",
@@ -999,6 +1041,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 11,
   sauce_f: 4,
+  hint: "",
 },
 {
   id: "chicken-stir-fry-noodles",
@@ -1014,6 +1057,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 14,
   sauce_f: 3,
+  hint: "",
 },
 {
   id: "chicken-shawarma-potato",
@@ -1029,6 +1073,7 @@ const R = [
   sauce_p: 4,
   sauce_c: 8,
   sauce_f: 7,
+  hint: "",
 },
 
 
@@ -1046,6 +1091,7 @@ const R = [
   sauce_p: 2,
   sauce_c: 8,
   sauce_f: 6,
+  hint: "",
 },
 {
   id: "shakshuka-middle-eastern-eggs",
@@ -1061,6 +1107,7 @@ const R = [
   sauce_p: 5,
   sauce_c: 12,
   sauce_f: 8,
+  hint: "",
 },
 {
   id: "japanese-tamago-gohan-bowl",
@@ -1076,6 +1123,7 @@ const R = [
   sauce_p: 1,
   sauce_c: 4,
   sauce_f: 5,
+  hint: "",
 },
 {
   id: "mexican-huevos-rancheros",
@@ -1091,6 +1139,7 @@ const R = [
   sauce_p: 4,
   sauce_c: 15,
   sauce_f: 6,
+  hint: "",
 },
 {
   id: "chinese-tomato-egg-stir-fry-rice",
@@ -1106,6 +1155,7 @@ const R = [
   sauce_p: 2,
   sauce_c: 9,
   sauce_f: 4,
+  hint: "",
 },
 {
   id: "high-protein-egg-potato-hash",
@@ -1121,6 +1171,7 @@ const R = [
   sauce_p: 2,
   sauce_c: 5,
   sauce_f: 6,
+  hint: "",
 },
 {
   id: "thai-omelette-rice-kai-jeow",
@@ -1136,6 +1187,7 @@ const R = [
   sauce_p: 2,
   sauce_c: 5,
   sauce_f: 7,
+  hint: "",
 },
 {
   id: "mediterranean-egg-white-omelette-wrap",
@@ -1151,6 +1203,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 8,
   sauce_f: 5,
+  hint: "",
 },
 {
   id: "french-scrambled-eggs-toast",
@@ -1166,6 +1219,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 4,
   sauce_f: 8,
+  hint: "",
 },
 {
   id: "egg-fried-noodles-asian",
@@ -1181,6 +1235,7 @@ const R = [
   sauce_p: 2,
   sauce_c: 12,
   sauce_f: 5,
+  hint: "",
 },
 
 // ── NEW RECIPES: HIGH PROTEIN LOW CALORIE ──────────────────
@@ -1200,6 +1255,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 5,
   sauce_f: 4,
+  hint: "",
 },
 {
   id: "miso-glazed-chicken-rice-bowl",
@@ -1215,6 +1271,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 8,
   sauce_f: 2,
+  hint: "",
 },
 {
   id: "harissa-chicken-couscous-bowl",
@@ -1224,12 +1281,13 @@ const R = [
   time: 30,
   title: "Harissa Chicken & Couscous Bowl",
   desc: "Spiced harissa-marinated chicken breast over fluffy couscous with roasted peppers and Greek yogurt.",
-  tags: ["north-african", "mediterranean"],
+  tags: ["north-african", "mediterranean", "spicy"],
   flavor: "savory",
   sauce_kcal: 65,
   sauce_p: 3,
   sauce_c: 6,
   sauce_f: 4,
+  hint: "",
 },
 {
   id: "vietnamese-chicken-vermicelli-bowl",
@@ -1245,6 +1303,7 @@ const R = [
   sauce_p: 2,
   sauce_c: 7,
   sauce_f: 3,
+  hint: "",
 },
 {
   id: "chicken-tabbouleh-couscous-bowl",
@@ -1260,6 +1319,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 5,
   sauce_f: 3,
+  hint: "",
 },
 
 // BEEF (5)
@@ -1277,6 +1337,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 8,
   sauce_f: 4,
+  hint: "",
 },
 {
   id: "japanese-beef-tataki-rice-bowl",
@@ -1292,6 +1353,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 10,
   sauce_f: 2,
+  hint: "",
 },
 {
   id: "mexican-picadillo-rice-bowl",
@@ -1307,6 +1369,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 9,
   sauce_f: 3,
+  hint: "",
 },
 {
   id: "vietnamese-lemongrass-beef-rice-bowl",
@@ -1322,6 +1385,7 @@ const R = [
   sauce_p: 2,
   sauce_c: 7,
   sauce_f: 3,
+  hint: "",
 },
 {
   id: "turkish-spiced-beef-bulgur-bowl",
@@ -1337,6 +1401,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 8,
   sauce_f: 4,
+  hint: "",
 },
 
 // EGGS (5)
@@ -1354,6 +1419,7 @@ const R = [
   sauce_p: 4,
   sauce_c: 3,
   sauce_f: 5,
+  hint: "",
 },
 {
   id: "turkish-menemen",
@@ -1369,12 +1435,13 @@ const R = [
   sauce_p: 3,
   sauce_c: 6,
   sauce_f: 4,
+  hint: "",
 },
 {
   id: "japanese-tamagoyaki-rice-bowl",
   protein: "eggs",
   displayNum: 68,
-  carb: "potato",
+  carb: "rice",
   time: 20,
   title: "Japanese Tamagoyaki Rice Bowl",
   desc: "Layered sweet-savory rolled omelette sliced over steamed rice with soy dipping sauce and pickled ginger.",
@@ -1384,6 +1451,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 8,
   sauce_f: 3,
+  hint: "",
 },
 {
   id: "spicy-korean-steamed-eggs",
@@ -1393,12 +1461,13 @@ const R = [
   time: 20,
   title: "Spicy Korean Steamed Eggs (Gyeran Jjim)",
   desc: "Silky, custardy steamed eggs in a stone bowl with gochugaru, spring onion, and sesame — deceptively simple and deeply satisfying.",
-  tags: ["korean"],
+  tags: ["korean", "spicy"],
   flavor: "savory",
   sauce_kcal: 40,
   sauce_p: 2,
   sauce_c: 4,
   sauce_f: 2,
+  hint: "",
 },
 {
   id: "shakshuka-verde-feta",
@@ -1414,6 +1483,7 @@ const R = [
   sauce_p: 4,
   sauce_c: 5,
   sauce_f: 5,
+  hint: "",
 },
 
 // FISH (5)
@@ -1431,6 +1501,7 @@ const R = [
   sauce_p: 2,
   sauce_c: 12,
   sauce_f: 2,
+  hint: "",
 },
 {
   id: "miso-glazed-salmon-edamame-rice",
@@ -1446,6 +1517,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 9,
   sauce_f: 2,
+  hint: "",
 },
 {
   id: "tuna-poke-bowl",
@@ -1461,6 +1533,7 @@ const R = [
   sauce_p: 2,
   sauce_c: 8,
   sauce_f: 1,
+  hint: "",
 },
 {
   id: "lemon-herb-baked-cod-potatoes",
@@ -1476,6 +1549,7 @@ const R = [
   sauce_p: 2,
   sauce_c: 5,
   sauce_f: 3,
+  hint: "",
 },
 {
   id: "thai-chili-lime-shrimp-rice-bowl",
@@ -1485,12 +1559,13 @@ const R = [
   time: 20,
   title: "Thai Chili Lime Shrimp Rice Bowl",
   desc: "Wok-blasted shrimp in a fiery lime and fish sauce dressing over steamed rice with fresh herbs and cucumber.",
-  tags: ["thai"],
+  tags: ["thai", "spicy"],
   flavor: "savory",
   sauce_kcal: 70,
   sauce_p: 2,
   sauce_c: 8,
   sauce_f: 2,
+  hint: "",
 },
 
 // TOFU (5)
@@ -1508,6 +1583,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 10,
   sauce_f: 4,
+  hint: "",
 },
 {
   id: "korean-dubu-jorim-rice-bowl",
@@ -1523,6 +1599,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 12,
   sauce_f: 4,
+  hint: "",
 },
 {
   id: "thai-basil-crispy-tofu-rice",
@@ -1538,6 +1615,7 @@ const R = [
   sauce_p: 2,
   sauce_c: 9,
   sauce_f: 5,
+  hint: "",
 },
 {
   id: "miso-glazed-tofu-edamame-bowl",
@@ -1553,6 +1631,7 @@ const R = [
   sauce_p: 3,
   sauce_c: 8,
   sauce_f: 3,
+  hint: "",
 },
 {
   id: "adobo-tofu-rice-bowl",
@@ -1568,6 +1647,7 @@ const R = [
   sauce_p: 2,
   sauce_c: 10,
   sauce_f: 3,
+  hint: "",
 },
 
 ];
@@ -4198,7 +4278,7 @@ const RECIPE_DETAILS = {
     video: "",
     ingredients: [
       { section: "Frittata", items: [
-        { name: "Whole eggs", amt: "{{proteinG_as_eggs}} eggs" },
+        { name: "Whole eggs", amt: "{{proteinG}}g raw" },
         { name: "Baby spinach", amt: "100g" },
         { name: "Feta cheese (crumbled)", amt: "40g" },
         { name: "Cherry tomatoes (halved)", amt: "8 pieces" },
@@ -4231,7 +4311,7 @@ const RECIPE_DETAILS = {
     video: "",
     ingredients: [
       { section: "Menemen", items: [
-        { name: "Whole eggs", amt: "{{proteinG_as_eggs}} eggs" },
+        { name: "Whole eggs", amt: "{{proteinG}}g raw" },
         { name: "Green pepper (diced)", amt: "1 whole" },
         { name: "Onion (diced)", amt: "½ whole" },
         { name: "Canned chopped tomatoes", amt: "250g" },
@@ -4267,7 +4347,7 @@ const RECIPE_DETAILS = {
     video: "",
     ingredients: [
       { section: "Tamagoyaki", items: [
-        { name: "Whole eggs", amt: "{{proteinG_as_eggs}} eggs" },
+        { name: "Whole eggs", amt: "{{proteinG}}g raw" },
         { name: "Mirin", amt: "1 tbsp" },
         { name: "Soy sauce (low-sodium)", amt: "1 tsp" },
         { name: "Sugar", amt: "1 tsp" },
@@ -4304,7 +4384,7 @@ const RECIPE_DETAILS = {
     video: "",
     ingredients: [
       { section: "Steamed Eggs", items: [
-        { name: "Whole eggs", amt: "{{proteinG_as_eggs}} eggs" },
+        { name: "Whole eggs", amt: "{{proteinG}}g raw" },
         { name: "Chicken or anchovy broth", amt: "180ml" },
         { name: "Fish sauce", amt: "1 tsp" },
         { name: "Gochugaru (Korean chili flakes)", amt: "1 tsp" },
@@ -4347,7 +4427,7 @@ const RECIPE_DETAILS = {
         { name: "Salt", amt: "to taste" },
       ]},
       { section: "Eggs", items: [
-        { name: "Whole eggs", amt: "{{proteinG_as_eggs}} eggs" },
+        { name: "Whole eggs", amt: "{{proteinG}}g raw" },
         { name: "Feta cheese (crumbled)", amt: "30g" },
       ]},
       { section: "Side", items: [
