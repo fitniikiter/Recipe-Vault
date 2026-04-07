@@ -6891,8 +6891,8 @@
                 n = o ? eggCount * eggSizeG : weights.chicken,
                 s = weights[e.carb] || 0,
                 c = (a.amt || "")
-                  .replace("{{proteinG}}", Math.round(n / i))
-                  .replace("{{carbG}}", Math.round(s / i))
+                  .replace("{{proteinG}}", Math.round(n))
+                  .replace("{{carbG}}", Math.round(s))
                   .replace("{{servings}}", i);
               let d = t ? c : scaleAmt(c, i),
                 m = a.name;
@@ -6968,8 +6968,8 @@
           });
         });
         const n = Math.max(weights.servings, 1),
-          s = Math.round(weights.chicken / n),
-          o = e ? Math.round(weights[e.carb] / n) : 0,
+          s = Math.round(weights.chicken),
+          o = e ? Math.round(weights[e.carb]) : 0,
           _proteinNames = {
             chicken_thigh: "Chicken thigh (boneless, skinless, raw)",
             chicken_breast: "Chicken breast (boneless, skinless, raw)",
