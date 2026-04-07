@@ -1937,7 +1937,7 @@ const RECIPE_DETAILS = {
       { name: "Water", amt: "3 tbsp" },
     ]},
     { section: "Vegetables", items: [
-      { name: "Bok choy", amt: "200g" },
+      { name: "Edamame (shelled, frozen)", amt: "100g" },
       { name: "Neutral oil", amt: "1 tsp" },
     ]},
     { section: "To Serve", items: [
@@ -1952,7 +1952,7 @@ const RECIPE_DETAILS = {
     "Cook udon noodles according to packet instructions, drain, and rinse with cold water.",
     "Heat oil in a large pan or wok over high heat — sear chicken pieces without moving for 2–3 minutes until golden, then toss and cook through.",
     "Add the sauce — it will thicken fast. Stir and coat the chicken for 1–2 minutes.",
-    "Push the chicken aside and toss the bok choy in the same pan for 1–2 minutes until wilted.",
+    "Push the chicken aside and add the edamame to the pan — stir-fry for 2 minutes until heated through.",
     "Add the cooked noodles and toss everything together over the heat for 1 minute.",
     "Serve immediately topped with spring onion and sesame seeds.",
   ],
@@ -1960,7 +1960,7 @@ const RECIPE_DETAILS = {
     { title: "Don't Crowd the Chicken", text: "Sear in two batches if needed. Crowding the pan steams the chicken instead of searing it — and that golden caramelised crust is what honey garlic chicken is all about." },
     { title: "5 Cloves of Garlic", text: "It sounds like a lot. It's not. The honey caramelises around the garlic as it cooks, completely mellowing it into sweet, nutty depth. This is the whole point of the dish." },
   ],
-  notes: "Fresh udon noodles available in the chiller section at Asian supermarkets in Frankfurt. Dried udon works equally well. Bok choy at Asia-Markt.",
+  notes: "Fresh udon noodles available in the chiller section at Asian supermarkets in Frankfurt. Dried udon works equally well. Frozen edamame (shelled) available at most supermarkets.",
 },
 
 "mediterranean-chicken-potato": {
