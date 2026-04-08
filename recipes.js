@@ -1714,6 +1714,23 @@ const R = [
   hint: "",
 },
 
+{
+  id: "chocolate-protein-baked-oat",
+  protein: "eggs",
+  displayNum: 84,
+  carb: "oats",
+  time: 25,
+  title: "Chocolate Protein Baked Oat",
+  desc: "Creamy baked oat with banana, chocolate whey, egg and dark chocolate chips — high-protein, macro-friendly dessert or breakfast.",
+  tags: ["comfort"],
+  flavor: "sweet",
+  sauce_kcal: 350,
+  sauce_p: 24,
+  sauce_c: 39,
+  sauce_f: 10,
+  hint: "",
+},
+
 ];
 
 // --- RECIPE DETAILS (ingredients, steps, hacks) ---
@@ -5074,5 +5091,43 @@ const RECIPE_DETAILS = {
     { title: "5 Cloves of Garlic", text: "It sounds like a lot — it's not. The garlic caramelises in the hot oil and becomes the backbone of the whole dish. Don't reduce it." },
   ],
   notes: "Thai basil available at Asian supermarkets in Frankfurt. Regular Italian basil works as a substitute but the flavour is milder. Lean ground beef (5% fat) keeps the macros clean. Best eaten immediately.",
+},
+
+"chocolate-protein-baked-oat": {
+  video: "",
+  ingredients: [
+    { section: "Wet", items: [
+      { name: "Banana (ripe)", amt: "65g" },
+      { name: "Eggs (whole)", amt: "1 piece" },
+      { name: "Almond milk (unsweetened)", amt: "50ml" },
+      { name: "Honey", amt: "10g" },
+      { name: "Vanilla extract (sugar-free)", amt: "3g" },
+    ]},
+    { section: "Dry", items: [
+      { name: "Rolled oats", amt: "50g" },
+      { name: "Whey protein (chocolate)", amt: "30g" },
+      { name: "Baking powder", amt: "3g" },
+      { name: "MSG", amt: "1 pinch" },
+    ]},
+    { section: "Mix-in", items: [
+      { name: "Dark chocolate chips", amt: "20g" },
+    ]},
+  ],
+  steps: [
+    "Preheat oven to 180°C (top/bottom heat).",
+    "Mash the ripe banana thoroughly in a bowl — the riper the better, it should be completely smooth.",
+    "Add the egg, almond milk, honey and vanilla extract to the banana and whisk until smooth.",
+    "Add rolled oats, chocolate whey protein, baking powder and a pinch of salt — stir until a creamy, slightly pourable batter forms.",
+    "Fold in the chocolate chips.",
+    "Pour into a small greased baking dish (approx. 12cm diameter) and bake for 15–18 minutes until the surface is golden and the centre still has a slight wobble.",
+    "Let it rest for 3–5 minutes — the centre will set slightly and stay creamy and fudgy.",
+  ],
+  hacks: [
+    { title: "The Wobble is the Point", text: "Pull it out when the centre still wobbles slightly — it continues to set as it rests. Fully set baked oat is dry and rubbery. The goal is creamy and custardy in the middle." },
+    { title: "Riper Banana = Better", text: "A spotty, overripe banana is sweeter, mushier and blends completely into the batter. An underripe banana stays lumpy and tastes starchy. The riper the better." },
+    { title: "Whey Choice Matters", text: "A good chocolate whey (like MyVay or similar) carries the whole flavour profile. If your whey tastes good as a shake, it'll taste good baked. Avoid anything chalky or artificial." },
+    { title: "Scale Up Easily", text: "This recipe is for one portion in a small ramekin or dish. For 2 portions, double everything and use a larger dish — add 3–5 minutes to baking time." },
+  ],
+  notes: "Best eaten warm straight from the oven. Can be prepped the night before (raw batter) and baked fresh in the morning. Chocolate chips optional — swap for blueberries or leave them out for lower fat.",
 },
 };
