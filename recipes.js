@@ -1718,7 +1718,7 @@ const R = [
   id: "chocolate-protein-baked-oat",
   protein: "eggs",
   displayNum: 84,
-  carb: "oats",
+  carb: "bread",
   time: 25,
   title: "Chocolate Protein Baked Oat",
   desc: "Creamy baked oat with banana, chocolate whey, egg and dark chocolate chips — high-protein, macro-friendly dessert or breakfast.",
