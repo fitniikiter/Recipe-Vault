@@ -6766,7 +6766,9 @@
         l &&
           d &&
           ((l.onscroll = () => {
-            d.classList.toggle("collapsed", l.scrollTop > 40);
+            // Don't collapse header for dip/none recipes - header is minimal already
+            const _isNone = currentModalRecipe && currentModalRecipe.protein === "none" && currentModalRecipe.carb === "none";
+            if (!_isNone) d.classList.toggle("collapsed", l.scrollTop > 40);
           }),
           (l.scrollTop = 0),
           d.classList.remove("collapsed"));
