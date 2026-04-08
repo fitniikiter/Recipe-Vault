@@ -3,6 +3,19 @@
 //  Edit this file to add/remove/change recipes.
 //  This file is loaded by index.html via <script src="recipes.js">
 // ============================================================
+//
+//  ⚠️  LANGUAGE RULE: ALL content must be in ENGLISH.
+//  This applies to:
+//    - ingredient names (e.g. "Garlic", not "Knoblauch")
+//    - step descriptions
+//    - hack titles and text
+//    - notes
+//    - section labels (e.g. "Sauce", "To Serve", "Marinade")
+//    - recipe titles and descriptions
+//
+//  Exception: brand names and untranslatable terms are allowed
+//  in parentheses as clarification (e.g. "Low-fat quark (Magerquark)").
+// ============================================================
 
 // --- RECIPE CARDS (shown on main page) ---
 
@@ -4948,7 +4961,7 @@ const RECIPE_DETAILS = {
     ]},
   ],
   steps: [
-    "Combine light mayo, Magerquark (or Skyr), finely grated parmesan, dijon mustard, lemon juice, garlic powder, salt and pepper in a bowl.",
+    "Combine light mayo, low-fat quark (Magerquark) or Skyr, finely grated parmesan, dijon mustard, lemon juice, garlic powder, salt and pepper in a bowl.",
     "Whisk everything together until smooth and creamy.",
     "Taste and adjust — more lemon for brightness, more mustard for tang.",
     "Refrigerate for at least 10 minutes before serving to let the flavours develop.",
