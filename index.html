@@ -928,6 +928,16 @@
         color: #fff;
         border-color: #ff5028;
       }
+      .flavor-badge.dip {
+        background: rgba(71, 232, 163, 0.12);
+        color: #47e8a3;
+        border: 1px solid rgba(71, 232, 163, 0.25);
+      }
+      .filter-btn.dip.active {
+        background: #47e8a3;
+        color: #000;
+        border-color: #47e8a3;
+      }
       .recipe-hint-box {
         display: flex;
         align-items: flex-start;
@@ -4563,6 +4573,7 @@
             <button class="filter-btn sweet" onclick="setFlavorFilter('sweet', this)">🍯 Sweet</button>
             <button class="filter-btn savory" onclick="setFlavorFilter('savory', this)">🧂 Savory</button>
             <button class="filter-btn spicy" onclick="setSpicyFilter(this)">🌶️ Spicy</button>
+            <button class="filter-btn dip" onclick="setDipFilter(this)">🥣 Dip</button>
           </div>
         </div>
         <div class="filter-dropdown" id="panel-carbs">
@@ -5484,6 +5495,7 @@
       let HIDDEN_RECIPE_IDS = null !== _savedHidden ? _savedHidden : new Set(DEFAULT_HIDDEN_IDS);
 
       let spicyFilter = false,
+        dipFilter = false,
         currentCuisineFilter = "all",
         weights = { chicken: 150, potato: 150, rice: 150, noodle: 150, bread: 150, eggs: 0, servings: 1 };
       const CARB_RATIOS = { potato: 1.25, rice: 0.33, noodle: 0.33, bread: 0.2 };
@@ -5739,6 +5751,12 @@
       function updateModalWeight(e, a, t) {
         clearTimeout(_weightDebounceTimer);
         const inputId = e === "prot" ? "mwProt" : "mwCarb";
+        // Strip leading zeros immediately on mobile
+        const el = document.getElementById(inputId);
+        if (el && el.value && el.value.length > 1 && el.value[0] === "0") {
+          el.value = String(parseInt(el.value) || 0);
+          a = el.value;
+        }
         _weightDebounceTimer = setTimeout(() => {
           const i = Math.max(0, Math.min(3e3, parseInt(a) || 0)),
             n = R.find((r) => r.id === t);
@@ -6032,7 +6050,9 @@
         (i && (i.textContent = "1 Serving"),
           (flavorFilter = "all"),
           (spicyFilter = false),
+          (dipFilter = false),
           document.querySelector(".filter-btn.spicy") && document.querySelector(".filter-btn.spicy").classList.remove("active"),
+          document.querySelector(".filter-btn.dip") && document.querySelector(".filter-btn.dip").classList.remove("active"),
           document
             .querySelectorAll(".filter-btn.sweet, .filter-btn.savory")
             .forEach((e) => e.classList.remove("active")));
@@ -6198,7 +6218,7 @@
         (R.forEach((e) => {
           const i = document.createElement("div");
           ((i.className = "card"), (i.dataset.id = e.id), (i.dataset.id = e.id), (i.onclick = () => openModal(e.id)));
-          const n = e.tags.filter(t => t !== "spicy").map((e) => `<span class="tag tag-${e}">${e.replace("-", " ")}</span>`).join(""),
+          const n = e.tags.filter(t => t !== "spicy" && t !== "dip").map((e) => `<span class="tag tag-${e}">${e.replace("-", " ")}</span>`).join(""),
             s = e.protein || "chicken",
             o =
               { chicken: "🍗 Chicken", beef: "🥩 Beef", eggs: "🥚 Eggs", fish: "🐟 Fish", tofu: "🫘 Tofu" }[s] ||
@@ -6210,7 +6230,7 @@
             : r &&
               r.video &&
               (c = `<div class="card-thumb-wrap"><img class="card-thumb" src="https://img.youtube.com/vi/${r.video}/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/${r.video}/hqdefault.jpg'" loading="lazy" alt="${e.title}"><div class="play-overlay"><span>▶️</span></div></div>`),
-            (i.innerHTML = `${c}\n      <div class="card-top">\n        <div class="card-num">#${String(e.displayNum).padStart(3, "0")}</div>\n        <div class="card-time"><span class="time-icon">${clockEmoji(e.time)}</span>${e.time} min</div>\n      </div>\n      <div class="card-title">${e.title}</div>\n      <div class="card-desc">${e.desc}</div>\n      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin-bottom:10px;">\n        <span class="carb-badge ${e.carb}" style="margin-bottom:0;vertical-align:middle;">${a[e.carb]}</span>\n        <span class="protein-badge ${s}" style="margin-bottom:0;vertical-align:middle;">${o}</span>\n        <span class="flavor-badge ${e.flavor || "savory"}" style="margin-bottom:0;">${"sweet" === e.flavor ? "🍯 Sweet" : "🧂 Savory"}</span>\n        ${ALCOHOL_RECIPE_IDS.has(e.id) ? '<span class="flavor-badge alcohol" style="margin-bottom:0;">🍶 Alcohol</span>' : ""}\n        ${SPICY_RECIPE_IDS.has(e.id) ? '<span class="flavor-badge spicy" style="margin-bottom:0;">🌶️ Spicy</span>' : ""}\n      </div>\n      <div class="macro-row">\n        <div class="macro-box kcal-box">    <span class="val" data-macro="kcal">—</span>  <span class="lbl">kcal</span></div>\n        <div class="macro-box protein-box"> <span class="val" data-macro="prot">—</span> <span class="lbl">protein</span></div>\n        <div class="macro-box carbs-box">   <span class="val" data-macro="carbs">—</span><span class="lbl">carbs</span></div>\n        <div class="macro-box fat-box">     <span class="val" data-macro="fat">—</span>  <span class="lbl">fat</span></div>\n      </div>\n      <div style="font-size:9px;color:#555;text-align:right;margin-top:-8px;margin-bottom:6px;" data-macro-context>per portion · <span data-serving-label>1 serving</span></div>\n      <div class="score-row">\n        <span class="score-badge" data-score></span>\n        <div class="score-bar-bg"><div class="score-bar-fill" data-fill></div></div>\n        <span class="score-label" data-scorelabel></span>\n      </div>\n      <div class="card-bottom"><div class="tags">${n}</div></div>\n      <div class="card-click-hint">tap to open recipe →</div>`),
+            (i.innerHTML = `${c}\n      <div class="card-top">\n        <div class="card-num">#${String(e.displayNum).padStart(3, "0")}</div>\n        <div class="card-time"><span class="time-icon">${clockEmoji(e.time)}</span>${e.time} min</div>\n      </div>\n      <div class="card-title">${e.title}</div>\n      <div class="card-desc">${e.desc}</div>\n      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin-bottom:10px;">\n        <span class="carb-badge ${e.carb}" style="margin-bottom:0;vertical-align:middle;">${a[e.carb]}</span>\n        <span class="protein-badge ${s}" style="margin-bottom:0;vertical-align:middle;">${o}</span>\n        <span class="flavor-badge ${e.flavor || "savory"}" style="margin-bottom:0;">${"sweet" === e.flavor ? "🍯 Sweet" : "🧂 Savory"}</span>\n        ${ALCOHOL_RECIPE_IDS.has(e.id) ? '<span class="flavor-badge alcohol" style="margin-bottom:0;">🍶 Alcohol</span>' : ""}\n        ${SPICY_RECIPE_IDS.has(e.id) ? '<span class="flavor-badge spicy" style="margin-bottom:0;">🌶️ Spicy</span>' : ""}\n        ${DIP_RECIPE_IDS.has(e.id) ? '<span class="flavor-badge dip" style="margin-bottom:0;">🥣 Dip</span>' : ""}\n      </div>\n      <div class="macro-row">\n        <div class="macro-box kcal-box">    <span class="val" data-macro="kcal">—</span>  <span class="lbl">kcal</span></div>\n        <div class="macro-box protein-box"> <span class="val" data-macro="prot">—</span> <span class="lbl">protein</span></div>\n        <div class="macro-box carbs-box">   <span class="val" data-macro="carbs">—</span><span class="lbl">carbs</span></div>\n        <div class="macro-box fat-box">     <span class="val" data-macro="fat">—</span>  <span class="lbl">fat</span></div>\n      </div>\n      <div style="font-size:9px;color:#555;text-align:right;margin-top:-8px;margin-bottom:6px;" data-macro-context>per portion · <span data-serving-label>1 serving</span></div>\n      <div class="score-row">\n        <span class="score-badge" data-score></span>\n        <div class="score-bar-bg"><div class="score-bar-fill" data-fill></div></div>\n        <span class="score-label" data-scorelabel></span>\n      </div>\n      <div class="card-bottom"><div class="tags">${n}</div></div>\n      <div class="card-click-hint">tap to open recipe →</div>`),
             t.appendChild(i));
         }),
           e.appendChild(t));
@@ -6296,7 +6316,9 @@
               !e ||
               t.title.toLowerCase().includes(e) ||
               t.desc.toLowerCase().includes(e) ||
-              t.tags.some((a) => a.includes(e)),
+              t.tags.some((a) => a.includes(e)) ||
+              (/^\d+$/.test(e.trim()) && t.displayNum === parseInt(e.trim())) ||
+              (e.trim().startsWith("#") && /^#\d+$/.test(e.trim()) && t.displayNum === parseInt(e.trim().slice(1))),
             r = baseMacros(t.carb),
             c = getSauceMacros(t),
             l = Math.round(r.kcal + c.kcal),
@@ -6314,7 +6336,8 @@
             g = Object.entries(INGREDIENT_RECIPE_MAP).some(([e, a]) => disabledIngredients.has(e) && a.includes(t.id)),
             k = "all" === flavorFilter || (t.flavor || "savory") === flavorFilter,
             j = !spicyFilter || SPICY_RECIPE_IDS.has(t.id),
-            y = s && o && u && !g && k && j;
+            q = !dipFilter || DIP_RECIPE_IDS.has(t.id),
+            y = s && o && u && !g && k && j && q;
           ((i.style.display = y ? "" : "none"), y && a++);
         }),
           (document.getElementById("visibleCount").textContent = a));
@@ -6711,8 +6734,8 @@
             "🍗 Chicken",
           n = { chicken: "chicken", beef: "beef", eggs: "eggs", salmon: "salmon", tofu: "tofu" }[t] || "chicken",
           s = document.getElementById("modalTagsRow"),
-          o = (a.tags || []).filter(e => e !== "spicy").map((e) => `<span class="tag tag-${e}">${e}</span>`).join("");
-        ((s.innerHTML = `\n    <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:${o ? "6px" : "0"};">\n      <span class="carb-badge ${a.carb}" style="font-size:10px;padding:4px 10px;">${{ potato: "🥔 Potato", rice: "🍚 Rice", noodle: "🍜 Noodle", bread: "🫓 Bread" }[a.carb]}</span>\n      <span class="protein-badge ${n}" style="font-size:10px;padding:4px 10px;">${i}</span>\n      <span class="flavor-badge ${a.flavor || "savory"}" style="font-size:10px;padding:4px 10px;">${"sweet" === a.flavor ? "🍯 Sweet" : "🧂 Savory"}</span>\n      ${ALCOHOL_RECIPE_IDS.has(a.id) ? '<span class="flavor-badge alcohol" style="font-size:10px;padding:4px 10px;">🍶 Alcohol</span>' : ""}\n      ${SPICY_RECIPE_IDS.has(a.id) ? '<span class="flavor-badge spicy" style="font-size:10px;padding:4px 10px;">🌶️ Spicy</span>' : ""}\n    </div>\n    ${o ? `<div style="display:flex;flex-wrap:wrap;gap:5px;">${o}</div>` : ""}\n  `),
+          o = (a.tags || []).filter(e => e !== "spicy" && e !== "dip").map((e) => `<span class="tag tag-${e}">${e}</span>`).join("");
+        ((s.innerHTML = `\n    <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:${o ? "6px" : "0"};">\n      <span class="carb-badge ${a.carb}" style="font-size:10px;padding:4px 10px;">${{ potato: "🥔 Potato", rice: "🍚 Rice", noodle: "🍜 Noodle", bread: "🫓 Bread" }[a.carb]}</span>\n      <span class="protein-badge ${n}" style="font-size:10px;padding:4px 10px;">${i}</span>\n      <span class="flavor-badge ${a.flavor || "savory"}" style="font-size:10px;padding:4px 10px;">${"sweet" === a.flavor ? "🍯 Sweet" : "🧂 Savory"}</span>\n      ${ALCOHOL_RECIPE_IDS.has(a.id) ? '<span class="flavor-badge alcohol" style="font-size:10px;padding:4px 10px;">🍶 Alcohol</span>' : ""}\n      ${SPICY_RECIPE_IDS.has(a.id) ? '<span class="flavor-badge spicy" style="font-size:10px;padding:4px 10px;">🌶️ Spicy</span>' : ""}\n      ${DIP_RECIPE_IDS.has(a.id) ? '<span class="flavor-badge dip" style="font-size:10px;padding:4px 10px;">🥣 Dip</span>' : ""}\n    </div>\n    ${o ? `<div style="display:flex;flex-wrap:wrap;gap:5px;">${o}</div>` : ""}\n  `),
           (modalServings = weights.servings), updateModalMacros(a));
         const r = getRecipeDetail(a),
           c = document.getElementById("modalTabs");
@@ -7267,7 +7290,8 @@
         },
         INGREDIENT_RECIPE_MAP = {},
                 ALCOHOL_RECIPE_IDS = new Set(),
-                SPICY_RECIPE_IDS = new Set();
+                SPICY_RECIPE_IDS = new Set(),
+                DIP_RECIPE_IDS = new Set();
       let disabledIngredients = new Set(JSON.parse(localStorage.getItem("pantryDisabled") || "[]"));
       function savePantry() {
         try {
@@ -7784,6 +7808,13 @@
           document.getElementById("calc2Results").classList.add("show"),
           document.getElementById("calc2Results").scrollIntoView({ behavior: "smooth", block: "start" }));
       }
+      function setDipFilter(a) {
+        dipFilter = !dipFilter;
+        a.classList.toggle("active", dipFilter);
+        const t = document.getElementById("pillCuisine");
+        t && (dipFilter || spicyFilter || "all" !== currentCuisineFilter || "all" !== flavorFilter ? t.classList.add("has-active") : t.classList.remove("has-active"));
+        filterRecipes();
+      }
       function setSpicyFilter(a) {
         spicyFilter = !spicyFilter;
         a.classList.toggle("active", spicyFilter);
@@ -8276,6 +8307,8 @@
         // Rebuild SPICY_RECIPE_IDS from recipe tags
         SPICY_RECIPE_IDS.clear();
         R.forEach(r => { if (r.tags && r.tags.includes("spicy")) SPICY_RECIPE_IDS.add(r.id); });
+        DIP_RECIPE_IDS.clear();
+        R.forEach(r => { if (r.tags && r.tags.includes("dip")) DIP_RECIPE_IDS.add(r.id); });
       }
 
       let compareSortKey = "default",
@@ -8554,6 +8587,102 @@
             f: 8.72,
             satiety: 3,
             best: "Plant-based option",
+          },
+          {
+            key: "edamame",
+            name: "Edamame",
+            icon: "🫘",
+            sub: "shelled, frozen, per 100g",
+            kcal: 109,
+            p: 11.2,
+            c: 7.61,
+            f: 4.73,
+            satiety: 4,
+            best: "Plant protein + fiber",
+          },
+          {
+            key: "tuna",
+            name: "Tuna (Canned)",
+            icon: "🐟",
+            sub: "in water, drained",
+            kcal: 116,
+            p: 25.5,
+            c: 0,
+            f: 1.0,
+            satiety: 3,
+            best: "Leanest protein, no cook",
+          },
+          {
+            key: "shrimp",
+            name: "Shrimp",
+            icon: "🦐",
+            sub: "raw, peeled",
+            kcal: 85,
+            p: 18.0,
+            c: 0.2,
+            f: 0.9,
+            satiety: 3,
+            best: "Ultra-lean, fast to cook",
+          },
+          {
+            key: "cod",
+            name: "Cod",
+            icon: "🐟",
+            sub: "raw fillet",
+            kcal: 82,
+            p: 17.8,
+            c: 0,
+            f: 0.7,
+            satiety: 3,
+            best: "Leanest white fish",
+          },
+          {
+            key: "turkey_mince",
+            name: "Turkey Mince",
+            icon: "🦃",
+            sub: "lean, raw",
+            kcal: 114,
+            p: 22.0,
+            c: 0,
+            f: 2.7,
+            satiety: 4,
+            best: "Lean beef alternative",
+          },
+          {
+            key: "cottage_cheese",
+            name: "Cottage Cheese",
+            icon: "🧀",
+            sub: "low-fat",
+            kcal: 72,
+            p: 12.4,
+            c: 2.7,
+            f: 1.0,
+            satiety: 3,
+            best: "High protein, low cal",
+          },
+          {
+            key: "skyr",
+            name: "Skyr",
+            icon: "🥛",
+            sub: "plain, 0% fat",
+            kcal: 63,
+            p: 11.0,
+            c: 4.0,
+            f: 0.2,
+            satiety: 3,
+            best: "Creamy, gut-friendly",
+          },
+          {
+            key: "quark",
+            name: "Quark (Low-Fat)",
+            icon: "🥛",
+            sub: "Magerquark",
+            kcal: 67,
+            p: 12.0,
+            c: 4.0,
+            f: 0.2,
+            satiety: 3,
+            best: "High protein, German staple",
           },
         ];
       function buildCompareTable() {
