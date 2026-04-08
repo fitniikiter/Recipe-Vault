@@ -6320,13 +6320,16 @@
             if (!e || !e.video) return void (i.style.display = "none");
           }
           const s = "all" === currentCuisineFilter || t.tags.includes(currentCuisineFilter),
-            o =
-              !e ||
-              t.title.toLowerCase().includes(e) ||
-              t.desc.toLowerCase().includes(e) ||
-              t.tags.some((a) => a.includes(e)) ||
-              (/^\d+$/.test(e.trim()) && t.displayNum === parseInt(e.trim())) ||
-              (e.trim().startsWith("#") && /^#\d+$/.test(e.trim()) && t.displayNum === parseInt(e.trim().slice(1))),
+            o = (() => {
+              if (!e) return true;
+              // Number search: "7" or "#007" -> match by displayNum
+              if (/^\d+$/.test(e.trim())) return t.displayNum === parseInt(e.trim());
+              if (e.trim().startsWith("#") && /^#\d+$/.test(e.trim())) return t.displayNum === parseInt(e.trim().slice(1));
+              // Multi-word search: ALL words must match somewhere in title, desc or tags
+              const words = e.trim().split(/\s+/).filter(Boolean);
+              const searchText = t.title.toLowerCase() + " " + t.desc.toLowerCase() + " " + t.tags.join(" ").toLowerCase();
+              return words.every(w => searchText.includes(w));
+            })(),
             r = baseMacros(t.carb),
             c = getSauceMacros(t),
             l = Math.round(r.kcal + c.kcal),
