@@ -5422,6 +5422,27 @@
         capers: { kcal: 23, p: 2, c: 5, f: 0.9, unit_g: { tbsp: 15 }, typical_g: 10, emoji: "🫙" },
         white_wine: { kcal: 82, p: 0, c: 3, f: 0, a: 11, unit_g: { tbsp: 15, ml: 1 }, typical_g: 30, emoji: "🍷" },
         curry_paste: { kcal: 150, p: 5, c: 12, f: 10, unit_g: { tbsp: 18, tsp: 6 }, typical_g: 25, emoji: "🌿" },
+        // === MISSING INGREDIENT MAPPINGS (added) ===
+        banana: { kcal: 89, p: 1.1, c: 23, f: 0.3, unit_g: { piece: 120, g: 1 }, typical_g: 120, emoji: "🍌" },
+        oats: { kcal: 389, p: 17, c: 66, f: 7, unit_g: { cup: 90, g: 1 }, typical_g: 80, emoji: "🌾" },
+        dark_chocolate: { kcal: 546, p: 5, c: 60, f: 31, unit_g: { g: 1, tbsp: 15 }, typical_g: 20, emoji: "🍫" },
+        chocolate_chips: { kcal: 540, p: 5, c: 60, f: 30, unit_g: { g: 1, tbsp: 15 }, typical_g: 20, emoji: "🍫" },
+        whey_protein: { kcal: 370, p: 74, c: 7, f: 4, unit_g: { g: 1, scoop: 30 }, typical_g: 30, emoji: "💪" },
+        almond_milk: { kcal: 16, p: 0.6, c: 1, f: 1, unit_g: { ml: 1, cup: 240 }, typical_g: 100, emoji: "🥛" },
+        vanilla_extract: { kcal: 288, p: 0, c: 13, f: 0.1, unit_g: { tsp: 4, g: 1 }, typical_g: 4, emoji: "🫙" },
+        baking_powder: { kcal: 53, p: 0, c: 28, f: 0, unit_g: { tsp: 4, g: 1 }, typical_g: 4, emoji: "🫙" },
+        couscous: { kcal: 376, p: 13, c: 77, f: 0.6, unit_g: { g: 1, cup: 180 }, typical_g: 80, emoji: "🌾" },
+        bulgur: { kcal: 342, p: 12, c: 76, f: 1.3, unit_g: { g: 1, cup: 180 }, typical_g: 80, emoji: "🌾" },
+        rice_vermicelli: { kcal: 364, p: 6, c: 80, f: 0.6, unit_g: { g: 1 }, typical_g: 80, emoji: "🍜" },
+        frozen_peas: { kcal: 77, p: 5, c: 14, f: 0.4, unit_g: { g: 1, cup: 150 }, typical_g: 80, emoji: "🫛" },
+        green_olives: { kcal: 145, p: 1, c: 4, f: 15, unit_g: { g: 1, piece: 5 }, typical_g: 30, emoji: "🫒" },
+        black_olives: { kcal: 115, p: 0.8, c: 6, f: 10, unit_g: { g: 1, piece: 5 }, typical_g: 30, emoji: "🫒" },
+        mustard: { kcal: 66, p: 4, c: 6, f: 4, unit_g: { tsp: 5, tbsp: 15 }, typical_g: 10, emoji: "🫙" },
+        pickle_juice: { kcal: 3, p: 0, c: 0.4, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 15, emoji: "🫙" },
+        berbere: { kcal: 251, p: 11, c: 43, f: 6, unit_g: { tsp: 3, tbsp: 9 }, typical_g: 5, emoji: "🌶️" },
+        bay_leaves: { kcal: 313, p: 8, c: 75, f: 8, unit_g: { piece: 0.5 }, typical_g: 1, emoji: "🌿" },
+        cloves: { kcal: 274, p: 6, c: 66, f: 13, unit_g: { tsp: 2, piece: 0.2 }, typical_g: 1, emoji: "🌿" },
+
       };
       function parseIngredientGrams(e, a) {
         if (!e) return null;
@@ -6327,7 +6348,15 @@
               if (e.trim().startsWith("#") && /^#\d+$/.test(e.trim())) return t.displayNum === parseInt(e.trim().slice(1));
               // Multi-word search: ALL words must match somewhere in title, desc or tags
               const words = e.trim().split(/\s+/).filter(Boolean);
-              const searchText = t.title.toLowerCase() + " " + t.desc.toLowerCase() + " " + t.tags.join(" ").toLowerCase();
+              // Build full searchable text: title + desc + tags + flavor + special badges
+              const _badges = [];
+              if (t.flavor) _badges.push(t.flavor);
+              if (SPICY_RECIPE_IDS.has(t.id)) _badges.push("spicy");
+              if (DIP_RECIPE_IDS.has(t.id)) _badges.push("dip");
+              if (ALCOHOL_RECIPE_IDS.has(t.id)) _badges.push("alcohol");
+              if (t.carb) _badges.push(t.carb);
+              if (t.protein) _badges.push(t.protein);
+              const searchText = t.title.toLowerCase() + " " + t.desc.toLowerCase() + " " + t.tags.join(" ").toLowerCase() + " " + _badges.join(" ");
               return words.every(w => searchText.includes(w));
             })(),
             r = baseMacros(t.carb),
@@ -6987,7 +7016,7 @@
           x = Math.round(S.p + C.p),
           B = Math.round(S.c + C.c),
           P = Math.round(S.f + C.f);
-        ((y += `<div class="ing-total-bar">\n    <div class="ing-total-title">📊 Total per portion</div>\n    <div class="ing-total-grid">\n      <div class="ing-total-cell mk"><span class="itc-val">${T}</span><span class="itc-lbl">kcal</span></div>\n      <div class="ing-total-cell mp"><span class="itc-val">${x}g</span><span class="itc-lbl">protein</span></div>\n      <div class="ing-total-cell mc"><span class="itc-val">${B}g</span><span class="itc-lbl">carbs</span></div>\n      <div class="ing-total-cell mf"><span class="itc-val">${P}g</span><span class="itc-lbl">fat</span></div>\n    </div>\n    <div class="ing-macro-hint" style="margin-top:8px;">Protein + carb base · sauce estimate · tap ingredients for breakdown</div>\n  </div>`),
+        ((y += `<div class="ing-total-bar">\n    <div class="ing-total-title">📊 Total per portion</div>\n    <div class="ing-total-grid">\n      <div class="ing-total-cell mk"><span class="itc-val">${T}</span><span class="itc-lbl">kcal</span></div>\n      <div class="ing-total-cell mp"><span class="itc-val">${x}g</span><span class="itc-lbl">protein</span></div>\n      <div class="ing-total-cell mc"><span class="itc-val">${B}g</span><span class="itc-lbl">carbs</span></div>\n      <div class="ing-total-cell mf"><span class="itc-val">${P}g</span><span class="itc-lbl">fat</span></div>\n    </div>\n    <div class="ing-macro-hint" style="margin-top:8px;">Tap any ingredient to see its macros</div>\n  </div>`),
           t.placeholder
             ? (y += '<div class="ing-note">📌 Full ingredient list coming soon — follow on YouTube & TikTok!</div>')
             : (y += '<div class="ing-note">📌 Weights are global — changes apply to all recipes.</div>'),
@@ -8220,6 +8249,56 @@
         herb: "parsley",
         water: "water",
         "hot water": "chicken_stock",
+        banana: "banana",
+        "banana (ripe)": "banana",
+        "ripe banana": "banana",
+        oats: "oats",
+        "rolled oats": "oats",
+        "oat flakes": "oats",
+        "haferflocken": "oats",
+        "dark chocolate chips": "chocolate_chips",
+        "chocolate chips": "chocolate_chips",
+        "milk chocolate chips": "chocolate_chips",
+        "vollmilch-schokotropfen": "chocolate_chips",
+        "schokotropfen": "chocolate_chips",
+        "dark chocolate": "dark_chocolate",
+        "whey protein": "whey_protein",
+        "whey protein (chocolate)": "whey_protein",
+        "chocolate whey": "whey_protein",
+        "protein powder": "whey_protein",
+        "almond milk": "almond_milk",
+        "almond milk (unsweetened)": "almond_milk",
+        "mandelmilch": "almond_milk",
+        "vanilla extract": "vanilla_extract",
+        "vanilla extract (sugar-free)": "vanilla_extract",
+        "baking powder": "baking_powder",
+        "backpulver": "baking_powder",
+        couscous: "couscous",
+        "couscous (dry)": "couscous",
+        bulgur: "bulgur",
+        "bulgur wheat (dry)": "bulgur",
+        "bulgur wheat": "bulgur",
+        "rice vermicelli": "rice_vermicelli",
+        "rice vermicelli (dry)": "rice_vermicelli",
+        "glass noodles": "glass_noodles",
+        "frozen peas": "frozen_peas",
+        "peas": "frozen_peas",
+        "green olives": "green_olives",
+        "green olives (sliced)": "green_olives",
+        "kalamata olives": "black_olives",
+        "kalamata olives (sliced)": "black_olives",
+        "black olives": "black_olives",
+        "olives": "green_olives",
+        mustard: "mustard",
+        "yellow mustard": "mustard",
+        "pickle juice": "pickle_juice",
+        berbere: "berbere",
+        "berbere spice blend": "berbere",
+        "bay leaves": "bay_leaves",
+        "bay leaf": "bay_leaves",
+        cloves: "cloves",
+        "cloves (ground)": "cloves",
+        "ground cloves": "cloves",
         "neutral cooking oil": "neutral_oil",
         "vegetable oil": "neutral_oil",
         "canola oil": "neutral_oil",
@@ -8280,7 +8359,24 @@
       ING_NAME_MAP["doubanjiang"] = "soy_sauce";
       ING_NAME_MAP["doubanjiang (spicy bean paste)"] = "soy_sauce";
       ING_NAME_MAP["naan bread"] = "bread";
+      ING_NAME_MAP["naan"] = "bread";
       ING_NAME_MAP["sourdough bread"] = "bread";
+      ING_NAME_MAP["sourdough bread (thick slices)"] = "bread";
+      ING_NAME_MAP["baguette or sandwich roll"] = "bread";
+      ING_NAME_MAP["sandwich roll"] = "bread";
+      ING_NAME_MAP["potatoes (cubed)"] = "potato";
+      ING_NAME_MAP["potato (roasted)"] = "potato";
+      ING_NAME_MAP["baby potatoes"] = "potato";
+      ING_NAME_MAP["large baking potatoes"] = "potato";
+      ING_NAME_MAP["short-grain rice (uncooked)"] = "rice";
+      ING_NAME_MAP["short-grain rice"] = "rice";
+      ING_NAME_MAP["doubanjiang (spicy bean paste)"] = "gochujang";
+      ING_NAME_MAP["doubanjiang"] = "gochujang";
+      ING_NAME_MAP["five-spice powder"] = "five_spice";
+      ING_NAME_MAP["chicken or anchovy broth"] = "chicken_stock";
+      ING_NAME_MAP["ground beef (20% fat)"] = "beef_regular";
+      ING_NAME_MAP["silken or soft tofu"] = "tofu";
+      ING_NAME_MAP["silken tofu"] = "tofu";
       ING_NAME_MAP["sourdough or crusty bread"] = "bread";
       ING_NAME_MAP["crusty bread"] = "bread";
       ING_NAME_MAP["brioche burger buns"] = "bread";
