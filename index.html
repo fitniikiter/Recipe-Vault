@@ -6713,8 +6713,9 @@
         const a = weights.servings;
         weights.servings = modalServings;
         const t = baseMacros(e.carb);
+        const i = getSauceMacros(e);
         weights.servings = a;
-        const i = getSauceMacros(e),
+        const _unused = null,
           n = Math.round(t.kcal + i.kcal),
           s = Math.round(t.p + i.p),
           o = Math.round(t.c + i.c),
@@ -7879,9 +7880,13 @@
       }
       const _sauceMacroCache = {};
       function getSauceMacros(e) {
-        if (_sauceMacroCache[e.id]) return _sauceMacroCache[e.id];
+        // For none-protein/carb recipes, include servings in cache key so scaling works
+        const cacheKey = (e.protein === "none" || e.carb === "none")
+          ? e.id + "_s" + Math.max(weights.servings, 1)
+          : e.id;
+        if (_sauceMacroCache[cacheKey]) return _sauceMacroCache[cacheKey];
         const a = calcSauceMacros(e);
-        return ((_sauceMacroCache[e.id] = a), a);
+        return ((_sauceMacroCache[cacheKey] = a), a);
       }
       function toggleIngMacro(e) {
         e.classList.toggle("open");
