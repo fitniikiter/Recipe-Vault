@@ -6986,6 +6986,7 @@
       }
       function changeModalServings(e, a) {
         ((modalServings = Math.max(1, Math.min(10, modalServings + e))), (weights.servings = modalServings));
+        if (a && _sauceMacroCache[a]) delete _sauceMacroCache[a];
         const t = document.getElementById("servingsInput");
         t && (t.textContent = modalServings);
         const i = document.getElementById("globalServingVal");
