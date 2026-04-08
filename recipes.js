@@ -1652,9 +1652,9 @@ const R = [
 
 {
   id: "caesar-dressing-light",
-  protein: "chicken",
-  displayNum: 224,
-  carb: "bread",
+  protein: "none",
+  displayNum: 81,
+  carb: "none",
   time: 5,
   title: "Caesar Dressing Light",
   desc: "High-protein Caesar dressing with light mayo, Magerquark and parmesan — creamy, tangy, and under 80 kcal per portion.",
@@ -1670,7 +1670,7 @@ const R = [
 {
   id: "butter-chicken-murgh-makhani",
   protein: "chicken",
-  displayNum: 225,
+  displayNum: 82,
   carb: "rice",
   time: 45,
   title: "Butter Chicken (Murgh Makhani)",
@@ -1687,7 +1687,7 @@ const R = [
 {
   id: "thai-basil-beef-rice",
   protein: "beef",
-  displayNum: 226,
+  displayNum: 83,
   carb: "rice",
   time: 20,
   title: "Thai Basil Beef Rice",

@@ -1742,6 +1742,11 @@
         opacity: 0;
         margin: 0;
       }
+      .modal.no-protein .modal-weight-row#protWeightRow,
+      .modal.no-protein .modal-variant-row,
+      .modal.no-carb .modal-weight-row#carbWeightRow {
+        display: none !important;
+      }
       .modal-close {
         position: absolute;
         top: 16px;
@@ -6303,7 +6308,7 @@
             return void (adminMode
               ? ((i.style.display = ""), (i.style.opacity = "0.35"))
               : ((i.style.display = "none"), (i.style.opacity = "")));
-          if (((i.style.opacity = ""), !carbEnabled[t.carb])) return void (i.style.display = "none");
+          if (((i.style.opacity = ""), (t.carb !== "none" && !carbEnabled[t.carb]))) return void (i.style.display = "none");
           if ("sweet_potato" === t.carb && !carbEnabled.potato) return void (i.style.display = "none");
           const n = getRecipeProtein(t);
           if (!proteinEnabled[n]) return void (i.style.display = "none");
@@ -6744,6 +6749,11 @@
           buildRecipeTab(a),
           r.video && buildVideoTab(a),
           switchModalTab("ingredients", c.querySelector(".modal-tab")),
+          (function(){
+            const modal = document.getElementById("recipeModal");
+            modal.classList.toggle("no-protein", a.protein === "none");
+            modal.classList.toggle("no-carb", a.carb === "none");
+          })(),
           document.getElementById("recipeModal").classList.add("open"),
           (document.body.style.overflow = "hidden"));
         const l = document.querySelector(".modal-body"),
@@ -6831,6 +6841,7 @@
           n = e.protein || "chicken",
           s = PROTEIN_DEFS.find((e) => e.key === n),
           o = "eggs" === n,
+          _isNoneProtein = "none" === n,
           r = o
             ? "eggs"
             : "salmon" === n
@@ -6892,7 +6903,7 @@
             )}\n    </div>\n    <div class="modal-weight-row">\n      <div class="modal-weight-row-main" style="cursor:default;flex-wrap:nowrap;align-items:center;gap:8px;">\n        <label style="flex-shrink:0;white-space:nowrap;">🥚 Egg Count</label>\n        <div class="serving-stepper" style="margin-left:0;">\n          <button class="step-btn" onclick="changeModalEggCount(-1, '${e.id}')">−</button>\n          <span class="serving-val" id="modalEggCountVal" style="width:36px;height:30px;line-height:30px;font-size:15px;">${eggCount}</span>\n          <button class="step-btn" onclick="changeModalEggCount(1, '${e.id}')">+</button>\n        </div>\n        <span class="modal-weight-hint" style="margin-left:auto;">${p}g per portion</span>\n      </div>\n    </div>`;
         }
         let y = `\n  <div class="serving-control">\n    <label>🍽️ Servings</label>\n    <div class="serving-stepper">\n      <button class="step-btn" onclick="changeModalServings(-1, '${e.id}')">−</button>\n      <span class="serving-val" id="modalServingVal">${i}</span>\n      <button class="step-btn" onclick="changeModalServings(1, '${e.id}')">+</button>\n    </div>\n    <span class="modal-weight-hint">per portion</span>\n  </div>\n  ${g}\n  ${
-            o
+            (o || _isNoneProtein)
               ? k
               : (() => {
                   const a = NUT[r] || NUT.chicken_thigh,
