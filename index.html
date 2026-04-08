@@ -5180,6 +5180,7 @@
               <div class="modal-macro mc"><span class="mv" id="mCarbs">—</span><span class="ml">carbs</span></div>
               <div class="modal-macro mf"><span class="mv" id="mFat">—</span><span class="ml">fat</span></div>
             </div>
+            <div style="font-size:9px;color:var(--muted);text-align:right;margin-top:-6px;margin-bottom:2px;">per portion · <span id="modalServingLabel">1 serving</span></div>
             <div id="modalTagsRow" style="display: flex; flex-wrap: wrap; gap: 5px; padding: 10px 0 4px"></div>
           </div>
           <div class="modal-tabs" id="modalTabs"></div>
@@ -6730,6 +6731,7 @@
         if (!a) return;
         ((currentModalRecipe = a),
           (document.getElementById("modalNum").textContent = "#" + String(a.displayNum).padStart(3, "0")),
+          (function(){ const sl=document.getElementById("modalServingLabel"); if(sl) sl.textContent="1 serving"; })(),
           (document.getElementById("modalTitle").textContent = a.title),
           (document.getElementById("modalDesc").textContent = a.desc),
           (function(){ const hb=document.getElementById("modalHintBox"),ht=document.getElementById("modalHintText"); if(a.hint){ht.textContent=a.hint;hb.style.display="flex";}else{hb.style.display="none";ht.textContent="";} })(),
@@ -6988,6 +6990,8 @@
       function changeModalServings(e, a) {
         ((modalServings = Math.max(1, Math.min(10, modalServings + e))), (weights.servings = modalServings));
         if (a && _sauceMacroCache[a]) delete _sauceMacroCache[a];
+        const _sl = document.getElementById("modalServingLabel");
+        if (_sl) _sl.textContent = modalServings + (modalServings === 1 ? " serving" : " servings");
         const t = document.getElementById("servingsInput");
         t && (t.textContent = modalServings);
         const i = document.getElementById("globalServingVal");
@@ -7852,7 +7856,8 @@
       function calcSauceMacros(e) {
         const a = getRecipeDetail(e);
         if (!a || !a.ingredients) return { kcal: e.sauce_kcal, p: e.sauce_p, c: e.sauce_c, f: e.sauce_f };
-        const t = Math.max(weights.servings, 1);
+        // For dip/none recipes: batch is fixed, don't divide by servings
+        const t = (e.protein === "none" && e.carb === "none") ? 1 : Math.max(weights.servings, 1);
         let i = 0,
           n = 0,
           s = 0,
