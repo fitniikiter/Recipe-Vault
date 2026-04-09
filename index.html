@@ -5769,7 +5769,7 @@
         r && (buildIngredientsTab(r), updateModalMacros(r));
       }
       function changeSideEggCount(delta, id) {
-        sideEggCount = Math.max(1, Math.min(10, sideEggCount + delta));
+        sideEggCount = Math.max(0, Math.min(10, sideEggCount + delta));
         const el = document.getElementById("sideEggCountVal");
         if (el) el.textContent = sideEggCount;
         const r = R.find((r) => r.id === id);
