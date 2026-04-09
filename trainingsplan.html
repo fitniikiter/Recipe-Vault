@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Trainingsplan — FIT NIIKITER</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: #080808; color: #fff; font-family: 'Bebas Neue', Impact, sans-serif; min-height: 100vh; }
+    #root { max-width: 500px; margin: 0 auto; min-height: 100vh; }
+    .btn { transition: all 0.18s ease; cursor: pointer; border: none; outline: none; }
+    .btn:hover { filter: brightness(1.12); transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); filter: brightness(0.95); }
+    .card { transition: transform 0.18s ease; cursor: pointer; }
+    .card:hover { transform: translateX(3px); }
+    .timer-btn { transition: all 0.15s ease; cursor: pointer; border: none; outline: none; }
+    .timer-btn:hover { filter: brightness(1.2); transform: scale(1.05); }
+    .timer-btn:active { transform: scale(0.98); }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.5; } }
+    .pulse { animation: pulse 1s infinite; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script>
+const { useState, useEffect, useRef } = React;
+
+const DAYS = [
+  {
+    day: "MONTAG", short: "MO", color: "#B847FF",
+    home: {
+      focus: "Bizeps + Trizeps + Core", tag: "Arme + Core",
+      exercises: [
+        { name: "Spider Curl (Band/Türanker)", sets: "3 × 10–12 / Seite", focus: "Bizeps Peak", pause: "60 Sek.", pauseType: "iso", tip: "Band am Türanker unten, nach vorne lehnen, Arm fixiert hängen lassen und curlen. Kein Schwingen — Arm bleibt die ganze Zeit fixiert.", prog: "Stärkeres Band wenn 12 Reps zu leicht" },
+        { name: "Triceps Extension (Band — Pushdown)", sets: "3 × 12–15", focus: "Trizeps — Lateraler Kopf", pause: "60 Sek.", pauseType: "iso", tip: "Band am Türanker oben. Ellbogen fest am Körper — nur Unterarm bewegt sich nach unten. Gibt dem Arm die sichtbare Wölbung von außen.", prog: "Stärkeres Band oder einarmig ausführen" },
+        { name: "Overhead Triceps Extension (Band)", sets: "3 × 12–15", focus: "Trizeps — Langer Kopf", pause: "60 Sek.", pauseType: "iso", tip: "Band am Türanker unten. Arme über den Kopf strecken. Langer Kopf = größter Trizepsanteil! Macht den Arm von hinten massiv.", prog: "Stärkeres Band oder langsamer absenken (3 Sek.)" },
+        { name: "Hanging Knee Raise", sets: "3 × 10–15", focus: "Core", pause: "60 Sek.", pauseType: "iso", tip: "An der Klimmzugstange hängen. Knie zur Brust ziehen, kontrolliert senken. Kein Schwingen!", prog: "Gestreckte Beine → langsame Absenkung (5 Sek.)" },
+      ]
+    },
+    gym: {
+      focus: "Bizeps + Trizeps + Core", tag: "Arme + Core",
+      exercises: [
+        { name: "Preacher Curl (Maschine)", sets: "3 × 10–12", focus: "Bizeps Peak", pause: "60 Sek.", pauseType: "iso", tip: "Arm vollständig auf der Ablage, kein Schwingen möglich. Maximale Isolation — langsam absenken (3 Sek.) für maximalen Stretch.", prog: "+2,5 kg wenn du 3×12 schaffst" },
+        { name: "Triceps Rope Pushdown", sets: "3 × 12–15", focus: "Trizeps — Lateraler Kopf", pause: "60 Sek.", pauseType: "iso", tip: "Seil am Ende auseinanderziehen. Ellbogen bleiben am Körper — immer. Gibt dem Arm die sichtbare Wölbung von außen.", prog: "+2,5 kg wenn du 3×15 schaffst" },
+        { name: "Overhead Triceps Extension (Kabel)", sets: "3 × 12–15", focus: "Trizeps — Langer Kopf", pause: "60 Sek.", pauseType: "iso", tip: "Kabel hinter dir unten. Arme über den Kopf strecken. Langer Kopf = größter Trizepsanteil! Macht den Arm von hinten massiv.", prog: "+2,5 kg wenn du 3×15 schaffst" },
+        { name: "Hanging Leg Raise", sets: "3 × 10–15", focus: "Core", pause: "60 Sek.", pauseType: "iso", tip: "Kein Schwingen! Beine kontrolliert hoch und runter. Wenn zu leicht: Beine gestreckt halten.", prog: "Gestreckte Beine → Windshield Wipers" },
+      ]
+    }
+  },
+  {
+    day: "DIENSTAG", short: "DI", color: "#E8FF47",
+    home: {
+      focus: "Brust + Rücken + Schultern", tag: "Push/Pull",
+      exercises: [
+        { name: "Ring Push Up (Füße erhöht)", sets: "4 × max (Ziel 8–12)", focus: "Obere Brust", pause: "90 Sek.", pauseType: "heavy", tip: "Füße auf Stuhl — trifft obere Brust. Körper brett-gerade, Schulterblätter am tiefsten Punkt zusammenziehen.", prog: "Füße höher stellen für mehr Schwierigkeit" },
+        { name: "Ring Dips", sets: "3 × max (Ziel 8–12)", focus: "Brust + Trizeps", pause: "90 Sek.", pauseType: "heavy", tip: "Brust leicht nach vorne neigen für mehr Brust-Aktivierung. Wenn Schulter zwickt: ROM verkleinern.", prog: "Zusatzgewicht wenn 12+ Reps locker" },
+        { name: "Pull Up (Klimmzug)", sets: "4 × max (Ziel 6–10)", focus: "Rücken Breite", pause: "90 Sek.", pauseType: "heavy", tip: "Schulterblätter zuerst runterziehen (Scapula Pull), dann erst Ellbogen beugen. Kein Schwingen.", prog: "Zusatzgewicht mit Gürtel oder Rucksack" },
+        { name: "Ring Row", sets: "3 × 10–12", focus: "Rücken Dicke", pause: "90 Sek.", pauseType: "heavy", tip: "Je flacher du liegst desto schwerer. Schulterblätter am Ende zusammenquetschen.", prog: "Flacher liegen wenn 12+ Reps zu leicht" },
+        { name: "Banded Face Pulls", sets: "3 × 15–20", focus: "Schulter Gesundheit", pause: "60 Sek.", pauseType: "iso", tip: "Band am Türanker auf Augenhöhe. Zur Stirn ziehen, Ellbogen hoch. Pflicht für deine Schulter!", prog: "Stärkeres Band wenn 20 Reps zu leicht" },
+      ]
+    },
+    gym: {
+      focus: "Brust + Rücken + Schultern", tag: "Push/Pull",
+      exercises: [
+        { name: "Incline Iso-Lateral Chest Press", sets: "4 × 8–10", focus: "Obere Brust", pause: "90 Sek.", pauseType: "heavy", tip: "Schräg nach oben drücken. Schulterblätter zusammenziehen BEVOR du drückst. Deine #1 Übung gegen die Schwachstelle obere Brust!", prog: "+2,5 kg wenn du 4×10 schaffst" },
+        { name: "Iso-Lateral Chest Press (normal)", sets: "3 × 10–12", focus: "Brust Masse", pause: "90 Sek.", pauseType: "heavy", tip: "Gerade nach vorne drücken. Langsam absenken (3 Sek.), explosiv drücken.", prog: "+2,5 kg wenn du 3×12 schaffst" },
+        { name: "Lat Pulldown (Kabel, weit)", sets: "4 × 10–12", focus: "Rücken Breite", pause: "90 Sek.", pauseType: "heavy", tip: "Zur Brust ziehen, nicht zum Kinn. Brust raus, leicht nach hinten lehnen.", prog: "+5 kg wenn du 4×12 schaffst" },
+        { name: "Face Pull (Kabel)", sets: "3 × 15–20", focus: "Schulter Gesundheit", pause: "60 Sek.", pauseType: "iso", tip: "PFLICHT für deine Schulter! Kabel auf Augenhöhe. Zur Stirn ziehen, Ellbogen hoch halten.", prog: "+2,5 kg wenn du 3×20 schaffst" },
+        { name: "Lateral Raise (Kabelzug, einarmig)", sets: "3 × 15–20 / Seite", focus: "Schulterbreite", pause: "60 Sek.", pauseType: "iso", tip: "Kabel auf unterste Position. Arm leicht gebeugt, langsam seitwärts bis Schulterhöhe. Konstante Spannung durch Kabel!", prog: "+2,5 kg wenn du 3×20 schaffst" },
+      ]
+    }
+  },
+  {
+    day: "DONNERSTAG", short: "DO", color: "#B847FF",
+    gym: {
+      focus: "Bizeps + Trizeps + Quad + Core", tag: "Arme + Beine",
+      exercises: [
+        { name: "Preacher Curl (Maschine)", sets: "3 × 10–12", focus: "Bizeps Peak", pause: "60 Sek.", pauseType: "iso", tip: "Arm vollständig auf der Ablage, kein Schwingen möglich. Maximale Isolation — langsam absenken (3 Sek.).", prog: "+2,5 kg wenn du 3×12 schaffst" },
+        { name: "Triceps Rope Pushdown", sets: "3 × 12–15", focus: "Trizeps — Lateraler Kopf", pause: "60 Sek.", pauseType: "iso", tip: "Seil am Ende auseinanderziehen. Ellbogen bleiben am Körper — immer.", prog: "+2,5 kg wenn du 3×15 schaffst" },
+        { name: "Overhead Triceps Extension (Kabel)", sets: "3 × 12–15", focus: "Trizeps — Langer Kopf", pause: "60 Sek.", pauseType: "iso", tip: "Kabel hinter dir unten. Arme über den Kopf strecken. Langer Kopf = größter Trizepsanteil!", prog: "+2,5 kg wenn du 3×15 schaffst" },
+        { name: "Leg Extension (Maschine)", sets: "3 × 12–15", focus: "Quad", pause: "60 Sek.", pauseType: "iso", tip: "Ganz oben 1 Sek. halten. Das brennt — das ist der Punkt.", prog: "+5 kg wenn du 3×15 schaffst" },
+        { name: "Hanging Leg Raise", sets: "3 × 10–15", focus: "Core", pause: "60 Sek.", pauseType: "iso", tip: "Kein Schwingen! Beine kontrolliert hoch und runter. Wenn zu leicht: Beine gestreckt halten.", prog: "Gestreckte Beine → Windshield Wipers" },
+      ]
+    },
+    home: {
+      focus: "Bizeps + Trizeps + Core", tag: "Arme + Core",
+      exercises: [
+        { name: "Spider Curl (Band/Türanker)", sets: "3 × 10–12 / Seite", focus: "Bizeps Peak", pause: "60 Sek.", pauseType: "iso", tip: "Band am Türanker unten, nach vorne lehnen, Arm fixiert curlen. Kein Schwingen.", prog: "Stärkeres Band wenn 12 Reps zu leicht" },
+        { name: "Triceps Extension (Band — Pushdown)", sets: "3 × 12–15", focus: "Trizeps — Lateraler Kopf", pause: "60 Sek.", pauseType: "iso", tip: "Band am Türanker oben. Ellbogen fest am Körper — nur Unterarm bewegt sich nach unten.", prog: "Stärkeres Band oder einarmig ausführen" },
+        { name: "Overhead Triceps Extension (Band)", sets: "3 × 12–15", focus: "Trizeps — Langer Kopf", pause: "60 Sek.", pauseType: "iso", tip: "Band am Türanker unten. Arme über den Kopf strecken. Langer Kopf = größter Trizepsanteil!", prog: "Stärkeres Band oder langsamer absenken (3 Sek.)" },
+        { name: "Hanging Knee Raise", sets: "3 × 10–15", focus: "Core", pause: "60 Sek.", pauseType: "iso", tip: "An der Klimmzugstange hängen. Knie zur Brust ziehen, kontrolliert senken. Kein Schwingen!", prog: "Gestreckte Beine → langsame Absenkung (5 Sek.)" },
+      ]
+    }
+  },
+  {
+    day: "FREITAG", short: "FR", color: "#E8FF47",
+    gym: {
+      focus: "Brust + Rücken + Schultern", tag: "Push/Pull",
+      exercises: [
+        { name: "Incline Iso-Lateral Chest Press", sets: "4 × 8–10", focus: "Obere Brust", pause: "90 Sek.", pauseType: "heavy", tip: "Schräg nach oben drücken. Schulterblätter zusammenziehen BEVOR du drückst. Deine #1 Übung gegen die Schwachstelle obere Brust!", prog: "+2,5 kg wenn du 4×10 schaffst" },
+        { name: "Iso-Lateral Chest Press (normal)", sets: "3 × 10–12", focus: "Brust Masse", pause: "90 Sek.", pauseType: "heavy", tip: "Gerade nach vorne drücken. Zwei Winkel = obere und mittlere Brust komplett abgedeckt.", prog: "+2,5 kg wenn du 3×12 schaffst" },
+        { name: "Lat Pulldown (Kabel, weit)", sets: "4 × 10–12", focus: "Rücken Breite", pause: "90 Sek.", pauseType: "heavy", tip: "Zur Brust ziehen, nicht zum Kinn. Brust raus, leicht nach hinten lehnen.", prog: "+5 kg wenn du 4×12 schaffst" },
+        { name: "Face Pull (Kabel)", sets: "3 × 15–20", focus: "Schulter Gesundheit", pause: "60 Sek.", pauseType: "iso", tip: "PFLICHT für deine Schulter! Kabel auf Augenhöhe. Zur Stirn ziehen, Ellbogen hoch halten.", prog: "+2,5 kg wenn du 3×20 schaffst" },
+        { name: "Lateral Raise (Kabelzug, einarmig)", sets: "3 × 15–20 / Seite", focus: "Schulterbreite", pause: "60 Sek.", pauseType: "iso", tip: "Kabel auf unterste Position. Arm leicht gebeugt, langsam seitwärts bis Schulterhöhe. Konstante Spannung!", prog: "+2,5 kg wenn du 3×20 schaffst" },
+      ]
+    },
+    home: {
+      focus: "Brust + Rücken + Schultern", tag: "Push/Pull",
+      exercises: [
+        { name: "Ring Push Up (Füße erhöht)", sets: "4 × max (Ziel 8–12)", focus: "Obere Brust", pause: "90 Sek.", pauseType: "heavy", tip: "Füße auf Stuhl — trifft obere Brust. Körper brett-gerade, Schulterblätter am tiefsten Punkt zusammenziehen.", prog: "Füße höher stellen für mehr Schwierigkeit" },
+        { name: "Ring Dips", sets: "3 × max (Ziel 8–12)", focus: "Brust + Trizeps", pause: "90 Sek.", pauseType: "heavy", tip: "Brust leicht nach vorne neigen für mehr Brust-Aktivierung. Wenn Schulter zwickt: ROM verkleinern.", prog: "Zusatzgewicht wenn 12+ Reps locker" },
+        { name: "Pull Up (Klimmzug)", sets: "4 × max (Ziel 6–10)", focus: "Rücken Breite", pause: "90 Sek.", pauseType: "heavy", tip: "Schulterblätter zuerst runterziehen (Scapula Pull), dann erst Ellbogen beugen. Kein Schwingen.", prog: "Zusatzgewicht mit Gürtel oder Rucksack" },
+        { name: "Ring Row", sets: "3 × 10–12", focus: "Rücken Dicke", pause: "90 Sek.", pauseType: "heavy", tip: "Je flacher du liegst desto schwerer. Schulterblätter am Ende zusammenquetschen.", prog: "Flacher liegen wenn 12+ Reps zu leicht" },
+        { name: "Banded Face Pulls", sets: "3 × 15–20", focus: "Schulter Gesundheit", pause: "60 Sek.", pauseType: "iso", tip: "Band am Türanker auf Augenhöhe. Zur Stirn ziehen, Ellbogen hoch. Pflicht für deine Schulter!", prog: "Stärkeres Band wenn 20 Reps zu leicht" },
+      ]
+    }
+  },
+];
+
+const WEEK = [
+  { short: "MO", type: "home", session: "ARME", color: "#B847FF", detail: "Bizeps + Trizeps + Core" },
+  { short: "DI", type: "home", session: "TORSO", color: "#E8FF47", detail: "Brust + Rücken + Schultern" },
+  { short: "MI", type: "rest", session: "PAUSE", color: "#222", detail: "" },
+  { short: "DO", type: "gym", session: "ARME", color: "#B847FF", detail: "Bizeps + Trizeps + Quad + Core" },
+  { short: "FR", type: "gym", session: "TORSO", color: "#E8FF47", detail: "Brust + Rücken + Schultern" },
+  { short: "SA", type: "rest", session: "PAUSE", color: "#222", detail: "" },
+  { short: "SO", type: "cardio", session: "CORE + LAUFEN", color: "#47D4FF", detail: "10 Min Core + 25 Min Zone 2" },
+];
+
+const MUSCLE_FREQ = [
+  { muscle: "Brust", freq: "2×", sessions: "Di + Fr", color: "#E8FF47", note: "Obere + mittlere Brust — Schwachstelle direkt adressiert" },
+  { muscle: "Rücken", freq: "2×", sessions: "Di + Fr", color: "#47D4FF", note: "Pull Up/Lat Pulldown + Ring Row" },
+  { muscle: "Schultern", freq: "2×", sessions: "Di + Fr", color: "#FF6B35", note: "Face Pull + Lateral Raise" },
+  { muscle: "Trizeps", freq: "2×", sessions: "Mo + Do", color: "#B847FF", note: "Lateraler Kopf + Langer Kopf 🎯" },
+  { muscle: "Bizeps", freq: "2×", sessions: "Mo + Do", color: "#B847FF", note: "Spider Curl / Preacher Curl" },
+  { muscle: "Quad", freq: "1×", sessions: "Do (Gym)", color: "#47D4FF", note: "Leg Extension — bewusst reduziert" },
+  { muscle: "Core", freq: "2×", sessions: "Mo + So", color: "#E8FF47", note: "Hanging Raise + So Mini-Session" },
+];
+
+function App() {
+  const [activeDayIdx, setActiveDayIdx] = useState(0);
+  const [locationPerDay, setLocationPerDay] = useState({ 0: "home", 1: "home", 2: "gym", 3: "gym" });
+  const [expanded, setExpanded] = useState(null);
+  const [activeTab, setActiveTab] = useState("plan");
+  const [timer, setTimer] = useState(null);
+  const [timerRunning, setTimerRunning] = useState(false);
+  const intervalRef = useRef(null);
+
+  const currentDay = DAYS[activeDayIdx];
+  const currentLocation = locationPerDay[activeDayIdx] || "home";
+  const currentPlan = currentDay[currentLocation];
+  const color = currentDay.color;
+  const pauseColor = (type) => type === "heavy" ? "#FF6B35" : "#47D4FF";
+
+  const startTimer = (seconds, e) => {
+    e.stopPropagation();
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    setTimer(seconds);
+    setTimerRunning(true);
+    intervalRef.current = setInterval(() => {
+      setTimer(prev => {
+        if (prev <= 1) {
+          clearInterval(intervalRef.current);
+          setTimerRunning(false);
+          // Vibrate on mobile when done
+          if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  };
+
+  useEffect(() => () => { if (intervalRef.current) clearInterval(intervalRef.current); }, []);
+
+  const toggleLocation = (loc) => {
+    setLocationPerDay(prev => ({ ...prev, [activeDayIdx]: loc }));
+    setExpanded(null);
+  };
+
+  const s = (obj) => Object.assign({}, obj); // passthrough for style objects
+
+  return React.createElement('div', {
+    style: { fontFamily: "'Bebas Neue', Impact, sans-serif", background: "#080808", minHeight: "100vh", color: "#fff", maxWidth: 500, margin: "0 auto" }
+  },
+    // ── HEADER ──────────────────────────────────────────────────
+    React.createElement('div', {
+      style: { padding: "28px 20px 20px", borderBottom: "1px solid #131313", position: "relative", overflow: "hidden" }
+    },
+      React.createElement('div', {
+        style: { position: "absolute", top: -50, right: -50, width: 200, height: 200, background: `radial-gradient(circle, ${color}15 0%, transparent 65%)`, transition: "all 0.4s", pointerEvents: "none" }
+      }),
+      React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#3a3a3a", fontSize: 10, letterSpacing: 3, textTransform: "uppercase", marginBottom: 6 } }, "Cut Plan · Sommer 2026"),
+      React.createElement('div', { style: { fontSize: "clamp(30px, 9vw, 52px)", lineHeight: 0.95, letterSpacing: 2 } }, "LEAN & DEFINED"),
+      React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#444", fontSize: 12, marginTop: 10 } }, "Ziel: 68–70 kg · ~9% KFA · Sixpack & Vaskularität"),
+      timer !== null && React.createElement('div', {
+        style: { position: "absolute", top: 20, right: 20, background: "#0d0d0d", border: `2px solid ${timerRunning ? (timer < 10 ? "#FF6B35" : "#E8FF47") : timer === 0 ? "#47FF6B" : "#333"}`, borderRadius: 12, padding: "10px 16px", textAlign: "center", minWidth: 80, transition: "border-color 0.3s" }
+      },
+        React.createElement('div', {
+          className: timer > 0 && timerRunning && timer < 10 ? "pulse" : "",
+          style: { fontSize: 32, color: timerRunning ? (timer < 10 ? "#FF6B35" : "#E8FF47") : timer === 0 ? "#47FF6B" : "#555", lineHeight: 1, transition: "color 0.3s" }
+        }, `${Math.floor(timer / 60)}:${String(timer % 60).padStart(2, "0")}`),
+        React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#333", fontSize: 9 } }, timer === 0 ? "LOS GEHTS! 💪" : "PAUSE...")
+      )
+    ),
+
+    // ── TABS ─────────────────────────────────────────────────────
+    React.createElement('div', { style: { display: "flex", background: "#0c0c0c", borderBottom: "1px solid #151515" } },
+      [{ id: "plan", label: "TRAINING" }, { id: "week", label: "WOCHE" }, { id: "freq", label: "MUSKELN" }].map(tab =>
+        React.createElement('button', {
+          key: tab.id,
+          className: "btn",
+          onClick: () => setActiveTab(tab.id),
+          style: {
+            flex: 1, padding: "13px 4px", fontSize: 12, letterSpacing: 0.5,
+            background: "transparent", color: activeTab === tab.id ? "#E8FF47" : "#333",
+            borderBottom: `2px solid ${activeTab === tab.id ? "#E8FF47" : "transparent"}`,
+            fontFamily: "'Bebas Neue', sans-serif",
+          }
+        }, tab.label)
+      )
+    ),
+
+    // ── TAB: PLAN ────────────────────────────────────────────────
+    activeTab === "plan" && React.createElement(React.Fragment, null,
+      // Day selector
+      React.createElement('div', { style: { padding: "14px 20px 0" } },
+        React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#383838", fontSize: 9, letterSpacing: 3, textTransform: "uppercase", marginBottom: 10 } }, "Tag wählen"),
+        React.createElement('div', { style: { display: "flex", gap: 6 } },
+          DAYS.map((d, i) =>
+            React.createElement('button', {
+              key: i, className: "btn",
+              onClick: () => { setActiveDayIdx(i); setExpanded(null); },
+              style: {
+                flex: 1, padding: "10px 4px", borderRadius: 8, textAlign: "center",
+                background: activeDayIdx === i ? d.color : "#0c0c0c",
+                color: activeDayIdx === i ? "#000" : "#3a3a3a",
+                border: `1px solid ${activeDayIdx === i ? d.color : "#161616"}`,
+                fontFamily: "'Bebas Neue', sans-serif",
+              }
+            },
+              React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 600 } }, d.short),
+              React.createElement('div', { style: { fontSize: 10, marginTop: 2 } }, locationPerDay[i] === "gym" ? "🏟️" : "🏠")
+            )
+          )
+        )
+      ),
+
+      // Home/Gym toggle
+      React.createElement('div', { style: { padding: "12px 20px 0" } },
+        React.createElement('div', { style: { display: "flex", background: "#0c0c0c", borderRadius: 10, padding: 4, border: "1px solid #181818" } },
+          ["home", "gym"].map(loc =>
+            React.createElement('button', {
+              key: loc, className: "btn",
+              onClick: () => toggleLocation(loc),
+              style: {
+                flex: 1, padding: "10px", borderRadius: 7, fontSize: 18, letterSpacing: 2,
+                background: currentLocation === loc ? color : "transparent",
+                color: currentLocation === loc ? "#000" : "#383838",
+                fontFamily: "'Bebas Neue', sans-serif",
+              }
+            }, loc === "home" ? "🏠 HOME" : "🏟️ GYM")
+          )
+        )
+      ),
+
+      // Day header
+      React.createElement('div', { style: { padding: "14px 20px 0", display: "flex", alignItems: "center", gap: 10 } },
+        React.createElement('div', null,
+          React.createElement('div', { style: { fontSize: 26, letterSpacing: 1 } }, `${currentDay.day} · ${currentLocation.toUpperCase()}`),
+          React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#484848", fontSize: 12, marginTop: 2 } }, currentPlan.focus)
+        ),
+        React.createElement('div', {
+          style: { marginLeft: "auto", background: `${color}12`, color, fontFamily: "'DM Sans', sans-serif", fontSize: 9, padding: "4px 10px", borderRadius: 20, border: `1px solid ${color}22`, whiteSpace: "nowrap" }
+        }, currentPlan.tag)
+      ),
+
+      // Legend
+      React.createElement('div', { style: { padding: "10px 20px 0", display: "flex", gap: 8 } },
+        React.createElement('div', { style: { display: "flex", alignItems: "center", gap: 6, background: "#0d0d0d", border: "1px solid #FF6B3530", borderRadius: 8, padding: "5px 10px" } },
+          React.createElement('div', { style: { width: 7, height: 7, borderRadius: "50%", background: "#FF6B35" } }),
+          React.createElement('span', { style: { fontFamily: "'DM Sans', sans-serif", color: "#555", fontSize: 10 } }, "90 Sek. — Grundübung")
+        ),
+        React.createElement('div', { style: { display: "flex", alignItems: "center", gap: 6, background: "#0d0d0d", border: "1px solid #47D4FF30", borderRadius: 8, padding: "5px 10px" } },
+          React.createElement('div', { style: { width: 7, height: 7, borderRadius: "50%", background: "#47D4FF" } }),
+          React.createElement('span', { style: { fontFamily: "'DM Sans', sans-serif", color: "#555", fontSize: 10 } }, "60 Sek. — Isolation")
+        )
+      ),
+
+      // Exercise cards
+      React.createElement('div', { style: { padding: "12px 20px 0", display: "flex", flexDirection: "column", gap: 8 } },
+        currentPlan.exercises.map((ex, i) =>
+          React.createElement('div', {
+            key: i, className: "card",
+            onClick: () => setExpanded(expanded === i ? null : i),
+            style: {
+              background: expanded === i ? "#111" : "#0b0b0b",
+              border: `1px solid ${expanded === i ? color + "40" : "#151515"}`,
+              borderRadius: 12, padding: "14px", position: "relative", overflow: "hidden"
+            }
+          },
+            expanded === i && React.createElement('div', {
+              style: { position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: color, borderRadius: "12px 0 0 12px" }
+            }),
+            React.createElement('div', { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start" } },
+              React.createElement('div', { style: { flex: 1 } },
+                React.createElement('div', { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 5 } },
+                  React.createElement('span', { style: { fontFamily: "'DM Sans', sans-serif", background: `${color}18`, color, fontSize: 9, padding: "2px 7px", borderRadius: 4, fontWeight: 600 } }, `0${i + 1}`),
+                  React.createElement('span', { style: { fontFamily: "'DM Sans', sans-serif", color: "#3c3c3c", fontSize: 10 } }, ex.focus)
+                ),
+                React.createElement('div', { style: { fontSize: 19, letterSpacing: 0.3, lineHeight: 1.1 } }, ex.name),
+                React.createElement('div', { style: { display: "flex", alignItems: "center", gap: 6, marginTop: 6 } },
+                  React.createElement('div', { style: { width: 6, height: 6, borderRadius: "50%", background: pauseColor(ex.pauseType), flexShrink: 0 } }),
+                  React.createElement('span', { style: { fontFamily: "'DM Sans', sans-serif", color: "#3a3a3a", fontSize: 10 } }, `Pause: ${ex.pause}`)
+                )
+              ),
+              React.createElement('div', { style: { textAlign: "right", marginLeft: 10, flexShrink: 0 } },
+                React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", color, fontSize: 12, fontWeight: 600 } }, ex.sets),
+                React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#252525", fontSize: 9, marginTop: 3 } }, expanded === i ? "▲" : "▼")
+              )
+            ),
+            expanded === i && React.createElement('div', { style: { marginTop: 14, paddingTop: 14, borderTop: "1px solid #161616" } },
+              React.createElement('button', {
+                className: "timer-btn",
+                onClick: (e) => startTimer(ex.pauseType === "heavy" ? 90 : 60, e),
+                style: {
+                  width: "100%", padding: "10px", borderRadius: 8, marginBottom: 12,
+                  background: `${pauseColor(ex.pauseType)}15`, border: `1px solid ${pauseColor(ex.pauseType)}30`,
+                  color: pauseColor(ex.pauseType), fontSize: 16, letterSpacing: 1,
+                  fontFamily: "'Bebas Neue', sans-serif",
+                }
+              }, `⏱ PAUSE TIMER — ${ex.pause}`),
+              React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#3a3a3a", fontSize: 9, letterSpacing: 2, textTransform: "uppercase", marginBottom: 6 } }, "Coach Tipp"),
+              React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#bbb", fontSize: 13, lineHeight: 1.65, marginBottom: 12 } }, ex.tip),
+              React.createElement('div', { style: { background: `${color}0c`, border: `1px solid ${color}1e`, borderRadius: 8, padding: "10px 12px" } },
+                React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#3a3a3a", fontSize: 9, letterSpacing: 2, textTransform: "uppercase", marginBottom: 4 } }, "Progressive Overload"),
+                React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", color, fontSize: 12 } }, ex.prog)
+              )
+            )
+          )
+        )
+      ),
+
+      // Cardio box
+      React.createElement('div', { style: { padding: "14px 20px 0" } },
+        React.createElement('div', { style: { background: "#0a0a00", border: "1px solid #E8FF4715", borderRadius: 12, padding: "14px 16px" } },
+          React.createElement('div', { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 7 } },
+            React.createElement('div', { style: { fontSize: 18 } }, "CARDIO"),
+            React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", background: "#E8FF4710", color: "#E8FF47", fontSize: 9, padding: "2px 8px", borderRadius: 4, fontWeight: 600 } }, "PFLICHT · 5×/WOCHE")
+          ),
+          React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#555", fontSize: 12, lineHeight: 1.8 } },
+            "🏠 Mo/Di: 20 Min Heimtrainer nach Training", React.createElement('br'),
+            "🏟️ Do/Fr: 20 Min Ergometer im Gym nach Training", React.createElement('br'),
+            "🏃 So: 10 Min Core + 25 Min Laufen Zone 2"
+          )
+        )
+      ),
+
+      // Nutrition
+      React.createElement('div', { style: { padding: "14px 20px 32px" } },
+        React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#383838", fontSize: 9, letterSpacing: 3, textTransform: "uppercase", marginBottom: 10 } }, "Tägliche Ernährung"),
+        React.createElement('div', { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 } },
+          React.createElement('div', { style: { gridColumn: "span 2", background: "#0d0d0d", border: "1px solid #181818", borderRadius: 10, padding: "14px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" } },
+            React.createElement('div', null,
+              React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#383838", fontSize: 9, letterSpacing: 2, textTransform: "uppercase" } }, "Kalorien / Tag"),
+              React.createElement('div', { style: { fontSize: 52, color: "#E8FF47", lineHeight: 1 } }, "2150")
+            ),
+            React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#252525", fontSize: 16 } }, "kcal")
+          ),
+          ...[
+            { label: "Protein", value: "185–200g", color: "#FF6B35" },
+            { label: "Kohlenhydrate", value: "200–220g", color: "#47D4FF" },
+            { label: "Fett", value: "55–65g", color: "#B847FF", full: true },
+          ].map((n, i) =>
+            React.createElement('div', {
+              key: i,
+              style: { gridColumn: n.full ? "span 2" : "span 1", background: "#0d0d0d", border: "1px solid #161616", borderRadius: 10, padding: "12px 14px" }
+            },
+              React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#383838", fontSize: 9, letterSpacing: 2, textTransform: "uppercase" } }, n.label),
+              React.createElement('div', { style: { fontSize: 28, color: n.color, lineHeight: 1.1, marginTop: 3 } }, n.value)
+            )
+          )
+        )
+      )
+    ),
+
+    // ── TAB: WOCHE ───────────────────────────────────────────────
+    activeTab === "week" && React.createElement('div', { style: { padding: "16px 20px 32px" } },
+      React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#383838", fontSize: 9, letterSpacing: 3, textTransform: "uppercase", marginBottom: 14 } }, "Deine feste Woche"),
+      React.createElement('div', { style: { display: "flex", flexDirection: "column", gap: 8 } },
+        WEEK.map((d, i) =>
+          React.createElement('div', {
+            key: i,
+            style: { background: "#0d0d0d", border: `1px solid ${d.type === "rest" ? "#141414" : d.color + "30"}`, borderRadius: 12, padding: "14px 16px", display: "flex", alignItems: "center", gap: 14, position: "relative", overflow: "hidden" }
+          },
+            d.type !== "rest" && React.createElement('div', { style: { position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: d.color, borderRadius: "12px 0 0 12px" } }),
+            React.createElement('div', { style: { textAlign: "center", minWidth: 36 } },
+              React.createElement('div', { style: { fontSize: 22, color: d.type === "rest" ? "#222" : d.color } }, d.short)
+            ),
+            React.createElement('div', { style: { flex: 1 } },
+              React.createElement('div', { style: { fontSize: 20, color: d.type === "rest" ? "#2a2a2a" : "#fff", letterSpacing: 0.5 } }, d.session),
+              React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#3a3a3a", fontSize: 11, marginTop: 3 } },
+                d.type === "gym" ? `🏟️ Gym + 20 Min Ergometer · ${d.detail}` :
+                d.type === "home" ? `🏠 Zuhause + 20 Min Heimtrainer · ${d.detail}` :
+                d.type === "cardio" ? `🏃 ${d.detail}` : "😴 Erholen + 🐕 Hund Gassi"
+              )
+            ),
+            d.type !== "rest" && React.createElement('div', {
+              style: { fontFamily: "'DM Sans', sans-serif", background: `${d.color}12`, color: d.color, fontSize: 10, padding: "4px 10px", borderRadius: 20, border: `1px solid ${d.color}22`, flexShrink: 0 }
+            }, d.type === "cardio" ? "35 Min" : "~70 Min")
+          )
+        )
+      ),
+      React.createElement('div', { style: { marginTop: 20 } },
+        React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#383838", fontSize: 9, letterSpacing: 3, textTransform: "uppercase", marginBottom: 10 } }, "Die 3 Regeln"),
+        [
+          { num: "01", rule: "2.150 kcal — kein Verhandeln", sub: "Auch am Wochenende.", color: "#E8FF47" },
+          { num: "02", rule: "185g+ Protein — immer", sub: "Protein zuerst tracken, dann KH und Fett.", color: "#FF6B35" },
+          { num: "03", rule: "Progressive Overload — jede Woche", sub: "+1 Rep oder +1,25 kg. Kein Stillstand.", color: "#47D4FF" },
+        ].map((r, i) =>
+          React.createElement('div', {
+            key: i,
+            style: { display: "flex", gap: 14, alignItems: "flex-start", marginBottom: i < 2 ? 8 : 0, background: "#0c0c0c", border: "1px solid #161616", borderRadius: 10, padding: "14px" }
+          },
+            React.createElement('div', { style: { fontSize: 28, color: r.color, lineHeight: 1, flexShrink: 0 } }, r.num),
+            React.createElement('div', null,
+              React.createElement('div', { style: { fontSize: 18, letterSpacing: 0.5, lineHeight: 1.1 } }, r.rule),
+              React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#484848", fontSize: 12, marginTop: 4 } }, r.sub)
+            )
+          )
+        )
+      )
+    ),
+
+    // ── TAB: MUSKELN ─────────────────────────────────────────────
+    activeTab === "freq" && React.createElement('div', { style: { padding: "16px 20px 32px" } },
+      React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#383838", fontSize: 9, letterSpacing: 3, textTransform: "uppercase", marginBottom: 14 } }, "Muskelgruppen Frequenz / Woche"),
+      React.createElement('div', { style: { display: "flex", flexDirection: "column", gap: 8 } },
+        MUSCLE_FREQ.map((m, i) =>
+          React.createElement('div', {
+            key: i,
+            style: { background: "#0d0d0d", border: `1px solid ${m.color}25`, borderRadius: 10, padding: "12px 14px", display: "flex", alignItems: "center", gap: 12 }
+          },
+            React.createElement('div', { style: { background: `${m.color}20`, color: m.color, fontSize: 18, padding: "6px 10px", borderRadius: 8, minWidth: 48, textAlign: "center" } }, m.freq),
+            React.createElement('div', { style: { flex: 1 } },
+              React.createElement('div', { style: { fontSize: 18, letterSpacing: 0.5 } }, m.muscle),
+              React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#3a3a3a", fontSize: 11, marginTop: 2 } }, m.sessions),
+              React.createElement('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#2a2a2a", fontSize: 10, marginTop: 1 } }, m.note)
+            ),
+            React.createElement('div', { style: { fontSize: 16 } }, "✅")
+          )
+        )
+      ),
+      React.createElement('div', { style: { marginTop: 12, background: "#0a0a0a", border: "1px solid #161616", borderRadius: 10, padding: "12px 14px", fontFamily: "'DM Sans', sans-serif", color: "#444", fontSize: 12, lineHeight: 1.65 } },
+        "💡 Kein Trizeps-Overlap mehr. Ring Dips sind zurück. Alle Prioritäten berücksichtigt: Brust 2×, Trizeps 2× mit beiden Köpfen, Schultern 2×."
+      )
+    )
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(App));
+  </script>
+</body>
+</html>
