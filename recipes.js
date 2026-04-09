@@ -2018,7 +2018,7 @@ const RECIPE_DETAILS = {
     { section: "Carb Base", items: [{ name: "Udon noodles (fresh or dried)", amt: "{{carbG}}g" }] },
     { section: "Sauce", items: [
       { name: "Soy sauce", amt: "3 tbsp" },
-      { name: "Honey", amt: "1.5 tbsp" },
+      { name: "Honey", amt: "1 tbsp" },
       { name: "Garlic (minced)", amt: "5 cloves" },
       { name: "Sesame oil", amt: "0.5 tsp" },
       { name: "Chili flakes", amt: "0.5 tsp" },
@@ -2027,8 +2027,7 @@ const RECIPE_DETAILS = {
       { name: "Water", amt: "3 tbsp" },
     ]},
     { section: "Vegetables", items: [
-      { name: "Edamame (shelled, frozen)", amt: "100g" },
-      { name: "Neutral oil", amt: "1 tsp" },
+      { name: "Pak choi (halved)", amt: "175g" },
     ]},
     { section: "To Serve", items: [
       { name: "Spring onion", amt: "2 stalks" },
@@ -2040,17 +2039,20 @@ const RECIPE_DETAILS = {
     "Whisk together soy sauce, honey, garlic, chili flakes, rice vinegar, and cornstarch dissolved in 3 tbsp water — set aside.",
     "Cut chicken thighs into bite-sized chunks and season lightly with salt and pepper.",
     "Cook udon noodles according to packet instructions, drain, and rinse with cold water.",
-    "Heat oil in a large pan or wok over high heat — sear chicken pieces without moving for 2–3 minutes until golden, then toss and cook through.",
+    "Heat a separate dry pan over high heat — no oil. Add pak choi cut-side down and sear for 2–3 minutes without moving until charred and caramelised. Flip, cook 1 more minute. Remove and set aside.",
+    "In the same dry pan, fry the eggs: add a small drizzle of oil, crack in the eggs, and fry until whites are crispy at the edges and yolk is still runny. Remove and set aside.",
+    "Heat oil in a large wok over high heat — sear chicken pieces without moving for 2–3 minutes until golden, then toss and cook through.",
     "Add the sauce — it will thicken fast. Stir and coat the chicken for 1–2 minutes.",
-    "Push the chicken aside and add the edamame to the pan — stir-fry for 2 minutes until heated through.",
     "Add the cooked noodles and toss everything together over the heat for 1 minute.",
-    "Serve immediately topped with spring onion and sesame seeds.",
+    "Fold in the pak choi for the last 30 seconds — just enough to warm through without losing the char.",
+    "Serve immediately topped with the fried egg, spring onion and sesame seeds.",
   ],
   hacks: [
     { title: "Don't Crowd the Chicken", text: "Sear in two batches if needed. Crowding the pan steams the chicken instead of searing it — and that golden caramelised crust is what honey garlic chicken is all about." },
     { title: "5 Cloves of Garlic", text: "It sounds like a lot. It's not. The honey caramelises around the garlic as it cooks, completely mellowing it into sweet, nutty depth. This is the whole point of the dish." },
+    { title: "Pak Choi Separate — Always", text: "Pak choi releases a lot of water when it hits heat. Cooking it dry in a separate pan first drives off all that moisture and builds a proper char — add it directly to the wok and it steams everything, kills the sauce and makes the noodles soggy. Those 3 minutes in a dry pan are the difference between a great bowl and a wet one." },
   ],
-  notes: "Fresh udon noodles available in the chiller section at Asian supermarkets in Frankfurt. Dried udon works equally well. Frozen edamame (shelled) available at most supermarkets.",
+  notes: "Fresh udon noodles available in the chiller section at Asian supermarkets in Frankfurt. Dried udon works equally well.",
 },
 
 "mediterranean-chicken-potato": {
