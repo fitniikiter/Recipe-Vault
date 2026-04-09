@@ -5765,10 +5765,10 @@
       // Side-egg controls for sideEgg: true recipes
       function setSideEggSize(g, id) {
         sideEggSizeG = g;
-        // Update active state on size buttons
+        // Update active state on size buttons by matching their label to sideEggSizeG
+        const sizeMap = {"S": 48, "M": 58, "L": 68};
         document.querySelectorAll("#sideEggRow .modal-variant-btn").forEach(function(btn) {
-          const btnG = btn.onclick ? (btn.getAttribute("onclick") || "").match(/setSideEggSize\((\d+)/)?.[1] : null;
-          btn.classList.toggle("active", btnG && parseInt(btnG) === g);
+          btn.classList.toggle("active", sizeMap[btn.textContent.trim()] === sideEggSizeG);
         });
         // Recalculate macros inline (same as changeSideEggCount)
         const nut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
@@ -5793,10 +5793,7 @@
         // Update the count display directly — no full tab rebuild to avoid overwriting the value
         const el = document.getElementById("sideEggCountVal");
         if (el) el.textContent = sideEggCount;
-        // Update the size buttons active state
-        document.querySelectorAll("#sideEggRow .modal-variant-btn").forEach(function(btn) {
-          btn.classList.toggle("active", parseInt(btn.textContent) === (sideEggSizeG === 48 ? 48 : sideEggSizeG === 68 ? 68 : 58));
-        });
+        // Update the size buttons active state — don't touch them, sideEggSizeG hasn't changed
         // Recalculate and update the macro panel inside sideEggRow
         const nut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
         const gPP = Math.round((sideEggCount * sideEggSizeG) / Math.max(modalServings, 1));
