@@ -462,6 +462,7 @@ const R = [
 },
 {
   id: "honey-garlic-chicken-noodles",
+  sideEgg: true,
   protein: "chicken",
   displayNum: 7,
   carb: "noodle",
@@ -2022,8 +2023,6 @@ const RECIPE_DETAILS = {
       { name: "Neutral oil", amt: "1 tsp" },
     ]},
     { section: "To Serve", items: [
-      { name: "Eggs (whole)", amt: "2 pieces" },
-      { name: "Neutral oil (for frying egg)", amt: "0.5 tsp" },
       { name: "Spring onion", amt: "2 stalks" },
       { name: "Sesame seeds", amt: "1 tsp" },
       { name: "Toasted sesame oil (finishing drizzle)", amt: "0.5 tsp" },
