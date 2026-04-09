@@ -5765,15 +5765,56 @@
       // Side-egg controls for sideEgg: true recipes
       function setSideEggSize(g, id) {
         sideEggSizeG = g;
+        // Update active state on size buttons
+        document.querySelectorAll("#sideEggRow .modal-variant-btn").forEach(function(btn) {
+          const btnG = btn.onclick ? (btn.getAttribute("onclick") || "").match(/setSideEggSize\((\d+)/)?.[1] : null;
+          btn.classList.toggle("active", btnG && parseInt(btnG) === g);
+        });
+        // Recalculate macros inline (same as changeSideEggCount)
+        const nut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
+        const gPP = Math.round((sideEggCount * sideEggSizeG) / Math.max(modalServings, 1));
+        const grid = document.querySelector("#sideEggRow .ing-macro-grid");
+        if (grid) {
+          grid.innerHTML =
+            "<div class=\"ing-macro-cell mk\"><span class=\"imc-val\">" + Math.round((nut.kcal * gPP) / 100) + "</span><span class=\"imc-lbl\">kcal</span></div>" +
+            "<div class=\"ing-macro-cell mp\"><span class=\"imc-val\">" + (Math.round(nut.p * gPP) / 100).toFixed(1) + "g</span><span class=\"imc-lbl\">protein</span></div>" +
+            "<div class=\"ing-macro-cell mc\"><span class=\"imc-val\">" + (Math.round(nut.c * gPP) / 100).toFixed(1) + "g</span><span class=\"imc-lbl\">carbs</span></div>" +
+            "<div class=\"ing-macro-cell mf\"><span class=\"imc-val\">" + (Math.round(nut.f * gPP) / 100).toFixed(1) + "g</span><span class=\"imc-lbl\">fat</span></div>";
+        }
+        const hint = document.querySelector("#sideEggRow .ing-macro-hint");
+        if (hint) hint.textContent = "Per portion \u00b7 " + gPP + "g \u00b7 per 100g: " + nut.kcal + "kcal " + nut.p + "g P " + nut.c + "g C " + nut.f + "g F";
+        const portionHint = document.querySelector("#sideEggRow .modal-weight-hint");
+        if (portionHint) portionHint.textContent = gPP + "g per portion";
         const r = R.find((r) => r.id === id);
-        r && (buildIngredientsTab(r), updateModalMacros(r));
+        r && updateModalMacros(r);
       }
       function changeSideEggCount(delta, id) {
         sideEggCount = Math.max(0, Math.min(10, sideEggCount + delta));
+        // Update the count display directly — no full tab rebuild to avoid overwriting the value
         const el = document.getElementById("sideEggCountVal");
         if (el) el.textContent = sideEggCount;
+        // Update the size buttons active state
+        document.querySelectorAll("#sideEggRow .modal-variant-btn").forEach(function(btn) {
+          btn.classList.toggle("active", parseInt(btn.textContent) === (sideEggSizeG === 48 ? 48 : sideEggSizeG === 68 ? 68 : 58));
+        });
+        // Recalculate and update the macro panel inside sideEggRow
+        const nut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
+        const gPP = Math.round((sideEggCount * sideEggSizeG) / Math.max(modalServings, 1));
+        const grid = document.querySelector("#sideEggRow .ing-macro-grid");
+        if (grid) {
+          grid.innerHTML =
+            "<div class=\"ing-macro-cell mk\"><span class=\"imc-val\">" + Math.round((nut.kcal * gPP) / 100) + "</span><span class=\"imc-lbl\">kcal</span></div>" +
+            "<div class=\"ing-macro-cell mp\"><span class=\"imc-val\">" + (Math.round(nut.p * gPP) / 100).toFixed(1) + "g</span><span class=\"imc-lbl\">protein</span></div>" +
+            "<div class=\"ing-macro-cell mc\"><span class=\"imc-val\">" + (Math.round(nut.c * gPP) / 100).toFixed(1) + "g</span><span class=\"imc-lbl\">carbs</span></div>" +
+            "<div class=\"ing-macro-cell mf\"><span class=\"imc-val\">" + (Math.round(nut.f * gPP) / 100).toFixed(1) + "g</span><span class=\"imc-lbl\">fat</span></div>";
+        }
+        const hint = document.querySelector("#sideEggRow .ing-macro-hint");
+        if (hint) hint.textContent = "Per portion \u00b7 " + gPP + "g \u00b7 per 100g: " + nut.kcal + "kcal " + nut.p + "g P " + nut.c + "g C " + nut.f + "g F";
+        const portionHint = document.querySelector("#sideEggRow .modal-weight-hint");
+        if (portionHint) portionHint.textContent = gPP + "g per portion";
+        // Only update the modal macro totals
         const r = R.find((r) => r.id === id);
-        r && (buildIngredientsTab(r), updateModalMacros(r));
+        r && updateModalMacros(r);
       }
       function selectModalVariant(e, a) {
         activeProtein = e;
