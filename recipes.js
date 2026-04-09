@@ -1099,7 +1099,8 @@ const R = [
 
 {
   id: "korean-egg-fried-rice",
-  protein: displayNum: 46,
+  protein: "eggs",
+  displayNum: 46,
   carb: "rice",
   time: 15,
   title: "Korean Egg Fried Rice",
@@ -1114,7 +1115,8 @@ const R = [
 },
 {
   id: "shakshuka-middle-eastern-eggs",
-  protein: displayNum: 47,
+  protein: "eggs",
+  displayNum: 47,
   carb: "bread",
   time: 25,
   title: "Shakshuka with Feta",
@@ -1129,7 +1131,8 @@ const R = [
 },
 {
   id: "japanese-tamago-gohan-bowl",
-  protein: displayNum: 48,
+  protein: "eggs",
+  displayNum: 48,
   carb: "rice",
   time: 10,
   title: "Japanese TKG — Tamago Kake Gohan",
@@ -1144,7 +1147,8 @@ const R = [
 },
 {
   id: "mexican-huevos-rancheros",
-  protein: displayNum: 49,
+  protein: "eggs",
+  displayNum: 49,
   carb: "bread",
   time: 20,
   title: "Huevos Rancheros",
@@ -1159,7 +1163,8 @@ const R = [
 },
 {
   id: "chinese-tomato-egg-stir-fry-rice",
-  protein: displayNum: 50,
+  protein: "eggs",
+  displayNum: 50,
   carb: "rice",
   time: 15,
   title: "Chinese Tomato & Egg Stir Fry",
@@ -1174,7 +1179,8 @@ const R = [
 },
 {
   id: "high-protein-egg-potato-hash",
-  protein: displayNum: 51,
+  protein: "eggs",
+  displayNum: 51,
   carb: "potato",
   time: 25,
   title: "High-Protein Egg & Potato Hash",
@@ -1189,7 +1195,8 @@ const R = [
 },
 {
   id: "thai-omelette-rice-kai-jeow",
-  protein: displayNum: 52,
+  protein: "eggs",
+  displayNum: 52,
   carb: "rice",
   time: 15,
   title: "Thai Crispy Omelette Rice (Kai Jeow)",
@@ -1204,7 +1211,8 @@ const R = [
 },
 {
   id: "mediterranean-egg-white-omelette-wrap",
-  protein: displayNum: 53,
+  protein: "eggs",
+  displayNum: 53,
   carb: "bread",
   time: 15,
   title: "Mediterranean Egg White Omelette Wrap",
@@ -1219,7 +1227,8 @@ const R = [
 },
 {
   id: "french-scrambled-eggs-toast",
-  protein: displayNum: 54,
+  protein: "eggs",
+  displayNum: 54,
   carb: "bread",
   time: 15,
   title: "French Soft Scrambled Eggs on Toast",
@@ -1234,7 +1243,8 @@ const R = [
 },
 {
   id: "egg-fried-noodles-asian",
-  protein: displayNum: 55,
+  protein: "eggs",
+  displayNum: 55,
   carb: "noodle",
   time: 20,
   title: "Wok Egg Fried Noodles",
@@ -1417,7 +1427,8 @@ const R = [
 // EGGS (5)
 {
   id: "greek-spinach-feta-frittata",
-  protein: displayNum: 66,
+  protein: "eggs",
+  displayNum: 66,
   carb: "potato",
   time: 25,
   title: "Greek Spinach & Feta Frittata",
@@ -1432,7 +1443,8 @@ const R = [
 },
 {
   id: "turkish-menemen",
-  protein: displayNum: 67,
+  protein: "eggs",
+  displayNum: 67,
   carb: "potato",
   time: 20,
   title: "Turkish Menemen",
@@ -1447,7 +1459,8 @@ const R = [
 },
 {
   id: "japanese-tamagoyaki-rice-bowl",
-  protein: displayNum: 68,
+  protein: "eggs",
+  displayNum: 68,
   carb: "rice",
   time: 20,
   title: "Japanese Tamagoyaki Rice Bowl",
@@ -1462,7 +1475,8 @@ const R = [
 },
 {
   id: "spicy-korean-steamed-eggs",
-  protein: displayNum: 69,
+  protein: "eggs",
+  displayNum: 69,
   carb: "potato",
   time: 20,
   title: "Spicy Korean Steamed Eggs (Gyeran Jjim)",
@@ -1477,7 +1491,8 @@ const R = [
 },
 {
   id: "shakshuka-verde-feta",
-  protein: displayNum: 70,
+  protein: "eggs",
+  displayNum: 70,
   carb: "potato",
   time: 25,
   title: "Shakshuka Verde with Feta",
