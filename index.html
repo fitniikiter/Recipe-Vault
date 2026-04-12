@@ -8007,8 +8007,7 @@
       function calcSauceMacros(e) {
         const a = getRecipeDetail(e);
         if (!a || !a.ingredients) return { kcal: e.sauce_kcal, p: e.sauce_p, c: e.sauce_c, f: e.sauce_f };
-        // For dip/none recipes: batch is fixed, don't divide by servings
-        const t = (e.protein === "none" && e.carb === "none") ? 1 : Math.max(weights.servings, 1);
+        const t = Math.max(weights.servings, 1);
         let i = 0,
           n = 0,
           s = 0,
