@@ -2011,8 +2011,8 @@ const RECIPE_DETAILS = {
 },
 
 "honey-garlic-chicken-noodles": {
-  image: null,
-  video: null,
+  image: "https://pub-bc6707297a024aa19ff31c3e4a36c1a9.r2.dev/Recipes/default_1.3.1.jpg",
+  video: "EdLBJEr__7c",
   ingredients: [
     { section: "Protein", items: [{ name: "Boneless skinless chicken thighs", amt: "{{proteinG}}g raw" }] },
     { section: "Carb Base", items: [{ name: "Udon noodles (fresh or dried)", amt: "{{carbG}}g" }] },
@@ -3195,8 +3195,8 @@ const RECIPE_DETAILS = {
 },
 
 "chicken-caesar-wrap": {
-  image: null,
-  video: null,
+  image: "https://pub-bc6707297a024aa19ff31c3e4a36c1a9.r2.dev/Recipes/default_1.44.1.jpg",
+  video: "YokX-zEMNwA",
   ingredients: [
     { section: "Protein", items: [{ name: "Boneless skinless chicken breast", amt: "{{proteinG}}g raw" }] },
     { section: "Carb Base", items: [{ name: "Large wheat tortilla wraps", amt: "{{carbG}}g" }] },
@@ -5108,37 +5108,36 @@ const RECIPE_DETAILS = {
   video: "",
   ingredients: [
     { section: "Wet", items: [
-      { name: "Banana (ripe)", amt: "65g" },
-      { name: "Eggs (whole)", amt: "1 piece" },
+      { name: "Banana (ripe)", amt: "65g", id: "banana" },
+      { name: "Egg (whole, size M)", amt: "1 piece", id: "eggs" },
       { name: "Almond milk (unsweetened)", amt: "50ml" },
-      { name: "Honey", amt: "10g" },
+      { name: "Honey", amt: "10g", id: "honey" },
       { name: "Vanilla extract (sugar-free)", amt: "3g" },
     ]},
     { section: "Dry", items: [
-      { name: "Rolled oats", amt: "50g" },
-      { name: "Whey protein (chocolate)", amt: "30g" },
+      { name: "Rolled oats", amt: "50g", id: "oats" },
+      { name: "Whey protein (chocolate, e.g. MyVay)", amt: "30g" },
       { name: "Baking powder", amt: "3g" },
-      { name: "MSG", amt: "1 pinch" },
+      { name: "Salt", amt: "1 pinch" },
     ]},
     { section: "Mix-in", items: [
-      { name: "Dark chocolate chips", amt: "20g" },
+      { name: "Dark chocolate chips (e.g. Aldi Vollmilch)", amt: "20g", id: "chocolate_chips" },
     ]},
   ],
   steps: [
     "Preheat oven to 180°C (top/bottom heat).",
-    "Mash the ripe banana thoroughly in a bowl — the riper the better, it should be completely smooth.",
-    "Add the egg, almond milk, honey and vanilla extract to the banana and whisk until smooth.",
-    "Add rolled oats, chocolate whey protein, baking powder and a pinch of salt — stir until a creamy, slightly pourable batter forms.",
+    "Wet base: mash the ripe banana thoroughly until completely smooth — no lumps. Add the egg, almond milk, honey and vanilla extract and whisk until combined.",
+    "Dry ingredients: stir in rolled oats, chocolate whey, baking powder and a pinch of salt until a creamy, slightly pourable batter forms.",
     "Fold in the chocolate chips.",
-    "Pour into a small greased baking dish (approx. 12cm diameter) and bake for 15–18 minutes until the surface is golden and the centre still has a slight wobble.",
-    "Let it rest for 3–5 minutes — the centre will set slightly and stay creamy and fudgy.",
+    "Pour into a small greased baking dish (approx. 12 cm diameter) and bake for 15–18 minutes until the surface is golden and the centre still has a slight wobble.",
+    "Rest for 3–5 minutes — the centre sets slightly and stays creamy and fudgy. Eat warm.",
   ],
   hacks: [
     { title: "The Wobble is the Point", text: "Pull it out when the centre still wobbles slightly — it continues to set as it rests. Fully set baked oat is dry and rubbery. The goal is creamy and custardy in the middle." },
-    { title: "Riper Banana = Better", text: "A spotty, overripe banana is sweeter, mushier and blends completely into the batter. An underripe banana stays lumpy and tastes starchy. The riper the better." },
-    { title: "Whey Choice Matters", text: "A good chocolate whey (like MyVay or similar) carries the whole flavour profile. If your whey tastes good as a shake, it'll taste good baked. Avoid anything chalky or artificial." },
+    { title: "Riper Banana = Better", text: "A spotty, overripe banana is sweeter, mushier and blends completely into the batter. An underripe banana stays lumpy and tastes starchy. The riper the better — black spots are fine." },
+    { title: "Whey Choice Matters", text: "A good chocolate whey (like MyVay) carries the whole flavour profile. If your whey tastes good as a shake, it'll taste good baked. Avoid anything chalky or artificial." },
     { title: "Scale Up Easily", text: "This recipe is for one portion in a small ramekin or dish. For 2 portions, double everything and use a larger dish — add 3–5 minutes to baking time." },
   ],
-  notes: "Best eaten warm straight from the oven. Can be prepped the night before (raw batter) and baked fresh in the morning. Chocolate chips optional — swap for blueberries or leave them out for lower fat.",
+  notes: "Macros per portion: 604 kcal · 40g protein · 72g carbs · 17g fat. Best eaten warm straight from the oven. Raw batter can be prepped the night before and baked fresh in the morning. Swap chocolate chips for blueberries for a lower-fat version.",
 },
 };
