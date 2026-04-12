@@ -1724,13 +1724,13 @@ const R = [
 },
 
 {
-  id: "chocolate-protein-baked-oat",
+  id: "chocolate-chip-baked-oats",
   protein: "none",
   displayNum: 84,
   carb: "none",
   time: 25,
-  title: "Chocolate Protein Baked Oat",
-  desc: "Creamy baked oat with banana, chocolate whey, egg and dark chocolate chips — high-protein, macro-friendly dessert or breakfast.",
+  title: "Chocolate Chip Baked Oats",
+  desc: "Creamy baked oats with banana, chocolate whey, egg and dark chocolate chips — high-protein, macro-friendly dessert or breakfast.",
   tags: ["eggs", "oats", "protein-powder", "comfort"],
   flavor: "sweet",
   sauce_kcal: 606,
@@ -3948,6 +3948,7 @@ const RECIPE_DETAILS = {
   // ── CHICKEN: HIGH PROTEIN LOW CALORIE ──────────────────────
 
   "greek-lemon-herb-chicken-bowl": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Rice", items: [
@@ -3991,6 +3992,7 @@ const RECIPE_DETAILS = {
   },
 
   "miso-glazed-chicken-rice-bowl": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Rice", items: [
@@ -4037,6 +4039,7 @@ const RECIPE_DETAILS = {
   },
 
   "harissa-chicken-couscous-bowl": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Couscous", items: [
@@ -4078,6 +4081,7 @@ const RECIPE_DETAILS = {
   },
 
   "vietnamese-chicken-vermicelli-bowl": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Noodles", items: [
@@ -4122,6 +4126,7 @@ const RECIPE_DETAILS = {
   },
 
   "chicken-tabbouleh-couscous-bowl": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Couscous", items: [
@@ -4165,6 +4170,7 @@ const RECIPE_DETAILS = {
   // ── BEEF: HIGH PROTEIN LOW CALORIE ─────────────────────────
 
   "moroccan-spiced-beef-couscous-bowl": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Couscous", items: [
@@ -4204,6 +4210,7 @@ const RECIPE_DETAILS = {
   },
 
   "japanese-beef-tataki-rice-bowl": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Rice", items: [
@@ -4244,6 +4251,7 @@ const RECIPE_DETAILS = {
   },
 
   "mexican-picadillo-rice-bowl": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Rice", items: [
@@ -4288,6 +4296,7 @@ const RECIPE_DETAILS = {
   },
 
   "vietnamese-lemongrass-beef-rice-bowl": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Rice", items: [
@@ -4328,6 +4337,7 @@ const RECIPE_DETAILS = {
   },
 
   "turkish-spiced-beef-bulgur-bowl": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Bulgur", items: [
@@ -4369,6 +4379,7 @@ const RECIPE_DETAILS = {
   // ── EGGS: HIGH PROTEIN LOW CALORIE ─────────────────────────
 
   "greek-spinach-feta-frittata": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Frittata", items: [
@@ -4402,6 +4413,7 @@ const RECIPE_DETAILS = {
   },
 
   "turkish-menemen": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Menemen", items: [
@@ -4438,6 +4450,7 @@ const RECIPE_DETAILS = {
   },
 
   "japanese-tamagoyaki-rice-bowl": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Tamagoyaki", items: [
@@ -4475,6 +4488,7 @@ const RECIPE_DETAILS = {
   },
 
   "spicy-korean-steamed-eggs": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Steamed Eggs", items: [
@@ -4508,6 +4522,7 @@ const RECIPE_DETAILS = {
   },
 
   "shakshuka-verde-feta": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Verde Sauce", items: [
@@ -4549,6 +4564,7 @@ const RECIPE_DETAILS = {
   // ── FISH: HIGH PROTEIN LOW CALORIE ─────────────────────────
 
   "teriyaki-salmon-rice-bowl": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Rice", items: [
@@ -4588,6 +4604,7 @@ const RECIPE_DETAILS = {
   },
 
   "miso-glazed-salmon-edamame-rice": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Rice", items: [
@@ -4626,6 +4643,7 @@ const RECIPE_DETAILS = {
   },
 
   "tuna-poke-bowl": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Sushi Rice", items: [
@@ -4667,6 +4685,7 @@ const RECIPE_DETAILS = {
   },
 
   "lemon-herb-baked-cod-potatoes": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Potatoes", items: [
@@ -4706,6 +4725,7 @@ const RECIPE_DETAILS = {
   },
 
   "thai-chili-lime-shrimp-rice-bowl": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Rice", items: [
@@ -4749,6 +4769,7 @@ const RECIPE_DETAILS = {
   // ── TOFU: HIGH PROTEIN LOW CALORIE ─────────────────────────
 
   "crispy-tofu-bibimbap": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Rice", items: [
@@ -4799,6 +4820,7 @@ const RECIPE_DETAILS = {
   },
 
   "korean-dubu-jorim-rice-bowl": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Rice", items: [
@@ -4845,6 +4867,7 @@ const RECIPE_DETAILS = {
   },
 
   "thai-basil-crispy-tofu-rice": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Rice", items: [
@@ -4888,6 +4911,7 @@ const RECIPE_DETAILS = {
   },
 
   "miso-glazed-tofu-edamame-bowl": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Rice", items: [
@@ -4933,6 +4957,7 @@ const RECIPE_DETAILS = {
   },
 
   "adobo-tofu-rice-bowl": {
+    image: null,
     video: "",
     ingredients: [
       { section: "Rice", items: [
@@ -4975,6 +5000,7 @@ const RECIPE_DETAILS = {
 
 
 "caesar-dressing-light": {
+  image: null,
   video: "",
   ingredients: [
     { section: "Dressing", items: [
@@ -5003,6 +5029,7 @@ const RECIPE_DETAILS = {
 },
 
 "butter-chicken-murgh-makhani": {
+  image: null,
   video: "",
   ingredients: [
     { section: "Protein", items: [
@@ -5066,6 +5093,7 @@ const RECIPE_DETAILS = {
 },
 
 "thai-basil-beef-rice": {
+  image: null,
   video: "",
   ingredients: [
     { section: "Protein", items: [{ name: "Lean ground beef", amt: "{{proteinG}}g raw" }] },
@@ -5104,8 +5132,9 @@ const RECIPE_DETAILS = {
   notes: "Thai basil available at Asian supermarkets in Frankfurt. Regular Italian basil works as a substitute but the flavour is milder. Lean ground beef (5% fat) keeps the macros clean. Best eaten immediately.",
 },
 
-"chocolate-protein-baked-oat": {
-  video: "",
+"chocolate-chip-baked-oats": {
+  image: "https://pub-bc6707297a024aa19ff31c3e4a36c1a9.r2.dev/Recipes/default_1.27.1.jpg",
+  video: "XOnkR7hP1u0",
   ingredients: [
     { section: "Wet", items: [
       { name: "Banana (ripe)", amt: "65g", id: "banana" },
