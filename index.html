@@ -8066,30 +8066,23 @@
         if (!a || !a.ingredients) return { kcal: e.sauce_kcal, p: e.sauce_p, c: e.sauce_c, f: e.sauce_f };
         // For fixed-batch recipes (none/none): always show full-batch macros, don't divide by servings
         const t = (e.protein === "none" && e.carb === "none") ? 1 : Math.max(weights.servings, 1);
-        let i = 0,
-          n = 0,
-          s = 0,
-          o = 0,
-          r = 0;
-        return (
-          a.ingredients.forEach((e) => {
-            e.items.forEach((e) => {
-              if (e.amt && (e.amt.includes("{{proteinG}}") || e.amt.includes("{{carbG}}"))) return;
-              const a = e.id || findIngredientId(e.name);
-              if (!a) return;
-              const c = calcIngredientMacros(a, e.amt || "");
-              c && ((i += c.kcal / t), (n += c.p / t), (s += c.c / t), (o += c.f / t), r++);
-            });
-          }),
-          r >= 2
-            ? {
-                kcal: Math.round(i),
-                p: Math.round(10 * n) / 10,
-                c: Math.round(10 * s) / 10,
-                f: Math.round(10 * o) / 10,
-              }
-            : { kcal: e.sauce_kcal, p: e.sauce_p, c: e.sauce_c, f: e.sauce_f }
-        );
+        let i = 0, n = 0, s = 0, o = 0;
+        a.ingredients.forEach((e) => {
+          e.items.forEach((e) => {
+            if (e.amt && (e.amt.includes("{{proteinG}}") || e.amt.includes("{{carbG}}"))) return;
+            const a = e.id || findIngredientId(e.name);
+            if (!a) return;
+            const c = calcIngredientMacros(a, e.amt || "");
+            if (c) { i += c.kcal / t; n += c.p / t; s += c.c / t; o += c.f / t; }
+          });
+        });
+        // Always return calculated values — no hardcoded fallback
+        return {
+          kcal: Math.round(i),
+          p: Math.round(10 * n) / 10,
+          c: Math.round(10 * s) / 10,
+          f: Math.round(10 * o) / 10,
+        };
       }
       const _sauceMacroCache = {};
       function getSauceMacros(e) {

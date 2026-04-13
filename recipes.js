@@ -1860,7 +1860,6 @@ const RECIPE_DETAILS = {
     ]},
     { section: "To Serve", items: [
       { name: "Fresh Thai basil (or regular basil)", amt: "large handful" },
-      { name: "Eggs (whole)", amt: "2 pieces" },
       { name: "Neutral oil (for frying egg)", amt: "1 tsp" },
     ]},
   ],
@@ -2453,7 +2452,6 @@ const RECIPE_DETAILS = {
       { name: "Onion (thinly sliced)", amt: "1 medium" },
     ]},
     { section: "To Serve", items: [
-      { name: "Eggs (whole)", amt: "2 pieces" },
       { name: "Spring onion", amt: "2 stalks" },
       { name: "Pickled ginger (beni shōga)", amt: "2 tbsp" },
     ]},
@@ -2542,7 +2540,6 @@ const RECIPE_DETAILS = {
       { name: "Bean sprouts", amt: "80g" },
     ]},
     { section: "To Serve", items: [
-      { name: "Eggs (whole)", amt: "2 pieces" },
       { name: "Sesame seeds", amt: "1 tsp" },
       { name: "Sesame oil (finishing)", amt: "0.5 tsp" },
     ]},
@@ -2778,7 +2775,6 @@ const RECIPE_DETAILS = {
       { name: "Sugar", amt: "0.5 tsp" },
     ]},
     { section: "To Serve", items: [
-      { name: "Soft-boiled egg", amt: "1 piece" },
       { name: "Chili oil (optional)", amt: "to taste" },
     ]},
   ],
@@ -5093,8 +5089,8 @@ const RECIPE_DETAILS = {
 },
 
 "thai-basil-beef-rice": {
-  image: null,
-  video: "",
+  image: "https://pub-bc6707297a024aa19ff31c3e4a36c1a9.r2.dev/Recipes/default_2.1.1.jpg",
+  video: "zznL8Ab-cZ0",
   ingredients: [
     { section: "Protein", items: [{ name: "Lean ground beef", amt: "{{proteinG}}g raw" }] },
     { section: "Carb Base", items: [{ name: "Jasmine rice (dry)", amt: "{{carbG}}g" }] },
@@ -5109,7 +5105,6 @@ const RECIPE_DETAILS = {
     ]},
     { section: "To Serve", items: [
       { name: "Fresh Thai basil (or regular basil)", amt: "large handful" },
-      { name: "Eggs (whole)", amt: "2 pieces" },
       { name: "Neutral oil (for frying egg)", amt: "1 tsp" },
     ]},
   ],
