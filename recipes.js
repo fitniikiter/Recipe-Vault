@@ -1926,7 +1926,7 @@ const RECIPE_DETAILS = {
     { title: "Tahini in the Sauce", text: "Adding 1 tbsp tahini to the yogurt sauce creates the nutty richness of a proper shawarma shop garlic-tahini. It adds around 55 kcal total and completely transforms the sauce from plain yogurt to something people will ask about." },
     { title: "Toast the Wrap", text: "30 seconds in a dry pan transforms a soft flatbread into something with structure and slight smokiness. This single step makes the whole wrap feel deliberately crafted rather than thrown together." },
   ],
-  notes: "Flatbread available at every Turkish supermarket in Frankfurt. The marinade can be made the night before — overnight gives deeper colour and flavour.",
+  notes: "The marinade can be made the night before — overnight gives deeper colour and flavour.",
 },
 
 "japanese-teriyaki-chicken": {
@@ -1964,7 +1964,7 @@ const RECIPE_DETAILS = {
     { title: "Cornstarch for the Glaze", text: "Adding 1 tsp cornstarch to the teriyaki sauce gives you that glossy, clingy glaze that coats the chicken beautifully instead of a thin watery liquid. Restaurant quality with zero extra effort." },
     { title: "Don't Move the Chicken", text: "Let it sit untouched for the full 5 minutes on the first side. It will release from the pan naturally when a proper crust has formed — if you force it, you leave the golden crust behind on the pan." },
   ],
-  notes: "Mirin available at REWE Asia section or Asian supermarkets. Substitute with 2 tbsp dry white wine + 1 tsp sugar if unavailable.",
+  notes: "Mirin available at Asian supermarkets. Substitute with 2 tbsp dry white wine + 1 tsp sugar if unavailable.",
 },
 
 "chipotle-lime-chicken-bowl": {
@@ -2004,10 +2004,10 @@ const RECIPE_DETAILS = {
     "Build the bowl: cilantro lime rice, sliced chicken, black bean salsa, and a drizzle of yogurt crema.",
   ],
   hacks: [
-    { title: "Chipotle Paste", text: "Available at REWE or Edeka in the world foods aisle. It brings a smoky depth that plain paprika simply can't match. If unavailable, use 1 tsp smoked paprika + 0.5 tsp regular paprika as a backup." },
+    { title: "Chipotle Paste", text: "Available in the world foods aisle at most supermarkets. It brings a smoky depth that plain paprika simply can't match. If unavailable, use 1 tsp smoked paprika + 0.5 tsp regular paprika as a backup." },
     { title: "Cilantro Lime Rice", text: "Squeezing lime and tossing fresh coriander into warm rice transforms a plain carb base into a component that earns its place in the bowl — and costs nothing extra in calories." },
   ],
-  notes: "Black beans available canned at all major German supermarkets. Chipotle paste at REWE or Edeka world foods aisle. This bowl works great for meal prep — store components separately.",
+  notes: "Black beans available canned at any supermarket. Chipotle paste in the world foods aisle at most supermarkets. This bowl works great for meal prep — store components separately.",
 },
 
 "honey-garlic-chicken-noodles": {
@@ -2052,7 +2052,7 @@ const RECIPE_DETAILS = {
     { title: "5 Cloves of Garlic", text: "It sounds like a lot. It's not. The honey caramelises around the garlic as it cooks, completely mellowing it into sweet, nutty depth. This is the whole point of the dish." },
     { title: "Pak Choi Separate — Always", text: "Pak choi releases a lot of water when it hits heat. Cooking it dry in a separate pan first drives off all that moisture and builds a proper char — add it directly to the wok and it steams everything, kills the sauce and makes the noodles soggy. Those 3 minutes in a dry pan are the difference between a great bowl and a wet one." },
   ],
-  notes: "Fresh udon noodles available in the chiller section at Asian supermarkets in Frankfurt. Dried udon works equally well.",
+  notes: "Dried udon works equally well.",
 },
 
 "mediterranean-chicken-potato": {
@@ -2130,7 +2130,7 @@ const RECIPE_DETAILS = {
     { title: "Char = Flavour", text: "Don't be scared of the dark spots on the chicken. The yogurt marinade caramelises and chars under high heat, creating the smoky crust of a proper tandoor — this is the tikka happening, not burning." },
     { title: "Yogurt Instead of Cream", text: "Stirring yogurt into the hot tomato sauce instead of cream saves around 60 kcal per serving while still making the sauce creamy and rich. Always add off the boil — low heat only, or it splits." },
   ],
-  notes: "All spices available at REWE, Edeka, or Indian grocery stores in Frankfurt. This dish reheats excellently — great for meal prep.",
+  notes: "This dish reheats excellently — great for meal prep.",
 },
 
 "chinese-five-spice-chicken-rice": {
@@ -2167,7 +2167,7 @@ const RECIPE_DETAILS = {
     { title: "Rice in Broth", text: "Cooking jasmine rice in chicken broth instead of water adds savoury depth to the base for zero extra effort and essentially zero extra calories. The easiest free upgrade on any rice dish." },
     { title: "Double Glaze", text: "Brushing glaze on at two points during the oven time builds a lacquered, slightly caramelised crust that looks incredible on camera and tastes even better off it." },
   ],
-  notes: "Five-spice powder available at REWE Asia section or Asian supermarkets. Hoisin sauce in the world foods aisle at most German supermarkets.",
+  notes: "Five-spice powder at Asian supermarkets. Hoisin sauce in the world foods aisle at most supermarkets.",
 },
 
 "bbq-chicken-smashed-potato": {
@@ -2244,7 +2244,7 @@ const RECIPE_DETAILS = {
     { title: "Grated Fruit in the Sauce", text: "Traditional bulgogi uses pear or Asian pear to tenderise and add natural sweetness. Two tablespoons of grated apple or pear does the same — makes the sauce taste authentically Korean rather than just soy-sweet." },
     { title: "Kimchi on the Side", text: "Store-bought kimchi adds crunch, fermented depth, acidity, and probiotic value for near-zero calories. It does more for this bowl than almost any extra sauce you could make — don't skip it." },
   ],
-  notes: "Kimchi available at Asia-Markt Frankfurt or Korean grocery stores. Some REWE bio sections now carry kimchi. Leftovers reheat very well the next day.",
+  notes: "Leftovers reheat very well the next day.",
 },
 
 "smash-burger-brioche": {
@@ -2283,7 +2283,7 @@ const RECIPE_DETAILS = {
     { title: "Greek Yogurt + Mayo Sauce", text: "Replacing most of the mayo in the special sauce with Greek yogurt saves around 80 kcal per serving without losing creaminess. The key is the 1 tbsp of real mayo — without it the sauce tastes thin and diet-adjacent." },
     { title: "Smoking Hot Pan", text: "A smash burger is not pan-fried — it's seared. The pan must be smoking before the beef touches it. That crust is 80% of the burger's entire flavour — everything else is secondary." },
   ],
-  notes: "Brioche buns at REWE, Edeka, and Lidl. Always use 20% fat beef — anything leaner and the patty will be dry. Do not press down after the initial smash.",
+  notes: "Brioche buns at any supermarket. Always use 20% fat beef — anything leaner and the patty will be dry. Do not press down after the initial smash.",
 },
 
 "mexican-taco-beef-bowl": {
@@ -2325,7 +2325,7 @@ const RECIPE_DETAILS = {
     { title: "Bloom Spices in the Beef Fat", text: "After browning the beef, add the dry spices directly to the hot fat before adding any water — 30 seconds of blooming in the fat releases the aromatic oils and gives the seasoning far more depth and complexity." },
     { title: "Fresh Pico vs Jarred Salsa", text: "Making pico from scratch takes 3 minutes. The difference in freshness and brightness is enormous — the lime juice lifts the whole bowl and jarred salsa simply can't replicate it." },
   ],
-  notes: "Pickled jalapeños available in jars at REWE and Edeka. Fresh jalapeños at Turkish or Spanish supermarkets in Frankfurt. This bowl is excellent for meal prep.",
+  notes: "This bowl is excellent for meal prep.",
 },
 
 "chinese-mapo-tofu-beef-rice": {
@@ -2359,10 +2359,10 @@ const RECIPE_DETAILS = {
     "Finish with sesame oil and Sichuan pepper if using, then serve over rice with spring onion on top.",
   ],
   hacks: [
-    { title: "Doubanjiang is the Soul", text: "This chili bean paste is non-negotiable for real mapo tofu. Find it at any Asian supermarket in Frankfurt — one jar lasts months. No substitute comes even close to its flavour." },
+    { title: "Doubanjiang is the Soul", text: "This chili bean paste is non-negotiable for real mapo tofu. One jar lasts months. No substitute comes even close to its flavour." },
     { title: "Spoon, Don't Stir", text: "Once the silken tofu is in the pan, stop stirring — spoon the sauce gently over the top instead. A spatula dragged through the pan will shatter the tofu into uneven chunks." },
   ],
-  notes: "Doubanjiang at Asia-Markt Frankfurt. Silken tofu can be replaced with firm tofu if you prefer something that holds its shape better. Sichuan pepper optional but adds the signature numbing heat.",
+  notes: "Silken tofu can be replaced with firm tofu if you prefer something that holds its shape better. Sichuan pepper optional but adds the signature numbing heat.",
 },
 
 "thai-larb-beef-rice": {
@@ -2436,7 +2436,7 @@ const RECIPE_DETAILS = {
     { title: "Chill Before Cooking", text: "10 minutes in the fridge after shaping helps the kofta hold together during cooking. It's the difference between a neat oval patty and a crumbling pile of beef — especially important with fattier mince." },
     { title: "Tahini in the Dip", text: "One tablespoon of tahini transforms plain Greek yogurt into something that tastes like a proper Middle Eastern sauce — nutty, rich, and satisfying. The dish without it tastes noticeably underdressed." },
   ],
-  notes: "All spices available at REWE. Tahini in the world foods aisle or Turkish markets. Kofta can be shaped ahead and refrigerated up to 24 hours before cooking.",
+  notes: "All spices at any supermarket. Tahini in the world foods aisle or Turkish supermarkets. Kofta can be shaped ahead and refrigerated up to 24 hours before cooking.",
 },
 
 "japanese-beef-rice-bowl-gyudon": {
@@ -2470,7 +2470,7 @@ const RECIPE_DETAILS = {
     { title: "Dashi = Instant Umami", text: "Instant dashi powder (at Asian supermarkets) gives you authentic Japanese umami depth in 30 seconds. Substitute chicken stock if unavailable — the dish still works well, it just tastes slightly less Japanese." },
     { title: "Soft-Boiled Egg", text: "The runny yolk from a perfectly soft-boiled egg mixes into the broth and rice and makes the whole bowl taste richer and more indulgent. It's 70 kcal of pure upgrade — do not skip it." },
   ],
-  notes: "Pickled ginger (beni shōga) available at Asian supermarkets — it's worth finding. Its sharp acidity cuts the richness of the broth perfectly. Dashi powder at Asia-Markt Frankfurt.",
+  notes: "Pickled ginger (beni shōga) available at Asian supermarkets — it's worth finding. Its sharp acidity cuts the richness of the broth perfectly.",
 },
 
 "beef-bolognese-protein-pasta": {
@@ -2562,7 +2562,7 @@ const RECIPE_DETAILS = {
     { title: "The Arrangement is the Money Shot", text: "The colourful bibimbap before mixing is one of the best hero shots in Korean food content. Arrange each ingredient in its own section, place the egg in the centre — shoot before mixing. It's more visually striking than almost any other bowl dish." },
     { title: "Squeeze the Spinach Completely Dry", text: "After blanching, squeeze every drop of water from the spinach before seasoning. Wet spinach turns watery and dilutes the whole bowl — dry spinach stays flavourful and texturally distinct from the other components." },
   ],
-  notes: "Short-grain rice available at Asian supermarkets — Japanese sushi rice is a perfect substitute. Bean sprouts from the chilled section at Asian supermarkets or Edeka.",
+  notes: "Short-grain rice available at Asian supermarkets — Japanese sushi rice is a perfect substitute. Bean sprouts from the chilled section at Asian supermarkets.",
 },
 
 "beef-stuffed-potato-skins": {
@@ -2643,7 +2643,7 @@ const RECIPE_DETAILS = {
     { title: "Bloom the Spices", text: "Adding the dry spices to the tomato paste before the meat, and frying them for 60 seconds, removes the raw dusty flavour and transforms the whole dish. It's the single biggest upgrade you can make to any curry." },
     { title: "5% Beef Works Here", text: "Lean beef is ideal for keema because the tomato masala provides all the moisture and richness. You don't need fat from the meat — the sauce does the work." },
   ],
-  notes: "Garam masala at REWE or any Asian/Indian supermarket in Frankfurt. Keema freezes perfectly for meal prep — make double and freeze in portions.",
+  notes: "Keema freezes perfectly for meal prep — make double and freeze in portions.",
 },
 
 "vietnamese-lemongrass-beef-noodles": {
@@ -2683,7 +2683,7 @@ const RECIPE_DETAILS = {
     { title: "Lemongrass Prep", text: "Only the bottom 10cm of the lemongrass stalk is usable — peel the outer layers and mince the inner core very finely. Coarse pieces are woody and unpleasant to eat." },
     { title: "Cold Rinse on the Noodles", text: "Rinsing cooked rice noodles in cold water stops the cooking instantly and prevents them from clumping into a sticky mass. Non-negotiable if you're not eating immediately." },
   ],
-  notes: "Lemongrass at Asia-Markt Frankfurt or Turkish supermarkets. Fish sauce at any Asian grocery. Fresh mint and coriander from REWE or Edeka.",
+  notes: "Fish sauce at any Asian grocery.",
 },
 
 "turkish-beef-lahmacun-wrap": {
@@ -2722,7 +2722,7 @@ const RECIPE_DETAILS = {
     { title: "Thin Is Everything", text: "The beef topping must be spread paper-thin — 3–4mm maximum. Thick lahmacun won't cook through properly in the pan and loses the characteristic crispiness at the edges that makes it so good." },
     { title: "Grated Onion in the Mix", text: "Grating the onion rather than dicing it incorporates the moisture and flavour throughout the beef without leaving large chunks. It also acts as a binder and keeps the topping tender during cooking." },
   ],
-  notes: "Turkish flatbread (yufka) at Turkish supermarkets in Frankfurt — Ostend and Sachsenhausen have several. Thin Lebanese wraps from REWE also work well.",
+  notes: "Thin Lebanese wraps also work well.",
 },
 
 "greek-beef-yuvarlakia-potato-bowl": {
@@ -2758,7 +2758,7 @@ const RECIPE_DETAILS = {
     { title: "Uncooked Rice in the Meatball", text: "The raw rice cooks inside the meatball during simmering, absorbing the stock and acting as a binder. It creates a uniquely soft, tender texture — completely different from a regular breadcrumb meatball." },
     { title: "Tempering the Eggs", text: "Pouring hot stock gradually into the egg-lemon mixture before adding it back to the pan prevents curdling. Skip this step and you'll have scrambled eggs in your soup instead of a silky sauce." },
   ],
-  notes: "This is a traditional Greek comfort dish — the avgolemono sauce is naturally thickened by egg and lemon, no cream needed. Short-grain rice (Milchreis at REWE) works perfectly.",
+  notes: "This is a traditional Greek comfort dish — the avgolemono sauce is naturally thickened by egg and lemon, no cream needed. Short-grain rice works perfectly.",
 },
 
 "taiwanese-beef-scallion-noodles": {
@@ -2795,7 +2795,7 @@ const RECIPE_DETAILS = {
     { title: "Fry the White Parts First", text: "The white ends of spring onions are more pungent and dense — frying them first in oil extracts their flavour into the fat, which then coats everything in the pan. The green tops go in at the end for freshness and colour." },
     { title: "White Pepper Not Black", text: "White pepper is the correct call here — it has a different, slightly floral heat that's classic in Taiwanese and Chinese noodle dishes. Black pepper would taste out of place." },
   ],
-  notes: "Thick wheat noodles (Udon or fresh ramen noodles) at Asia-Markt Frankfurt. Oyster sauce widely available at Asian supermarkets. Chili oil optional but highly recommended.",
+  notes: "Oyster sauce widely available at Asian supermarkets. Chili oil optional but highly recommended.",
 },
 
 "peruvian-lomo-saltado-bowl": {
@@ -2831,7 +2831,7 @@ const RECIPE_DETAILS = {
   ],
   hacks: [
     { title: "Maximum Heat Is Not Optional", text: "Lomo saltado is a Chinese-Peruvian stir-fry — the characteristic smoky wok flavour (wok hei) only happens at very high heat. A medium-heat pan will steam everything instead of searing it. The charred edges on the onion are not a mistake — they're the point." },
-    { title: "Aji Amarillo Substitute", text: "Aji amarillo paste is the soul of Peruvian cooking — fruity, hot, and distinctive. If you can't find it (try Latin American shops in Frankfurt), substitute with a mix of habanero sauce and a pinch of turmeric for a rough approximation." },
+    { title: "Aji Amarillo Substitute", text: "Aji amarillo paste is the soul of Peruvian cooking — fruity, hot, and distinctive. If you can't find it (try Latin American shops), substitute with a mix of habanero sauce and a pinch of turmeric for a rough approximation." },
   ],
   notes: "Aji amarillo paste occasionally at import food stores or online. Soy sauce in lomo saltado is authentic — it reflects the strong Chinese immigrant influence on Peruvian cuisine.",
 },
@@ -2873,7 +2873,7 @@ const RECIPE_DETAILS = {
     { title: "Splash of Water on the Beef", text: "Adding 2–3 tablespoons of water after the spices and letting it simmer down creates a light sauce that glazes the beef. Without it the spiced beef is dry and dusty — this step takes 2 minutes and makes a significant difference." },
     { title: "Greek Yogurt Crema", text: "Plain Greek yogurt as sour cream substitute saves around 60 kcal and triples the protein of the topping. Season it with a pinch of salt and lime juice and it's genuinely indistinguishable from the real thing in a bowl context." },
   ],
-  notes: "Black beans available canned at every REWE and Edeka. This bowl reheats well — store beef and rice separately, assemble fresh with cold toppings.",
+  notes: "Black beans available canned at any supermarket. This bowl reheats well — store beef and rice separately, assemble fresh with cold toppings.",
 },
 
 "japanese-beef-tantanmen-noodles": {
@@ -2913,9 +2913,9 @@ const RECIPE_DETAILS = {
   ],
   hacks: [
     { title: "Soy Milk Instead of Cream", text: "Traditional tantanmen uses sesame paste and a rich tonkotsu base. Soy milk with miso and tahini recreates the creamy, nutty character without the fat. The trick is not boiling the broth after adding the soy milk — it will split." },
-    { title: "Doubanjiang Is the Soul", text: "Doubanjiang (fermented chili bean paste) gives the spiced beef topping its distinctively deep, funky heat. A plain chili paste works as a substitute but lacks the complexity. Available at Asia-Markt Frankfurt." },
+    { title: "Doubanjiang Is the Soul", text: "Doubanjiang (fermented chili bean paste) gives the spiced beef topping its distinctively deep, funky heat. A plain chili paste works as a substitute but lacks the complexity." },
   ],
-  notes: "White miso at Asia-Markt or some REWE bio sections. Doubanjiang at Asian supermarkets. Soy milk at every supermarket. This broth is lighter than tonkotsu but still deeply satisfying.",
+  notes: "White miso at Asian supermarkets. Doubanjiang at Asian supermarkets. Soy milk at every supermarket. This broth is lighter than tonkotsu but still deeply satisfying.",
 },
 
 "north-african-harissa-beef-flatbread": {
@@ -2955,7 +2955,7 @@ const RECIPE_DETAILS = {
     { title: "Harissa Heat Varies Wildly", text: "Harissa paste strength varies significantly by brand — taste yours before adding the full amount. Rose harissa is milder and more floral, regular is fiery. Both work; adjust quantity to your heat tolerance." },
     { title: "Mint With Beef", text: "Fresh mint with spiced lamb or beef is a classic North African combination that feels unusual until you try it — the cool herbal freshness cuts through the heat and richness perfectly. Don't substitute dried mint here." },
   ],
-  notes: "Harissa paste available at REWE (Belazu brand), Turkish supermarkets, and Aldi occasionally. Pitta bread at every supermarket.",
+  notes: "Harissa paste available at Turkish supermarkets and most supermarkets. Pitta bread at any supermarket.",
 },
 
 "indonesian-beef-rendang-bowl": {
@@ -2997,7 +2997,7 @@ const RECIPE_DETAILS = {
     { title: "Reduce Until Almost Dry", text: "Authentic rendang is a dry curry — the coconut milk cooks down completely until the beef is coated in a thick, fragrant paste rather than swimming in sauce. This is not a mistake, it's the goal. The concentrated flavour at this stage is extraordinary." },
     { title: "Light Coconut Milk", text: "Using light coconut milk instead of full-fat saves around 100 kcal while still providing enough fat to carry the spice paste. The extended simmering time concentrates whatever fat is there anyway." },
   ],
-  notes: "Kaffir lime leaves at Asia-Markt Frankfurt — dried version works fine. Galangal powder at Asian supermarkets; substitute extra ginger if unavailable. This dish improves significantly the next day.",
+  notes: "Dried Kaffir lime works fine. Galangal powder at Asian supermarkets; substitute extra ginger if unavailable. This dish improves significantly the next day.",
 },
 
 "ethiopian-beef-tibs-potato-bowl": {
@@ -3029,10 +3029,10 @@ const RECIPE_DETAILS = {
     "Serve beef tibs over potatoes, topped with fresh tomato and coriander.",
   ],
   hacks: [
-    { title: "Berbere Is the Whole Dish", text: "Berbere is an Ethiopian spice blend of chili, fenugreek, coriander, cardamom, and more — it's warm, complex, and unlike any single spice substitute. Buy it premixed at African grocery stores in Frankfurt or online. There's no real substitute that comes close." },
+    { title: "Berbere Is the Whole Dish", text: "Berbere is an Ethiopian spice blend of chili, fenugreek, coriander, cardamom, and more — it's warm, complex, and unlike any single spice substitute. Buy it premixed at African grocery stores or Turkish supermarkets. There's no real substitute that comes close." },
     { title: "Caramelise the Onions Properly", text: "Ethiopian cooking builds flavour through deeply cooked onions. Rushing this step produces a sharp, raw taste. 6–7 minutes at medium-high with occasional stirring until the edges are dark gold is the minimum." },
   ],
-  notes: "Berbere spice blend at African or Ethiopian grocery stores in Frankfurt, or online (Amazon). Some Turkish supermarkets carry it. The dish is traditionally served with injera flatbread but works excellently over potatoes.",
+  notes: "Berbere spice blend at African or Ethiopian grocery stores, or Turkish supermarkets. The dish is traditionally served with injera flatbread but works excellently over potatoes.",
 },
 
 "vietnamese-beef-pho-noodle-bowl": {
@@ -3072,7 +3072,7 @@ const RECIPE_DETAILS = {
     { title: "10-Minute Spice Infusion", text: "Real pho simmers for hours. Toasting star anise and cinnamon briefly in a dry pan before adding the stock concentrates their aroma and makes a 10-minute broth taste like it's been going much longer. Don't skip the toast." },
     { title: "Toppings Are Not Optional", text: "Bean sprouts, fresh herbs, and lime aren't garnish — they're half the dish. The raw crunch against the hot broth and the acid from the lime are structural components of pho. A bowl without them is just beef noodle soup." },
   ],
-  notes: "Star anise and cinnamon sticks at every supermarket. Fresh Thai basil at Asia-Markt Frankfurt. Bean sprouts at REWE, Edeka, or Asian supermarkets. Fish sauce essential — no real substitute.",
+  notes: "Star anise and cinnamon sticks at any supermarket. Fresh Thai basil at Asian supermarkets. Bean sprouts at Asian supermarkets. Fish sauce essential — no real substitute.",
 },
 
 "argentinian-chimichurri-beef-rice-bowl": {
@@ -3152,7 +3152,7 @@ const RECIPE_DETAILS = {
     { title: "The Pickles Make the Sandwich", text: "Quick-pickled daikon and carrot are not optional — their sharp acidity and crunch are what separate bánh mì from any other sandwich. 15 minutes is the minimum; 30 minutes is better. Make them first, everything else second." },
     { title: "Crusty Bread Is Essential", text: "Bánh mì is traditionally made with a Vietnamese baguette — a very light, crispy-crusted, airy bread. A fresh supermarket baguette is the best substitute. Soft sandwich bread makes it soggy and kills the textural contrast." },
   ],
-  notes: "Daikon (white radish) at Asia-Markt Frankfurt or Turkish supermarkets. Fish sauce essential. Fresh baguette from any Bäckerei. Sriracha at every supermarket.",
+  notes: "Daikon (white radish) at Asian or Turkish supermarkets. Fish sauce essential. Fresh baguette from any bakery. Sriracha at any supermarket.",
 },
 
 "korean-dakgalbi-chicken-noodle": {
@@ -3191,7 +3191,7 @@ const RECIPE_DETAILS = {
     { title: "Thin Strips = More Sauce Coverage", text: "Slicing chicken breast thin ensures every piece is coated in dakgalbi sauce and cooks quickly over high heat. Thick chunks steam from the inside and lose the caramelised crust that makes the dish special." },
     { title: "Scissors on the Noodles", text: "Glass noodles straight from the pot are very long and tangle badly. A few cuts with kitchen scissors after boiling makes them much easier to eat and to toss through the pan evenly." },
   ],
-  notes: "Sweet potato glass noodles (dangmyeon) available at Asian supermarkets in Frankfurt. Regular glass noodles or thin rice noodles work as substitutes. Gochugaru at Asia-Markt.",
+  notes: "Sweet potato glass noodles (dangmyeon) available at Asian supermarkets. Regular glass noodles or thin rice noodles work as substitutes. Gochugaru at Korean or Asian supermarkets.",
 },
 
 "chicken-caesar-wrap": {
@@ -3399,7 +3399,7 @@ const RECIPE_DETAILS = {
     { title: "Char is the Flavour", text: "The dark charred edges on tikka chicken are the flavour. The yogurt marinade caramelises and chars under high heat, mimicking a tandoor. Embrace the colour — it should look slightly dramatic." },
     { title: "Gas Burner Naan", text: "Heating naan directly on a gas flame gives it genuine charred spots and a slight smokiness that oven heating cannot replicate. If you have gas, always use it for flatbreads." },
   ],
-  notes: "Naan available at REWE, Edeka, and Turkish supermarkets. Marinating overnight gives the best flavour and colour. Mint chutney keeps refrigerated for 3 days.",
+  notes: "Naan available at Turkish supermarkets and most supermarkets. Marinating overnight gives the best flavour and colour. Mint chutney keeps refrigerated for 3 days.",
 },
 
 "japanese-chicken-katsu-rice": {
@@ -3441,7 +3441,7 @@ const RECIPE_DETAILS = {
     { title: "Wire Rack for Crispy Bottom", text: "Baking on a wire rack lets hot air circulate under the panko — you get crispy on both sides without any oil pooling. Directly on a baking tray gives you a soggy bottom. The rack is the whole trick." },
     { title: "Press the Panko Hard", text: "Don't just dip — press the chicken firmly into the panko with both hands. More coverage means more crunch. Then spray generously with oil — this is what makes baked katsu actually golden and not pale." },
   ],
-  notes: "Panko available at REWE Asia section, Edeka, and Asian supermarkets. Ready-made Bulldog tonkatsu sauce is available at Asian supermarkets if you want to skip making your own.",
+  notes: "Panko available at Asian supermarkets and most supermarkets. Ready-made Bulldog tonkatsu sauce is available at Asian supermarkets if you want to skip making your own.",
 },
 
 "mexican-chicken-burrito-bowl": {
@@ -3487,7 +3487,7 @@ const RECIPE_DETAILS = {
     { title: "Warm Beans in the Pan", text: "After the chicken rests, toss the black beans in the same pan for 60 seconds with the residual heat and chicken drippings. They pick up all that seasoning and taste far better than beans cold from the tin." },
     { title: "Cilantro Lime Rice", text: "Lime juice and fresh coriander stirred through warm rice turns it from a plain filler into a component that earns its place. This is the Chipotle move — and it costs nothing extra." },
   ],
-  notes: "All ingredients available at REWE, Edeka, or Aldi. Excellent for meal prep — store rice, chicken, and toppings separately. Crema keeps refrigerated 3 days.",
+  notes: "All ingredients available at any supermarket. Excellent for meal prep — store rice, chicken, and toppings separately. Crema keeps refrigerated 3 days.",
 },
 
 "chicken-stir-fry-noodles": {
@@ -3526,7 +3526,7 @@ const RECIPE_DETAILS = {
     { title: "Undercook the Noodles", text: "Always cook noodles 1 minute under the packet instructions when they're finishing in a wok. They'll finish cooking in the pan and absorb the sauce rather than turning mushy and overcooked." },
     { title: "White Pepper", text: "White pepper is standard in Chinese stir-fries and has a different character to black — warmer and slightly floral. It makes lo mein taste authentically Chinese. Available at Asian supermarkets." },
   ],
-  notes: "Egg noodles in the world foods aisle at REWE and at Asian supermarkets. Bean sprouts from the chilled section at Asian supermarkets or Edeka.",
+  notes: "Egg noodles in the world foods aisle at most supermarkets or Asian supermarkets. Bean sprouts from the chilled section at Asian supermarkets.",
 },
 
 "chicken-shawarma-potato": {
@@ -3572,7 +3572,7 @@ const RECIPE_DETAILS = {
     { title: "Tahini Emulsification", text: "Tahini seizes up the moment lemon juice hits it — keep adding water and whisking and it will suddenly become a smooth, creamy sauce. Don't panic when it first thickens, just keep going." },
     { title: "Rest the Breast", text: "Resting chicken breast 5 minutes after cooking lets the juices redistribute. Cut immediately and they run out onto the board. Rest first and every slice stays properly juicy." },
   ],
-  notes: "Tahini at REWE, Edeka, and Turkish markets. All shawarma spices in the standard supermarket spice aisle.",
+  notes: "Tahini at Turkish supermarkets and most supermarkets. All shawarma spices in the standard supermarket spice aisle.",
 },
 
 
@@ -3679,7 +3679,7 @@ const RECIPE_DETAILS = {
     { title: "Rice Must Be Steaming Hot", text: "The entire dish depends on the rice being hot enough to gently cook the egg as you stir. If the rice has cooled, microwave it until actively steaming before cracking the egg. Room temperature rice gives you raw egg on rice — not the goal." },
     { title: "Vigorous Stirring = Creamy Texture", text: "The more vigorously and longer you stir, the more air you incorporate and the creamier and frothier the texture becomes. This technique is what transforms raw egg on rice into something genuinely silky." },
   ],
-  notes: "Use the freshest eggs possible — this dish uses raw egg. Togarashi at Asian supermarkets. Nori sheets available at REWE Asia section or Asian supermarkets. Great ASMR-style close-up content.",
+  notes: "Use the freshest eggs possible — this dish uses raw egg. Togarashi at Asian supermarkets. Nori sheets available at Asian supermarkets. Great ASMR-style close-up content.",
 },
 
 "mexican-huevos-rancheros": {
@@ -3719,7 +3719,7 @@ const RECIPE_DETAILS = {
     { title: "Crisp the Tortillas First", text: "The tortilla must be rigid before the toppings go on — it's the structural base of the whole dish. A soft tortilla collapses under the egg and sauce, turning everything soggy within 30 seconds." },
     { title: "Sauce Over the Egg", text: "Spoon the ranchero sauce over the fried egg rather than under it. You get the visual contrast of bright orange yolk against red sauce, plus the egg stays runny for longer." },
   ],
-  notes: "Corn tortillas at REWE, Edeka, or Mexican/South American grocery stores in Frankfurt. The ranchero sauce can be made ahead and refrigerated up to 4 days.",
+  notes: "Corn tortillas at Mexican/South American grocery stores or most supermarkets. The ranchero sauce can be made ahead and refrigerated up to 4 days.",
 },
 
 "chinese-tomato-egg-stir-fry-rice": {
@@ -3869,7 +3869,7 @@ const RECIPE_DETAILS = {
     { title: "Whole Egg + Whites Mix", text: "Using a mix of whole eggs and extra egg whites keeps the omelette rich and flavourful from the yolks while boosting protein significantly. Pure egg white omelettes taste hollow and rubbery — this ratio is the sweet spot." },
     { title: "Sun-Dried Tomatoes", text: "Sun-dried tomatoes pack intense, concentrated flavour — far more than fresh. A small amount (30g) adds sweetness, acidity, and depth to the filling without meaningful calories." },
   ],
-  notes: "Sun-dried tomatoes available at all German supermarkets. Egg whites available in cartons at REWE and Edeka. The omelette should be eaten fresh — it doesn't reheat well inside a wrap.",
+  notes: "Sun-dried tomatoes available at any supermarket. Egg whites available in cartons at most supermarkets. The omelette should be eaten fresh — it doesn't reheat well inside a wrap.",
 },
 
 "french-scrambled-eggs-toast": {
@@ -3942,7 +3942,7 @@ const RECIPE_DETAILS = {
     { title: "Push and Scramble", text: "Pushing everything to the sides and scrambling eggs directly in the centre of the hot wok — then folding through — creates distinct, fluffy egg pieces rather than dry crumbles. This is the street food vendor technique." },
     { title: "Maximum Heat, Fast Hands", text: "Egg fried noodles must be cooked fast and hot. Medium heat gives steamed, soggy noodles. Maximum heat gives that slightly smoky wok-charred flavour that separates street food from home cooking." },
   ],
-  notes: "Egg noodles in the world foods aisle at REWE and Edeka. Bean sprouts from the chilled section at Asian supermarkets. This dish comes together in under 15 minutes — ideal weeknight content.",
+  notes: "Egg noodles in the world foods aisle at most supermarkets or Asian supermarkets. Bean sprouts from the chilled section at Asian supermarkets. This dish comes together in under 15 minutes — ideal weeknight content.",
 },
 
   // ── CHICKEN: HIGH PROTEIN LOW CALORIE ──────────────────────
@@ -4035,7 +4035,7 @@ const RECIPE_DETAILS = {
       { title: "Cornstarch for the Glaze", text: "Add ½ tsp cornstarch to the miso glaze for a thicker, glossier finish that clings to the chicken instead of running off into the pan." },
       { title: "Watch the Miso", text: "Miso caramelises much faster than soy-based glazes — medium heat max once the glaze goes in. Thirty seconds too long and it goes from lacquered to burnt." },
     ],
-    notes: "White miso available at Asian supermarkets and increasingly at REWE bio section. Mirin can be substituted with dry sherry + pinch of sugar.",
+    notes: "White miso available at Asian supermarkets. Mirin can be substituted with dry sherry + pinch of sugar.",
   },
 
   "harissa-chicken-couscous-bowl": {
@@ -4077,7 +4077,7 @@ const RECIPE_DETAILS = {
       { title: "Harissa Heat Varies Wildly", text: "Rose harissa is mild and floral — regular is fiery. Taste yours before adding the full amount. Double it if you want heat, halve it if you don't." },
       { title: "Hot Broth, Not Water", text: "Couscous cooked in hot chicken broth instead of water takes on a deep savouriness for zero extra effort — it's a free upgrade that changes the whole bowl." },
     ],
-    notes: "Harissa paste available at REWE, Edeka (world foods aisle), or Turkish supermarkets. Couscous from the dry goods aisle.",
+    notes: "Harissa paste available at Turkish supermarkets or in the world foods aisle. Couscous from the dry goods aisle at any supermarket.",
   },
 
   "vietnamese-chicken-vermicelli-bowl": {
@@ -4122,7 +4122,7 @@ const RECIPE_DETAILS = {
       { title: "Chill Before Cooking", text: "The slow poach — starting in cold water, low simmer, rest off heat — is what keeps chicken breast juicy. High heat poaching makes it rubbery every time." },
       { title: "Dress While Warm", text: "Toss the shredded chicken in a spoonful of nuoc cham while it's still warm — it absorbs the dressing from the inside and tastes much better than cold, undressed chicken." },
     ],
-    notes: "Fish sauce at any Asian supermarket in Frankfurt. Bean sprouts from the chilled section. Vermicelli noodles are very thin rice noodles — don't confuse with glass noodles.",
+    notes: "Fish sauce at any Asian supermarket. Bean sprouts from the chilled section. Vermicelli noodles are very thin rice noodles — don't confuse with glass noodles.",
   },
 
   "chicken-tabbouleh-couscous-bowl": {
@@ -4206,7 +4206,7 @@ const RECIPE_DETAILS = {
       { title: "Bloom Spices in the Beef Fat", text: "Pushing the beef aside and frying the dry spices in the residual fat for 30 seconds before mixing doubles their aromatic impact. Don't add them directly to the wet meat." },
       { title: "5% Beef Works Here", text: "The spice blend carries all the flavour — you don't need fat from the meat. 95% lean beef saves ~100 kcal per portion without any sacrifice in taste." },
     ],
-    notes: "Ras el hanout can replace the individual spices if available. Lean ground beef (5% fat) at REWE, Edeka, or Metzger.",
+    notes: "Ras el hanout can replace the individual spices if available. Lean ground beef (5% fat) at any supermarket or butcher.",
   },
 
   "japanese-beef-tataki-rice-bowl": {
@@ -4247,7 +4247,7 @@ const RECIPE_DETAILS = {
       { title: "Sesame Oil at the End", text: "Add a few drops of sesame oil to the ponzu right before serving — don't cook with it. It keeps the aroma intense and prevents the nutty depth from burning off." },
       { title: "Daikon is Not Optional", text: "Freshly grated daikon has a cool, peppery bite that cuts through the richness of the beef and cleanses the palate. It's the Japanese technique that makes this bowl feel light despite being protein-dense." },
     ],
-    notes: "Daikon available at Asian supermarkets in Frankfurt. Ponzu is a citrus-based soy sauce — you can buy it ready-made if preferred.",
+    notes: "Daikon available at Asian supermarkets. Ponzu is a citrus-based soy sauce — you can buy it ready-made if preferred.",
   },
 
   "mexican-picadillo-rice-bowl": {
@@ -4333,7 +4333,7 @@ const RECIPE_DETAILS = {
       { title: "Lemongrass Prep", text: "Only the bottom 10cm inner core is usable — the outer layers are fibrous and won't break down. Mince it extremely fine or it'll be unpleasant to bite into." },
       { title: "Fish Sauce Over Salt", text: "Fish sauce seasons the beef with a deep umami backbone that regular salt simply doesn't have. In a hot pan it loses all fishiness — it just tastes savoury." },
     ],
-    notes: "Lemongrass at Asian supermarkets or well-stocked REWE. Fresh stalks keep in the fridge for 2 weeks. The beef keeps 4 days refrigerated — excellent meal prep.",
+    notes: "Lemongrass at Asian supermarkets. Fresh stalks keep in the fridge for 2 weeks. The beef keeps 4 days refrigerated — excellent meal prep.",
   },
 
   "turkish-spiced-beef-bulgur-bowl": {
@@ -4518,7 +4518,7 @@ const RECIPE_DETAILS = {
       { title: "Strain the Eggs", text: "Passing the egg mixture through a fine sieve removes the chalaza and any air bubbles — the result is a silkier, more uniform custard with no rubbery bits." },
       { title: "Undercook Slightly", text: "Pull the eggs from the steamer when the centre is still slightly wobbly — residual heat finishes the cooking. Fully set gyeran jjim is overcooked gyeran jjim." },
     ],
-    notes: "Gochugaru at any Korean or Asian grocery in Frankfurt. Anchovy broth packets (dasida) at Asian supermarkets. This is one of the simplest, most comforting Korean dishes — and one of the most underrated.",
+    notes: "Gochugaru at Korean or Asian grocery stores. Anchovy broth at Asian supermarkets. This is one of the simplest, most comforting Korean dishes — and one of the most underrated.",
   },
 
   "shakshuka-verde-feta": {
@@ -4558,7 +4558,7 @@ const RECIPE_DETAILS = {
       { title: "Tomatillos vs Green Tomatoes", text: "Canned tomatillos work perfectly here — they're tarter and more complex than green tomatoes. Find them at Latin American shops or online. Plain canned green tomatoes are an acceptable substitute." },
       { title: "Feta as a Topping", text: "Add feta after the eggs are cooked, not before. It softens from the residual heat and stays creamy without becoming rubbery or blending into the sauce." },
     ],
-    notes: "Canned tomatillos increasingly available at larger REWE or order online. This is a vibrant, fresh alternative to classic red shakshuka — dramatically better on camera.",
+    notes: "Canned tomatillos available at Mexican grocery stores or online. This is a vibrant, fresh alternative to classic red shakshuka — dramatically better on camera.",
   },
 
   // ── FISH: HIGH PROTEIN LOW CALORIE ─────────────────────────
@@ -4600,7 +4600,7 @@ const RECIPE_DETAILS = {
       { title: "Cornstarch for the Glaze", text: "1 tsp cornstarch dissolved in water and stirred into the sauce transforms thin soy into a glossy, clingy glaze. Without it the sauce runs straight off the fish." },
       { title: "Double Glaze", text: "Glaze once in the pan, then brush once more right before serving — the second coat is what gives you that restaurant-quality lacquered finish." },
     ],
-    notes: "Skin-on salmon keeps better shape and adds a crispy texture element. Salmon available fresh at any REWE, Edeka or fish counter. Frozen works fine — thaw overnight.",
+    notes: "Skin-on salmon keeps better shape and adds a crispy texture element. Salmon available fresh at any supermarket or fish counter. Frozen works fine — thaw overnight.",
   },
 
   "miso-glazed-salmon-edamame-rice": {
@@ -4639,7 +4639,7 @@ const RECIPE_DETAILS = {
       { title: "Wipe the Marinade", text: "Miso burns at high heat. Wipe off the excess before the salmon hits the pan — you get a clean caramelised crust instead of a bitter, black coating." },
       { title: "Overnight Marinade", text: "20 minutes works fine. Overnight is transformative — the miso gently cures the surface and the fish takes on a deeply savoury, almost smoky character." },
     ],
-    notes: "White miso at Asian supermarkets. Edamame frozen at REWE and Edeka. This is the cleanest, most balanced salmon bowl — works cold the next day.",
+    notes: "White miso at Asian supermarkets. Edamame frozen at most supermarkets. This is the cleanest, most balanced salmon bowl — works cold the next day.",
   },
 
   "tuna-poke-bowl": {
@@ -4721,7 +4721,7 @@ const RECIPE_DETAILS = {
       { title: "Serve from the Tray", text: "The tray shot — golden cod, roasted tomatoes, crispy potatoes all together — is one of the best content formats. Bring the tray to the table rather than plating." },
       { title: "Lemon Zest in the Marinade", text: "Zest carries far more citrus impact than juice and holds up during baking. The juice goes on at the end — it stays bright and fresh rather than cooking off." },
     ],
-    notes: "Cod is the leanest protein in the database — 82 kcal per 100g, almost zero fat. It makes an exceptionally clean macro profile. Frozen cod fillets from REWE or Edeka work perfectly.",
+    notes: "Cod is the leanest protein in the database — 82 kcal per 100g, almost zero fat. It makes an exceptionally clean macro profile. Frozen cod fillets from any supermarket work perfectly.",
   },
 
   "thai-chili-lime-shrimp-rice-bowl": {
@@ -5129,7 +5129,7 @@ const RECIPE_DETAILS = {
     { title: "Basil Goes in Off the Heat", text: "Always add basil after taking the pan off the heat. Cooking it more than 30 seconds turns it bitter and grey — you want it bright green and aromatic." },
     { title: "5 Cloves of Garlic", text: "It sounds like a lot — it's not. The garlic caramelises in the hot oil and becomes the backbone of the whole dish. Don't reduce it." },
   ],
-  notes: "Thai basil available at Asian supermarkets in Frankfurt. Regular Italian basil works as a substitute but the flavour is milder. Lean ground beef (5% fat) keeps the macros clean. Best eaten immediately.",
+  notes: "Thai basil available at Asian supermarkets. Regular Italian basil works as a substitute but the flavour is milder. Lean ground beef (5% fat) keeps the macros clean. Best eaten immediately.",
 },
 
 "chocolate-chip-baked-oats": {
@@ -5150,7 +5150,7 @@ const RECIPE_DETAILS = {
       { name: "Salt", amt: "1 pinch" },
     ]},
     { section: "Mix-in", items: [
-      { name: "Dark chocolate chips (e.g. Aldi Vollmilch)", amt: "20g", id: "chocolate_chips" },
+      { name: "Dark chocolate chips", amt: "20g", id: "chocolate_chips" },
     ]},
   ],
   steps: [
