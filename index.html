@@ -7126,12 +7126,15 @@
             }),
             (y += "</ul>"));
         });
+        const _svBak = weights.servings;
+        weights.servings = modalServings;
         const S = baseMacros(e.carb),
           C = getSauceMacros(e),
           T = Math.round(S.kcal + C.kcal),
           x = Math.round(S.p + C.p),
           B = Math.round(S.c + C.c),
           P = Math.round(S.f + C.f);
+        weights.servings = _svBak;
         ((y += `<div class="ing-total-bar">\n    <div class="ing-total-title">📊 Total per portion</div>\n    <div class="ing-total-grid">\n      <div class="ing-total-cell mk"><span class="itc-val">${T}</span><span class="itc-lbl">kcal</span></div>\n      <div class="ing-total-cell mp"><span class="itc-val">${x}g</span><span class="itc-lbl">protein</span></div>\n      <div class="ing-total-cell mc"><span class="itc-val">${B}g</span><span class="itc-lbl">carbs</span></div>\n      <div class="ing-total-cell mf"><span class="itc-val">${P}g</span><span class="itc-lbl">fat</span></div>\n    </div>\n    <div class="ing-macro-hint" style="margin-top:8px;">Tap any ingredient to see its macros</div>\n  </div>`),
           t.placeholder
             ? (y += '<div class="ing-note">📌 Full ingredient list coming soon — follow on YouTube & TikTok!</div>')
