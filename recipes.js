@@ -2373,7 +2373,7 @@ const RECIPE_DETAILS = {
     { section: "Carb Base", items: [{ name: "Jasmine rice (dry)", amt: "{{carbG}}g" }] },
     { section: "Larb Dressing", items: [
       { name: "Fish sauce", amt: "2.5 tbsp" },
-      { name: "Lime juice", amt: "3 tbsp" },
+      { name: "Lime juice", amt: "2 tbsp" },
       { name: "Sugar", amt: "1 tsp" },
       { name: "Dried chili flakes", amt: "1 tsp" },
       { name: "Shallots (thinly sliced)", amt: "2 pieces" },
@@ -4096,7 +4096,7 @@ const RECIPE_DETAILS = {
       ]},
       { section: "Nuoc Cham Dressing", items: [
         { name: "Fish sauce", amt: "3 tbsp" },
-        { name: "Lime juice", amt: "3 tbsp" },
+        { name: "Lime juice", amt: "2 tbsp" },
         { name: "Water", amt: "3 tbsp" },
         { name: "Sugar", amt: "1 tbsp" },
         { name: "Garlic clove (minced)", amt: "1 clove" },
@@ -4739,7 +4739,7 @@ const RECIPE_DETAILS = {
       ]},
       { section: "Thai Chili Lime Sauce", items: [
         { name: "Fish sauce", amt: "2 tbsp" },
-        { name: "Lime juice", amt: "3 tbsp" },
+        { name: "Lime juice", amt: "2 tbsp" },
         { name: "Sugar", amt: "1 tsp" },
         { name: "Garlic cloves (minced)", amt: "2 cloves" },
         { name: "Thai red chili (sliced)", amt: "1–2 pieces" },
