@@ -8019,7 +8019,8 @@
       function calcSauceMacros(e) {
         const a = getRecipeDetail(e);
         if (!a || !a.ingredients) return { kcal: e.sauce_kcal, p: e.sauce_p, c: e.sauce_c, f: e.sauce_f };
-        const t = Math.max(weights.servings, 1);
+        // For fixed-batch recipes (none/none): always show full-batch macros, don't divide by servings
+        const t = (e.protein === "none" && e.carb === "none") ? 1 : Math.max(weights.servings, 1);
         let i = 0,
           n = 0,
           s = 0,
@@ -8047,10 +8048,10 @@
       }
       const _sauceMacroCache = {};
       function getSauceMacros(e) {
-        // For none-protein/carb recipes, include servings in cache key so scaling works
-        const cacheKey = (e.protein === "none" || e.carb === "none")
-          ? e.id + "_s" + Math.max(weights.servings, 1)
-          : e.id;
+        // none/none recipes always use t=1 so cache key doesn't need servings suffix
+        const cacheKey = (e.protein === "none" && e.carb === "none")
+          ? e.id
+          : e.id + "_s" + Math.max(weights.servings, 1);
         if (_sauceMacroCache[cacheKey]) return _sauceMacroCache[cacheKey];
         const a = calcSauceMacros(e);
         return ((_sauceMacroCache[cacheKey] = a), a);
