@@ -5457,6 +5457,24 @@
         berbere: { kcal: 251, p: 11, c: 43, f: 6, unit_g: { tsp: 3, tbsp: 9 }, typical_g: 5, emoji: "🌶️" },
         bay_leaves: { kcal: 313, p: 8, c: 75, f: 8, unit_g: { piece: 0.5 }, typical_g: 1, emoji: "🌿" },
         cloves: { kcal: 274, p: 6, c: 66, f: 13, unit_g: { tsp: 2, piece: 0.2 }, typical_g: 1, emoji: "🌿" },
+        // === NEW ENTRIES (USDA FoodData Central) ===
+        anchovy_paste: { kcal: 128, p: 22, c: 0, f: 4, unit_g: { tsp: 5, tbsp: 15 }, typical_g: 10, emoji: "🐟" },
+        doubanjiang: { kcal: 100, p: 7, c: 8, f: 4, unit_g: { tbsp: 18, tsp: 6 }, typical_g: 20, emoji: "🫙" },
+        gherkins: { kcal: 11, p: 0.4, c: 2.4, f: 0.1, unit_g: { piece: 30, tbsp: 15 }, typical_g: 30, emoji: "🥒" },
+        naan: { kcal: 317, p: 9, c: 56, f: 7, unit_g: { piece: 90, g: 1 }, typical_g: 90, emoji: "🫓" },
+        flour: { kcal: 364, p: 10, c: 76, f: 1, unit_g: { tbsp: 8, tsp: 3, g: 1 }, typical_g: 30, emoji: "🌾" },
+        pasta: { kcal: 371, p: 13, c: 74, f: 1.5, unit_g: { g: 1 }, typical_g: 80, emoji: "🍝" },
+        radish: { kcal: 16, p: 0.7, c: 3.4, f: 0.1, unit_g: { piece: 10, slice: 3 }, typical_g: 30, emoji: "🌿" },
+        shallot: { kcal: 72, p: 2.5, c: 17, f: 0.1, unit_g: { piece: 30, tbsp: 15 }, typical_g: 30, emoji: "🧅" },
+        tomatillo: { kcal: 32, p: 1, c: 5.8, f: 1, unit_g: { piece: 35 }, typical_g: 50, emoji: "🍅" },
+        tortilla_wheat: { kcal: 312, p: 8, c: 51, f: 8, unit_g: { piece: 45, g: 1 }, typical_g: 45, emoji: "🌯" },
+        brown_sugar: { kcal: 377, p: 0, c: 97, f: 0, unit_g: { tsp: 4, tbsp: 12 }, typical_g: 10, emoji: "🍯" },
+        white_pepper: { kcal: 296, p: 10, c: 69, f: 2.1, unit_g: { tsp: 2, g: 1 }, typical_g: 1, emoji: "🌿" },
+        fried_shallots: { kcal: 490, p: 8, c: 57, f: 25, unit_g: { tbsp: 12 }, typical_g: 10, emoji: "🧅" },
+        galangal: { kcal: 70, p: 1.7, c: 15, f: 0.8, unit_g: { tsp: 3, tbsp: 9 }, typical_g: 5, emoji: "🌿" },
+        pine_nuts: { kcal: 673, p: 14, c: 13, f: 68, unit_g: { tbsp: 9, g: 1 }, typical_g: 15, emoji: "🌰" },
+        pomegranate_mol: { kcal: 267, p: 1, c: 68, f: 0.3, unit_g: { tbsp: 20, tsp: 7 }, typical_g: 15, emoji: "🫙" },
+        soy_milk: { kcal: 33, p: 3, c: 2, f: 2, unit_g: { ml: 1, cup: 240 }, typical_g: 100, emoji: "🥛" },
 
       };
       function parseIngredientGrams(e, a) {
@@ -8489,57 +8507,233 @@
         pute: "turkey_mince",
       };
       // Additional ingredient name mappings
+      // === Protein / Meat ===
       ING_NAME_MAP["ground beef (20% fat)"] = "beef_regular";
       ING_NAME_MAP["ground beef (5% fat)"] = "beef_lean";
       ING_NAME_MAP["lean ground beef"] = "beef_lean";
-      ING_NAME_MAP["five-spice powder"] = "five_spice";
-      ING_NAME_MAP["five spice powder"] = "five_spice";
+      ING_NAME_MAP["lean ground beef (5% fat)"] = "beef_lean";
+      ING_NAME_MAP["lean ground beef (95% lean)"] = "beef_lean";
+      ING_NAME_MAP["chicken or anchovy broth"] = "chicken_stock";
+      ING_NAME_MAP["ground turkey"] = "turkey_mince";
+      ING_NAME_MAP["egg (whole)"] = "eggs";
+      ING_NAME_MAP["egg (fried — optional)"] = "eggs";
+      ING_NAME_MAP["eggs (whole)"] = "eggs";
+      ING_NAME_MAP["whole eggs"] = "eggs";
+      ING_NAME_MAP["soft-boiled egg"] = "eggs";
+      ING_NAME_MAP["anchovy paste"] = "anchovy_paste";
+      ING_NAME_MAP["anchovy paste (optional)"] = "anchovy_paste";
+      // === Tofu / Dairy ===
       ING_NAME_MAP["silken or soft tofu"] = "tofu";
       ING_NAME_MAP["silken tofu"] = "tofu";
       ING_NAME_MAP["soft tofu"] = "tofu";
-      ING_NAME_MAP["doubanjiang"] = "soy_sauce";
-      ING_NAME_MAP["doubanjiang (spicy bean paste)"] = "soy_sauce";
-      ING_NAME_MAP["naan bread"] = "bread";
-      ING_NAME_MAP["naan"] = "bread";
-      ING_NAME_MAP["sourdough bread"] = "bread";
-      ING_NAME_MAP["sourdough bread (thick slices)"] = "bread";
-      ING_NAME_MAP["baguette or sandwich roll"] = "bread";
-      ING_NAME_MAP["sandwich roll"] = "bread";
-      ING_NAME_MAP["potatoes (cubed)"] = "potato";
+      ING_NAME_MAP["firm tofu"] = "tofu";
+      ING_NAME_MAP["greek yogurt (0%)"] = "greek_yogurt";
+      ING_NAME_MAP["crème fraîche or greek yogurt (10%)"] = "creme_fraiche";
+      ING_NAME_MAP["soy milk (unsweetened)"] = "soy_milk";
+      // === Vegetables ===
+      ING_NAME_MAP["pak choi"] = "bok_choy";
+      ING_NAME_MAP["pak choi (halved)"] = "bok_choy";
+      ING_NAME_MAP["bok choy (halved)"] = "bok_choy";
+      ING_NAME_MAP["baby spinach"] = "spinach";
+      ING_NAME_MAP["cabbage (roughly chopped)"] = "cabbage";
+      ING_NAME_MAP["cabbage (thinly sliced)"] = "cabbage";
+      ING_NAME_MAP["white cabbage (finely shredded)"] = "cabbage";
+      ING_NAME_MAP["carrot (finely diced)"] = "carrot";
+      ING_NAME_MAP["carrot (julienned)"] = "carrot";
+      ING_NAME_MAP["shredded carrot"] = "carrot";
+      ING_NAME_MAP["cucumber (diced)"] = "cucumber";
+      ING_NAME_MAP["cucumber (grated, squeezed dry)"] = "cucumber";
+      ING_NAME_MAP["cucumber (julienned)"] = "cucumber";
+      ING_NAME_MAP["cucumber (sliced)"] = "cucumber";
+      ING_NAME_MAP["cucumber (thinly sliced)"] = "cucumber";
+      ING_NAME_MAP["daikon / white radish (julienned)"] = "daikon";
+      ING_NAME_MAP["daikon radish (grated)"] = "daikon";
+      ING_NAME_MAP["onion (diced)"] = "onion";
+      ING_NAME_MAP["onion (finely diced)"] = "onion";
+      ING_NAME_MAP["onion (finely grated)"] = "onion";
+      ING_NAME_MAP["onion (grated)"] = "onion";
+      ING_NAME_MAP["onion (thinly sliced)"] = "onion";
+      ING_NAME_MAP["white onion (finely diced)"] = "onion";
+      ING_NAME_MAP["red onion (diced)"] = "onion";
+      ING_NAME_MAP["red onion (finely diced)"] = "onion";
+      ING_NAME_MAP["red onion (thinly sliced)"] = "onion";
+      ING_NAME_MAP["red onion (cut into wedges)"] = "onion";
+      ING_NAME_MAP["shallot (finely diced)"] = "shallot";
+      ING_NAME_MAP["shallot (minced)"] = "shallot";
+      ING_NAME_MAP["shallots (finely diced)"] = "shallot";
+      ING_NAME_MAP["shallots (thinly sliced)"] = "shallot";
+      ING_NAME_MAP["fried shallots (optional)"] = "fried_shallots";
+      ING_NAME_MAP["fried shallots"] = "fried_shallots";
+      ING_NAME_MAP["tomato (diced)"] = "tomato";
+      ING_NAME_MAP["tomatoes (diced)"] = "tomato";
+      ING_NAME_MAP["tomatoes (cut into wedges)"] = "tomato";
+      ING_NAME_MAP["fresh tomato (diced)"] = "tomato";
+      ING_NAME_MAP["ripe tomatoes (large)"] = "tomato";
+      ING_NAME_MAP["cherry tomatoes (halved)"] = "tomato";
+      ING_NAME_MAP["cherry tomatoes (quartered)"] = "tomato";
+      ING_NAME_MAP["tomatillos (canned or fresh)"] = "tomatillo";
       ING_NAME_MAP["potato (roasted)"] = "potato";
-      ING_NAME_MAP["baby potatoes"] = "potato";
-      ING_NAME_MAP["large baking potatoes"] = "potato";
-      ING_NAME_MAP["short-grain rice (uncooked)"] = "rice";
-      ING_NAME_MAP["short-grain rice"] = "rice";
-      ING_NAME_MAP["doubanjiang (spicy bean paste)"] = "gochujang";
-      ING_NAME_MAP["doubanjiang"] = "gochujang";
-      ING_NAME_MAP["five-spice powder"] = "five_spice";
-      ING_NAME_MAP["chicken or anchovy broth"] = "chicken_stock";
-      ING_NAME_MAP["ground beef (20% fat)"] = "beef_regular";
-      ING_NAME_MAP["silken or soft tofu"] = "tofu";
-      ING_NAME_MAP["silken tofu"] = "tofu";
-      ING_NAME_MAP["sourdough or crusty bread"] = "bread";
-      ING_NAME_MAP["crusty bread"] = "bread";
-      ING_NAME_MAP["brioche burger buns"] = "bread";
-      ING_NAME_MAP["brioche bun"] = "bread";
+      ING_NAME_MAP["potato (cubed, boiled or roasted)"] = "potato";
+      ING_NAME_MAP["potato (roasted or boiled)"] = "potato";
+      ING_NAME_MAP["potatoes (cubed)"] = "potato";
       ING_NAME_MAP["waxy potatoes"] = "potato";
+      ING_NAME_MAP["waxy potatoes (diced small)"] = "potato";
       ING_NAME_MAP["waxy potatoes (drillinge)"] = "potato";
       ING_NAME_MAP["baby potatoes (drillinge)"] = "potato";
+      ING_NAME_MAP["baby potatoes"] = "potato";
       ING_NAME_MAP["large baking potatoes"] = "potato";
-      ING_NAME_MAP["waxy potatoes (diced small)"] = "potato";
-      ING_NAME_MAP["kalamata olives"] = "olive_oil";
-      ING_NAME_MAP["kalamata olives (optional)"] = "olive_oil";
-      ING_NAME_MAP["baby potatoes (drillinge)"] = "potato";
-      ING_NAME_MAP["brioche burger buns"] = "bread";
+      ING_NAME_MAP["radishes (thinly sliced)"] = "radish";
+      ING_NAME_MAP["radish"] = "radish";
+      ING_NAME_MAP["jalapeño (deseeded)"] = "jalapeño";
+      ING_NAME_MAP["jalapeño (optional)"] = "jalapeño";
+      ING_NAME_MAP["jalapeño (pickled or fresh)"] = "jalapeño";
+      ING_NAME_MAP["jalapeño (sliced)"] = "jalapeño";
+      ING_NAME_MAP["jalapeño slices"] = "jalapeño";
+      ING_NAME_MAP["red chili (deseeded, chopped)"] = "chili_fresh";
+      ING_NAME_MAP["red chili (sliced)"] = "chili_fresh";
+      ING_NAME_MAP["red chili (optional)"] = "chili_fresh";
+      ING_NAME_MAP["thai red chili (sliced)"] = "chili_fresh";
+      ING_NAME_MAP["chili (sliced)"] = "chili_fresh";
+      ING_NAME_MAP["chili (sliced, optional)"] = "chili_fresh";
+      ING_NAME_MAP["dried red chilis"] = "chili_flakes";
+      ING_NAME_MAP["green pepper (diced)"] = "bell_pepper";
+      ING_NAME_MAP["red bell pepper (diced)"] = "bell_pepper";
+      ING_NAME_MAP["red bell pepper (finely diced)"] = "bell_pepper";
+      ING_NAME_MAP["red bell pepper (sliced)"] = "bell_pepper";
+      ING_NAME_MAP["romaine lettuce (chopped)"] = "lettuce";
+      ING_NAME_MAP["iceberg lettuce"] = "lettuce";
+      ING_NAME_MAP["edamame (frozen, shelled)"] = "edamame";
+      ING_NAME_MAP["steamed broccoli or edamame"] = "edamame";
+      ING_NAME_MAP["canned corn (drained)"] = "corn";
+      ING_NAME_MAP["frozen peas"] = "frozen_peas";
+      // === Herbs & Spices ===
+      ING_NAME_MAP["fresh basil"] = "basil";
+      ING_NAME_MAP["fresh basil or parsley"] = "basil";
+      ING_NAME_MAP["fresh thai basil"] = "thai_basil";
+      ING_NAME_MAP["fresh thai basil (or regular basil)"] = "thai_basil";
+      ING_NAME_MAP["fresh coriander"] = "cilantro";
+      ING_NAME_MAP["fresh coriander (chopped)"] = "cilantro";
+      ING_NAME_MAP["fresh coriander or parsley"] = "cilantro";
+      ING_NAME_MAP["coriander (chopped)"] = "cilantro";
+      ING_NAME_MAP["fresh mint"] = "mint";
+      ING_NAME_MAP["fresh mint (chopped)"] = "mint";
+      ING_NAME_MAP["fresh mint leaves"] = "mint";
+      ING_NAME_MAP["fresh mint & coriander"] = "mint";
+      ING_NAME_MAP["fresh dill or mint"] = "mint";
+      ING_NAME_MAP["dried mint"] = "mint";
+      ING_NAME_MAP["fresh parsley"] = "parsley";
+      ING_NAME_MAP["fresh parsley (chopped)"] = "parsley";
+      ING_NAME_MAP["fresh flat-leaf parsley"] = "parsley";
+      ING_NAME_MAP["fresh flat-leaf parsley (chopped)"] = "parsley";
+      ING_NAME_MAP["fresh flat-leaf parsley (finely chopped)"] = "parsley";
+      ING_NAME_MAP["fresh parsley or chives"] = "parsley";
+      ING_NAME_MAP["fresh parsley or coriander"] = "parsley";
+      ING_NAME_MAP["fresh chives (chopped)"] = "chives";
+      ING_NAME_MAP["fresh ginger (grated)"] = "ginger";
+      ING_NAME_MAP["fresh ginger (sliced)"] = "ginger";
+      ING_NAME_MAP["ginger (grated)"] = "ginger";
+      ING_NAME_MAP["ginger slices"] = "ginger";
+      ING_NAME_MAP["galangal powder (or extra ginger)"] = "galangal";
+      ING_NAME_MAP["dried oregano"] = "oregano";
+      ING_NAME_MAP["oregano (dried)"] = "oregano";
+      ING_NAME_MAP["dried thyme"] = "thyme";
+      ING_NAME_MAP["dried rosemary"] = "rosemary";
+      ING_NAME_MAP["garlic (crushed)"] = "garlic";
+      ING_NAME_MAP["garlic (minced)"] = "garlic";
+      ING_NAME_MAP["garlic clove (minced)"] = "garlic";
+      ING_NAME_MAP["garlic cloves (minced)"] = "garlic";
+      ING_NAME_MAP["garlic cloves (crushed)"] = "garlic";
+      ING_NAME_MAP["lemongrass (finely minced)"] = "lemongrass";
+      ING_NAME_MAP["lemongrass (minced, inner stalk)"] = "lemongrass";
+      ING_NAME_MAP["lemongrass stalks (finely minced)"] = "lemongrass";
+      ING_NAME_MAP["white pepper"] = "white_pepper";
+      ING_NAME_MAP["salt & white pepper"] = "white_pepper";
+      ING_NAME_MAP["coriander (ground)"] = "coriander";
+      ING_NAME_MAP["cumin (ground)"] = "cumin";
+      ING_NAME_MAP["cinnamon (ground)"] = "cinnamon";
+      ING_NAME_MAP["cinnamon stick"] = "cinnamon";
+      ING_NAME_MAP["gochujang paste"] = "gochujang";
+      ING_NAME_MAP["gochugaru (chili flakes)"] = "gochugaru";
+      ING_NAME_MAP["gochugaru (korean chili flakes)"] = "gochugaru";
+      ING_NAME_MAP["gochugaru or chili flakes"] = "gochugaru";
+      ING_NAME_MAP["harissa paste"] = "harissa";
+      ING_NAME_MAP["chipotle paste"] = "chipotle_adobo";
+      ING_NAME_MAP["chipotle paste or smoked paprika"] = "chipotle_adobo";
+      ING_NAME_MAP["doubanjiang"] = "doubanjiang";
+      ING_NAME_MAP["doubanjiang (spicy bean paste)"] = "doubanjiang";
+      ING_NAME_MAP["doubanjiang (or chili paste)"] = "doubanjiang";
+      ING_NAME_MAP["five-spice powder"] = "five_spice";
+      ING_NAME_MAP["five spice powder"] = "five_spice";
+      ING_NAME_MAP["za'atar or mixed herbs"] = "zaatar";
+      // === Sauces & Condiments ===
+      ING_NAME_MAP["hoisin sauce (optional)"] = "hoisin";
+      ING_NAME_MAP["sriracha (optional)"] = "sriracha";
+      ING_NAME_MAP["sriracha or spicy mayo"] = "sriracha";
+      ING_NAME_MAP["hot sauce (optional)"] = "hot_sauce";
+      ING_NAME_MAP["dijon mustard"] = "dijon";
       ING_NAME_MAP["mustard"] = "dijon";
-      ING_NAME_MAP["pickle juice"] = "pickled_veg";
-      ING_NAME_MAP["large baking potatoes"] = "potato";
-      ING_NAME_MAP["anchovy paste (optional)"] = "fish_sauce";
+      ING_NAME_MAP["mayonnaise (light)"] = "mayo_light";
+      ING_NAME_MAP["light mayonnaise"] = "mayo_light";
+      ING_NAME_MAP["white miso paste"] = "miso";
+      ING_NAME_MAP["dashi powder (dissolved in 1 tbsp water)"] = "dashi";
+      ING_NAME_MAP["worcestershire sauce"] = "worcestershire";
+      ING_NAME_MAP["pickle juice"] = "pickle_juice";
+      ING_NAME_MAP["gherkins / pickles"] = "gherkins";
+      ING_NAME_MAP["gherkins"] = "gherkins";
+      ING_NAME_MAP["pickled ginger"] = "pickled_veg";
+      ING_NAME_MAP["pickled ginger (beni shōga)"] = "pickled_veg";
+      ING_NAME_MAP["kimchi (optional)"] = "kimchi";
+      ING_NAME_MAP["kimchi (store-bought)"] = "kimchi";
+      // === Citrus ===
+      ING_NAME_MAP["lemon juice"] = "lemon";
+      ING_NAME_MAP["lemon wedge"] = "lemon";
+      ING_NAME_MAP["lemon zest"] = "lemon";
+      ING_NAME_MAP["lemon (zest + juice)"] = "lemon";
+      ING_NAME_MAP["lime juice"] = "lime";
+      ING_NAME_MAP["lime juice (for crema)"] = "lime";
+      ING_NAME_MAP["lime juice (for rice)"] = "lime";
+      ING_NAME_MAP["lime wedge"] = "lime";
+      ING_NAME_MAP["lime wedges"] = "lime";
+      // === Bread / Carbs ===
+      ING_NAME_MAP["naan bread"] = "naan";
+      ING_NAME_MAP["naan"] = "naan";
+      ING_NAME_MAP["flatbread / fladenbrot"] = "naan";
+      ING_NAME_MAP["flatbread or pitta"] = "naan";
+      ING_NAME_MAP["turkish flatbread (yufka or thin pide)"] = "naan";
+      ING_NAME_MAP["sourdough bread (thick slices)"] = "bread";
       ING_NAME_MAP["sourdough or crusty bread"] = "bread";
-      ING_NAME_MAP["mustard"] = "dijon";
-      ING_NAME_MAP["pickle juice"] = "pickled_veg";
-      ING_NAME_MAP["anchovy paste"] = "fish_sauce";
-      ING_NAME_MAP["anchovy paste (optional)"] = "fish_sauce";
+      ING_NAME_MAP["baguette or sandwich roll"] = "bread";
+      ING_NAME_MAP["brioche burger buns"] = "bread";
+      ING_NAME_MAP["large wheat tortilla wraps"] = "tortilla_wheat";
+      ING_NAME_MAP["whole wheat tortilla wraps"] = "tortilla_wheat";
+      ING_NAME_MAP["small corn or wheat tortillas"] = "tortilla_wheat";
+      ING_NAME_MAP["large wheat tortilla"] = "tortilla_wheat";
+      ING_NAME_MAP["plain flour"] = "flour";
+      ING_NAME_MAP["panko breadcrumbs"] = "panko";
+      ING_NAME_MAP["rigatoni or penne pasta (dry)"] = "pasta";
+      ING_NAME_MAP["egg noodles (dry)"] = "noodle";
+      ING_NAME_MAP["thick wheat noodles (dry)"] = "noodle";
+      ING_NAME_MAP["short-grain rice (uncooked)"] = "rice";
+      ING_NAME_MAP["short grain rice (dry)"] = "rice";
+      ING_NAME_MAP["short grain japanese rice (dry)"] = "rice";
+      // === Other ===
+      ING_NAME_MAP["brown sugar"] = "brown_sugar";
+      ING_NAME_MAP["nori sheets (optional)"] = "nori";
+      ING_NAME_MAP["canned chopped tomatoes"] = "canned_tomato";
+      ING_NAME_MAP["canned crushed tomatoes"] = "canned_tomato";
+      ING_NAME_MAP["parmesan (grated)"] = "cheese_parm";
+      ING_NAME_MAP["parmesan (for serving)"] = "cheese_parm";
+      ING_NAME_MAP["cheese (parmesan)"] = "cheese_parm";
+      ING_NAME_MAP["cheddar cheese (grated)"] = "cheese_cheddar";
+      ING_NAME_MAP["cheddar or gouda slices"] = "cheese_cheddar";
+      ING_NAME_MAP["feta cheese (crumbled)"] = "cheese_feta";
+      ING_NAME_MAP["pine nuts"] = "pine_nuts";
+      ING_NAME_MAP["roasted peanuts"] = "peanuts";
+      ING_NAME_MAP["crushed roasted peanuts"] = "peanuts";
+      ING_NAME_MAP["peanuts"] = "peanuts";
+      ING_NAME_MAP["kalamata olives (optional)"] = "black_olives";
+      ING_NAME_MAP["kalamata olives (sliced)"] = "black_olives";
+      ING_NAME_MAP["green olives (sliced)"] = "green_olives";
 
       function findIngredientId(e) {
         if (!e) return null;
