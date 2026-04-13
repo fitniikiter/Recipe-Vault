@@ -7129,11 +7129,20 @@
         const _svBak = weights.servings;
         weights.servings = modalServings;
         const S = baseMacros(e.carb),
-          C = getSauceMacros(e),
-          T = Math.round(S.kcal + C.kcal),
-          x = Math.round(S.p + C.p),
-          B = Math.round(S.c + C.c),
-          P = Math.round(S.f + C.f);
+          C = getSauceMacros(e);
+        let _seKcal = 0, _seP = 0, _seC = 0, _seF = 0;
+        if (e.sideEgg) {
+          const _nut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
+          const _gPP = Math.round((sideEggCount * sideEggSizeG) / Math.max(modalServings, 1));
+          _seKcal = Math.round((_nut.kcal * _gPP) / 100);
+          _seP    = Math.round((_nut.p  * _gPP) / 100 * 10) / 10;
+          _seC    = Math.round((_nut.c  * _gPP) / 100 * 10) / 10;
+          _seF    = Math.round((_nut.f  * _gPP) / 100 * 10) / 10;
+        }
+        const T = Math.round(S.kcal + C.kcal + _seKcal),
+          x = Math.round(S.p + C.p + _seP),
+          B = Math.round(S.c + C.c + _seC),
+          P = Math.round(S.f + C.f + _seF);
         weights.servings = _svBak;
         ((y += `<div class="ing-total-bar">\n    <div class="ing-total-title">📊 Total per portion</div>\n    <div class="ing-total-grid">\n      <div class="ing-total-cell mk"><span class="itc-val">${T}</span><span class="itc-lbl">kcal</span></div>\n      <div class="ing-total-cell mp"><span class="itc-val">${x}g</span><span class="itc-lbl">protein</span></div>\n      <div class="ing-total-cell mc"><span class="itc-val">${B}g</span><span class="itc-lbl">carbs</span></div>\n      <div class="ing-total-cell mf"><span class="itc-val">${P}g</span><span class="itc-lbl">fat</span></div>\n    </div>\n    <div class="ing-macro-hint" style="margin-top:8px;">Tap any ingredient to see its macros</div>\n  </div>`),
           t.placeholder
