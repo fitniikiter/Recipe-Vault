@@ -1259,6 +1259,18 @@
         background: rgba(180, 123, 232, 0.15);
         color: var(--tag-protein-powder);
       }
+      .tag-vietnamese { background: rgba(220, 80, 80, 0.15); color: #dc5050; }
+      .tag-turkish    { background: rgba(220, 50, 50, 0.15); color: #e84040; }
+      .tag-greek      { background: rgba(50, 100, 220, 0.15); color: #3264dc; }
+      .tag-moroccan   { background: rgba(200, 120, 30, 0.15); color: #c8781e; }
+      .tag-north-african { background: rgba(200, 120, 30, 0.15); color: #c8781e; }
+      .tag-peruvian   { background: rgba(210, 40, 40, 0.15); color: #d22828; }
+      .tag-ethiopian  { background: rgba(220, 160, 30, 0.15); color: #dca01e; }
+      .tag-argentinian { background: rgba(60, 130, 210, 0.15); color: #3c82d2; }
+      .tag-indonesian { background: rgba(210, 50, 50, 0.15); color: #d23232; }
+      .tag-hawaiian   { background: rgba(255, 100, 150, 0.15); color: #ff6496; }
+      .tag-taiwanese  { background: rgba(30, 100, 180, 0.15); color: #1e64b4; }
+      .tag-filipino   { background: rgba(0, 56, 168, 0.15); color: #0038a8; }
       .calc-page {
         max-width: 740px;
         margin: 0 auto;
@@ -6433,6 +6445,12 @@
               : ((i.style.display = "none"), (i.style.opacity = "")));
           if (((i.style.opacity = ""), (t.carb !== "none" && !carbEnabled[t.carb]))) return void (i.style.display = "none");
           if ("sweet_potato" === t.carb && !carbEnabled.potato) return void (i.style.display = "none");
+          // Hide none/none recipes when carb or protein filters are active
+          if (t.carb === "none" && t.protein === "none") {
+            const carbFiltered = Object.values(carbEnabled).some(v => !v);
+            const protFiltered = Object.values(proteinEnabled).some(v => !v);
+            if (carbFiltered || protFiltered) return void (i.style.display = "none");
+          }
           const n = getRecipeProtein(t);
           if (n !== "none" && !proteinEnabled[n]) return void (i.style.display = "none");
           if (videoFilterOnly) {
