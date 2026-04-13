@@ -1879,7 +1879,7 @@ const RECIPE_DETAILS = {
     { title: "Wok Heat is Everything", text: "Pad kra pao needs blasting heat to get that slightly charred, smoky wok flavour. If your burner isn't powerful, cook in two batches instead of crowding the pan — crowded pans steam instead of fry." },
     { title: "Basil Goes in Off the Heat", text: "Always add basil after taking the pan off the heat. Cooking it more than 30 seconds turns it bitter and grey — you want it bright green and aromatic." },
   ],
-  notes: "Thai basil available at Asian supermarkets in Frankfurt. Regular Italian basil works as a substitute but the flavour is milder. Best eaten immediately — the basil wilts if it sits.",
+  notes: "Regular Italian basil works as a substitute but the flavour is milder. Best eaten immediately — the basil wilts if it sits.",
 },
 
 "shawarma-chicken-wrap": {
