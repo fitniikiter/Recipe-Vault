@@ -1112,7 +1112,7 @@ const R = [
   sauce_p: 2,
   sauce_c: 8,
   sauce_f: 6,
-  hint: "",
+  hint: "Uses 150g cooked (day-old) rice — cook ~50g dry rice the night before.",
 },
 {
   id: "shakshuka-middle-eastern-eggs",
@@ -3578,7 +3578,7 @@ const RECIPE_DETAILS = {
   video: null,
   ingredients: [
     { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{proteinG}}g raw" }] },
-    { section: "Carb Base", items: [{ name: "Day-old jasmine rice (cooked)", amt: "{{carbG}}g" }] },
+    { section: "Carb Base", items: [{ name: "Day-old jasmine rice (cooked)", amt: "150g", id: "rice_cooked" }] },
     { section: "Sauce", items: [
       { name: "Gochujang", amt: "1 tbsp" },
       { name: "Soy sauce", amt: "1.5 tbsp" },
@@ -5089,8 +5089,8 @@ const RECIPE_DETAILS = {
 },
 
 "thai-basil-beef-rice": {
-  image: "https://pub-bc6707297a024aa19ff31c3e4a36c1a9.r2.dev/Recipes/default_2.1.1.jpg",
-  video: "zznL8Ab-cZ0",
+  image: null,
+  video: "",
   ingredients: [
     { section: "Protein", items: [{ name: "Lean ground beef", amt: "{{proteinG}}g raw" }] },
     { section: "Carb Base", items: [{ name: "Jasmine rice (dry)", amt: "{{carbG}}g" }] },
