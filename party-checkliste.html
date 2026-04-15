@@ -16,12 +16,12 @@
       --muted:      #7a7568;
       --green:      #2d6a4f;
       --green-mid:  #52b788;
-      --green-light:#d8f3dc;
       --amber:      #b5770d;
       --amber-bg:   #fff8e6;
       --blue:       #1a5276;
       --blue-bg:    #eaf3fb;
       --red:        #922b21;
+      --red-bg:     #fdf0ee;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -29,10 +29,9 @@
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      padding-bottom: 5rem;
+      padding-bottom: 7rem;
     }
 
-    /* HEADER */
     header {
       background: var(--green);
       color: white;
@@ -45,107 +44,41 @@
       font-weight: 400;
       margin-bottom: 0.3rem;
     }
-    header p {
-      font-size: 0.92rem;
-      opacity: 0.75;
-      margin-bottom: 1.6rem;
-    }
+    header p { font-size: 0.92rem; opacity: 0.75; margin-bottom: 1.6rem; }
     .progress-wrap { max-width: 320px; margin: 0 auto; }
     .progress-labels {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.78rem;
-      opacity: 0.85;
-      margin-bottom: 7px;
+      display: flex; justify-content: space-between;
+      font-size: 0.78rem; opacity: 0.85; margin-bottom: 7px;
     }
-    .progress-bg {
-      background: rgba(255,255,255,0.22);
-      border-radius: 99px;
-      height: 8px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 8px;
-      background: var(--green-mid);
-      border-radius: 99px;
-      width: 0%;
-      transition: width 0.4s ease;
-    }
+    .progress-bg { background: rgba(255,255,255,0.22); border-radius: 99px; height: 8px; overflow: hidden; }
+    .progress-fill { height: 8px; background: var(--green-mid); border-radius: 99px; width: 0%; transition: width 0.4s ease; }
 
-    /* STATUS */
     .status-bar {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
-      padding: 0.55rem 1rem;
-      background: #f0ebe0;
-      font-size: 0.76rem;
-      color: var(--muted);
+      display: flex; align-items: center; justify-content: center;
+      gap: 7px; padding: 0.55rem 1rem;
+      background: #f0ebe0; font-size: 0.76rem; color: var(--muted);
       border-bottom: 1px solid var(--border);
     }
-    .dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: #bbb;
-      transition: background 0.4s;
-      flex-shrink: 0;
-    }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: #bbb; transition: background 0.4s; flex-shrink: 0; }
     .dot.online  { background: var(--green-mid); }
     .dot.offline { background: var(--red); }
 
-    /* MAIN */
-    main {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 1.75rem 1rem 0;
-    }
+    main { max-width: 680px; margin: 0 auto; padding: 1.75rem 1rem 0; }
 
-    /* SECTION */
     .section { margin-bottom: 2rem; }
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-    .section-title {
-      font-size: 0.7rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      flex: 1;
-    }
-    .globus-pill {
-      font-size: 0.66rem;
-      font-weight: 600;
-      padding: 3px 10px;
-      border-radius: 99px;
-      background: var(--blue-bg);
-      color: var(--blue);
-      letter-spacing: 0.03em;
-    }
+    .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .section-title { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); flex: 1; }
+    .globus-pill { font-size: 0.66rem; font-weight: 600; padding: 3px 10px; border-radius: 99px; background: var(--blue-bg); color: var(--blue); letter-spacing: 0.03em; }
 
-    /* CARD */
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      overflow: hidden;
-    }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
 
-    /* ITEM */
     .item {
-      display: flex;
-      align-items: flex-start;
-      gap: 13px;
-      padding: 13px 16px;
-      cursor: pointer;
+      display: flex; align-items: flex-start; gap: 13px;
+      padding: 13px 16px; cursor: pointer;
       border-bottom: 1px solid var(--border);
       transition: background 0.12s;
       -webkit-tap-highlight-color: transparent;
-      user-select: none;
+      user-select: none; position: relative;
     }
     .item:last-child { border-bottom: none; }
     .item:hover  { background: #f7f4ed; }
@@ -155,71 +88,75 @@
     .item.done { opacity: 0.35; }
     .item.done .item-name { text-decoration: line-through; }
 
-    /* CHECKBOX */
     .cb {
-      width: 22px; height: 22px;
-      min-width: 22px;
-      border-radius: 6px;
-      border: 2px solid var(--border);
-      margin-top: 1px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.15s;
-      background: white;
+      width: 22px; height: 22px; min-width: 22px;
+      border-radius: 6px; border: 2px solid var(--border);
+      margin-top: 1px; display: flex; align-items: center;
+      justify-content: center; transition: all 0.15s; background: white;
     }
     .cb.on { background: var(--green); border-color: var(--green); }
     .cb svg { display: none; }
     .cb.on svg { display: block; }
 
-    .item-body { flex: 1; }
-    .item-name {
-      font-size: 0.94rem;
-      line-height: 1.35;
-    }
-    .item-note {
-      font-size: 0.75rem;
-      color: var(--amber);
-      margin-top: 3px;
-      display: block;
-    }
+    .item-body { flex: 1; min-width: 0; }
+    .item-name  { font-size: 0.94rem; line-height: 1.35; }
+    .item-note  { font-size: 0.75rem; color: var(--amber); margin-top: 3px; display: block; }
     .tip {
-      display: inline-block;
-      font-size: 0.63rem;
-      font-weight: 600;
-      padding: 1px 6px;
-      border-radius: 99px;
-      background: var(--amber-bg);
-      color: var(--amber);
-      margin-left: 5px;
-      vertical-align: middle;
+      display: inline-block; font-size: 0.63rem; font-weight: 600;
+      padding: 1px 6px; border-radius: 99px;
+      background: var(--amber-bg); color: var(--amber);
+      margin-left: 5px; vertical-align: middle;
     }
-    .item-qty {
-      font-size: 0.8rem;
-      color: var(--muted);
-      white-space: nowrap;
-      padding-top: 2px;
-      font-weight: 500;
-    }
+    .item-qty { font-size: 0.8rem; color: var(--muted); white-space: nowrap; padding-top: 2px; font-weight: 500; }
     .item.globus .item-qty { color: var(--blue); }
 
-    /* FOOTER */
-    .footer {
-      display: flex;
-      justify-content: center;
-      margin-top: 2.5rem;
-      padding: 0 1rem;
+    .del-btn {
+      display: none; width: 26px; height: 26px; min-width: 26px;
+      border: none; background: none; cursor: pointer;
+      align-items: center; justify-content: center;
+      border-radius: 6px; color: var(--muted); transition: all 0.15s; margin-top: -1px;
     }
+    .item:hover .del-btn { display: flex; }
+    .del-btn:hover { background: var(--red-bg); color: var(--red); }
+
+    .add-form {
+      display: flex; gap: 8px; padding: 12px 16px;
+      border-top: 1px solid var(--border); background: #fdfcf8;
+      flex-wrap: wrap;
+    }
+    .add-form input {
+      font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--text);
+      background: white; border: 1px solid var(--border);
+      border-radius: 8px; padding: 7px 11px; outline: none; transition: border 0.15s;
+    }
+    .add-form input:focus { border-color: var(--green-mid); }
+    #inp-name { flex: 1; min-width: 140px; }
+    #inp-qty  { width: 110px; }
+    .add-btn {
+      font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 500;
+      color: white; background: var(--green); border: none; border-radius: 8px;
+      padding: 7px 16px; cursor: pointer; white-space: nowrap; transition: background 0.15s; flex-shrink: 0;
+    }
+    .add-btn:hover { background: #225539; }
+
+    .empty-custom { padding: 16px; font-size: 0.85rem; color: var(--muted); text-align: center; font-style: italic; }
+
+    .fab {
+      position: fixed; bottom: 1.75rem; right: 1.5rem;
+      width: 52px; height: 52px; background: var(--green); color: white;
+      border: none; border-radius: 50%; font-size: 1.7rem; line-height: 1;
+      cursor: pointer; box-shadow: 0 4px 16px rgba(45,106,79,0.35);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; z-index: 100;
+    }
+    .fab:hover { background: #225539; transform: scale(1.07); }
+    .fab:active { transform: scale(0.95); }
+
+    .footer { display: flex; justify-content: center; margin-top: 2.5rem; padding: 0 1rem; }
     .reset-btn {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.83rem;
-      color: var(--muted);
-      background: transparent;
-      border: 1px solid var(--border);
-      padding: 9px 24px;
-      border-radius: 99px;
-      cursor: pointer;
-      transition: all 0.15s;
+      font-family: 'DM Sans', sans-serif; font-size: 0.83rem; color: var(--muted);
+      background: transparent; border: 1px solid var(--border);
+      padding: 9px 24px; border-radius: 99px; cursor: pointer; transition: all 0.15s;
     }
     .reset-btn:hover { background: white; color: var(--red); border-color: #e8a09a; }
   </style>
@@ -234,9 +171,7 @@
       <span id="lbl-done">0 erledigt</span>
       <span id="lbl-total">0 gesamt</span>
     </div>
-    <div class="progress-bg">
-      <div class="progress-fill" id="pbar"></div>
-    </div>
+    <div class="progress-bg"><div class="progress-fill" id="pbar"></div></div>
   </div>
 </header>
 
@@ -251,223 +186,313 @@
   <button class="reset-btn" id="reset-btn">Alles zurücksetzen</button>
 </div>
 
+<button class="fab" id="fab-btn" title="Eintrag hinzufügen">+</button>
+
 <script>
-  /* ── DATEN ─────────────────────────────────────────────── */
-  const SECTIONS = [
-    {
-      title: "Globus-Bestellung", globus: true,
-      items: [
-        { key:"g_spiess",   name:"Spießbraten",                              qty:"2 Stück",           note:"Klären: nochmal grillen oder direkt aufschneiden?" },
-        { key:"g_fk1",      name:"Fleischkäse klassisch",                    qty:"1 Stück + 10 Brötchen" },
-        { key:"g_fk2",      name:"Rinderfleischkäse oder Pizzafleischkäse",  qty:"1 Stück + 10 Brötchen" },
-        { key:"g_frika",    name:"Frikadellen",                              qty:"20 Stück + 20 Brötchen" },
-      ]
-    },
-    {
-      title: "Grillfleisch (selbst)",
-      items: [
-        { key:"f_nacken",   name:"Nackensteaks / Schweinekotelett",          qty:"4 kg",              note:"Reduziert wegen Globus-Fleisch" },
-        { key:"f_haehn",    name:"Hähnchenschenkel / -spieße",               qty:"4 kg" },
-        { key:"f_brat",     name:"Bratwürste",                               qty:"4 kg (~55 Stück)" },
-        { key:"f_veggie",   name:"Veggie-Option (Halloumi, Gemüse)",         qty:"2 kg",              tip:"Tipp" },
-        { key:"f_kohle",    name:"Grillkohle",                               qty:"12–15 kg" },
-        { key:"f_anzuend",  name:"Grillanzünder / Anzünderkamine",           qty:"2–3 Stück" },
-        { key:"f_alu",      name:"Alufolie",                                 qty:"2 Rollen" },
-      ]
-    },
-    {
-      title: "Beilagen & Salate",
-      items: [
-        { key:"b_brot",     name:"Brötchen (selbst kaufen)",                 qty:"~65–70 Stück",      note:"40 kommen von Globus → gesamt ~110" },
-        { key:"b_bag",      name:"Baguette",                                 qty:"6–8 Stangen" },
-        { key:"b_butter",   name:"Butter",                                   qty:"3–4 Päckchen" },
-        { key:"b_belag",    name:"Belag (Käse, Aufschnitt)",                 qty:"2–3 kg" },
-        { key:"b_salat1",   name:"Nudelsalat oder Kartoffelsalat",           qty:"6–7 kg" },
-        { key:"b_salat2",   name:"Beilagensalat (grün)",                     qty:"5–6 kg" },
-        { key:"b_tzatz",    name:"Tzatziki",                                 qty:"1–1,5 kg" },
-        { key:"b_bbq",      name:"BBQ-Sauce",                                qty:"1–1,5 kg" },
-        { key:"b_ketch",    name:"Ketchup",                                  qty:"1–1,5 kg" },
-        { key:"b_senf",     name:"Senf",                                     qty:"500 g" },
-        { key:"b_mayo",     name:"Mayo",                                     qty:"500 g" },
-        { key:"b_sp",       name:"Salz & Pfeffer",                           qty:"2× Großpackung" },
-      ]
-    },
-    {
-      title: "Snacks & Nachmittag (ab 15 Uhr)",
-      items: [
-        { key:"s_kuchen",   name:"Kuchen / Torten",                          qty:"5 Bleche / 5 Torten" },
-        { key:"s_chips",    name:"Chips / Salzgebäck",                       qty:"2 kg" },
-        { key:"s_obst",     name:"Obst / Obstsalat",                         qty:"4–5 kg" },
-        { key:"s_eier",     name:"Gekochte Eier (optional)",                 qty:"30–40 Stück" },
-      ]
-    },
-    {
-      title: "Getränke",
-      items: [
-        { key:"d_bier",     name:"Bier",                                     qty:"5–6 Kästen (20×0,5L)" },
-        { key:"d_wein",     name:"Wein (Weiß & Rosé)",                       qty:"15–18 Flaschen" },
-        { key:"d_wasser",   name:"Wasser (still & sprudelnd)",               qty:"15–20×1,5L" },
-        { key:"d_soft",     name:"Softdrinks / Limo",                        qty:"10–12×1,5L" },
-        { key:"d_saft",     name:"Saft (Kinder / Fahrer)",                   qty:"5–6 Liter" },
-      ]
-    },
-    {
-      title: "Kühlung",
-      items: [
-        { key:"k_eis",      name:"Eis (für Kühlboxen)",                      qty:"15–20 kg" },
-        { key:"k_box",      name:"Kühlboxen (mind. 2 große)",                qty:"2 Stück" },
-        { key:"k_akkus",    name:"Kühlakkus",                                qty:"6–8 Stück" },
-        { key:"k_frisch",   name:"Frischhalteboxen",                         qty:"4–6 Stück" },
-      ]
-    },
-    {
-      title: "Geschirr & Besteck",
-      items: [
-        { key:"gs_teller",  name:"Teller",                                   qty:"60 Stück" },
-        { key:"gs_best",    name:"Besteck-Sets",                             qty:"60 Sets" },
-        { key:"gs_bech",    name:"Becher / Gläser",                          qty:"90–100 Stück" },
-        { key:"gs_serv",    name:"Servietten",                               qty:"200–250 Stück" },
-        { key:"gs_kuro",    name:"Küchenrolle",                              qty:"4–5 Rollen" },
-      ]
-    },
-    {
-      title: "Sonstiges",
-      items: [
-        { key:"so_muell",   name:"Müllsäcke (groß)",                         qty:"6–8 Stück" },
-        { key:"so_open",    name:"Dosen-/Flaschenöffner, Korkenzieher",      qty:"2–3 Stück" },
-        { key:"so_brett",   name:"Großes Schneidebrett + Messer",            qty:"für Spießbraten",   tip:"!" },
-        { key:"so_sonne",   name:"Sonnenschutzcreme",                        qty:"2 Flaschen" },
-        { key:"so_ins",     name:"Insektenschutz",                           qty:"1–2 Sprays" },
-      ]
-    }
-  ];
+const SECTIONS = [
+  { title:"Globus-Bestellung", globus:true, items:[
+    { key:"g_spiess", name:"Spießbraten",                             qty:"2 Stück",              note:"Klären: nochmal grillen oder direkt aufschneiden?" },
+    { key:"g_fk1",    name:"Fleischkäse klassisch",                   qty:"1 Stück + 10 Brötchen" },
+    { key:"g_fk2",    name:"Rinderfleischkäse oder Pizzafleischkäse", qty:"1 Stück + 10 Brötchen" },
+    { key:"g_frika",  name:"Frikadellen",                             qty:"20 Stück + 20 Brötchen" },
+  ]},
+  { title:"Grillfleisch (selbst)", items:[
+    { key:"f_nacken",  name:"Nackensteaks / Schweinekotelett", qty:"4 kg",             note:"Reduziert wegen Globus-Fleisch" },
+    { key:"f_haehn",   name:"Hähnchenschenkel / -spieße",      qty:"4 kg" },
+    { key:"f_brat",    name:"Bratwürste",                       qty:"4 kg (~55 Stück)" },
+    { key:"f_veggie",  name:"Veggie-Option (Halloumi, Gemüse)", qty:"2 kg",             tip:"Tipp" },
+    { key:"f_kohle",   name:"Grillkohle",                       qty:"12–15 kg" },
+    { key:"f_anzuend", name:"Grillanzünder / Anzünderkamine",   qty:"2–3 Stück" },
+    { key:"f_alu",     name:"Alufolie",                         qty:"2 Rollen" },
+  ]},
+  { title:"Beilagen & Salate", items:[
+    { key:"b_brot",   name:"Brötchen (selbst kaufen)",      qty:"~65–70 Stück",   note:"40 kommen von Globus → gesamt ~110" },
+    { key:"b_bag",    name:"Baguette",                       qty:"6–8 Stangen" },
+    { key:"b_butter", name:"Butter",                         qty:"3–4 Päckchen" },
+    { key:"b_belag",  name:"Belag (Käse, Aufschnitt)",       qty:"2–3 kg" },
+    { key:"b_sal1",   name:"Nudelsalat oder Kartoffelsalat", qty:"6–7 kg" },
+    { key:"b_sal2",   name:"Beilagensalat (grün)",           qty:"5–6 kg" },
+    { key:"b_tzatz",  name:"Tzatziki",                       qty:"1–1,5 kg" },
+    { key:"b_bbq",    name:"BBQ-Sauce",                      qty:"1–1,5 kg" },
+    { key:"b_ketch",  name:"Ketchup",                        qty:"1–1,5 kg" },
+    { key:"b_senf",   name:"Senf",                           qty:"500 g" },
+    { key:"b_mayo",   name:"Mayo",                           qty:"500 g" },
+    { key:"b_sp",     name:"Salz & Pfeffer",                 qty:"2× Großpackung" },
+  ]},
+  { title:"Snacks & Nachmittag (ab 15 Uhr)", items:[
+    { key:"s_kuchen", name:"Kuchen / Torten",            qty:"5 Bleche / 5 Torten" },
+    { key:"s_chips",  name:"Chips / Salzgebäck",          qty:"2 kg" },
+    { key:"s_obst",   name:"Obst / Obstsalat",            qty:"4–5 kg" },
+    { key:"s_eier",   name:"Gekochte Eier (optional)",    qty:"30–40 Stück" },
+  ]},
+  { title:"Getränke", items:[
+    { key:"d_bier",   name:"Bier",                        qty:"5–6 Kästen (20×0,5L)" },
+    { key:"d_wein",   name:"Wein (Weiß & Rosé)",          qty:"15–18 Flaschen" },
+    { key:"d_wasser", name:"Wasser (still & sprudelnd)",  qty:"15–20×1,5L" },
+    { key:"d_soft",   name:"Softdrinks / Limo",           qty:"10–12×1,5L" },
+    { key:"d_saft",   name:"Saft (Kinder / Fahrer)",      qty:"5–6 Liter" },
+  ]},
+  { title:"Kühlung", items:[
+    { key:"k_eis",    name:"Eis (für Kühlboxen)",         qty:"15–20 kg" },
+    { key:"k_box",    name:"Kühlboxen (mind. 2 große)",   qty:"2 Stück" },
+    { key:"k_akkus",  name:"Kühlakkus",                   qty:"6–8 Stück" },
+    { key:"k_frisch", name:"Frischhalteboxen",            qty:"4–6 Stück" },
+  ]},
+  { title:"Geschirr & Besteck", items:[
+    { key:"gs_tell",  name:"Teller",                      qty:"60 Stück" },
+    { key:"gs_best",  name:"Besteck-Sets",                qty:"60 Sets" },
+    { key:"gs_bech",  name:"Becher / Gläser",             qty:"90–100 Stück" },
+    { key:"gs_serv",  name:"Servietten",                  qty:"200–250 Stück" },
+    { key:"gs_kuro",  name:"Küchenrolle",                 qty:"4–5 Rollen" },
+  ]},
+  { title:"Sonstiges", items:[
+    { key:"so_muell", name:"Müllsäcke (groß)",                    qty:"6–8 Stück" },
+    { key:"so_open",  name:"Dosen-/Flaschenöffner, Korkenzieher", qty:"2–3 Stück" },
+    { key:"so_brett", name:"Großes Schneidebrett + Messer",       qty:"für Spießbraten", tip:"!" },
+    { key:"so_sonne", name:"Sonnenschutzcreme",                   qty:"2 Flaschen" },
+    { key:"so_ins",   name:"Insektenschutz",                      qty:"1–2 Sprays" },
+  ]},
+];
 
-  /* ── alle keys flach ──────────────────────────────────── */
-  const ALL_ITEMS = SECTIONS.flatMap(s => s.items);
-  const TOTAL     = ALL_ITEMS.length;
-  const state     = {};   // key → true/false
+const FIXED = SECTIONS.flatMap(s => s.items);
+const fixedState  = {};   // key → bool
+const customItems = {};   // key → { name, qty, checked, deleted }
 
-  /* ── GUN SETUP ────────────────────────────────────────── */
-  // Öffentliche Relay-Server – kein Account nötig
-  const gun  = GUN(['https://gun-manhattan.herokuapp.com/gun',
-                    'https://gun-us.herokuapp.com/gun']);
+/* ── GUN ── */
+const gun = GUN(['https://gun-manhattan.herokuapp.com/gun', 'https://gun-us.herokuapp.com/gun']);
+const db  = gun.get('party-checkliste-2025-v1');
+const cdb = gun.get('party-checkliste-2025-v1-custom');
 
-  // Eindeutiger Namespace – ändere diesen String nicht nach Go-Live,
-  // sonst verlierst du alle Daten (oder möchtest frisch starten)
-  const db   = gun.get('party-checkliste-2025-v1');
+/* ── HELPERS ── */
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function checkmark() {
+  return `<svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+}
 
-  /* Für jeden Key einen Echtzeit-Listener registrieren */
-  /* Status: sobald irgendein Wert reinkommt → online */
-  setTimeout(() => {
-    const dot = document.getElementById('dot');
-    const txt = document.getElementById('status-txt');
-    if (!dot.classList.contains('online')) {
-      dot.classList.add('offline');
-      txt.textContent = 'Kein Sync – offline oder Relay nicht erreichbar';
-    }
-  }, 5000);
+/* ── PROGRESS ── */
+function updateProgress() {
+  const fDone  = FIXED.filter(i => fixedState[i.key]).length;
+  const cList  = Object.values(customItems).filter(c => c && !c.deleted);
+  const cDone  = cList.filter(c => c.checked).length;
+  const done   = fDone + cDone;
+  const total  = FIXED.length + cList.length;
+  const pct    = total > 0 ? Math.round(done / total * 100) : 0;
+  document.getElementById('pbar').style.width      = pct + '%';
+  document.getElementById('lbl-done').textContent  = done  + ' erledigt';
+  document.getElementById('lbl-total').textContent = total + ' gesamt';
+}
 
-  function setOnline() {
-    const dot = document.getElementById('dot');
-    const txt = document.getElementById('status-txt');
-    if (!dot.classList.contains('online')) {
-      dot.classList.remove('offline');
-      dot.classList.add('online');
-      txt.textContent = 'Echtzeit-Sync aktiv – Änderungen werden sofort geteilt';
-    }
+/* ── STATUS ── */
+function setOnline() {
+  const dot = document.getElementById('dot');
+  if (!dot.classList.contains('online')) {
+    dot.classList.remove('offline');
+    dot.classList.add('online');
+    document.getElementById('status-txt').textContent = 'Echtzeit-Sync aktiv – Änderungen werden sofort geteilt';
   }
-
-  /* ── TOGGLE ───────────────────────────────────────────── */
-  function toggle(key) {
-    const newVal = !state[key];
-    db.get(key).put(newVal);   // schreibt in Gun → löst on() bei allen aus
+}
+setTimeout(() => {
+  const dot = document.getElementById('dot');
+  if (!dot.classList.contains('online')) {
+    dot.classList.add('offline');
+    document.getElementById('status-txt').textContent = 'Kein Sync – offline oder Relay nicht erreichbar';
   }
+}, 5000);
 
-  function resetAll() {
-    if (!confirm('Wirklich alles zurücksetzen?')) return;
-    ALL_ITEMS.forEach(({ key }) => db.get(key).put(false));
-  }
+/* ── FIXED TOGGLE ── */
+function toggle(key) { db.get(key).put(!fixedState[key]); }
+function syncFixed(key) {
+  setOnline();
+  const row = document.getElementById('row-' + key);
+  const cb  = document.getElementById('cb-'  + key);
+  if (!row || !cb) return;
+  const done = !!fixedState[key];
+  row.classList.toggle('done', done);
+  cb.classList.toggle('on',   done);
+}
 
-  /* ── DOM UPDATES ──────────────────────────────────────── */
-  function syncItem(key) {
-    setOnline();
-    const row = document.getElementById('row-' + key);
-    const cb  = document.getElementById('cb-'  + key);
-    if (!row || !cb) return;
-    const done = !!state[key];
-    row.classList.toggle('done', done);
-    cb.classList.toggle('on',   done);
-  }
+/* ── CUSTOM TOGGLE ── */
+function toggleCustom(key) {
+  const cur = customItems[key] ? !!customItems[key].checked : false;
+  cdb.get(key).get('checked').put(!cur);
+}
 
-  function updateProgress() {
-    const done  = ALL_ITEMS.filter(i => state[i.key]).length;
-    const pct   = Math.round(done / TOTAL * 100);
-    document.getElementById('pbar').style.width     = pct + '%';
-    document.getElementById('lbl-done').textContent = done + ' erledigt';
-    document.getElementById('lbl-total').textContent= TOTAL + ' gesamt';
-  }
+/* ── CUSTOM DELETE ── */
+function deleteCustom(key, e) {
+  e.stopPropagation();
+  cdb.get(key).get('deleted').put(true);
+}
 
-  /* ── INITIAL RENDER ───────────────────────────────────── */
-  function buildDOM() {
-    const main = document.getElementById('list');
-    main.innerHTML = '';
+/* ── CUSTOM ADD ── */
+function addCustomItem() {
+  const nameEl = document.getElementById('inp-name');
+  const qtyEl  = document.getElementById('inp-qty');
+  const name   = (nameEl.value || '').trim();
+  const qty    = (qtyEl.value  || '').trim();
+  if (!name) { nameEl.focus(); return; }
+  const key = 'c' + Date.now();
+  cdb.get(key).put({ name, qty, checked: false, deleted: false });
+  nameEl.value = '';
+  qtyEl.value  = '';
+  nameEl.focus();
+}
 
-    SECTIONS.forEach(sec => {
-      const wrap = document.createElement('div');
-      wrap.className = 'section';
+/* ── RENDER CUSTOM SECTION ── */
+function renderCustom() {
+  const card = document.getElementById('custom-card');
+  if (!card) return;
+  card.innerHTML = '';
 
-      wrap.innerHTML = `
-        <div class="section-header">
-          <span class="section-title">${sec.title}</span>
-          ${sec.globus ? '<span class="globus-pill">Globus bestellen</span>' : ''}
-        </div>`;
+  const visible = Object.entries(customItems)
+    .filter(([, v]) => v && v.name && !v.deleted)
+    .sort(([a], [b]) => a.localeCompare(b));
 
-      const card = document.createElement('div');
-      card.className = 'card';
-
-      sec.items.forEach(item => {
-        const row = document.createElement('div');
-        row.className = 'item' + (sec.globus ? ' globus' : '');
-        row.id = 'row-' + item.key;
-        row.onclick = () => toggle(item.key);
-
-        row.innerHTML = `
-          <div class="cb" id="cb-${item.key}">
-            <svg width="12" height="9" viewBox="0 0 12 9" fill="none">
-              <path d="M1 4.5L4.5 8L11 1" stroke="white" stroke-width="2.2"
-                    stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="item-body">
-            <span class="item-name">
-              ${item.name}
-              ${item.tip ? `<span class="tip">${item.tip}</span>` : ''}
-            </span>
-            ${item.note ? `<span class="item-note">↳ ${item.note}</span>` : ''}
-          </div>
-          <span class="item-qty">${item.qty}</span>`;
-
-        card.appendChild(row);
-      });
-
-      wrap.appendChild(card);
-      main.appendChild(wrap);
+  if (visible.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'empty-custom';
+    empty.textContent = 'Noch keine eigenen Einträge – trag unten etwas ein!';
+    card.appendChild(empty);
+  } else {
+    visible.forEach(([key, item]) => {
+      const row = document.createElement('div');
+      row.className = 'item' + (item.checked ? ' done' : '');
+      row.id = 'crow-' + key;
+      row.innerHTML = `
+        <div class="cb ${item.checked ? 'on' : ''}" id="ccb-${key}">${checkmark()}</div>
+        <div class="item-body">
+          <span class="item-name">${esc(item.name)}</span>
+        </div>
+        ${item.qty ? `<span class="item-qty">${esc(item.qty)}</span>` : ''}
+        <button class="del-btn" title="Löschen">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+            <path d="M1.5 1.5l10 10M11.5 1.5l-10 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>`;
+      row.querySelector('.del-btn').addEventListener('click', e => deleteCustom(key, e));
+      row.addEventListener('click', () => toggleCustom(key));
+      card.appendChild(row);
     });
   }
 
-  buildDOM();
-  updateProgress();
+  /* Add-Form */
+  const form = document.createElement('div');
+  form.className = 'add-form';
+  form.innerHTML = `
+    <input id="inp-name" type="text" placeholder="Was fehlt noch?" autocomplete="off" />
+    <input id="inp-qty"  type="text" placeholder="Menge (optional)" autocomplete="off" />
+    <button class="add-btn" id="add-btn">Hinzufügen</button>`;
+  card.appendChild(form);
 
-  /* Gun-Listener NACH buildDOM registrieren – sonst existiert das DOM noch nicht */
-  ALL_ITEMS.forEach(({ key }) => {
-    db.get(key).on(val => {
-      state[key] = !!val;
-      syncItem(key);
-      updateProgress();
-    });
+  document.getElementById('add-btn').addEventListener('click', addCustomItem);
+  document.getElementById('inp-name').addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    e.preventDefault();
+    const q = document.getElementById('inp-qty');
+    if (!q.value.trim()) q.focus(); else addCustomItem();
+  });
+  document.getElementById('inp-qty').addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); addCustomItem(); }
   });
 
-  document.getElementById('reset-btn').addEventListener('click', resetAll);
+  updateProgress();
+}
+
+/* ── BUILD STATIC DOM ── */
+function buildDOM() {
+  const main = document.getElementById('list');
+  main.innerHTML = '';
+
+  SECTIONS.forEach(sec => {
+    const wrap = document.createElement('div');
+    wrap.className = 'section';
+    wrap.innerHTML = `
+      <div class="section-header">
+        <span class="section-title">${sec.title}</span>
+        ${sec.globus ? '<span class="globus-pill">Globus bestellen</span>' : ''}
+      </div>`;
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    sec.items.forEach(item => {
+      const row = document.createElement('div');
+      row.className = 'item' + (sec.globus ? ' globus' : '');
+      row.id = 'row-' + item.key;
+      row.innerHTML = `
+        <div class="cb" id="cb-${item.key}">${checkmark()}</div>
+        <div class="item-body">
+          <span class="item-name">${esc(item.name)}${item.tip ? `<span class="tip">${esc(item.tip)}</span>` : ''}</span>
+          ${item.note ? `<span class="item-note">↳ ${esc(item.note)}</span>` : ''}
+        </div>
+        <span class="item-qty">${esc(item.qty)}</span>`;
+      row.addEventListener('click', () => toggle(item.key));
+      card.appendChild(row);
+    });
+
+    wrap.appendChild(card);
+    main.appendChild(wrap);
+  });
+
+  /* Custom section */
+  const cWrap = document.createElement('div');
+  cWrap.className = 'section';
+  cWrap.innerHTML = `<div class="section-header"><span class="section-title">Eigene Einträge</span></div>`;
+  const cCard = document.createElement('div');
+  cCard.className = 'card';
+  cCard.id = 'custom-card';
+  cWrap.appendChild(cCard);
+  main.appendChild(cWrap);
+}
+
+/* ── RESET ── */
+function resetAll() {
+  if (!confirm('Wirklich alles zurücksetzen?')) return;
+  FIXED.forEach(({ key }) => db.get(key).put(false));
+  Object.keys(customItems).forEach(k => {
+    if (customItems[k] && !customItems[k].deleted)
+      cdb.get(k).get('checked').put(false);
+  });
+}
+
+/* ── INIT ── */
+buildDOM();
+renderCustom();
+updateProgress();
+
+/* Fixed listeners — AFTER buildDOM */
+FIXED.forEach(({ key }) => {
+  db.get(key).on(val => {
+    fixedState[key] = !!val;
+    syncFixed(key);
+    updateProgress();
+  });
+});
+
+/* Custom listeners */
+cdb.map().on(function(data, key) {
+  if (!key || key === '_' || !data) return;
+  setOnline();
+  if (!customItems[key]) customItems[key] = { name:'', qty:'', checked:false, deleted:false };
+  if (typeof data === 'object') Object.assign(customItems[key], data);
+  else if (typeof data === 'boolean' || typeof data === 'string') {
+    // single field update — handled already by Gun merging
+  }
+  renderCustom();
+});
+
+/* FAB */
+document.getElementById('fab-btn').addEventListener('click', () => {
+  setTimeout(() => {
+    const form = document.getElementById('inp-name');
+    if (form) {
+      form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => form.focus(), 350);
+    }
+  }, 50);
+});
+
+document.getElementById('reset-btn').addEventListener('click', resetAll);
 </script>
 </body>
 </html>
