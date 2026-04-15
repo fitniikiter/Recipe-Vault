@@ -4350,7 +4350,7 @@ const RECIPE_DETAILS = {
     { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{proteinG}}g raw" }] },
     { section: "Carb Base", items: [{ name: "Whole wheat tortilla wraps", amt: "{{carbG}}g" }] },
     { section: "Omelette", items: [
-      { name: "Egg whites (additional)", amt: "4 pieces" },
+      { name: "Egg whites (additional)", amt: "{{eggCount}} pieces" },
       { name: "Feta cheese (crumbled)", amt: "40g" },
       { name: "Baby spinach", amt: "60g" },
       { name: "Sun-dried tomatoes (drained)", amt: "30g" },
@@ -5683,7 +5683,7 @@ const RECIPE_DETAILS = {
   image: null,
   video: "",
   ingredients: [
-    { section: "Protein", items: [{ name: "Eggs (large)", amt: "4 pieces" }] },
+    { section: "Protein", items: [{ name: "Eggs (large)", amt: "{{eggCount}} pieces" }] },
     { section: "Carb Base", items: [{ name: "Waxy potatoes (thinly sliced)", amt: "{{carbG}}g" }] },
     { section: "Seasoning", items: [
       { name: "Olive oil", amt: "1 tbsp" },
@@ -5710,7 +5710,7 @@ const RECIPE_DETAILS = {
   image: null,
   video: "",
   ingredients: [
-    { section: "Protein", items: [{ name: "Eggs (large)", amt: "4 pieces" }] },
+    { section: "Protein", items: [{ name: "Eggs (large)", amt: "{{eggCount}} pieces" }] },
     { section: "Carb Base", items: [{ name: "Waxy potatoes (pre-cooked or leftover)", amt: "{{carbG}}g" }] },
     { section: "Add-ins", items: [
       { name: "Spring onion (sliced)", amt: "3 stalks" },
@@ -5737,7 +5737,7 @@ const RECIPE_DETAILS = {
   image: null,
   video: "",
   ingredients: [
-    { section: "Protein", items: [{ name: "Eggs (large)", amt: "5 pieces" }] },
+    { section: "Protein", items: [{ name: "Eggs (large)", amt: "{{eggCount}} pieces" }] },
     { section: "Carb Base", items: [{ name: "Waxy potatoes (thin-sliced)", amt: "{{carbG}}g" }] },
     { section: "Flavour", items: [
       { name: "Parmesan (grated)", amt: "20g" },
@@ -5765,7 +5765,7 @@ const RECIPE_DETAILS = {
   image: null,
   video: "",
   ingredients: [
-    { section: "Protein", items: [{ name: "Eggs (large)", amt: "4 pieces" }] },
+    { section: "Protein", items: [{ name: "Eggs (large)", amt: "{{eggCount}} pieces" }] },
     { section: "Carb Base", items: [{ name: "Waxy potatoes (small diced)", amt: "{{carbG}}g" }] },
     { section: "Flavour", items: [
       { name: "Jalapeño (finely chopped)", amt: "1 piece" },
@@ -5799,7 +5799,7 @@ const RECIPE_DETAILS = {
   image: null,
   video: "",
   ingredients: [
-    { section: "Protein", items: [{ name: "Eggs (large)", amt: "4 pieces" }] },
+    { section: "Protein", items: [{ name: "Eggs (large)", amt: "{{eggCount}} pieces" }] },
     { section: "Carb Base", items: [{ name: "Roti or chapati (store-bought)", amt: "{{carbG}}g" }] },
     { section: "Masala Mix", items: [
       { name: "Onion (finely chopped)", amt: "0.25 medium" },
@@ -5829,7 +5829,7 @@ const RECIPE_DETAILS = {
   image: null,
   video: "",
   ingredients: [
-    { section: "Protein", items: [{ name: "Eggs (large)", amt: "4 pieces" }] },
+    { section: "Protein", items: [{ name: "Eggs (large)", amt: "{{eggCount}} pieces" }] },
     { section: "Carb Base", items: [{ name: "Basmati rice (dry)", amt: "{{carbG}}g" }] },
     { section: "Curry Sauce", items: [
       { name: "Onion (finely diced)", amt: "1 medium" },
@@ -5867,7 +5867,7 @@ const RECIPE_DETAILS = {
   image: null,
   video: "",
   ingredients: [
-    { section: "Protein", items: [{ name: "Eggs (large)", amt: "4 pieces" }] },
+    { section: "Protein", items: [{ name: "Eggs (large)", amt: "{{eggCount}} pieces" }] },
     { section: "Carb Base", items: [{ name: "Large flour tortillas", amt: "{{carbG}}g" }] },
     { section: "Filling", items: [
       { name: "Lean ground beef (5%)", amt: "100g" },
@@ -5901,7 +5901,7 @@ const RECIPE_DETAILS = {
   image: null,
   video: "",
   ingredients: [
-    { section: "Protein", items: [{ name: "Eggs (large)", amt: "4 pieces" }] },
+    { section: "Protein", items: [{ name: "Eggs (large)", amt: "{{eggCount}} pieces" }] },
     { section: "Carb Base", items: [{ name: "Crusty sourdough or ciabatta", amt: "{{carbG}}g" }] },
     { section: "Tomato Sauce", items: [
       { name: "Canned crushed tomatoes", amt: "400g" },

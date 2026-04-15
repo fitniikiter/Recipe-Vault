@@ -6868,7 +6868,11 @@
         if (!e) return;
         const a = weights.servings;
         weights.servings = modalServings;
+        // For eggs-protein recipes: temporarily override so baseMacros uses egg values
+        const _pAP = activeProtein, _pCh = weights.chicken;
+        if (e.protein === "eggs") { activeProtein = "eggs"; weights.chicken = eggCount * eggSizeG; }
         const t = baseMacros(e.carb);
+        activeProtein = _pAP; weights.chicken = _pCh;
         const i = getSauceMacros(e);
         weights.servings = a;
         let seKcal = 0, seP = 0, seC = 0, seF = 0;
@@ -7178,8 +7182,11 @@
         });
         const _svBak = weights.servings;
         weights.servings = modalServings;
+        const _pAP2 = activeProtein, _pCh2 = weights.chicken;
+        if (e.protein === "eggs") { activeProtein = "eggs"; weights.chicken = eggCount * eggSizeG; }
         const S = baseMacros(e.carb),
           C = getSauceMacros(e);
+        activeProtein = _pAP2; weights.chicken = _pCh2;
         let _seKcal = 0, _seP = 0, _seC = 0, _seF = 0;
         if (e.sideEgg) {
           const _nut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
