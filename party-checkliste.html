@@ -357,14 +357,6 @@
   const db   = gun.get('party-checkliste-2025-v1');
 
   /* Für jeden Key einen Echtzeit-Listener registrieren */
-  ALL_ITEMS.forEach(({ key }) => {
-    db.get(key).on(val => {
-      state[key] = !!val;
-      syncItem(key);
-      updateProgress();
-    });
-  });
-
   /* Status: sobald irgendein Wert reinkommt → online */
   setTimeout(() => {
     const dot = document.getElementById('dot');
@@ -465,6 +457,15 @@
 
   buildDOM();
   updateProgress();
+
+  /* Gun-Listener NACH buildDOM registrieren – sonst existiert das DOM noch nicht */
+  ALL_ITEMS.forEach(({ key }) => {
+    db.get(key).on(val => {
+      state[key] = !!val;
+      syncItem(key);
+      updateProgress();
+    });
+  });
 
   document.getElementById('reset-btn').addEventListener('click', resetAll);
 </script>
