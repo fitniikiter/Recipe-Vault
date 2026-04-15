@@ -5579,12 +5579,16 @@
         "turkish": "🇹🇷", "greek": "🇬🇷", "moroccan": "🇲🇦", "indonesian": "🇮🇩",
         "filipino": "🇵🇭", "taiwanese": "🇹🇼", "peruvian": "🇵🇪", "ethiopian": "🇪🇹",
         "argentinian": "🇦🇷", "mediterranean": "🌊", "middle-eastern": "🌙",
-        "north-african": "🌍", "asian": "🌏", "hawaiian": "🌺",
+        "north-african": "🌍", "asian": "🌏", "hawaiian": "🌺", "german": "🇩🇪",
+        // Auto-injected ingredient tags
+        "beef": "🥩", "eggs": "🥚", "fish": "🐟", "shrimp": "🦐",
+        "tofu": "🫘", "cheese": "🧀", "turkey": "🦃", "pork": "🐷",
       };
       function tagLabel(e) {
         const flag = TAG_FLAGS[e];
         const text = e.replace(/-/g, " ");
-        return flag ? flag + "\u00a0" + text : text;
+        const label = text.charAt(0).toUpperCase() + text.slice(1);
+        return flag ? flag + "\u00a0" + label : label;
       }
       function clockEmoji(e) {
         return e <= 15
@@ -8748,16 +8752,7 @@
       ING_NAME_MAP["kalamata olives (sliced)"] = "black_olives";
       ING_NAME_MAP["green olives (sliced)"] = "green_olives";
 
-      function findIngredientId(e) {
-        if (!e) return null;
-        const a = e.toLowerCase().trim();
-        if (ING_NAME_MAP[a]) return ING_NAME_MAP[a];
-        let t = null,
-          i = 0;
-        for (const [e, n] of Object.entries(ING_NAME_MAP)) a.includes(e) && e.length > i && ((t = n), (i = e.length));
-        return t;
-      }
-      function buildIngredientRecipeMap() {
+function buildIngredientRecipeMap() {
         // Auto-builds INGREDIENT_RECIPE_MAP from RECIPE_DETAILS at runtime
         // No manual maintenance needed — filters always match actual recipe ingredients
         if (typeof RECIPE_DETAILS === "undefined") return;
@@ -8785,6 +8780,26 @@
         R.forEach(r => { if (r.tags && r.tags.includes("spicy")) SPICY_RECIPE_IDS.add(r.id); });
         DIP_RECIPE_IDS.clear();
         R.forEach(r => { if (r.tags && r.tags.includes("dip")) DIP_RECIPE_IDS.add(r.id); });
+        // Auto-inject ingredient-based tags into recipe cards at runtime
+        // Maps tag name → ingredient IDs that trigger it
+        const INGREDIENT_AUTO_TAGS = {
+          "beef":   ["beef_lean", "beef_regular"],
+          "eggs":   ["eggs"],
+          "fish":   ["salmon", "tuna_canned", "cod", "anchovy_paste"],
+          "shrimp": ["shrimp"],
+          "tofu":   ["tofu"],
+          "cheese": ["cheese_parm", "cheese_cheddar", "cheese_feta", "cheese_mozzarella", "cheese_gouda"],
+          "turkey": ["turkey_mince"],
+          "pork":   ["pork_tenderloin"],
+        };
+        Object.entries(INGREDIENT_AUTO_TAGS).forEach(([tag, ingIds]) => {
+          ingIds.forEach(ingId => {
+            (INGREDIENT_RECIPE_MAP[ingId] || []).forEach(recipeId => {
+              const recipe = R.find(r => r.id === recipeId);
+              if (recipe && !recipe.tags.includes(tag)) recipe.tags.push(tag);
+            });
+          });
+        });
       }
 
       let compareSortKey = "default",
