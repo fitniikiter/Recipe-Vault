@@ -7138,12 +7138,13 @@
         t.ingredients.forEach((a) => {
           ((y += `<div class="ing-section-title">${a.section}</div><ul class="ing-list">`),
             a.items.forEach((a) => {
-              const t = (a.amt || "").includes("{{proteinG}}") || (a.amt || "").includes("{{carbG}}"),
+              const t = (a.amt || "").includes("{{proteinG}}") || (a.amt || "").includes("{{carbG}}") || (a.amt || "").includes("{{eggCount}}"),
                 n = o ? eggCount * eggSizeG : weights.chicken,
                 s = weights[e.carb] || 0,
                 c = (a.amt || "")
                   .replace("{{proteinG}}", Math.round(n))
                   .replace("{{carbG}}", Math.round(s))
+                  .replace("{{eggCount}}", eggCount)
                   .replace("{{servings}}", i);
               let d = t ? c : scaleAmt(c, i),
                 m = a.name;
@@ -7168,6 +7169,16 @@
                     p: Math.round((((a.p || 0) * u) / 100) * 10) / 10,
                     c: Math.round((((a.c || 0) * u) / 100) * 10) / 10,
                     f: Math.round((((a.f || 0) * u) / 100) * 10) / 10,
+                  };
+                } else if (a.amt && a.amt.includes("{{eggCount}}")) {
+                  const _eggNut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
+                  const _eggG = Math.round((eggCount * eggSizeG) / Math.max(i, 1));
+                  g = {
+                    grams: _eggG,
+                    kcal: Math.round((_eggNut.kcal * _eggG) / 100),
+                    p: Math.round(((_eggNut.p * _eggG) / 100) * 10) / 10,
+                    c: Math.round(((_eggNut.c * _eggG) / 100) * 10) / 10,
+                    f: Math.round(((_eggNut.f * _eggG) / 100) * 10) / 10,
                   };
                 } else ((h = a.id || findIngredientId(m)), (g = h ? calcIngredientMacros(h, d) : null));
               } catch (e) {}
