@@ -5676,7 +5676,7 @@ const RECIPE_DETAILS = {
     { title: "Scale Up Easily", text: "This recipe is for one portion in a small ramekin or dish. For 2 portions, double everything and use a larger dish — add 3–5 minutes to baking time." },
   ],
   notes: "Macros per portion: 604 kcal · 40g protein · 72g carbs · 17g fat. Best eaten warm straight from the oven. Raw batter can be prepped the night before and baked fresh in the morning. Swap chocolate chips for blueberries for a lower-fat version.",
-},,
+},
 
 
 "spanish-tortilla-espanola": {
