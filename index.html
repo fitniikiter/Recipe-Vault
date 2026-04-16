@@ -6977,7 +6977,7 @@
           ((l.scrollTop = 0),
           d.classList.remove("collapsed"),
           (l.onscroll = null),
-          setTimeout(() => {
+          window.innerWidth < 640 && setTimeout(() => {
             l.onscroll = () => {
               if (l.scrollTop > 60) {
                 d.classList.add("collapsed");
