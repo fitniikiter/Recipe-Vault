@@ -8164,7 +8164,7 @@
       }
       function calcSauceMacros(e) {
         const a = getRecipeDetail(e);
-        if (!a || !a.ingredients) return { kcal: e.sauce_kcal, p: e.sauce_p, c: e.sauce_c, f: e.sauce_f };
+        if (!a || !a.ingredients) return { kcal: 0, p: 0, c: 0, f: 0 };
         // For fixed-batch recipes (none/none): always show full-batch macros, don't divide by servings
         const t = (e.protein === "none" && e.carb === "none") ? 1 : Math.max(weights.servings, 1);
         let i = 0, n = 0, s = 0, o = 0;
@@ -8177,7 +8177,6 @@
             if (c) { i += c.kcal / t; n += c.p / t; s += c.c / t; o += c.f / t; }
           });
         });
-        // Always return calculated values — no hardcoded fallback
         return {
           kcal: Math.round(i),
           p: Math.round(10 * n) / 10,
