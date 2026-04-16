@@ -5614,6 +5614,10 @@
         currentCuisineFilter = "all",
         weights = { chicken: 150, potato: 150, rice: 150, noodle: 150, bread: 150, eggs: 0, servings: 1 };
       const CARB_RATIOS = { potato: 1.25, rice: 0.33, noodle: 0.33, bread: 0.2 };
+      // Dry→Cooked multiplication factor (1g dry = Xg cooked)
+      const CARB_COOKED_FACTORS = { rice: 2.5, noodle: 2.2, potato: 0.85 };
+      // true = user input is cooked/ready weight
+      let carbIsCooked = { rice: false, noodle: false, potato: false };
       const TAG_FLAGS = {
         "korean": "🇰🇷", "japanese": "🇯🇵", "thai": "🇹🇭", "mexican": "🇲🇽",
         "chinese": "🇨🇳", "indian": "🇮🇳", "vietnamese": "🇻🇳", "american": "🇺🇸",
@@ -5663,7 +5667,9 @@
           t = NUT[activeProtein] || NUT.chicken_thigh,
           i = NUT[e] || { kcal: 0, p: 0, c: 0, f: 0 },
           n = weights.chicken / 100,
-          s = weights[e] ? weights[e] / 100 : 0,
+          _carbRaw = weights[e] || 0,
+          _carbEff = (carbIsCooked[e] && CARB_COOKED_FACTORS[e]) ? _carbRaw / CARB_COOKED_FACTORS[e] : _carbRaw,
+          s = _carbEff / 100,
           o = "eggs" === activeProtein ? 0 : weights.eggs * (eggSizeG / 100),
           r = NUT.eggs;
         return {
@@ -5852,6 +5858,12 @@
         (n && (buildIngredientsTab(n), updateModalMacros(n)), updateCardMacros(), updateCalcDisplay());
       }
       // Side-egg controls for sideEgg: true recipes
+      function setCarbMode(carb, isCooked, recipeId) {
+        carbIsCooked[carb] = isCooked;
+        const r = R.find(r => r.id === recipeId);
+        if (r) { buildIngredientsTab(r); updateModalMacros(r); }
+        updateCardMacros(); filterRecipes(); updateCalcDisplay();
+      }
       function setSideEggSize(g, id) {
         sideEggSizeG = g;
         // Update active state on size buttons by matching their label to sideEggSizeG
@@ -7177,11 +7189,19 @@
                 })()
           }\n  <div class="modal-weight-row" id="carbWeightRow">\n    ${(() => {
             const a = NUT[e.carb] || {},
-              t = Math.round(((a.kcal || 0) * u) / 100),
-              i = Math.round((((a.p || 0) * u) / 100) * 10) / 10,
-              n = Math.round((((a.c || 0) * u) / 100) * 10) / 10,
-              s = Math.round((((a.f || 0) * u) / 100) * 10) / 10;
-            return `\n    <div class="modal-weight-row-main" onclick="toggleWeightRow('carbWeightRow')">\n      <label>${m} ${h}</label>\n      <input type="number" class="modal-weight-input" id="mwCarb" value="${weights[e.carb] || 0}"\n        min="0" max="3000"\n        onclick="event.stopPropagation()"\n        oninput="updateModalWeight('carb', this.value, '${e.id}')">\n      <span class="modal-weight-unit">g batch total</span>\n      <span class="modal-weight-hint">${u}g per portion</span>\n      <span class="modal-weight-expand">▼</span>\n    </div>\n    <div class="modal-weight-macro-panel">\n      <div class="ing-macro-grid" style="margin-top:8px;">\n        <div class="ing-macro-cell mk"><span class="imc-val">${t}</span><span class="imc-lbl">kcal</span></div>\n        <div class="ing-macro-cell mp"><span class="imc-val">${i}g</span><span class="imc-lbl">protein</span></div>\n        <div class="ing-macro-cell mc"><span class="imc-val">${n}g</span><span class="imc-lbl">carbs</span></div>\n        <div class="ing-macro-cell mf"><span class="imc-val">${s}g</span><span class="imc-lbl">fat</span></div>\n      </div>\n      <div class="ing-macro-hint">Per portion · ${u}g · per 100g: ${a.kcal || 0}kcal ${a.p || 0}g P ${a.c || 0}g C ${a.f || 0}g F</div>\n    </div>`;
+              _hasToggle = ["rice", "noodle", "potato"].includes(e.carb),
+              _isCooked = carbIsCooked[e.carb],
+              _factor = CARB_COOKED_FACTORS[e.carb] || 1,
+              _labels = e.carb === "potato" ? ["Raw", "Cooked"] : ["Dry", "Cooked"],
+              _uEffective = _hasToggle && _isCooked ? Math.round(u / _factor) : u,
+              t = Math.round(((a.kcal || 0) * _uEffective) / 100),
+              i = Math.round((((a.p || 0) * _uEffective) / 100) * 10) / 10,
+              n = Math.round((((a.c || 0) * _uEffective) / 100) * 10) / 10,
+              s = Math.round((((a.f || 0) * _uEffective) / 100) * 10) / 10,
+              _toggleBtns = _hasToggle ? `<div style="display:inline-flex;gap:4px;margin-left:8px;"><button class="modal-variant-btn${!_isCooked ? " active" : ""}" style="padding:2px 8px;font-size:10px;" onclick="setCarbMode('${e.carb}',false,'${e.id}');event.stopPropagation()">${_labels[0]}</button><button class="modal-variant-btn${_isCooked ? " active" : ""}" style="padding:2px 8px;font-size:10px;" onclick="setCarbMode('${e.carb}',true,'${e.id}');event.stopPropagation()">${_labels[1]}</button></div>` : "",
+              _unitLabel = _hasToggle ? (_isCooked ? "g cooked total" : "g dry total") : "g batch total",
+              _hintLabel = _hasToggle && _isCooked ? `Per portion · ${u}g cooked (≈${_uEffective}g dry) · per 100g dry: ${a.kcal || 0}kcal ${a.p || 0}g P ${a.c || 0}g C ${a.f || 0}g F` : `Per portion · ${u}g · per 100g: ${a.kcal || 0}kcal ${a.p || 0}g P ${a.c || 0}g C ${a.f || 0}g F`;
+            return `\n    <div class="modal-weight-row-main" onclick="toggleWeightRow('carbWeightRow')">\n      <label>${m} ${h}</label>${_toggleBtns}\n      <input type="number" class="modal-weight-input" id="mwCarb" value="${weights[e.carb] || 0}"\n        min="0" max="3000"\n        onclick="event.stopPropagation()"\n        oninput="updateModalWeight('carb', this.value, '${e.id}')">\n      <span class="modal-weight-unit">${_unitLabel}</span>\n      <span class="modal-weight-hint">${u}g per portion</span>\n      <span class="modal-weight-expand">▼</span>\n    </div>\n    <div class="modal-weight-macro-panel">\n      <div class="ing-macro-grid" style="margin-top:8px;">\n        <div class="ing-macro-cell mk"><span class="imc-val">${t}</span><span class="imc-lbl">kcal</span></div>\n        <div class="ing-macro-cell mp"><span class="imc-val">${i}g</span><span class="imc-lbl">protein</span></div>\n        <div class="ing-macro-cell mc"><span class="imc-val">${n}g</span><span class="imc-lbl">carbs</span></div>\n        <div class="ing-macro-cell mf"><span class="imc-val">${s}g</span><span class="imc-lbl">fat</span></div>\n      </div>\n      <div class="ing-macro-hint">${_hintLabel}</div>\n    </div>`;
           })()}\n  </div>${_hasSideEgg ? _sideEggBlock : ""}`,
           b = 0,
           f = 0,
