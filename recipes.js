@@ -1854,6 +1854,32 @@ const R = [
   hint: "",
 },
 
+{
+  id: "american-bigmac-burger-bowl",
+  protein: "beef",
+  displayNum: 114,
+  carb: "potato",
+  time: 35,
+  title: "Big Mac Burger Bowl",
+  desc: "Lean beef over crispy potato cubes with homemade Big Mac sauce, pickles, iceberg lettuce — all the flavour, none of the bun.",
+  tags: ["american", "comfort"],
+  flavor: "savory",
+  hint: "",
+},
+ 
+{
+  id: "german-cucumber-salad-highprotein",
+  protein: "none",
+  displayNum: 115,
+  carb: "none",
+  time: 10,
+  title: "High-Protein Cucumber Salad",
+  desc: "Classic Gurkensalat with a creamy Quark and Greek yogurt dressing — 19g protein per portion as a side dish in 10 minutes.",
+  tags: ["german"],
+  flavor: "savory",
+  hint: "",
+},
+
 ];
 
 // --- RECIPE DETAILS (ingredients, steps, hacks) ---
@@ -6527,6 +6553,86 @@ const RECIPE_DETAILS = {
     { title: "Scramble in the Sausage Pan", text: "Don't wipe the pan after the Nürnberger — those golden bits of rendered fat and fond are flavor. Scrambling the eggs directly in that pan means you get all of that richness for zero extra ingredients. Keep the heat low and the motion slow — the goal is creamy, just-set eggs, not dry rubbery ones. Pull off heat while still slightly wet." },
   ],
   notes: "Potato schmear can be made ahead and reheated — actually gets better as it sits and the mustard flavour develops. Gravy keeps in the fridge for up to 3 days.",
+},
+
+"american-bigmac-burger-bowl": {
+  image: null,
+  video: "",
+  ingredients: [
+    { section: "Protein", items: [{ name: "Lean ground beef (5% fat)", amt: "{{proteinG}}g raw" }] },
+    { section: "Carb Base", items: [{ name: "Waxy potatoes", amt: "{{carbG}}g" }] },
+    { section: "Big Mac Sauce", items: [
+      { name: "Light mayo", amt: "30g" },
+      { name: "American mustard", amt: "1 tbsp" },
+      { name: "Pickles (finely chopped)", amt: "1 tbsp" },
+      { name: "Pickle juice", amt: "1 tsp" },
+      { name: "Garlic powder", amt: "0.5 tsp" },
+      { name: "Onion powder", amt: "0.5 tsp" },
+      { name: "Paprika", amt: "0.5 tsp" },
+      { name: "White wine vinegar", amt: "0.5 tsp" },
+      { name: "Sugar", amt: "0.5 tsp" },
+    ]},
+    { section: "Toppings", items: [
+      { name: "Iceberg lettuce (shredded)", amt: "80g" },
+      { name: "Cherry tomatoes (halved)", amt: "100g" },
+      { name: "White onion (finely diced)", amt: "50g" },
+      { name: "Pickles (sliced)", amt: "40g" },
+      { name: "Cheddar (grated)", amt: "30g" },
+      { name: "Sesame seeds", amt: "1 tsp" },
+      { name: "Neutral oil", amt: "1 tsp" },
+    ]},
+  ],
+  steps: [
+    "Preheat oven to 220°C fan. Cut potatoes into 1.5cm cubes, toss with 1 tsp oil, garlic powder, paprika, and salt — spread on a baking tray with space between each piece. Roast 20–22 minutes, flipping halfway, until golden and crispy.",
+    "Mix all Big Mac sauce ingredients in a small bowl and refrigerate while everything else cooks.",
+    "Season the ground beef generously with salt, pepper, garlic powder, and onion powder.",
+    "Heat a cast iron pan or heavy skillet over high heat until smoking. Add 1 tsp oil, press the beef flat in an even layer, and leave untouched for 2–3 minutes — you want a dark crust, not grey steamed meat.",
+    "Break the beef apart and cook a further 2 minutes until browned all through. Remove from heat.",
+    "Build the bowls: potatoes as the base, beef on top, then shredded iceberg, cherry tomatoes, diced white onion, and sliced pickles.",
+    "Drizzle Big Mac sauce generously over everything, scatter cheddar and sesame seeds on top, and serve immediately.",
+  ],
+  hacks: [
+    { title: "The Crust is the Flavour", text: "Press lean 5% beef flat and don't move it for at least 2 minutes. A proper dark sear gives you all the richness you'd expect from fattier mince — no extra calories required. Crowding the pan or moving the meat early kills this effect completely." },
+    { title: "Cold Lettuce, Hot Beef", text: "The temperature contrast is intentional and essential — cold, crispy iceberg against hot, seared beef is exactly what makes a burger feel like a burger. Don't let the lettuce sit on warm components before serving." },
+  ],
+  notes: "Big Mac sauce keeps in the fridge for 3–4 days — make a double batch and use it on wraps all week. Skip the cheddar on a strict cut day to drop to ~450 kcal and 43g protein.",
+},
+ 
+"german-cucumber-salad-highprotein": {
+  image: null,
+  video: "",
+  ingredients: [
+    { section: "Cucumber", items: [
+      { name: "Cucumber (thinly sliced)", amt: "400g" },
+      { name: "Salt (to draw out water)", amt: "1 tsp" },
+    ]},
+    { section: "Dressing", items: [
+      { name: "Magerquark", amt: "150g" },
+      { name: "Greek yogurt (0% fat)", amt: "100g" },
+      { name: "Light mayo", amt: "15g" },
+      { name: "Garlic (minced)", amt: "1 clove" },
+      { name: "White wine vinegar", amt: "1 tbsp" },
+      { name: "Sugar", amt: "1 tsp" },
+      { name: "Salt & white pepper", amt: "to taste" },
+    ]},
+    { section: "To Finish", items: [
+      { name: "Fresh dill (roughly chopped)", amt: "large handful" },
+      { name: "Olive oil", amt: "1 tsp" },
+    ]},
+  ],
+  steps: [
+    "Slice the cucumber paper-thin with a mandoline or sharp knife. Toss slices with 1 tsp salt in a colander and let sit 10–15 minutes to draw out the excess water.",
+    "Whisk together Magerquark, Greek yogurt, light mayo, minced garlic, white wine vinegar, and sugar until smooth. Season generously with salt and white pepper.",
+    "Fold most of the chopped dill into the dressing, reserving a small amount for garnish.",
+    "Squeeze the cucumber firmly with both hands to remove as much water as possible, then fold into the dressing immediately.",
+    "Taste and adjust — more vinegar for brightness, more sugar if too sharp, more salt if flat.",
+    "Refrigerate at least 15 minutes before serving. Finish with a drizzle of olive oil, reserved dill, and cracked black pepper.",
+  ],
+  hacks: [
+    { title: "Squeeze It Hard", text: "Cucumber is mostly water — skip the salting step and the dressing turns thin and diluted within minutes. Salt for 15 minutes, then squeeze aggressively with both hands. The amount of liquid that comes out of 400g cucumber is genuinely surprising." },
+    { title: "Mayo = Mouthfeel", text: "15g light mayo added to the Quark-yogurt base takes the texture from slightly grainy to genuinely creamy — that's ~22 kcal per person. Drop it on a deep cut day, but the eating experience is noticeably better with it in." },
+  ],
+  notes: "Keeps well for up to 24 hours in the fridge — the cucumber softens slightly overnight which some prefer. Works as a side to grilled chicken or beef, or as a standalone protein-rich snack.",
 },
 
 };
