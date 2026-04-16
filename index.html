@@ -7305,8 +7305,11 @@
         ((y += `<div class="ing-total-bar">\n    <div class="ing-total-title">📊 Total per portion</div>\n    <div class="ing-total-grid">\n      <div class="ing-total-cell mk"><span class="itc-val">${T}</span><span class="itc-lbl">kcal</span></div>\n      <div class="ing-total-cell mp"><span class="itc-val">${x}g</span><span class="itc-lbl">protein</span></div>\n      <div class="ing-total-cell mc"><span class="itc-val">${B}g</span><span class="itc-lbl">carbs</span></div>\n      <div class="ing-total-cell mf"><span class="itc-val">${P}g</span><span class="itc-lbl">fat</span></div>\n    </div>\n    <div class="ing-macro-hint" style="margin-top:8px;">Tap any ingredient to see its macros</div>\n  </div>`),
           t.placeholder
             ? (y += '<div class="ing-note">📌 Full ingredient list coming soon — follow on YouTube & TikTok!</div>')
-            : (y += '<div class="ing-note">📌 Weights are global — changes apply to all recipes.</div>'),
-          (document.getElementById("tab-ingredients").innerHTML = y));
+            : (y += '<div class="ing-note">📌 Weights are global — changes apply to all recipes.</div>'));
+        // Save which weight rows are open before rebuild, restore after
+        const _openRows = new Set([...document.querySelectorAll('#tab-ingredients .modal-weight-row.open')].map(el => el.id).filter(Boolean));
+        document.getElementById("tab-ingredients").innerHTML = y;
+        _openRows.forEach(id => { const el = document.getElementById(id); if (el) el.classList.add('open'); });
       }
       function changeModalServings(e, a) {
         ((modalServings = Math.max(1, Math.min(10, modalServings + e))), (weights.servings = modalServings));
