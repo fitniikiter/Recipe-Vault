@@ -1198,6 +1198,7 @@
         border-radius: 4px;
         text-transform: uppercase;
         letter-spacing: 0.5px;
+        border: 1px solid currentColor;
       }
       .tag-asian {
         background: rgba(71, 179, 232, 0.15);
@@ -1271,6 +1272,38 @@
       .tag-hawaiian   { background: rgba(255, 100, 150, 0.15); color: #ff6496; }
       .tag-taiwanese  { background: rgba(30, 100, 180, 0.15); color: #1e64b4; }
       .tag-filipino   { background: rgba(0, 56, 168, 0.15); color: #0038a8; }
+
+      /* ── Scroll-to-top button ── */
+      #scrollTopBtn {
+        position: fixed;
+        bottom: 28px;
+        right: 20px;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s, transform 0.25s;
+        transform: translateY(10px);
+        z-index: 1100;
+      }
+      #scrollTopBtn.visible {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+      #scrollTopBtn:hover {
+        filter: brightness(1.15);
+      }
       .calc-page {
         max-width: 740px;
         margin: 0 auto;
@@ -6363,7 +6396,7 @@
         (R.forEach((e) => {
           const i = document.createElement("div");
           ((i.className = "card"), (i.dataset.id = e.id), (i.dataset.id = e.id), (i.onclick = () => openModal(e.id)));
-          const n = e.tags.filter(t => t !== "spicy" && t !== "dip").map((e) => `<span class="tag tag-${e}">${tagLabel(e)}</span>`).join(""),
+          const n = e.tags.filter(t => t !== "spicy" && t !== "dip" && t !== e.protein).map((e) => `<span class="tag tag-${e}">${tagLabel(e)}</span>`).join(""),
             s = e.protein === "none" ? "none" : (e.protein || "chicken"),
             o =
               { chicken: "🍗 Chicken", beef: "🥩 Beef", eggs: "🥚 Eggs", fish: "🐟 Fish", tofu: "🫘 Tofu" }[s] ||
@@ -6911,7 +6944,7 @@
             "🍗 Chicken",
           n = { chicken: "chicken", beef: "beef", eggs: "eggs", salmon: "salmon", tofu: "tofu" }[t] || "chicken",
           s = document.getElementById("modalTagsRow"),
-          o = (a.tags || []).filter(e => e !== "spicy" && e !== "dip").map((e) => `<span class="tag tag-${e}">${tagLabel(e)}</span>`).join("");
+          o = (a.tags || []).filter(t => t !== "spicy" && t !== "dip" && t !== a.protein).map((e) => `<span class="tag tag-${e}">${tagLabel(e)}</span>`).join("");
         ((s.innerHTML = `\n    <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:${o ? "6px" : "0"};">\n      ${a.carb !== "none" ? `<span class="carb-badge ${a.carb}" style="font-size:10px;padding:4px 10px;">${{ potato: "🥔 Potato", rice: "🍚 Rice", noodle: "🍜 Noodle", bread: "🫓 Bread" }[a.carb]}</span>` : ""}\n      ${t !== "none" ? `<span class="protein-badge ${n}" style="font-size:10px;padding:4px 10px;">${i}</span>` : ""}\n      <span class="flavor-badge ${a.flavor || "savory"}" style="font-size:10px;padding:4px 10px;">${"sweet" === a.flavor ? "🍯 Sweet" : "🧂 Savory"}</span>\n      ${ALCOHOL_RECIPE_IDS.has(a.id) ? '<span class="flavor-badge alcohol" style="font-size:10px;padding:4px 10px;">🍶 Alcohol</span>' : ""}\n      ${SPICY_RECIPE_IDS.has(a.id) ? '<span class="flavor-badge spicy" style="font-size:10px;padding:4px 10px;">🌶️ Spicy</span>' : ""}\n      ${DIP_RECIPE_IDS.has(a.id) ? '<span class="flavor-badge dip" style="font-size:10px;padding:4px 10px;">🥣 Dip</span>' : ""}\n    </div>\n    ${o ? `<div style="display:flex;flex-wrap:wrap;gap:5px;">${o}</div>` : ""}\n  `),
           (modalServings = weights.servings), updateModalMacros(a));
         const r = getRecipeDetail(a),
@@ -7013,7 +7046,7 @@
         }).join("");
         return "<div class=\"modal-weight-row\" id=\"sideEggRow\">" +
           "<div class=\"modal-weight-row-main\" onclick=\"toggleWeightRow('sideEggRow')\" style=\"flex-wrap:nowrap;align-items:center;\">" +
-          "<label style=\"flex-shrink:0;white-space:nowrap;\">🍳 Fried Egg</label>" +
+          "<label style=\"flex-shrink:0;white-space:nowrap;\">🥚 Egg Count</label>" +
           "<div style=\"display:flex;align-items:center;gap:6px;margin-left:8px;\">" +
           "<div style=\"display:inline-flex;gap:4px;\">" + btns + "</div>" +
           "<div class=\"serving-stepper\" style=\"margin-left:4px;\">" +
@@ -9512,5 +9545,22 @@
         </div>
       </div>
     </div>
+    <!-- Scroll-to-top button -->
+    <button id="scrollTopBtn" title="Back to top">&#8679;</button>
+    <script>
+      (function () {
+        const btn = document.getElementById("scrollTopBtn");
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 400) {
+            btn.classList.add("visible");
+          } else {
+            btn.classList.remove("visible");
+          }
+        }, { passive: true });
+        btn.addEventListener("click", function () {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      })();
+    </script>
   </body>
 </html>
