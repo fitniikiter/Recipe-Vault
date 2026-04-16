@@ -3043,7 +3043,7 @@ const RECIPE_DETAILS = {
     ]},
   ],
   steps: [
-    "Bake potatoes at 200°C for 50–60 minutes until the skin is crispy and inside is fluffy — or microwave 8 minutes then 5 minutes in the oven to crisp the skin.",
+    "Bake potatoes at 200°C for 50–60 minutes until the skin is crispy and inside is fluffy.",
     "Let potatoes cool slightly, then halve and scoop out most of the flesh, leaving a 5mm thick shell.",
     "Brush the potato skins with a tiny bit of oil, season with salt, and return to the oven at 220°C for 10 minutes until extra crispy.",
     "Cook ground beef in a hot pan with smoked paprika, cumin, garlic powder, tomato paste, soy sauce, salt, and pepper — 5–6 minutes until browned and fragrant.",
@@ -3055,7 +3055,7 @@ const RECIPE_DETAILS = {
     { title: "The Double Oven Blast", text: "The second blast for the empty potato shells — without filling — creates a crackling, chip-like skin. Fill them while they're still hot and crispy. Fill them before and they steam from the inside and go soft." },
     { title: "Soy Sauce in the Beef", text: "1 tsp of soy sauce in the beef filling adds deep umami and enhances the meat flavour without making it taste remotely Asian. It's an invisible upgrade that makes the filling taste more complex and less one-dimensional." },
   ],
-  notes: "Scooped potato flesh can be seasoned and used for mash or added to soup — don't waste it. These reheat well in the oven at 180°C for 10 minutes. Don't microwave — the skin goes soft.",
+  notes: "Scooped potato flesh can be seasoned and used for mash or added to soup — don't waste it. These reheat well in the oven at 180°C for 10 minutes — the skin stays crispy.",
 },
 
 
@@ -4132,7 +4132,7 @@ const RECIPE_DETAILS = {
     "Top with spring onion, togarashi, sesame seeds, and a piece of nori — eat immediately.",
   ],
   hacks: [
-    { title: "Rice Must Be Steaming Hot", text: "The entire dish depends on the rice being hot enough to gently cook the egg as you stir. If the rice has cooled, microwave it until actively steaming before cracking the egg. Room temperature rice gives you raw egg on rice — not the goal." },
+    { title: "Rice Must Be Steaming Hot", text: "The entire dish depends on the rice being hot enough to gently cook the egg as you stir. If the rice has cooled, reheat it in a small pot with a splash of water over medium heat until actively steaming before cracking the egg. Room temperature rice gives you raw egg on rice — not the goal." },
     { title: "Vigorous Stirring = Creamy Texture", text: "The more vigorously and longer you stir, the more air you incorporate and the creamier and frothier the texture becomes. This technique is what transforms raw egg on rice into something genuinely silky." },
   ],
   notes: "Use the freshest eggs possible — this dish uses raw egg. Togarashi at Asian supermarkets. Nori sheets available at Asian supermarkets. Great ASMR-style close-up content.",
@@ -4234,7 +4234,7 @@ const RECIPE_DETAILS = {
     ]},
   ],
   steps: [
-    "Dice potatoes into 1cm cubes and microwave in a bowl with a splash of water and pinch of salt for 4 minutes until par-cooked.",
+    "Dice potatoes into 1cm cubes. Heat olive oil in a large oven-safe pan over medium heat, add potatoes with a pinch of salt, cover with a lid and steam-fry for 6–7 minutes, shaking occasionally, until just tender.",
     "Heat olive oil in a large oven-safe pan over medium-high heat — add par-cooked potatoes and spread flat. Don't touch for 3–4 minutes until the bottom crisps.",
     "Toss the potatoes, then add onion and bell pepper — cook 4 minutes until softened.",
     "Add garlic, smoked paprika, cumin, salt, and pepper — toss and cook 1 minute.",
@@ -4243,7 +4243,7 @@ const RECIPE_DETAILS = {
     "Scatter fresh herbs and serve straight from the pan with hot sauce on the side.",
   ],
   hacks: [
-    { title: "Microwave Par-Cook", text: "Microwaving the raw diced potato for 4 minutes before frying cuts total cooking time in half and means no boiling step. You get crispy hash in under 20 minutes total." },
+    { title: "Steam First, Then Crisp", text: "Covering the pan traps steam and cooks the potato through in 6–7 minutes — no boiling, no extra equipment. Pull the lid off, crank the heat and let the bottom crust. Two textures from one pan." },
     { title: "Oven Finish for Perfect Eggs", text: "Using the oven rather than a lid to finish the eggs means whites cook through while yolks stay beautifully runny — and you get a perfect presentation straight from pan to table." },
   ],
   notes: "Any leftover vegetables work in the hash — a great fridge-clear recipe. Serve with sriracha or Tabasco. Greek yogurt on the side adds extra protein and acts as a sour cream substitute.",
@@ -5087,7 +5087,7 @@ const RECIPE_DETAILS = {
     steps: [
       "Marinate the salmon: Mix miso, mirin, sake and honey. Coat salmon and marinate 20 minutes minimum — overnight in the fridge gives the deepest flavour.",
       "Cook the rice: Cook per packet instructions.",
-      "Cook the edamame: Boil or microwave frozen edamame 3 minutes until heated through.",
+      "Cook the edamame: Boil frozen edamame in salted water for 3–4 minutes until heated through, then drain.",
       "Sear the salmon: Wipe off excess marinade (it burns). Heat pan over medium-high, spray with oil. Place skin-side down. Cook 4 minutes, flip, 2 more minutes. Alternatively oven-roast at 200°C for 12 minutes.",
       "Build the bowl: Rice base, salmon on top. Add edamame and pickled ginger alongside. Drizzle any remaining glaze (thinned with a splash of water). Finish with sesame and spring onion.",
     ],
@@ -5130,7 +5130,7 @@ const RECIPE_DETAILS = {
     steps: [
       "Make sushi rice: Cook rice per instructions. While hot, mix rice vinegar, sugar and salt until dissolved. Fold through warm rice gently. Fan to cool slightly.",
       "Season the tuna: Mix drained tuna with soy sauce, sesame oil, rice vinegar, grated ginger and chili flakes. Let sit 5 minutes.",
-      "Cook edamame: Microwave or boil 3 minutes.",
+      "Cook edamame: Boil 3–4 minutes in salted water, then drain.",
       "Build the bowl: Sushi rice as the base. Arrange tuna in the centre. Place edamame, cucumber, carrot and avocado in separate sections around it. Top with spring onion and sesame seeds. Finish with sriracha.",
     ],
     hacks: [
@@ -5265,7 +5265,7 @@ const RECIPE_DETAILS = {
       "Crisp the tofu: Heat oven to 210°C. Place cornstarch-coated tofu on a wire rack, spray with oil. Bake 25 minutes until golden and crispy, flipping halfway.",
       "Season the vegetables: Quickly wilt spinach in a dry pan with sesame oil and soy sauce. Toss julienned carrot in the same pan 1 minute. Leave cucumber raw.",
       "Make the sauce: Mix gochujang, soy sauce, sesame oil, rice vinegar, honey and minced garlic. Taste — spicy, savoury, slightly sweet.",
-      "Cook edamame: Microwave 3 minutes.",
+      "Cook edamame: Boil 3–4 minutes in salted water, then drain.",
       "Build the bowl: Rice base, arrange crispy tofu, spinach, carrot, cucumber and edamame in separate sections. Place a spoonful of gochujang sauce in the centre. Finish with spring onion and sesame seeds. Mix everything at the table.",
     ],
     hacks: [
@@ -5312,7 +5312,7 @@ const RECIPE_DETAILS = {
       "Pan-fry the tofu: Cut tofu into thick slices. Pat dry. Heat pan over high, spray with oil. Fry 3–4 minutes each side until golden and firm on the outside.",
       "Make the braise sauce: Mix gochugaru, soy sauce, sesame oil, honey, garlic, ginger and water.",
       "Braise: Reduce heat to medium. Pour sauce over the fried tofu. Simmer 3–4 minutes, turning once, until sauce is reduced and sticky and the tofu is coated.",
-      "Cook edamame: Microwave 3 minutes.",
+      "Cook edamame: Boil 3–4 minutes in salted water, then drain.",
       "Build the bowl: Rice base, glazed dubu jorim on top. Add pickled cucumber and edamame alongside. Finish with spring onion and sesame seeds.",
     ],
     hacks: [
@@ -5352,7 +5352,7 @@ const RECIPE_DETAILS = {
     steps: [
       "Cook the rice: Cook per packet instructions.",
       "Crisp the tofu: Press tofu dry, cut into small cubes. Coat in cornstarch. Fry in oil over high heat 5–6 minutes until golden on most sides. Remove and set aside.",
-      "Cook edamame: Microwave 3 minutes.",
+      "Cook edamame: Boil 3–4 minutes in salted water, then drain.",
       "Make the sauce: Mix oyster sauce, soy sauce, fish sauce and sugar.",
       "Stir-fry: Heat wok over maximum heat. Add garlic and chili, stir-fry 30 seconds. Add crispy tofu and toss. Pour sauce over, toss to coat — 60 seconds over high heat.",
       "Basil off the heat: Remove from heat entirely. Add Thai basil and fold through — the residual heat wilts it without turning it bitter.",
@@ -5401,7 +5401,7 @@ const RECIPE_DETAILS = {
       "Cook the rice: Cook per packet instructions.",
       "Press and glaze the tofu: Press tofu 15 minutes, slice into thick rectangles. Mix miso, mirin, soy sauce, honey and ginger. Coat tofu slices.",
       "Bake the tofu: Place on a wire rack at 200°C, spray lightly. Bake 20–22 minutes until caramelised on the outside. Brush with any remaining glaze halfway through.",
-      "Cook edamame: Microwave or boil 3 minutes.",
+      "Cook edamame: Boil 3–4 minutes in salted water, then drain.",
       "Make the sesame dressing: Mix soy sauce, rice vinegar, sesame oil and honey.",
       "Build the bowl: Rice base, miso tofu on top. Add edamame, shredded carrot and pickled ginger in sections. Drizzle sesame dressing over everything. Finish with spring onion and sesame seeds.",
     ],
@@ -5444,7 +5444,7 @@ const RECIPE_DETAILS = {
       "Adobo braise: Add soy sauce, vinegar, garlic, bay leaves, black pepper, sugar and water to the pan with the tofu. Bring to a simmer.",
       "Reduce: Simmer on medium 10–12 minutes, turning the tofu occasionally, until sauce has reduced to a sticky glaze that coats the tofu. Remove bay leaves.",
       "Final caramelise: If sauce is reduced enough, increase heat to high for 60 seconds to caramelise the outside of the tofu.",
-      "Cook edamame: Microwave 3 minutes.",
+      "Cook edamame: Boil 3–4 minutes in salted water, then drain.",
       "Build the bowl: Rice base. Adobo tofu on top, spoon any remaining glaze over the rice. Add edamame alongside. Finish with spring onion, sesame seeds and fried shallots.",
     ],
     hacks: [
@@ -5695,14 +5695,14 @@ const RECIPE_DETAILS = {
     ]},
   ],
   steps: [
-    "Preheat oven grill/broiler to high. Slice potatoes thinly and microwave for 4 minutes until just tender.",
+    "Preheat oven grill/broiler to high. Slice potatoes thinly, place in a pan with a splash of water and a lid over medium heat — steam 4–5 minutes until just tender, then drain.",
     "Heat olive oil in an oven-safe non-stick pan over medium heat. Fry garlic and rosemary 30 seconds until fragrant. Add potatoes and cook 3–4 minutes until starting to crisp at the edges.",
     "Whisk eggs with grated parmesan, salt and pepper. Pour over the potatoes and swirl the pan to distribute evenly.",
     "Cook on the hob for 3–4 minutes until the edges are fully set. Transfer to the oven grill for 3–4 minutes until the top is golden and puffed.",
     "Run a spatula around the edge, slide onto a board. Rest 2 minutes and slice into wedges.",
   ],
   hacks: [
-    { title: "Microwave the Potato First", text: "4 minutes in the microwave before the pan cuts total cooking time in half. You skip the boiling step entirely and go straight to crisping — total time under 15 minutes." },
+    { title: "Steam the Potato Slices First", text: "A quick covered steam in the pan with a splash of water gets the potato tender in 4–5 minutes without boiling a separate pot. Drain well before crisping — excess moisture prevents browning." },
     { title: "Parmesan in the Egg Mix", text: "Mixing grated parmesan directly into the egg batter seasons every bite and creates a slightly firmer, more golden crust. Don't save it all for topping." },
   ],
   notes: "Frittata keeps well refrigerated for 3 days — excellent meal prep. Eat warm or cold. Serve with a simple green salad. The rosemary-potato-parmesan combination is a classic Italian flavour trio.",
@@ -5729,14 +5729,14 @@ const RECIPE_DETAILS = {
     ]},
   ],
   steps: [
-    "Dice potatoes into 1cm cubes and microwave 4 minutes until tender. Pat dry.",
-    "Heat oil in a skillet over high heat. Add potatoes and cook undisturbed 3 minutes until golden and crispy. Season with cumin, paprika and salt.",
+    "Dice potatoes into 1cm cubes. Heat 1 tsp oil in a skillet over medium heat, add potatoes with a pinch of salt and cover with a lid — steam-fry for 6–7 minutes, shaking the pan occasionally, until just tender.",
+    "Remove the lid, increase heat to high and press the potatoes flat against the pan — cook undisturbed 2–3 minutes until the bottom is golden and crispy. Season with cumin, paprika and salt.",
     "Add garlic, jalapeño and spring onion whites — stir-fry 1 minute.",
     "Whisk eggs with a pinch of salt. Reduce heat to medium, pour over the potatoes and scramble gently — fold rather than stir for bigger curds.",
     "Serve topped with salsa, fresh coriander and spring onion greens.",
   ],
   hacks: [
-    { title: "Microwave Par-Cook is Non-Negotiable", text: "Raw potato needs 20+ minutes in a pan. A 4-minute microwave pre-cook gets you crispy diced potatoes in under 5 minutes of pan time. Same result, 15 minutes faster." },
+    { title: "Steam First, Crisp Second", text: "Covering the pan with a lid traps steam and cooks the potato through in 6–7 minutes without any pre-boiling. Then pulling the lid off and cranking the heat gives you the crispy golden crust — two textures, one pan, zero extra steps." },
     { title: "Jalapeño Seeds In or Out", text: "Keep seeds in for real heat, remove for mild. The white membrane is the hottest part — remove that alone for medium. This dish should have a kick — don't go too mild." },
   ],
   notes: "One of the most eaten breakfasts in Mexico — inexpensive, fast and endlessly satisfying. Serve with warm tortillas if you want a wrap version. Leftovers reheat well in a dry pan.",
@@ -6222,7 +6222,7 @@ const RECIPE_DETAILS = {
     ]},
   ],
   steps: [
-    "Microwave potatoes 8 minutes then 5 minutes in a 220°C oven to crisp the skin.",
+    "Bake potatoes at 200°C for 50–60 minutes until the skin is crispy and the inside is fluffy. Alternatively, par-boil whole for 20 minutes, then transfer to a 220°C oven for 15–20 minutes to crisp the skin.",
     "Dice chicken breast and season. Cook in a pan over high heat with oil until browned and cooked through, 5–6 minutes.",
     "Add garlic, green chili and spices to the pan — 30 seconds. Add white beans and chicken stock, simmer 5 minutes.",
     "Roughly mash a spoonful of beans against the side of the pan to thicken the broth naturally.",
@@ -6230,7 +6230,7 @@ const RECIPE_DETAILS = {
   ],
   hacks: [
     { title: "Mash Some Beans Against the Pan", text: "Pressing a few white beans against the side of the pan and stirring them in thickens the chili into a creamy sauce naturally — no flour, no cornstarch, no extra calories. The beans do the work." },
-    { title: "Microwave + Oven for the Potato", text: "8 minutes microwave then 5 in a hot oven gives you fluffy inside and crispy skin in 13 minutes total, versus 50–60 minutes oven-only. This is the only method that makes sense for a weeknight loaded potato." },
+    { title: "Par-Boil + Oven for Speed", text: "Par-boiling the potato for 20 minutes before a hot oven blast gives you fluffy inside and crispy skin in around 35 minutes — much faster than oven-only, no specialist equipment needed." },
   ],
   notes: "White chicken chili is a classic American midwest comfort dish — less common than red chili but arguably better macro-profile. The chili also works well in tortillas or over rice. Cannellini beans at any supermarket.",
 },
@@ -6369,14 +6369,14 @@ const RECIPE_DETAILS = {
     ]},
   ],
   steps: [
-    "Microwave potatoes 8 minutes, then transfer to a 220°C oven for 5 minutes to crisp the skin.",
+    "Bake potatoes at 200°C for 50–60 minutes until the skin is crispy and the inside is fluffy. Alternatively, par-boil whole for 20 minutes, then transfer to a 220°C oven for 15–20 minutes to crisp the skin.",
     "Heat oil in a pan over high heat. Brown ground beef, breaking it up, 4–5 minutes.",
     "Add onion, garlic, tomato paste and all spices — cook 2 minutes until fragrant.",
     "Add crushed tomatoes and beans. Simmer 10 minutes until thick.",
     "Split the potato and push open. Load generously with chili, then top with cheddar — the residual heat melts it. Add Greek yogurt and spring onion.",
   ],
   hacks: [
-    { title: "Microwave + Oven Method", text: "8 minutes in the microwave followed by 5 in a hot oven gets you a perfect baked potato with fluffy interior and crispy skin in 13 minutes. Full oven baking takes over an hour. There is no downside to the shortcut." },
+    { title: "Par-Boil + Oven Method", text: "Par-boiling the whole potato for 20 minutes then blasting it in a 220°C oven for 15–20 minutes gives you fluffy inside and crispy skin without a microwave. Far faster than full oven baking and the skin comes out crispier." },
     { title: "Kidney Beans Mashed In", text: "Press a few kidney beans against the side of the pan mid-cook. The mashed beans thicken the chili and make it cling to the potato better than a runny sauce. Free upgrade, no extra ingredients." },
   ],
   notes: "The American loaded baked potato is one of the most satisfying high-protein potato dishes in existence. The chili alone also works as a bowl over rice or in a wrap. Double the chili batch and freeze half.",
@@ -6643,7 +6643,7 @@ const RECIPE_DETAILS = {
     ]},
   ],
   steps: [
-    "Microwave potatoes 8 minutes then 5 minutes at 220°C to crisp the skin.",
+    "Bake potatoes at 200°C for 50–60 minutes until the skin is crispy and the inside is fluffy. Alternatively, par-boil whole for 20 minutes, then transfer to a 220°C oven for 15–20 minutes to crisp the skin.",
     "Heat oil in a pan over high heat. Brown ground beef 4–5 minutes, breaking up well.",
     "Add onion and garlic — cook 2 minutes. Add tomato paste and cook 1 minute until it darkens.",
     "Add passata, Worcestershire sauce, vinegar and sugar. Simmer 8–10 minutes until thick and glossy.",

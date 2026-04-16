@@ -6949,10 +6949,11 @@
           (modalServings = weights.servings), updateModalMacros(a));
         const r = getRecipeDetail(a),
           c = document.getElementById("modalTabs");
-        ((c.innerHTML = `\n    <div class="modal-tab active" onclick="switchModalTab('ingredients',this)">🥄 Ingredients</div>\n    <div class="modal-tab" onclick="switchModalTab('recipe',this)">👨‍🍳 Recipe</div>\n    ${r.video ? '<div class="modal-tab" onclick="switchModalTab(\'video\',this)">▶️ Video</div>' : ""}\n  `),
+        ((c.innerHTML = `\n    <div class="modal-tab active" onclick="switchModalTab('ingredients',this)">🥄 Ingredients</div>\n    <div class="modal-tab" onclick="switchModalTab('recipe',this)">👨‍🍳 Recipe</div>\n    ${r.video ? '<div class="modal-tab" onclick="switchModalTab(\'video\',this)">▶️ Video</div>' : r.image ? '<div class="modal-tab" onclick="switchModalTab(\'video\',this)">📸 Photo</div>' : ""}\n  `),
           buildIngredientsTab(a, modalServings),
           buildRecipeTab(a),
           r.video && buildVideoTab(a),
+          !r.video && r.image && buildVideoTab(a),
           switchModalTab("ingredients", c.querySelector(".modal-tab")),
           (function(){
             const modal = document.getElementById("recipeModal");
@@ -6965,9 +6966,15 @@
           d = document.getElementById("modalCollapsible");
         l &&
           d &&
-          ((l.onscroll = () => {}),
-          (l.scrollTop = 0),
-          d.classList.remove("collapsed"));
+          ((l.scrollTop = 0),
+          d.classList.remove("collapsed"),
+          (l.onscroll = () => {
+            if (l.scrollTop > 40) {
+              d.classList.add("collapsed");
+            } else {
+              d.classList.remove("collapsed");
+            }
+          }));
       }
       function closeModal(e) {
         e.target === document.getElementById("recipeModal") && closeModalDirect();
@@ -7387,9 +7394,12 @@
       function buildVideoTab(e) {
         const a = getRecipeDetail(e);
         let t = "";
-        (a.video &&
-          (t = `<div class="video-embed"><iframe src="https://www.youtube.com/embed/${a.video}" allowfullscreen loading="lazy"></iframe></div>`),
-          (document.getElementById("tab-video").innerHTML = t));
+        if (a.video) {
+          t = `<div class="video-embed"><iframe src="https://www.youtube.com/embed/${a.video}" allowfullscreen loading="lazy"></iframe></div>`;
+        } else if (a.image) {
+          t = `<div style="text-align:center;padding:12px 0;"><img src="${a.image}" alt="${e.title}" style="max-width:100%;border-radius:10px;"></div>`;
+        }
+        document.getElementById("tab-video").innerHTML = t;
       }
       const PANTRY_ITEMS = {
           sauces: [
