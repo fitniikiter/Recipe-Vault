@@ -5618,6 +5618,10 @@
       const CARB_COOKED_FACTORS = { rice: 2.5, noodle: 2.2, potato: 0.85 };
       // true = user input is cooked/ready weight
       let carbIsCooked = { rice: false, noodle: false, potato: false };
+      // Raw→Cooked factor for proteins (100g raw → Xg cooked)
+      const PROTEIN_COOKED_FACTORS = { chicken_thigh: 0.75, chicken_breast: 0.75, beef_regular: 0.70, beef_lean: 0.70, salmon: 0.80, tofu: 1.0 };
+      // true = user is entering cooked protein weight
+      let proteinIsCooked = false;
       const TAG_FLAGS = {
         "korean": "🇰🇷", "japanese": "🇯🇵", "thai": "🇹🇭", "mexican": "🇲🇽",
         "chinese": "🇨🇳", "indian": "🇮🇳", "vietnamese": "🇻🇳", "american": "🇺🇸",
@@ -5666,7 +5670,8 @@
         const a = Math.max(weights.servings, 1),
           t = NUT[activeProtein] || NUT.chicken_thigh,
           i = NUT[e] || { kcal: 0, p: 0, c: 0, f: 0 },
-          n = weights.chicken / 100,
+          _protRawFactor = (proteinIsCooked && PROTEIN_COOKED_FACTORS[activeProtein]) ? (1 / PROTEIN_COOKED_FACTORS[activeProtein]) : 1,
+          n = (weights.chicken * _protRawFactor) / 100,
           _carbRaw = weights[e] || 0,
           _carbEff = (carbIsCooked[e] && CARB_COOKED_FACTORS[e]) ? _carbRaw / CARB_COOKED_FACTORS[e] : _carbRaw,
           s = _carbEff / 100,
@@ -5864,6 +5869,12 @@
         if (r) { buildIngredientsTab(r); updateModalMacros(r); }
         updateCardMacros(); filterRecipes(); updateCalcDisplay();
       }
+      function setProteinMode(isCooked, recipeId) {
+        proteinIsCooked = isCooked;
+        const r = R.find(r => r.id === recipeId);
+        if (r) { buildIngredientsTab(r); updateModalMacros(r); }
+        updateCardMacros(); filterRecipes(); updateCalcDisplay();
+      }
       function setSideEggSize(g, id) {
         sideEggSizeG = g;
         // Update active state on size buttons by matching data-g attribute
@@ -5915,6 +5926,7 @@
       }
       function selectModalVariant(e, a) {
         activeProtein = e;
+        proteinIsCooked = false; // reset to raw when switching variant
         const t =
             { chicken_thigh: "chicken", chicken_breast: "chicken", beef_regular: "beef", beef_lean: "beef" }[e] || e,
           i = PROTEIN_DEFS.find((e) => e.key === t);
@@ -6949,6 +6961,7 @@
       function openModal(e) {
         const a = R.find((a) => a.id === e);
         if (!a) return;
+        proteinIsCooked = false; // always start in raw mode
         ((currentModalRecipe = a),
           (document.getElementById("modalNum").textContent = "#" + String(a.displayNum).padStart(3, "0")),
           (function(){ const sl=document.getElementById("modalServingLabel"); if(sl) sl.textContent="1 serving"; })(),
@@ -7180,11 +7193,16 @@
               ? k
               : (() => {
                   const a = NUT[r] || NUT.chicken_thigh,
-                    t = Math.round((a.kcal * p) / 100),
-                    i = Math.round(((a.p * p) / 100) * 10) / 10,
-                    n = Math.round(((a.c * p) / 100) * 10) / 10,
-                    s = Math.round(((a.f * p) / 100) * 10) / 10;
-                  return `\n  <div class="modal-weight-row" id="protWeightRow">\n    <div class="modal-weight-row-main" onclick="toggleWeightRow('protWeightRow')">\n      <label>${d} ${l.short}</label>\n      <input type="number" class="modal-weight-input" id="mwProt" value="${weights.chicken}"\n        min="50" max="3000"\n        onclick="event.stopPropagation()"\n        oninput="updateModalWeight('prot', this.value, '${e.id}')">\n      <span class="modal-weight-unit">g batch total</span>\n      <span class="modal-weight-hint">${p}g per portion</span>\n      <span class="modal-weight-expand">▼</span>\n    </div>\n    <div class="modal-weight-macro-panel">\n      <div class="ing-macro-grid" style="margin-top:8px;">\n        <div class="ing-macro-cell mk"><span class="imc-val">${t}</span><span class="imc-lbl">kcal</span></div>\n        <div class="ing-macro-cell mp"><span class="imc-val">${i}g</span><span class="imc-lbl">protein</span></div>\n        <div class="ing-macro-cell mc"><span class="imc-val">${n}g</span><span class="imc-lbl">carbs</span></div>\n        <div class="ing-macro-cell mf"><span class="imc-val">${s}g</span><span class="imc-lbl">fat</span></div>\n      </div>\n      <div class="ing-macro-hint">Per portion · ${p}g · per 100g: ${a.kcal}kcal ${a.p}g P ${a.c}g C ${a.f}g F</div>\n    </div>\n  </div>`;
+                    _pFactor = (proteinIsCooked && PROTEIN_COOKED_FACTORS[r]) ? (1 / PROTEIN_COOKED_FACTORS[r]) : 1,
+                    _pRawEff = Math.round((weights.chicken * _pFactor) / i),
+                    t = Math.round((a.kcal * _pRawEff) / 100),
+                    i2 = Math.round(((a.p * _pRawEff) / 100) * 10) / 10,
+                    n = Math.round(((a.c * _pRawEff) / 100) * 10) / 10,
+                    s = Math.round(((a.f * _pRawEff) / 100) * 10) / 10,
+                    _protToggle = `<div style="display:inline-flex;gap:4px;margin-left:8px;"><button class="modal-variant-btn${!proteinIsCooked ? " active" : ""}" style="padding:2px 8px;font-size:10px;" onclick="setProteinMode(false,'${e.id}');event.stopPropagation()">Raw</button><button class="modal-variant-btn${proteinIsCooked ? " active" : ""}" style="padding:2px 8px;font-size:10px;" onclick="setProteinMode(true,'${e.id}');event.stopPropagation()">Cooked</button></div>`,
+                    _protUnit = proteinIsCooked ? "g cooked total" : "g raw total",
+                    _protHint = proteinIsCooked ? `Per portion · ${p}g cooked (≈${_pRawEff}g raw) · per 100g raw: ${a.kcal}kcal ${a.p}g P ${a.c}g C ${a.f}g F` : `Per portion · ${p}g · per 100g: ${a.kcal}kcal ${a.p}g P ${a.c}g C ${a.f}g F`;
+                  return `\n  <div class="modal-weight-row" id="protWeightRow">\n    <div class="modal-weight-row-main" onclick="toggleWeightRow('protWeightRow')">\n      <label>${d} ${l.short}</label>${_protToggle}\n      <input type="number" class="modal-weight-input" id="mwProt" value="${weights.chicken}"\n        min="50" max="3000"\n        onclick="event.stopPropagation()"\n        oninput="updateModalWeight('prot', this.value, '${e.id}')">\n      <span class="modal-weight-unit">${_protUnit}</span>\n      <span class="modal-weight-hint">${p}g per portion</span>\n      <span class="modal-weight-expand">▼</span>\n    </div>\n    <div class="modal-weight-macro-panel">\n      <div class="ing-macro-grid" style="margin-top:8px;">\n        <div class="ing-macro-cell mk"><span class="imc-val">${t}</span><span class="imc-lbl">kcal</span></div>\n        <div class="ing-macro-cell mp"><span class="imc-val">${i2}g</span><span class="imc-lbl">protein</span></div>\n        <div class="ing-macro-cell mc"><span class="imc-val">${n}g</span><span class="imc-lbl">carbs</span></div>\n        <div class="ing-macro-cell mf"><span class="imc-val">${s}g</span><span class="imc-lbl">fat</span></div>\n      </div>\n      <div class="ing-macro-hint">${_protHint}</div>\n    </div>\n  </div>`;
                 })()
           }\n  <div class="modal-weight-row" id="carbWeightRow">\n    ${(() => {
             const a = NUT[e.carb] || {},
