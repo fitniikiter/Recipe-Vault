@@ -7002,6 +7002,10 @@
           const e = R.find((e) => e.id === currentModalRecipe.id);
           e && buildRecipeTab(e);
         }
+        const _body = document.querySelector(".modal-body");
+        const _coll = document.getElementById("modalCollapsible");
+        if (_body) _body.scrollTop = 0;
+        if (_coll) _coll.classList.remove("collapsed");
       }
       function refreshRecipeTabIfOpen(e) {
         const a = document.getElementById("tab-recipe");
