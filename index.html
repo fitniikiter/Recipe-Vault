@@ -5866,10 +5866,9 @@
       }
       function setSideEggSize(g, id) {
         sideEggSizeG = g;
-        // Update active state on size buttons by matching their label to sideEggSizeG
-        const sizeMap = {"S": 48, "M": 58, "L": 68};
+        // Update active state on size buttons by matching data-g attribute
         document.querySelectorAll("#sideEggRow .modal-variant-btn").forEach(function(btn) {
-          btn.classList.toggle("active", sizeMap[btn.textContent.trim()] === sideEggSizeG);
+          btn.classList.toggle("active", parseInt(btn.dataset.g) === sideEggSizeG);
         });
         // Recalculate macros inline (same as changeSideEggCount)
         const nut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
@@ -7075,8 +7074,8 @@
         const sizes = [{k:"S",g:48},{k:"M",g:58},{k:"L",g:68}];
         const btns = sizes.map(function(a) {
           const active = sideEggSizeG === a.g ? " active" : "";
-          return "<button class=\"modal-variant-btn" + active + "\" style=\"padding:2px 8px;font-size:10px;\" " +
-            "onclick=\"setSideEggSize(" + a.g + ",'" + recipeId + "');event.stopPropagation()\">" + a.k + "</button>";
+          return "<button class=\"modal-variant-btn" + active + "\" style=\"padding:2px 8px;font-size:10px;\" data-g=\"" + a.g + "\" " +
+            "onclick=\"setSideEggSize(" + a.g + ",'" + recipeId + "');event.stopPropagation()\">" + a.k + " ~" + a.g + "g</button>";
         }).join("");
         return "<div class=\"modal-weight-row\" id=\"sideEggRow\">" +
           "<div class=\"modal-weight-row-main\" onclick=\"toggleWeightRow('sideEggRow')\" style=\"flex-wrap:nowrap;align-items:center;\">" +
