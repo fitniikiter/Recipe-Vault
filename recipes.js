@@ -1841,6 +1841,19 @@ const R = [
   hint: "",
 },
 
+{
+  id: "german-bavarian-street-wrap",
+  protein: "eggs",
+  displayNum: 118,
+  carb: "bread",
+  time: 40,
+  title: "Bavarian Street Wrap",
+  desc: "Geflügel-Nürnberger, slow-scrambled eggs, caramelized onions & mustard-potato schmear — dunked in homemade Bratensauce.",
+  tags: ["german", "comfort"],
+  flavor: "savory",
+  hint: "",
+},
+
 ];
 
 // --- RECIPE DETAILS (ingredients, steps, hacks) ---
@@ -6465,6 +6478,55 @@ const RECIPE_DETAILS = {
     { title: "Greek Yogurt + Light Mayo = Burger Sauce That Hits Macros", text: "Standard burger sauce is essentially just mayo. Replacing 2/3 of the mayo with Greek yogurt gives you a sauce that's creamier, tangier, and adds 5–6g of protein per batch — while barely changing the flavour. The pickle brine is the detail that makes it taste like a real burger sauce rather than a dip." },
   ],
   notes: "The smash moment is the natural hook for this video — shoot it from directly above with the pan on a dark surface. Use a cast iron skillet for the best crust; a non-stick pan won't get hot enough.",
+},
+
+"german-bavarian-street-wrap": {
+  image: null,
+  video: "",
+  ingredients: [
+    { section: "Protein", items: [{ name: "Eggs (large)", amt: "{{eggCount}} pieces" }] },
+    { section: "Carb Base", items: [{ name: "Large flour tortillas", amt: "{{carbG}}g" }] },
+    { section: "Nürnberger", items: [
+      { name: "Geflügel-Nürnberger sausages", amt: "4 pieces" },
+    ]},
+    { section: "Potato Schmear", items: [
+      { name: "Floury potatoes (mehligkochend), peeled & cubed", amt: "200g" },
+      { name: "Magerquark", amt: "120g" },
+      { name: "Butter", amt: "5g" },
+      { name: "Milk", amt: "30ml" },
+      { name: "Medium-hot mustard (Mittelscharf)", amt: "1 tbsp" },
+      { name: "Salt & nutmeg", amt: "to taste" },
+    ]},
+    { section: "Caramelized Onions", items: [
+      { name: "Large onions, thinly sliced", amt: "2 medium" },
+      { name: "Rapeseed oil", amt: "1 tsp" },
+      { name: "Sugar", amt: "1 tsp" },
+      { name: "Apple cider vinegar", amt: "1 tbsp" },
+      { name: "Salt", amt: "to taste" },
+    ]},
+    { section: "Bratensauce", items: [
+      { name: "Beef broth (Rinderbrühe, from cube)", amt: "300ml" },
+      { name: "Tomato paste", amt: "1 tbsp" },
+      { name: "Worcestershire sauce", amt: "1 tsp" },
+      { name: "Cornstarch (Speisestärke)", amt: "1 tsp" },
+      { name: "Dried thyme", amt: "0.5 tsp" },
+      { name: "Salt & pepper", amt: "to taste" },
+    ]},
+  ],
+  steps: [
+    "Start the onions first — heat 1 tsp rapeseed oil in a pan over medium heat. Add the sliced onions with a pinch of salt and 1 tsp sugar. Cook low and slow for 20–25 minutes, stirring occasionally, until deeply golden and jammy. Add the apple cider vinegar in the last 2 minutes, let it sizzle and cook off completely.",
+    "While the onions cook, boil the cubed potatoes in well-salted water for 15 minutes until fork-tender. Drain completely, then let them steam-dry off the heat for 1 minute. Mash until smooth, then stir in the Magerquark, butter, milk, and mustard. Season generously with salt and a pinch of nutmeg — the texture should be smooth and spreadable, like thick hummus.",
+    "Make the Bratensauce — combine broth, tomato paste, Worcestershire sauce, thyme, salt, and pepper in a small saucepan. Simmer gently for 5 minutes. Stir the cornstarch into 2 tbsp cold water until dissolved, then pour into the sauce and cook for another 2 minutes, stirring, until glossy and lightly thickened. Keep warm on the lowest heat.",
+    "Sear the Nürnberger in a dry pan over medium-high heat for 6–8 minutes, turning regularly, until deeply golden and slightly crisp all over. Remove and set aside but do not wipe the pan.",
+    "Reduce the same pan to low heat — the sausage fond left behind is pure flavour. Add 6g butter total, crack in the eggs, season with salt and pepper, and stir very slowly with a spatula. Pull off the heat while they're still slightly glossy — residual heat will finish them perfectly.",
+    "Toast each tortilla in a dry pan for 30 seconds per side until soft with light char spots. Spread a generous layer of potato schmear across the lower two-thirds. Pile the scrambled eggs in the center, lay 2 Nürnberger across them, then top with a generous heap of caramelized onions. Fold in the sides and roll tight.",
+    "Slice each wrap diagonally and plate next to a small bowl of warm Bratensauce for dipping. Serve immediately.",
+  ],
+  hacks: [
+    { title: "Don't Rush the Onions", text: "The caramelized onions are the secret weapon of this wrap — 20 minutes of low heat transforms sharp raw onion into something sweet, jammy, and complex. The apple cider vinegar deglaze at the end adds brightness that cuts perfectly through the richness of the eggs and sausage. Rushing them on high heat gives you soft onions, not caramelized ones — not the same thing." },
+    { title: "Scramble in the Sausage Pan", text: "Don't wipe the pan after the Nürnberger — those golden bits of rendered fat and fond are flavor. Scrambling the eggs directly in that pan means you get all of that richness for zero extra ingredients. Keep the heat low and the motion slow — the goal is creamy, just-set eggs, not dry rubbery ones. Pull off heat while still slightly wet." },
+  ],
+  notes: "Potato schmear can be made ahead and reheated — actually gets better as it sits and the mustard flavour develops. Bratensauce keeps in the fridge for up to 3 days.",
 },
 
 };
