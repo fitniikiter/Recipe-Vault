@@ -1198,7 +1198,6 @@
         border-radius: 4px;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        border: 1px solid currentColor;
       }
       .tag-asian {
         background: rgba(71, 179, 232, 0.15);
@@ -1272,46 +1271,6 @@
       .tag-hawaiian   { background: rgba(255, 100, 150, 0.15); color: #ff6496; }
       .tag-taiwanese  { background: rgba(30, 100, 180, 0.15); color: #1e64b4; }
       .tag-filipino   { background: rgba(0, 56, 168, 0.15); color: #0038a8; }
-      .tag-beef       { background: rgba(232, 71, 71, 0.15); color: #e84747; }
-      .tag-cheese     { background: rgba(232, 195, 71, 0.15); color: #c8a800; }
-      .tag-chicken    { background: rgba(232, 163, 71, 0.15); color: #e8a347; }
-      .tag-salmon     { background: rgba(255, 140, 105, 0.15); color: #ff6b35; }
-      .tag-tofu       { background: rgba(71, 232, 163, 0.15); color: #33c687; }
-      .tag-pork       { background: rgba(255, 150, 160, 0.15); color: #e87080; }
-      .tag-breakfast  { background: rgba(255, 220, 100, 0.15); color: #c8960a; }
-      .tag-italian    { background: rgba(71, 137, 232, 0.15); color: #4789e8; }
-
-      /* ── Scroll-to-top button ── */
-      #scrollTopBtn {
-        position: fixed;
-        bottom: 28px;
-        right: 20px;
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        background: var(--accent);
-        color: #fff;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 20px;
-        box-shadow: 0 4px 14px rgba(0,0,0,0.35);
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.25s, transform 0.25s;
-        transform: translateY(10px);
-        z-index: 1100;
-      }
-      #scrollTopBtn.visible {
-        opacity: 1;
-        pointer-events: auto;
-        transform: translateY(0);
-      }
-      #scrollTopBtn:hover {
-        filter: brightness(1.15);
-      }
       .calc-page {
         max-width: 740px;
         margin: 0 auto;
@@ -5614,14 +5573,6 @@
         currentCuisineFilter = "all",
         weights = { chicken: 150, potato: 150, rice: 150, noodle: 150, bread: 150, eggs: 0, servings: 1 };
       const CARB_RATIOS = { potato: 1.25, rice: 0.33, noodle: 0.33, bread: 0.2 };
-      // Dry→Cooked multiplication factor (1g dry = Xg cooked)
-      const CARB_COOKED_FACTORS = { rice: 2.5, noodle: 2.2, potato: 0.85 };
-      // true = user input is cooked/ready weight
-      let carbIsCooked = { rice: false, noodle: false, potato: false };
-      // Raw→Cooked factor for proteins (100g raw → Xg cooked)
-      const PROTEIN_COOKED_FACTORS = { chicken_thigh: 0.75, chicken_breast: 0.75, beef_regular: 0.70, beef_lean: 0.70, salmon: 0.80, tofu: 1.0 };
-      // true = user is entering cooked protein weight
-      let proteinIsCooked = false;
       const TAG_FLAGS = {
         "korean": "🇰🇷", "japanese": "🇯🇵", "thai": "🇹🇭", "mexican": "🇲🇽",
         "chinese": "🇨🇳", "indian": "🇮🇳", "vietnamese": "🇻🇳", "american": "🇺🇸",
@@ -5670,11 +5621,8 @@
         const a = Math.max(weights.servings, 1),
           t = NUT[activeProtein] || NUT.chicken_thigh,
           i = NUT[e] || { kcal: 0, p: 0, c: 0, f: 0 },
-          _protRawFactor = (proteinIsCooked && PROTEIN_COOKED_FACTORS[activeProtein]) ? (1 / PROTEIN_COOKED_FACTORS[activeProtein]) : 1,
-          n = (weights.chicken * _protRawFactor) / 100,
-          _carbRaw = weights[e] || 0,
-          _carbEff = (carbIsCooked[e] && CARB_COOKED_FACTORS[e]) ? _carbRaw / CARB_COOKED_FACTORS[e] : _carbRaw,
-          s = _carbEff / 100,
+          n = weights.chicken / 100,
+          s = weights[e] ? weights[e] / 100 : 0,
           o = "eggs" === activeProtein ? 0 : weights.eggs * (eggSizeG / 100),
           r = NUT.eggs;
         return {
@@ -5863,23 +5811,12 @@
         (n && (buildIngredientsTab(n), updateModalMacros(n)), updateCardMacros(), updateCalcDisplay());
       }
       // Side-egg controls for sideEgg: true recipes
-      function setCarbMode(carb, isCooked, recipeId) {
-        carbIsCooked[carb] = isCooked;
-        const r = R.find(r => r.id === recipeId);
-        if (r) { buildIngredientsTab(r); updateModalMacros(r); }
-        updateCardMacros(); filterRecipes(); updateCalcDisplay();
-      }
-      function setProteinMode(isCooked, recipeId) {
-        proteinIsCooked = isCooked;
-        const r = R.find(r => r.id === recipeId);
-        if (r) { buildIngredientsTab(r); updateModalMacros(r); }
-        updateCardMacros(); filterRecipes(); updateCalcDisplay();
-      }
       function setSideEggSize(g, id) {
         sideEggSizeG = g;
-        // Update active state on size buttons by matching data-g attribute
+        // Update active state on size buttons by matching their label to sideEggSizeG
+        const sizeMap = {"S": 48, "M": 58, "L": 68};
         document.querySelectorAll("#sideEggRow .modal-variant-btn").forEach(function(btn) {
-          btn.classList.toggle("active", parseInt(btn.dataset.g) === sideEggSizeG);
+          btn.classList.toggle("active", sizeMap[btn.textContent.trim()] === sideEggSizeG);
         });
         // Recalculate macros inline (same as changeSideEggCount)
         const nut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
@@ -5926,7 +5863,6 @@
       }
       function selectModalVariant(e, a) {
         activeProtein = e;
-        proteinIsCooked = false; // reset to raw when switching variant
         const t =
             { chicken_thigh: "chicken", chicken_breast: "chicken", beef_regular: "beef", beef_lean: "beef" }[e] || e,
           i = PROTEIN_DEFS.find((e) => e.key === t);
@@ -6427,7 +6363,7 @@
         (R.forEach((e) => {
           const i = document.createElement("div");
           ((i.className = "card"), (i.dataset.id = e.id), (i.dataset.id = e.id), (i.onclick = () => openModal(e.id)));
-          const n = e.tags.filter(t => t !== "spicy" && t !== "dip" && t !== e.protein).map((e) => `<span class="tag tag-${e}">${tagLabel(e)}</span>`).join(""),
+          const n = e.tags.filter(t => t !== "spicy" && t !== "dip").map((e) => `<span class="tag tag-${e}">${tagLabel(e)}</span>`).join(""),
             s = e.protein === "none" ? "none" : (e.protein || "chicken"),
             o =
               { chicken: "🍗 Chicken", beef: "🥩 Beef", eggs: "🥚 Eggs", fish: "🐟 Fish", tofu: "🫘 Tofu" }[s] ||
@@ -6961,7 +6897,6 @@
       function openModal(e) {
         const a = R.find((a) => a.id === e);
         if (!a) return;
-        proteinIsCooked = false; // always start in raw mode
         ((currentModalRecipe = a),
           (document.getElementById("modalNum").textContent = "#" + String(a.displayNum).padStart(3, "0")),
           (function(){ const sl=document.getElementById("modalServingLabel"); if(sl) sl.textContent="1 serving"; })(),
@@ -6976,16 +6911,15 @@
             "🍗 Chicken",
           n = { chicken: "chicken", beef: "beef", eggs: "eggs", salmon: "salmon", tofu: "tofu" }[t] || "chicken",
           s = document.getElementById("modalTagsRow"),
-          o = (a.tags || []).filter(t => t !== "spicy" && t !== "dip" && t !== a.protein).map((e) => `<span class="tag tag-${e}">${tagLabel(e)}</span>`).join("");
+          o = (a.tags || []).filter(e => e !== "spicy" && e !== "dip").map((e) => `<span class="tag tag-${e}">${tagLabel(e)}</span>`).join("");
         ((s.innerHTML = `\n    <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:${o ? "6px" : "0"};">\n      ${a.carb !== "none" ? `<span class="carb-badge ${a.carb}" style="font-size:10px;padding:4px 10px;">${{ potato: "🥔 Potato", rice: "🍚 Rice", noodle: "🍜 Noodle", bread: "🫓 Bread" }[a.carb]}</span>` : ""}\n      ${t !== "none" ? `<span class="protein-badge ${n}" style="font-size:10px;padding:4px 10px;">${i}</span>` : ""}\n      <span class="flavor-badge ${a.flavor || "savory"}" style="font-size:10px;padding:4px 10px;">${"sweet" === a.flavor ? "🍯 Sweet" : "🧂 Savory"}</span>\n      ${ALCOHOL_RECIPE_IDS.has(a.id) ? '<span class="flavor-badge alcohol" style="font-size:10px;padding:4px 10px;">🍶 Alcohol</span>' : ""}\n      ${SPICY_RECIPE_IDS.has(a.id) ? '<span class="flavor-badge spicy" style="font-size:10px;padding:4px 10px;">🌶️ Spicy</span>' : ""}\n      ${DIP_RECIPE_IDS.has(a.id) ? '<span class="flavor-badge dip" style="font-size:10px;padding:4px 10px;">🥣 Dip</span>' : ""}\n    </div>\n    ${o ? `<div style="display:flex;flex-wrap:wrap;gap:5px;">${o}</div>` : ""}\n  `),
           (modalServings = weights.servings), updateModalMacros(a));
         const r = getRecipeDetail(a),
           c = document.getElementById("modalTabs");
-        ((c.innerHTML = `\n    <div class="modal-tab active" onclick="switchModalTab('ingredients',this)">🥄 Ingredients</div>\n    <div class="modal-tab" onclick="switchModalTab('recipe',this)">👨‍🍳 Recipe</div>\n    ${r.video ? '<div class="modal-tab" onclick="switchModalTab(\'video\',this)">▶️ Video</div>' : r.image ? '<div class="modal-tab" onclick="switchModalTab(\'video\',this)">📸 Photo</div>' : ""}\n  `),
+        ((c.innerHTML = `\n    <div class="modal-tab active" onclick="switchModalTab('ingredients',this)">🥄 Ingredients</div>\n    <div class="modal-tab" onclick="switchModalTab('recipe',this)">👨‍🍳 Recipe</div>\n    ${r.video ? '<div class="modal-tab" onclick="switchModalTab(\'video\',this)">▶️ Video</div>' : ""}\n  `),
           buildIngredientsTab(a, modalServings),
           buildRecipeTab(a),
           r.video && buildVideoTab(a),
-          !r.video && r.image && buildVideoTab(a),
           switchModalTab("ingredients", c.querySelector(".modal-tab")),
           (function(){
             const modal = document.getElementById("recipeModal");
@@ -6998,18 +6932,9 @@
           d = document.getElementById("modalCollapsible");
         l &&
           d &&
-          ((l.scrollTop = 0),
-          d.classList.remove("collapsed"),
-          (l.onscroll = null),
-          window.innerWidth < 640 && setTimeout(() => {
-            l.onscroll = () => {
-              if (l.scrollTop > 60) {
-                d.classList.add("collapsed");
-              } else {
-                d.classList.remove("collapsed");
-              }
-            };
-          }, 150));
+          ((l.onscroll = () => {}),
+          (l.scrollTop = 0),
+          d.classList.remove("collapsed"));
       }
       function closeModal(e) {
         e.target === document.getElementById("recipeModal") && closeModalDirect();
@@ -7026,10 +6951,6 @@
           const e = R.find((e) => e.id === currentModalRecipe.id);
           e && buildRecipeTab(e);
         }
-        const _body = document.querySelector(".modal-body");
-        const _coll = document.getElementById("modalCollapsible");
-        if (_body) _body.scrollTop = 0;
-        if (_coll) _coll.classList.remove("collapsed");
       }
       function refreshRecipeTabIfOpen(e) {
         const a = document.getElementById("tab-recipe");
@@ -7087,12 +7008,12 @@
         const sizes = [{k:"S",g:48},{k:"M",g:58},{k:"L",g:68}];
         const btns = sizes.map(function(a) {
           const active = sideEggSizeG === a.g ? " active" : "";
-          return "<button class=\"modal-variant-btn" + active + "\" style=\"padding:2px 8px;font-size:10px;\" data-g=\"" + a.g + "\" " +
-            "onclick=\"setSideEggSize(" + a.g + ",'" + recipeId + "');event.stopPropagation()\">" + a.k + " ~" + a.g + "g</button>";
+          return "<button class=\"modal-variant-btn" + active + "\" style=\"padding:2px 8px;font-size:10px;\" " +
+            "onclick=\"setSideEggSize(" + a.g + ",'" + recipeId + "');event.stopPropagation()\">" + a.k + "</button>";
         }).join("");
         return "<div class=\"modal-weight-row\" id=\"sideEggRow\">" +
           "<div class=\"modal-weight-row-main\" onclick=\"toggleWeightRow('sideEggRow')\" style=\"flex-wrap:nowrap;align-items:center;\">" +
-          "<label style=\"flex-shrink:0;white-space:nowrap;\">🥚 Egg Count</label>" +
+          "<label style=\"flex-shrink:0;white-space:nowrap;\">🍳 Fried Egg</label>" +
           "<div style=\"display:flex;align-items:center;gap:6px;margin-left:8px;\">" +
           "<div style=\"display:inline-flex;gap:4px;\">" + btns + "</div>" +
           "<div class=\"serving-stepper\" style=\"margin-left:4px;\">" +
@@ -7168,16 +7089,18 @@
         }
         let k = "";
         if (o) {
-          const _egSizeBtns = [{ k: "S", g: 48 }, { k: "M", g: 58 }, { k: "L", g: 68 }]
-            .map((a) => `<button class="modal-variant-btn${eggSizeG === a.g ? " active" : ""}" style="padding:2px 8px;font-size:10px;" onclick="setModalEggSize(${a.g},'${e.id}');event.stopPropagation()">${a.k} ~${a.g}g</button>`)
-            .join("");
-          const _eNut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
-          const _eGPP = p;
-          const _eK = Math.round((_eNut.kcal * _eGPP) / 100);
-          const _eP = (Math.round((_eNut.p * _eGPP) / 100 * 10) / 10).toFixed(1);
-          const _eC = (Math.round((_eNut.c * _eGPP) / 100 * 10) / 10).toFixed(1);
-          const _eF = (Math.round((_eNut.f * _eGPP) / 100 * 10) / 10).toFixed(1);
-          k = `<div class="modal-weight-row" id="eggMainRow">\n      <div class="modal-weight-row-main" onclick="toggleWeightRow('eggMainRow')" style="flex-wrap:nowrap;align-items:center;">\n        <label style="flex-shrink:0;white-space:nowrap;">🥚 Egg Count</label>\n        <div style="display:flex;align-items:center;gap:6px;margin-left:8px;">\n          <div style="display:inline-flex;gap:4px;">${_egSizeBtns}</div>\n          <div class="serving-stepper" style="margin-left:4px;">\n            <button class="step-btn" onclick="changeModalEggCount(-1,'${e.id}');event.stopPropagation()">−</button>\n            <span class="serving-val" id="modalEggCountVal" style="width:32px;height:28px;line-height:28px;font-size:14px;">${eggCount}</span>\n            <button class="step-btn" onclick="changeModalEggCount(1,'${e.id}');event.stopPropagation()">+</button>\n          </div>\n        </div>\n        <span class="modal-weight-hint" style="margin-left:auto;">${p}g per portion</span>\n        <span class="modal-weight-expand">&#9660;</span>\n      </div>\n      <div class="modal-weight-macro-panel">\n        <div class="ing-macro-grid" style="margin-top:8px;">\n          <div class="ing-macro-cell mk"><span class="imc-val">${_eK}</span><span class="imc-lbl">kcal</span></div>\n          <div class="ing-macro-cell mp"><span class="imc-val">${_eP}g</span><span class="imc-lbl">protein</span></div>\n          <div class="ing-macro-cell mc"><span class="imc-val">${_eC}g</span><span class="imc-lbl">carbs</span></div>\n          <div class="ing-macro-cell mf"><span class="imc-val">${_eF}g</span><span class="imc-lbl">fat</span></div>\n        </div>\n        <div class="ing-macro-hint">Per portion &middot; ${_eGPP}g &middot; per 100g: ${_eNut.kcal}kcal ${_eNut.p}g P ${_eNut.c}g C ${_eNut.f}g F</div>\n      </div>\n    </div>`;
+          k = `<div class="modal-variant-row">\n      <label>🥚 Egg Size</label>\n      ${[
+            { k: "S", g: 48 },
+            { k: "M", g: 58 },
+            { k: "L", g: 68 },
+          ]
+            .map(
+              (a) =>
+                `<button class="modal-variant-btn ${eggSizeG === a.g ? "active" : ""}"\n        onclick="setModalEggSize(${a.g}, '${e.id}')">${a.k} ~${a.g}g</button>`,
+            )
+            .join(
+              "",
+            )}\n    </div>\n    <div class="modal-weight-row">\n      <div class="modal-weight-row-main" style="cursor:default;flex-wrap:nowrap;align-items:center;gap:8px;">\n        <label style="flex-shrink:0;white-space:nowrap;">🥚 Egg Count</label>\n        <div class="serving-stepper" style="margin-left:0;">\n          <button class="step-btn" onclick="changeModalEggCount(-1, '${e.id}')">−</button>\n          <span class="serving-val" id="modalEggCountVal" style="width:36px;height:30px;line-height:30px;font-size:15px;">${eggCount}</span>\n          <button class="step-btn" onclick="changeModalEggCount(1, '${e.id}')">+</button>\n        </div>\n        <span class="modal-weight-hint" style="margin-left:auto;">${p}g per portion</span>\n      </div>\n    </div>`;
         }
         // Side-egg stepper for sideEgg: true recipes
         const _hasSideEgg = !!e.sideEgg;
@@ -7193,32 +7116,19 @@
               ? k
               : (() => {
                   const a = NUT[r] || NUT.chicken_thigh,
-                    _pFactor = (proteinIsCooked && PROTEIN_COOKED_FACTORS[r]) ? (1 / PROTEIN_COOKED_FACTORS[r]) : 1,
-                    _pRawEff = Math.round((weights.chicken * _pFactor) / i),
-                    t = Math.round((a.kcal * _pRawEff) / 100),
-                    i2 = Math.round(((a.p * _pRawEff) / 100) * 10) / 10,
-                    n = Math.round(((a.c * _pRawEff) / 100) * 10) / 10,
-                    s = Math.round(((a.f * _pRawEff) / 100) * 10) / 10,
-                    _protToggle = `<div style="display:inline-flex;gap:4px;margin-left:8px;"><button class="modal-variant-btn${!proteinIsCooked ? " active" : ""}" style="padding:2px 8px;font-size:10px;" onclick="setProteinMode(false,'${e.id}');event.stopPropagation()">Raw</button><button class="modal-variant-btn${proteinIsCooked ? " active" : ""}" style="padding:2px 8px;font-size:10px;" onclick="setProteinMode(true,'${e.id}');event.stopPropagation()">Cooked</button></div>`,
-                    _protUnit = proteinIsCooked ? "g cooked total" : "g raw total",
-                    _protHint = proteinIsCooked ? `Per portion · ${p}g cooked (≈${_pRawEff}g raw) · per 100g raw: ${a.kcal}kcal ${a.p}g P ${a.c}g C ${a.f}g F` : `Per portion · ${p}g · per 100g: ${a.kcal}kcal ${a.p}g P ${a.c}g C ${a.f}g F`;
-                  return `\n  <div class="modal-weight-row" id="protWeightRow">\n    <div class="modal-weight-row-main" onclick="toggleWeightRow('protWeightRow')">\n      <label>${d} ${l.short}</label>${_protToggle}\n      <input type="number" class="modal-weight-input" id="mwProt" value="${weights.chicken}"\n        min="50" max="3000"\n        onclick="event.stopPropagation()"\n        oninput="updateModalWeight('prot', this.value, '${e.id}')">\n      <span class="modal-weight-unit">${_protUnit}</span>\n      <span class="modal-weight-hint">${p}g per portion</span>\n      <span class="modal-weight-expand">▼</span>\n    </div>\n    <div class="modal-weight-macro-panel">\n      <div class="ing-macro-grid" style="margin-top:8px;">\n        <div class="ing-macro-cell mk"><span class="imc-val">${t}</span><span class="imc-lbl">kcal</span></div>\n        <div class="ing-macro-cell mp"><span class="imc-val">${i2}g</span><span class="imc-lbl">protein</span></div>\n        <div class="ing-macro-cell mc"><span class="imc-val">${n}g</span><span class="imc-lbl">carbs</span></div>\n        <div class="ing-macro-cell mf"><span class="imc-val">${s}g</span><span class="imc-lbl">fat</span></div>\n      </div>\n      <div class="ing-macro-hint">${_protHint}</div>\n    </div>\n  </div>`;
+                    t = Math.round((a.kcal * p) / 100),
+                    i = Math.round(((a.p * p) / 100) * 10) / 10,
+                    n = Math.round(((a.c * p) / 100) * 10) / 10,
+                    s = Math.round(((a.f * p) / 100) * 10) / 10;
+                  return `\n  <div class="modal-weight-row" id="protWeightRow">\n    <div class="modal-weight-row-main" onclick="toggleWeightRow('protWeightRow')">\n      <label>${d} ${l.short}</label>\n      <input type="number" class="modal-weight-input" id="mwProt" value="${weights.chicken}"\n        min="50" max="3000"\n        onclick="event.stopPropagation()"\n        oninput="updateModalWeight('prot', this.value, '${e.id}')">\n      <span class="modal-weight-unit">g batch total</span>\n      <span class="modal-weight-hint">${p}g per portion</span>\n      <span class="modal-weight-expand">▼</span>\n    </div>\n    <div class="modal-weight-macro-panel">\n      <div class="ing-macro-grid" style="margin-top:8px;">\n        <div class="ing-macro-cell mk"><span class="imc-val">${t}</span><span class="imc-lbl">kcal</span></div>\n        <div class="ing-macro-cell mp"><span class="imc-val">${i}g</span><span class="imc-lbl">protein</span></div>\n        <div class="ing-macro-cell mc"><span class="imc-val">${n}g</span><span class="imc-lbl">carbs</span></div>\n        <div class="ing-macro-cell mf"><span class="imc-val">${s}g</span><span class="imc-lbl">fat</span></div>\n      </div>\n      <div class="ing-macro-hint">Per portion · ${p}g · per 100g: ${a.kcal}kcal ${a.p}g P ${a.c}g C ${a.f}g F</div>\n    </div>\n  </div>`;
                 })()
           }\n  <div class="modal-weight-row" id="carbWeightRow">\n    ${(() => {
             const a = NUT[e.carb] || {},
-              _hasToggle = ["rice", "noodle", "potato"].includes(e.carb),
-              _isCooked = carbIsCooked[e.carb],
-              _factor = CARB_COOKED_FACTORS[e.carb] || 1,
-              _labels = e.carb === "potato" ? ["Raw", "Cooked"] : ["Dry", "Cooked"],
-              _uEffective = _hasToggle && _isCooked ? Math.round(u / _factor) : u,
-              t = Math.round(((a.kcal || 0) * _uEffective) / 100),
-              i = Math.round((((a.p || 0) * _uEffective) / 100) * 10) / 10,
-              n = Math.round((((a.c || 0) * _uEffective) / 100) * 10) / 10,
-              s = Math.round((((a.f || 0) * _uEffective) / 100) * 10) / 10,
-              _toggleBtns = _hasToggle ? `<div style="display:inline-flex;gap:4px;margin-left:8px;"><button class="modal-variant-btn${!_isCooked ? " active" : ""}" style="padding:2px 8px;font-size:10px;" onclick="setCarbMode('${e.carb}',false,'${e.id}');event.stopPropagation()">${_labels[0]}</button><button class="modal-variant-btn${_isCooked ? " active" : ""}" style="padding:2px 8px;font-size:10px;" onclick="setCarbMode('${e.carb}',true,'${e.id}');event.stopPropagation()">${_labels[1]}</button></div>` : "",
-              _unitLabel = _hasToggle ? (_isCooked ? "g cooked total" : "g dry total") : "g batch total",
-              _hintLabel = _hasToggle && _isCooked ? `Per portion · ${u}g cooked (≈${_uEffective}g dry) · per 100g dry: ${a.kcal || 0}kcal ${a.p || 0}g P ${a.c || 0}g C ${a.f || 0}g F` : `Per portion · ${u}g · per 100g: ${a.kcal || 0}kcal ${a.p || 0}g P ${a.c || 0}g C ${a.f || 0}g F`;
-            return `\n    <div class="modal-weight-row-main" onclick="toggleWeightRow('carbWeightRow')">\n      <label>${m} ${h}</label>${_toggleBtns}\n      <input type="number" class="modal-weight-input" id="mwCarb" value="${weights[e.carb] || 0}"\n        min="0" max="3000"\n        onclick="event.stopPropagation()"\n        oninput="updateModalWeight('carb', this.value, '${e.id}')">\n      <span class="modal-weight-unit">${_unitLabel}</span>\n      <span class="modal-weight-hint">${u}g per portion</span>\n      <span class="modal-weight-expand">▼</span>\n    </div>\n    <div class="modal-weight-macro-panel">\n      <div class="ing-macro-grid" style="margin-top:8px;">\n        <div class="ing-macro-cell mk"><span class="imc-val">${t}</span><span class="imc-lbl">kcal</span></div>\n        <div class="ing-macro-cell mp"><span class="imc-val">${i}g</span><span class="imc-lbl">protein</span></div>\n        <div class="ing-macro-cell mc"><span class="imc-val">${n}g</span><span class="imc-lbl">carbs</span></div>\n        <div class="ing-macro-cell mf"><span class="imc-val">${s}g</span><span class="imc-lbl">fat</span></div>\n      </div>\n      <div class="ing-macro-hint">${_hintLabel}</div>\n    </div>`;
+              t = Math.round(((a.kcal || 0) * u) / 100),
+              i = Math.round((((a.p || 0) * u) / 100) * 10) / 10,
+              n = Math.round((((a.c || 0) * u) / 100) * 10) / 10,
+              s = Math.round((((a.f || 0) * u) / 100) * 10) / 10;
+            return `\n    <div class="modal-weight-row-main" onclick="toggleWeightRow('carbWeightRow')">\n      <label>${m} ${h}</label>\n      <input type="number" class="modal-weight-input" id="mwCarb" value="${weights[e.carb] || 0}"\n        min="0" max="3000"\n        onclick="event.stopPropagation()"\n        oninput="updateModalWeight('carb', this.value, '${e.id}')">\n      <span class="modal-weight-unit">g batch total</span>\n      <span class="modal-weight-hint">${u}g per portion</span>\n      <span class="modal-weight-expand">▼</span>\n    </div>\n    <div class="modal-weight-macro-panel">\n      <div class="ing-macro-grid" style="margin-top:8px;">\n        <div class="ing-macro-cell mk"><span class="imc-val">${t}</span><span class="imc-lbl">kcal</span></div>\n        <div class="ing-macro-cell mp"><span class="imc-val">${i}g</span><span class="imc-lbl">protein</span></div>\n        <div class="ing-macro-cell mc"><span class="imc-val">${n}g</span><span class="imc-lbl">carbs</span></div>\n        <div class="ing-macro-cell mf"><span class="imc-val">${s}g</span><span class="imc-lbl">fat</span></div>\n      </div>\n      <div class="ing-macro-hint">Per portion · ${u}g · per 100g: ${a.kcal || 0}kcal ${a.p || 0}g P ${a.c || 0}g C ${a.f || 0}g F</div>\n    </div>`;
           })()}\n  </div>${_hasSideEgg ? _sideEggBlock : ""}`,
           b = 0,
           f = 0,
@@ -7305,11 +7215,8 @@
         ((y += `<div class="ing-total-bar">\n    <div class="ing-total-title">📊 Total per portion</div>\n    <div class="ing-total-grid">\n      <div class="ing-total-cell mk"><span class="itc-val">${T}</span><span class="itc-lbl">kcal</span></div>\n      <div class="ing-total-cell mp"><span class="itc-val">${x}g</span><span class="itc-lbl">protein</span></div>\n      <div class="ing-total-cell mc"><span class="itc-val">${B}g</span><span class="itc-lbl">carbs</span></div>\n      <div class="ing-total-cell mf"><span class="itc-val">${P}g</span><span class="itc-lbl">fat</span></div>\n    </div>\n    <div class="ing-macro-hint" style="margin-top:8px;">Tap any ingredient to see its macros</div>\n  </div>`),
           t.placeholder
             ? (y += '<div class="ing-note">📌 Full ingredient list coming soon — follow on YouTube & TikTok!</div>')
-            : (y += '<div class="ing-note">📌 Weights are global — changes apply to all recipes.</div>'));
-        // Save which weight rows are open before rebuild, restore after
-        const _openRows = new Set([...document.querySelectorAll('#tab-ingredients .modal-weight-row.open')].map(el => el.id).filter(Boolean));
-        document.getElementById("tab-ingredients").innerHTML = y;
-        _openRows.forEach(id => { const el = document.getElementById(id); if (el) el.classList.add('open'); });
+            : (y += '<div class="ing-note">📌 Weights are global — changes apply to all recipes.</div>'),
+          (document.getElementById("tab-ingredients").innerHTML = y));
       }
       function changeModalServings(e, a) {
         ((modalServings = Math.max(1, Math.min(10, modalServings + e))), (weights.servings = modalServings));
@@ -7375,17 +7282,15 @@
               const a = "step-ing-" + e.id + "-" + r,
                 t = l
                   .map((e) => {
-                    const a = (e.amt || "").includes("{{proteinG}}") || (e.amt || "").includes("{{carbG}}") || (e.amt || "").includes("{{eggCount}}"),
+                    const a = (e.amt || "").includes("{{proteinG}}") || (e.amt || "").includes("{{carbG}}"),
                       t = (e.amt || "")
                         .replace("{{proteinG}}", s)
                         .replace("{{carbG}}", o)
-                        .replace("{{eggCount}}", eggCount)
                         .replace("{{servings}}", n);
                     let i = a ? t : scaleAmt(t, n),
                       r = e.name;
                     e.amt && e.amt.includes("{{proteinG}}") && (r = _proteinLabel);
                     e.amt && e.amt.includes("{{carbG}}") && (r = _carbLabel);
-                    e.amt && e.amt.includes("{{eggCount}}") && (r = "Eggs (" + ({48:"S ~48g", 58:"M ~58g", 68:"L ~68g"}[eggSizeG] || "M ~58g") + ")");
                     return (
                       `<div class="step-ing-item">\n            <span class="sii-name">${r}</span>\n            <span class="sii-amt">${i}</span>\n          </div>`
                     );
@@ -7449,12 +7354,9 @@
       function buildVideoTab(e) {
         const a = getRecipeDetail(e);
         let t = "";
-        if (a.video) {
-          t = `<div class="video-embed"><iframe src="https://www.youtube.com/embed/${a.video}" allowfullscreen loading="lazy"></iframe></div>`;
-        } else if (a.image) {
-          t = `<div style="text-align:center;padding:12px 0;"><img src="${a.image}" alt="${e.title}" style="max-width:100%;border-radius:10px;"></div>`;
-        }
-        document.getElementById("tab-video").innerHTML = t;
+        (a.video &&
+          (t = `<div class="video-embed"><iframe src="https://www.youtube.com/embed/${a.video}" allowfullscreen loading="lazy"></iframe></div>`),
+          (document.getElementById("tab-video").innerHTML = t));
       }
       const PANTRY_ITEMS = {
           sauces: [
@@ -8184,7 +8086,7 @@
       }
       function calcSauceMacros(e) {
         const a = getRecipeDetail(e);
-        if (!a || !a.ingredients) return { kcal: 0, p: 0, c: 0, f: 0 };
+        if (!a || !a.ingredients) return { kcal: e.sauce_kcal, p: e.sauce_p, c: e.sauce_c, f: e.sauce_f };
         // For fixed-batch recipes (none/none): always show full-batch macros, don't divide by servings
         const t = (e.protein === "none" && e.carb === "none") ? 1 : Math.max(weights.servings, 1);
         let i = 0, n = 0, s = 0, o = 0;
@@ -8197,6 +8099,7 @@
             if (c) { i += c.kcal / t; n += c.p / t; s += c.c / t; o += c.f / t; }
           });
         });
+        // Always return calculated values — no hardcoded fallback
         return {
           kcal: Math.round(i),
           p: Math.round(10 * n) / 10,
@@ -8866,6 +8769,30 @@
       ING_NAME_MAP["kalamata olives (optional)"] = "black_olives";
       ING_NAME_MAP["kalamata olives (sliced)"] = "black_olives";
       ING_NAME_MAP["green olives (sliced)"] = "green_olives";
+      // === Missing mappings (audit fix) ===
+      ING_NAME_MAP["canned white beans (cannellini)"] = "white_beans";
+      ING_NAME_MAP["white beans"] = "white_beans";
+      ING_NAME_MAP["cannellini beans"] = "white_beans";
+      ING_NAME_MAP["caraway seeds"] = "caraway_seeds";
+      ING_NAME_MAP["cashews (raw)"] = "cashews";
+      ING_NAME_MAP["cashews"] = "cashews";
+      ING_NAME_MAP["crusty sourdough or ciabatta"] = "bread";
+      ING_NAME_MAP["sourdough or crusty bread"] = "bread";
+      ING_NAME_MAP["geflügel-nürnberger sausages"] = "chicken_sausage";
+      ING_NAME_MAP["nürnberger"] = "chicken_sausage";
+      ING_NAME_MAP["ground beef (15% fat)"] = "beef_regular";
+      ING_NAME_MAP["orange juice"] = "orange_juice";
+      ING_NAME_MAP["pickle brine"] = "pickled_veg";
+      ING_NAME_MAP["rigatoni or spaghetti (dry)"] = "noodle";
+      ING_NAME_MAP["rigatoni or spaghetti"] = "noodle";
+      ING_NAME_MAP["spaghetti or linguine (dry)"] = "noodle";
+      ING_NAME_MAP["spaghetti or linguine"] = "noodle";
+      ING_NAME_MAP["roti or chapati (store-bought)"] = "bread";
+      ING_NAME_MAP["roti or chapati"] = "bread";
+      ING_NAME_MAP["salsa or pico de gallo"] = "canned_tomato";
+      ING_NAME_MAP["salsa roja (jarred)"] = "canned_tomato";
+      ING_NAME_MAP["pico de gallo"] = "canned_tomato";
+      ING_NAME_MAP["low-fat quark (magerquark)"] = "quark_low_fat";
 
 		function findIngredientId(e) {                             
         if (!e) return null;
@@ -9609,22 +9536,5 @@
         </div>
       </div>
     </div>
-    <!-- Scroll-to-top button -->
-    <button id="scrollTopBtn" title="Back to top">&#8679;</button>
-    <script>
-      (function () {
-        const btn = document.getElementById("scrollTopBtn");
-        window.addEventListener("scroll", function () {
-          if (window.scrollY > 400) {
-            btn.classList.add("visible");
-          } else {
-            btn.classList.remove("visible");
-          }
-        }, { passive: true });
-        btn.addEventListener("click", function () {
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        });
-      })();
-    </script>
   </body>
 </html>

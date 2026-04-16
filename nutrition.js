@@ -464,6 +464,102 @@ const NUTRITION_DB = {
   //   lentils, chickpeas, black_beans, kidney_beans)
   // ──────────────────────────────────────────────────────────
 
+  // ──────────────────────────────────────────────────────────
+  //  NUTS & SEEDS
+  // ──────────────────────────────────────────────────────────
+
+  cashews: {
+    kcal: 553, p: 18.2, c: 30.2, f: 43.8,
+    fiber: 3.3, sugar: 5.91,
+    sat_fat: 7.78, mono_fat: 23.8, poly_fat: 7.84, trans_fat: 0, omega3: 0.16,
+    cholesterol: 0,
+    sodium: 12, potassium: 660, calcium: 37, iron: 6.68,
+    magnesium: 292, phosphorus: 593, zinc: 5.78, selenium: 19.9,
+    iodine: null, copper: 2.22,
+    vitamin_a: 0, vitamin_c: 0.5, vitamin_d: 0,
+    vitamin_b1: 0.423, vitamin_b2: 0.058, vitamin_b3: 1.06,
+    vitamin_b5: 0.864, vitamin_b6: 0.417, vitamin_b12: 0,
+    folate: 25, choline: 61,
+    fdc_id: "170162", data_type: "SR Legacy",
+    notes: "Cashew nuts, raw",
+  },
+
+  caraway_seeds: {
+    kcal: 333, p: 19.8, c: 49.9, f: 14.6,
+    fiber: 38.0, sugar: 0.64,
+    sat_fat: 0.62, mono_fat: 7.12, poly_fat: 3.28, trans_fat: 0, omega3: null,
+    cholesterol: 0,
+    sodium: 17, potassium: 1351, calcium: 689, iron: 16.2,
+    magnesium: 258, phosphorus: 568, zinc: 5.5, selenium: null,
+    iodine: null, copper: 0.91,
+    vitamin_a: 18, vitamin_c: 21.0, vitamin_d: 0,
+    vitamin_b1: 0.383, vitamin_b2: 0.379, vitamin_b3: 3.61,
+    vitamin_b5: null, vitamin_b6: 0.36, vitamin_b12: 0,
+    folate: 10, choline: null,
+    fdc_id: "170921", data_type: "SR Legacy",
+    notes: "Caraway seeds, dried",
+  },
+
+  // ──────────────────────────────────────────────────────────
+  //  LEGUMES
+  // ──────────────────────────────────────────────────────────
+
+  white_beans: {
+    kcal: 90, p: 5.6, c: 16.3, f: 0.29,
+    fiber: 4.2, sugar: 0.26,
+    sat_fat: 0.07, mono_fat: 0.02, poly_fat: 0.12, trans_fat: 0, omega3: null,
+    cholesterol: 0,
+    sodium: 295, potassium: 344, calcium: 67, iron: 2.6,
+    magnesium: 37, phosphorus: 107, zinc: 0.88, selenium: 1.3,
+    iodine: null, copper: 0.16,
+    vitamin_a: 0, vitamin_c: 0, vitamin_d: 0,
+    vitamin_b1: 0.063, vitamin_b2: 0.051, vitamin_b3: 0.19,
+    vitamin_b5: 0.19, vitamin_b6: 0.059, vitamin_b12: 0,
+    folate: 88, choline: null,
+    fdc_id: "175197", data_type: "SR Legacy",
+    notes: "White beans (cannellini), canned, drained",
+  },
+
+  // ──────────────────────────────────────────────────────────
+  //  BEVERAGES / JUICES
+  // ──────────────────────────────────────────────────────────
+
+  orange_juice: {
+    kcal: 45, p: 0.70, c: 10.4, f: 0.20,
+    fiber: 0.2, sugar: 8.40,
+    sat_fat: 0.02, mono_fat: 0.04, poly_fat: 0.04, trans_fat: 0, omega3: null,
+    cholesterol: 0,
+    sodium: 1, potassium: 200, calcium: 11, iron: 0.2,
+    magnesium: 11, phosphorus: 17, zinc: 0.05, selenium: 0.1,
+    iodine: null, copper: 0.04,
+    vitamin_a: 10, vitamin_c: 50.0, vitamin_d: 0,
+    vitamin_b1: 0.087, vitamin_b2: 0.031, vitamin_b3: 0.4,
+    vitamin_b5: 0.189, vitamin_b6: 0.042, vitamin_b12: 0,
+    folate: 30, choline: 8.4,
+    fdc_id: "169098", data_type: "SR Legacy",
+    notes: "Orange juice, raw, freshly squeezed",
+  },
+
+  // ──────────────────────────────────────────────────────────
+  //  POULTRY PRODUCTS
+  // ──────────────────────────────────────────────────────────
+
+  chicken_sausage: {
+    kcal: 195, p: 14.8, c: 2.1, f: 14.5,
+    fiber: 0, sugar: 0.8,
+    sat_fat: 4.10, mono_fat: 6.20, poly_fat: 3.10, trans_fat: 0, omega3: null,
+    cholesterol: 75,
+    sodium: 680, potassium: 220, calcium: 18, iron: 0.9,
+    magnesium: 18, phosphorus: 145, zinc: 1.2, selenium: 14.0,
+    iodine: null, copper: 0.07,
+    vitamin_a: null, vitamin_c: null, vitamin_d: null,
+    vitamin_b1: null, vitamin_b2: null, vitamin_b3: null,
+    vitamin_b5: null, vitamin_b6: null, vitamin_b12: null,
+    folate: null, choline: null,
+    fdc_id: null, data_type: "Estimated",
+    notes: "Chicken/poultry sausage, cooked (Geflügelwurst / Geflügel-Nürnberger). Values estimated from USDA poultry sausage composites.",
+  },
+
 };
 
 // ──────────────────────────────────────────────────────────

@@ -1661,7 +1661,7 @@ const R = [
   displayNum: 104,
   carb: "potato",
   time: 20,
-  title: "German Hähnchen in Rahmsauce",
+  title: "German Chicken in Cream Sauce",
   desc: "Pan-seared chicken breast in a light cream-mustard sauce with boiled potatoes — classic German comfort made macro-friendly.",
   tags: ["comfort", "german"],
   flavor: "savory",
@@ -1848,7 +1848,7 @@ const R = [
   carb: "bread",
   time: 40,
   title: "Bavarian Street Wrap",
-  desc: "Geflügel-Nürnberger, slow-scrambled eggs, caramelized onions & mustard-potato schmear — dunked in homemade Bratensauce.",
+  desc: "German chicken sausages (Geflügel-Nürnberger), slow-scrambled eggs, caramelized onions & mustard-potato schmear — dunked in homemade brown gravy.",
   tags: ["german", "comfort"],
   flavor: "savory",
   hint: "",
@@ -5937,7 +5937,7 @@ const RECIPE_DETAILS = {
   ingredients: [
     { section: "Protein", items: [{ name: "Boneless skinless chicken breast", amt: "{{proteinG}}g raw" }] },
     { section: "Carb Base", items: [{ name: "Waxy potatoes (halved)", amt: "{{carbG}}g" }] },
-    { section: "Rahmsauce", items: [
+    { section: "Cream Sauce", items: [
       { name: "Greek yogurt (0%)", amt: "100g" },
       { name: "Dijon mustard", amt: "1 tsp" },
       { name: "Chicken stock (low-sodium)", amt: "100ml" },
@@ -5958,7 +5958,7 @@ const RECIPE_DETAILS = {
     "Slice chicken, arrange over boiled potatoes, pour the cream sauce generously over. Garnish with parsley.",
   ],
   hacks: [
-    { title: "Rahmsauce Never Boils", text: "German Rahmsauce relies on cream — here replaced with yogurt. Both split at a boil. After the yogurt goes in, the heat stays on low. A split sauce means the protein in the yogurt has curdled — the texture is grainy and unpleasant. Low and slow keeps it silky." },
+    { title: "Cream Sauce Never Boils", text: "German-style cream sauce relies on cream — here replaced with yogurt. Both split at a boil. After the yogurt goes in, the heat stays on low. A split sauce means the protein in the yogurt has curdled — the texture is grainy and unpleasant. Low and slow keeps it silky." },
     { title: "Deglaze = Free Flavour", text: "The brown fond left in the pan after searing the chicken is pure condensed flavour. A splash of stock and a wooden spoon dissolves all of it into the sauce. Skip this and the sauce tastes flat — the pan is your flavour bank." },
   ],
   notes: "Hähnchen in Rahmsauce is one of Germany's most home-cooked dishes — the type of meal every German parent makes on a Wednesday. Yogurt makes it lighter without losing the creamy character. Also excellent with rice or egg noodles (Spätzle).",
@@ -6491,7 +6491,7 @@ const RECIPE_DETAILS = {
     ]},
     { section: "Potato Schmear", items: [
       { name: "Floury potatoes (mehligkochend), peeled & cubed", amt: "200g" },
-      { name: "Magerquark", amt: "120g" },
+      { name: "Low-fat quark (Magerquark)", amt: "120g" },
       { name: "Butter", amt: "5g" },
       { name: "Milk", amt: "30ml" },
       { name: "Medium-hot mustard (Mittelscharf)", amt: "1 tbsp" },
@@ -6504,7 +6504,7 @@ const RECIPE_DETAILS = {
       { name: "Apple cider vinegar", amt: "1 tbsp" },
       { name: "Salt", amt: "to taste" },
     ]},
-    { section: "Bratensauce", items: [
+    { section: "Gravy", items: [
       { name: "Beef broth (Rinderbrühe, from cube)", amt: "300ml" },
       { name: "Tomato paste", amt: "1 tbsp" },
       { name: "Worcestershire sauce", amt: "1 tsp" },
@@ -6515,18 +6515,18 @@ const RECIPE_DETAILS = {
   ],
   steps: [
     "Start the onions first — heat 1 tsp rapeseed oil in a pan over medium heat. Add the sliced onions with a pinch of salt and 1 tsp sugar. Cook low and slow for 20–25 minutes, stirring occasionally, until deeply golden and jammy. Add the apple cider vinegar in the last 2 minutes, let it sizzle and cook off completely.",
-    "While the onions cook, boil the cubed potatoes in well-salted water for 15 minutes until fork-tender. Drain completely, then let them steam-dry off the heat for 1 minute. Mash until smooth, then stir in the Magerquark, butter, milk, and mustard. Season generously with salt and a pinch of nutmeg — the texture should be smooth and spreadable, like thick hummus.",
-    "Make the Bratensauce — combine broth, tomato paste, Worcestershire sauce, thyme, salt, and pepper in a small saucepan. Simmer gently for 5 minutes. Stir the cornstarch into 2 tbsp cold water until dissolved, then pour into the sauce and cook for another 2 minutes, stirring, until glossy and lightly thickened. Keep warm on the lowest heat.",
+    "While the onions cook, boil the cubed potatoes in well-salted water for 15 minutes until fork-tender. Drain completely, then let them steam-dry off the heat for 1 minute. Mash until smooth, then stir in the low-fat quark (Magerquark), butter, milk, and mustard. Season generously with salt and a pinch of nutmeg — the texture should be smooth and spreadable, like thick hummus.",
+    "Make the gravy — combine broth, tomato paste, Worcestershire sauce, thyme, salt, and pepper in a small saucepan. Simmer gently for 5 minutes. Stir the cornstarch into 2 tbsp cold water until dissolved, then pour into the sauce and cook for another 2 minutes, stirring, until glossy and lightly thickened. Keep warm on the lowest heat.",
     "Sear the Nürnberger in a dry pan over medium-high heat for 6–8 minutes, turning regularly, until deeply golden and slightly crisp all over. Remove and set aside but do not wipe the pan.",
     "Reduce the same pan to low heat — the sausage fond left behind is pure flavour. Add 6g butter total, crack in the eggs, season with salt and pepper, and stir very slowly with a spatula. Pull off the heat while they're still slightly glossy — residual heat will finish them perfectly.",
     "Toast each tortilla in a dry pan for 30 seconds per side until soft with light char spots. Spread a generous layer of potato schmear across the lower two-thirds. Pile the scrambled eggs in the center, lay 2 Nürnberger across them, then top with a generous heap of caramelized onions. Fold in the sides and roll tight.",
-    "Slice each wrap diagonally and plate next to a small bowl of warm Bratensauce for dipping. Serve immediately.",
+    "Slice each wrap diagonally and plate next to a small bowl of warm gravy for dipping. Serve immediately.",
   ],
   hacks: [
     { title: "Don't Rush the Onions", text: "The caramelized onions are the secret weapon of this wrap — 20 minutes of low heat transforms sharp raw onion into something sweet, jammy, and complex. The apple cider vinegar deglaze at the end adds brightness that cuts perfectly through the richness of the eggs and sausage. Rushing them on high heat gives you soft onions, not caramelized ones — not the same thing." },
     { title: "Scramble in the Sausage Pan", text: "Don't wipe the pan after the Nürnberger — those golden bits of rendered fat and fond are flavor. Scrambling the eggs directly in that pan means you get all of that richness for zero extra ingredients. Keep the heat low and the motion slow — the goal is creamy, just-set eggs, not dry rubbery ones. Pull off heat while still slightly wet." },
   ],
-  notes: "Potato schmear can be made ahead and reheated — actually gets better as it sits and the mustard flavour develops. Bratensauce keeps in the fridge for up to 3 days.",
+  notes: "Potato schmear can be made ahead and reheated — actually gets better as it sits and the mustard flavour develops. Gravy keeps in the fridge for up to 3 days.",
 },
 
 };
