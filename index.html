@@ -1272,6 +1272,14 @@
       .tag-hawaiian   { background: rgba(255, 100, 150, 0.15); color: #ff6496; }
       .tag-taiwanese  { background: rgba(30, 100, 180, 0.15); color: #1e64b4; }
       .tag-filipino   { background: rgba(0, 56, 168, 0.15); color: #0038a8; }
+      .tag-beef       { background: rgba(232, 71, 71, 0.15); color: #e84747; }
+      .tag-cheese     { background: rgba(232, 195, 71, 0.15); color: #c8a800; }
+      .tag-chicken    { background: rgba(232, 163, 71, 0.15); color: #e8a347; }
+      .tag-salmon     { background: rgba(255, 140, 105, 0.15); color: #ff6b35; }
+      .tag-tofu       { background: rgba(71, 232, 163, 0.15); color: #33c687; }
+      .tag-pork       { background: rgba(255, 150, 160, 0.15); color: #e87080; }
+      .tag-breakfast  { background: rgba(255, 220, 100, 0.15); color: #c8960a; }
+      .tag-italian    { background: rgba(71, 137, 232, 0.15); color: #4789e8; }
 
       /* ── Scroll-to-top button ── */
       #scrollTopBtn {
@@ -6968,13 +6976,16 @@
           d &&
           ((l.scrollTop = 0),
           d.classList.remove("collapsed"),
-          (l.onscroll = () => {
-            if (l.scrollTop > 40) {
-              d.classList.add("collapsed");
-            } else {
-              d.classList.remove("collapsed");
-            }
-          }));
+          (l.onscroll = null),
+          setTimeout(() => {
+            l.onscroll = () => {
+              if (l.scrollTop > 60) {
+                d.classList.add("collapsed");
+              } else {
+                d.classList.remove("collapsed");
+              }
+            };
+          }, 150));
       }
       function closeModal(e) {
         e.target === document.getElementById("recipeModal") && closeModalDirect();
@@ -7314,15 +7325,17 @@
               const a = "step-ing-" + e.id + "-" + r,
                 t = l
                   .map((e) => {
-                    const a = (e.amt || "").includes("{{proteinG}}") || (e.amt || "").includes("{{carbG}}"),
+                    const a = (e.amt || "").includes("{{proteinG}}") || (e.amt || "").includes("{{carbG}}") || (e.amt || "").includes("{{eggCount}}"),
                       t = (e.amt || "")
                         .replace("{{proteinG}}", s)
                         .replace("{{carbG}}", o)
+                        .replace("{{eggCount}}", eggCount)
                         .replace("{{servings}}", n);
                     let i = a ? t : scaleAmt(t, n),
                       r = e.name;
                     e.amt && e.amt.includes("{{proteinG}}") && (r = _proteinLabel);
                     e.amt && e.amt.includes("{{carbG}}") && (r = _carbLabel);
+                    e.amt && e.amt.includes("{{eggCount}}") && (r = "Eggs (" + ({48:"S ~48g", 58:"M ~58g", 68:"L ~68g"}[eggSizeG] || "M ~58g") + ")");
                     return (
                       `<div class="step-ing-item">\n            <span class="sii-name">${r}</span>\n            <span class="sii-amt">${i}</span>\n          </div>`
                     );
