@@ -7129,18 +7129,10 @@
         }
         let k = "";
         if (o) {
-          k = `<div class="modal-variant-row">\n      <label>🥚 Egg Size</label>\n      ${[
-            { k: "S", g: 48 },
-            { k: "M", g: 58 },
-            { k: "L", g: 68 },
-          ]
-            .map(
-              (a) =>
-                `<button class="modal-variant-btn ${eggSizeG === a.g ? "active" : ""}"\n        onclick="setModalEggSize(${a.g}, '${e.id}')">${a.k} ~${a.g}g</button>`,
-            )
-            .join(
-              "",
-            )}\n    </div>\n    <div class="modal-weight-row">\n      <div class="modal-weight-row-main" style="cursor:default;flex-wrap:nowrap;align-items:center;gap:8px;">\n        <label style="flex-shrink:0;white-space:nowrap;">🥚 Egg Count</label>\n        <div class="serving-stepper" style="margin-left:0;">\n          <button class="step-btn" onclick="changeModalEggCount(-1, '${e.id}')">−</button>\n          <span class="serving-val" id="modalEggCountVal" style="width:36px;height:30px;line-height:30px;font-size:15px;">${eggCount}</span>\n          <button class="step-btn" onclick="changeModalEggCount(1, '${e.id}')">+</button>\n        </div>\n        <span class="modal-weight-hint" style="margin-left:auto;">${p}g per portion</span>\n      </div>\n    </div>`;
+          const _egSizeBtns = [{ k: "S", g: 48 }, { k: "M", g: 58 }, { k: "L", g: 68 }]
+            .map((a) => `<button class="modal-variant-btn${eggSizeG === a.g ? " active" : ""}" style="padding:2px 8px;font-size:10px;" onclick="setModalEggSize(${a.g},'${e.id}');event.stopPropagation()">${a.k} ~${a.g}g</button>`)
+            .join("");
+          k = `<div class="modal-weight-row">\n      <div class="modal-weight-row-main" onclick="toggleWeightRow('eggMainRow')" style="flex-wrap:nowrap;align-items:center;" id="eggMainRow">\n        <label style="flex-shrink:0;white-space:nowrap;">🥚 Egg Count</label>\n        <div style="display:flex;align-items:center;gap:6px;margin-left:8px;">\n          <div style="display:inline-flex;gap:4px;">${_egSizeBtns}</div>\n          <div class="serving-stepper" style="margin-left:4px;">\n            <button class="step-btn" onclick="changeModalEggCount(-1,'${e.id}');event.stopPropagation()">−</button>\n            <span class="serving-val" id="modalEggCountVal" style="width:32px;height:28px;line-height:28px;font-size:14px;">${eggCount}</span>\n            <button class="step-btn" onclick="changeModalEggCount(1,'${e.id}');event.stopPropagation()">+</button>\n          </div>\n        </div>\n        <span class="modal-weight-hint" style="margin-left:auto;">${p}g per portion</span>\n        <span class="modal-weight-expand">&#9660;</span>\n      </div>\n    </div>`;
         }
         // Side-egg stepper for sideEgg: true recipes
         const _hasSideEgg = !!e.sideEgg;
