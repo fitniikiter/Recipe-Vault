@@ -95,6 +95,10 @@
         --carb-rice: #47b3e8;
         --carb-noodle: #c847e8;
         --carb-bread: #e84747;
+        --macro-kcal: #ff8c00;
+        --macro-protein: #47e8a3;
+        --macro-carbs: #47b3e8;
+        --macro-fat: #e8a347;
       }
       html.light {
         --bg: #f4f4ef;
@@ -153,6 +157,22 @@
       }
       html.light .carb-bar {
         background: rgba(244, 244, 239, 0.95);
+      }
+      html.light #filterPanel {
+        background: rgba(238, 238, 233, 0.98);
+      }
+      html.light .filter-toggle-btn {
+        background: var(--card);
+        color: var(--muted);
+      }
+      html.light .filter-toggle-btn:hover {
+        border-color: #aaa;
+        color: var(--text);
+      }
+      html.light .filter-toggle-btn.open,
+      html.light .filter-toggle-btn.has-active {
+        border-color: var(--accent);
+        color: #cc7000;
       }
       html.light .filter-btn,
       html.light .filter-pill {
@@ -415,8 +435,11 @@
       }
       .header-social {
         display: flex;
-        gap: 10px;
-        margin-bottom: 16px;
+        gap: 8px;
+        margin-left: auto;
+        align-self: flex-start;
+        flex-wrap: wrap;
+        justify-content: flex-end;
       }
       .header-avatar-wrap {
         width: 84px;
@@ -443,8 +466,8 @@
       .social-btn {
         display: flex;
         align-items: center;
-        gap: 6px;
-        padding: 7px 14px;
+        gap: 5px;
+        padding: 6px 11px;
         border-radius: 20px;
         font-family: "DM Sans", sans-serif;
         font-size: 12px;
@@ -643,7 +666,7 @@
       }
       .header-top {
         display: flex;
-        align-items: flex-end;
+        align-items: flex-start;
         gap: 16px;
         margin-bottom: 6px;
       }
@@ -728,6 +751,99 @@
       }
       .filter-row-search {
         padding: 14px 40px 10px;
+      }
+      .filter-toggle-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        color: var(--text);
+        border-radius: 20px;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 14px;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.15s;
+        white-space: nowrap;
+      }
+      .filter-toggle-btn:hover {
+        border-color: #555;
+      }
+      .filter-toggle-btn.open {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .filter-toggle-btn.has-active {
+        border-color: var(--accent);
+        color: var(--accent);
+        background: rgba(255, 140, 0, 0.08);
+      }
+      .filter-count-badge {
+        background: var(--accent);
+        color: #000;
+        border-radius: 10px;
+        padding: 1px 7px;
+        font-size: 11px;
+        font-family: "DM Sans", sans-serif;
+        font-weight: 700;
+        min-width: 18px;
+        text-align: center;
+        line-height: 1.6;
+      }
+      #filterPanel {
+        border-bottom: 1px solid var(--border);
+        background: rgba(16, 16, 16, 0.98);
+        padding: 20px 40px 24px;
+      }
+      .filter-panel-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px 32px;
+      }
+      .filter-section {
+        display: flex;
+        flex-direction: column;
+      }
+      .filter-section-label {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 13px;
+        letter-spacing: 1px;
+        color: var(--muted);
+        text-transform: uppercase;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        padding: 6px 0;
+        border-bottom: 1px solid var(--border);
+        transition: color 0.15s;
+        user-select: none;
+      }
+      .filter-section-label:hover {
+        color: var(--text);
+      }
+      .filter-section.open > .filter-section-label {
+        color: var(--accent);
+        border-bottom-color: var(--accent);
+      }
+      .filter-section-arrow {
+        font-size: 9px;
+        color: var(--muted);
+        transition: transform 0.2s;
+        flex-shrink: 0;
+      }
+      .filter-section.open > .filter-section-label .filter-section-arrow {
+        transform: rotate(180deg);
+        color: var(--accent);
+      }
+      .filter-section-body {
+        display: none;
+        padding-top: 10px;
+      }
+      .filter-section.open > .filter-section-body {
+        display: block;
       }
       .filter-pill {
         display: flex;
@@ -982,18 +1098,21 @@
       .grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 1px;
-        background: var(--border);
+        gap: 12px;
+        padding: 12px;
       }
       .card {
         background: var(--card);
         padding: 18px 20px;
-        transition: background 0.15s;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        transition: background 0.15s, border-color 0.15s;
         position: relative;
         overflow: hidden;
       }
       .card:hover {
         background: #222;
+        border-color: #3a3a3a;
       }
       .card::after {
         content: "";
@@ -1177,10 +1296,10 @@
         color: var(--accent3);
       }
       .macro-box.carbs-box .val {
-        color: #47b3e8;
+        color: var(--macro-carbs);
       }
       .macro-box.fat-box .val {
-        color: #e8a347;
+        color: var(--macro-fat);
       }
       .card-bottom {
         display: flex;
@@ -1879,10 +1998,10 @@
         color: var(--accent3);
       }
       .modal-macro.mc .mv {
-        color: #47b3e8;
+        color: var(--macro-carbs);
       }
       .modal-macro.mf .mv {
-        color: #e8a347;
+        color: var(--macro-fat);
       }
       .modal-tabs {
         display: flex;
@@ -1919,7 +2038,7 @@
         background: 0 0;
       }
       .modal-body::-webkit-scrollbar-thumb {
-        background: #3a3a3a;
+        background: var(--border);
         border-radius: 3px;
       }
       .modal-body::-webkit-scrollbar-thumb:hover {
@@ -1938,7 +2057,7 @@
         background: #0e0e0e;
       }
       html::-webkit-scrollbar-thumb {
-        background: #3a3a3a;
+        background: var(--border);
         border-radius: 3px;
       }
       html::-webkit-scrollbar-thumb:hover {
@@ -2051,16 +2170,16 @@
         margin-top: 2px;
       }
       .ing-macro-cell.mk .imc-val {
-        color: #ff8c00;
+        color: var(--macro-kcal);
       }
       .ing-macro-cell.mp .imc-val {
-        color: #47e8a3;
+        color: var(--macro-protein);
       }
       .ing-macro-cell.mc .imc-val {
-        color: #47b3e8;
+        color: var(--macro-carbs);
       }
       .ing-macro-cell.mf .imc-val {
-        color: #e84747;
+        color: var(--macro-fat);
       }
       .ing-macro-cell.ma .imc-val {
         color: #c8a0e8;
@@ -2108,16 +2227,16 @@
         margin-top: 2px;
       }
       .ing-total-cell.mk .itc-val {
-        color: #ff8c00;
+        color: var(--macro-kcal);
       }
       .ing-total-cell.mp .itc-val {
-        color: #47e8a3;
+        color: var(--macro-protein);
       }
       .ing-total-cell.mc .itc-val {
-        color: #47b3e8;
+        color: var(--macro-carbs);
       }
       .ing-total-cell.mf .itc-val {
-        color: #e84747;
+        color: var(--macro-fat);
       }
       .equipment-row {
         display: flex;
@@ -4444,7 +4563,24 @@
           padding: 28px 20px 20px;
         }
         .recipe-count {
-          font-size: 60px;
+          font-size: 48px;
+        }
+        .header-social {
+          display: none;
+        }
+        .filter-pill {
+          min-height: 40px;
+          padding: 8px 14px;
+        }
+        #filterPanel {
+          padding: 16px 20px 20px;
+        }
+        .filter-panel-grid {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+        .filter-toggle-btn {
+          min-height: 40px;
         }
         .carb-bar,
         .controls {
@@ -4499,6 +4635,12 @@
           font-size: 20px;
         }
       }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+          animation: none !important;
+        }
+      }
     </style>
   </head>
   <body>
@@ -4523,19 +4665,6 @@
     </div>
     <div class="page active" id="page-recipes">
       <header>
-        <div class="header-social">
-          <a
-            class="social-btn youtube"
-            href="https://www.youtube.com/@fitniikiter/shorts"
-            target="_blank"
-            rel="noopener"
-            ><span class="social-icon">▶️</span> YouTube </a
-          ><a class="social-btn tiktok" href="https://www.tiktok.com/@fit.niikiter" target="_blank" rel="noopener"
-            ><span class="social-icon">🎵</span> TikTok </a
-          ><button class="social-btn how-it-works-btn" onclick="openHowItWorksModal()">
-            <span class="social-icon">💡</span> How it works
-          </button>
-        </div>
         <div class="header-top" style="display: flex; align-items: flex-start; gap: 20px">
           <div class="header-avatar-wrap" onclick="handleProfileClick()" style="cursor: pointer">
             <img
@@ -4548,88 +4677,120 @@
             <h1>FIT <span style="color: var(--accent)">NIIKITER'S</span><br />RECIPE VAULT</h1>
             <p>Your high-protein recipe library. Real food, real macros.</p>
           </div>
+          <div class="header-social">
+            <a
+              class="social-btn youtube"
+              href="https://www.youtube.com/@fitniikiter/shorts"
+              target="_blank"
+              rel="noopener"
+              ><span class="social-icon">▶️</span> YouTube </a
+            ><a class="social-btn tiktok" href="https://www.tiktok.com/@fit.niikiter" target="_blank" rel="noopener"
+              ><span class="social-icon">🎵</span> TikTok </a
+            ><button class="social-btn how-it-works-btn" onclick="openHowItWorksModal()">
+              <span class="social-icon">💡</span> How it works
+            </button>
+          </div>
         </div>
       </header>
       <div class="filter-bar" id="mainFilterBar">
         <div class="filter-row">
-          <div class="search-wrap" style="max-width: 280px; flex: 1">
+          <div class="search-wrap" style="max-width: 360px; flex: 1">
             <span class="search-icon">🔍</span>
             <input id="searchInput" placeholder="Search recipes..." oninput="filterRecipes()" />
           </div>
-          <div class="filter-pill" id="pillCuisine" onclick="toggleFilterPanel('cuisine')">
-            🌍 Cuisine <span class="pill-arrow">▼</span>
-          </div>
-          <div class="filter-pill" id="pillCarbs" onclick="toggleFilterPanel('carbs')">
-            🥔 Carbs <span class="pill-arrow">▼</span>
-          </div>
-          <div class="filter-pill" id="pillProtein" onclick="toggleFilterPanel('protein')">
-            🍗 Protein <span class="pill-arrow">▼</span>
-          </div>
-          <div class="filter-pill" id="pillMacros" onclick="toggleFilterPanel('macros')">
-            📊 Macros <span class="pill-arrow">▼</span>
-          </div>
-          <div class="filter-pill" id="pillServings" onclick="toggleFilterPanel('servings')">
-            🍽️ <span id="pillServingsLabel">1 Serving</span> <span class="pill-arrow">▼</span>
-          </div>
-          <label class="video-check-wrap" onclick="toggleVideoFilter()" style="margin-left: 4px"
-            ><input type="checkbox" id="chkVideoOnly" /> <span class="video-checkbox"></span>
-            <span class="video-check-label">▶️ With Video</span></label
-          >
+          <button class="filter-toggle-btn" id="btnFilterToggle" onclick="toggleFilterPanel()">
+            <span>⚙️ Filter</span>
+            <span class="filter-count-badge" id="filterCountBadge" style="display:none">0</span>
+            <span class="pill-arrow" id="filterPillArrow">▼</span>
+          </button>
           <button
             class="filter-pill"
             id="btnResetAll"
             onclick="resetAllFilters()"
-            style="border-color: #444; color: #666; margin-left: 4px"
+            style="border-color: #444; color: #666"
           >
             ↺ Reset
           </button>
         </div>
-        <div class="filter-dropdown" id="panel-cuisine">
-          <div class="filter-dropdown-inner">
-            <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
-            <button class="filter-btn" onclick="setFilter('korean', this)">Korean</button>
-            <button class="filter-btn" onclick="setFilter('japanese', this)">Japanese</button>
-            <button class="filter-btn" onclick="setFilter('chinese', this)">Chinese</button>
-            <button class="filter-btn" onclick="setFilter('thai', this)">Thai</button>
-            <button class="filter-btn" onclick="setFilter('asian', this)">Asian</button>
-            <button class="filter-btn" onclick="setFilter('american', this)">American</button>
-            <button class="filter-btn" onclick="setFilter('mexican', this)">Mexican</button>
-            <button class="filter-btn" onclick="setFilter('middle-eastern', this)">Middle Eastern</button>
-            <button class="filter-btn" onclick="setFilter('mediterranean', this)">Mediterranean</button>
-            <button class="filter-btn" onclick="setFilter('indian', this)">Indian</button>
-            <button class="filter-btn" onclick="setFilter('comfort', this)">Comfort</button>
-            <button class="filter-btn" onclick="setFilter('fusion', this)">Fusion</button>
-            <span
-              style="width: 1px; height: 20px; background: var(--border); display: inline-block; margin: 0 4px"
-            ></span>
-            <button class="filter-btn sweet" onclick="setFlavorFilter('sweet', this)">🍯 Sweet</button>
-            <button class="filter-btn savory" onclick="setFlavorFilter('savory', this)">🧂 Savory</button>
-            <button class="filter-btn spicy" onclick="setSpicyFilter(this)">🌶️ Spicy</button>
-            <button class="filter-btn dip" onclick="setDipFilter(this)">🥣 Dip</button>
-          </div>
-        </div>
-        <div class="filter-dropdown" id="panel-carbs">
-          <div class="filter-dropdown-inner">
-            <label class="carb-check-wrap potato-check" onclick="toggleCarb('potato')"
-              ><input type="checkbox" id="chkPotato" checked /> <span class="carb-checkbox"></span>
-              <span class="carb-check-label">🥔 Potato</span></label
-            >
-            <label class="carb-check-wrap rice-check" onclick="toggleCarb('rice')"
-              ><input type="checkbox" id="chkRice" checked /> <span class="carb-checkbox"></span>
-              <span class="carb-check-label">🍚 Rice</span></label
-            >
-            <label class="carb-check-wrap noodle-check" onclick="toggleCarb('noodle')"
-              ><input type="checkbox" id="chkNoodle" checked /> <span class="carb-checkbox"></span>
-              <span class="carb-check-label">🍜 Noodles</span></label
-            >
-            <label class="carb-check-wrap bread-check" onclick="toggleCarb('bread')"
-              ><input type="checkbox" id="chkBread" checked /> <span class="carb-checkbox"></span>
-              <span class="carb-check-label">🫓 Bread/Wrap</span></label
-            >
-          </div>
-        </div>
-        <div class="filter-dropdown" id="panel-macros">
-          <div class="filter-dropdown-inner" style="flex-wrap: wrap; gap: 12px 20px; align-items: flex-end">
+        <div id="filterPanel" style="display:none">
+          <div class="filter-panel-grid">
+            <div class="filter-section">
+              <div class="filter-section-label" onclick="toggleFilterSection(this)"><span>🌍 Cuisine &amp; Flavor</span><span class="filter-section-arrow">▼</span></div>
+              <div class="filter-section-body"><div class="filter-dropdown-inner">
+                <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
+                <button class="filter-btn" onclick="setFilter('korean', this)">Korean</button>
+                <button class="filter-btn" onclick="setFilter('japanese', this)">Japanese</button>
+                <button class="filter-btn" onclick="setFilter('chinese', this)">Chinese</button>
+                <button class="filter-btn" onclick="setFilter('thai', this)">Thai</button>
+                <button class="filter-btn" onclick="setFilter('asian', this)">Asian</button>
+                <button class="filter-btn" onclick="setFilter('american', this)">American</button>
+                <button class="filter-btn" onclick="setFilter('mexican', this)">Mexican</button>
+                <button class="filter-btn" onclick="setFilter('middle-eastern', this)">Middle Eastern</button>
+                <button class="filter-btn" onclick="setFilter('mediterranean', this)">Mediterranean</button>
+                <button class="filter-btn" onclick="setFilter('indian', this)">Indian</button>
+                <button class="filter-btn" onclick="setFilter('comfort', this)">Comfort</button>
+                <button class="filter-btn" onclick="setFilter('fusion', this)">Fusion</button>
+                <span style="width: 1px; height: 20px; background: var(--border); display: inline-block; margin: 0 4px"></span>
+                <button class="filter-btn sweet" onclick="setFlavorFilter('sweet', this)">🍯 Sweet</button>
+                <button class="filter-btn savory" onclick="setFlavorFilter('savory', this)">🧂 Savory</button>
+                <button class="filter-btn spicy" onclick="setSpicyFilter(this)">🌶️ Spicy</button>
+                <button class="filter-btn dip" onclick="setDipFilter(this)">🥣 Dip</button>
+              </div></div>
+            </div>
+            <div class="filter-section">
+              <div class="filter-section-label" onclick="toggleFilterSection(this)"><span>🍚 Carbs</span><span class="filter-section-arrow">▼</span></div>
+              <div class="filter-section-body"><div class="filter-dropdown-inner">
+                <label class="carb-check-wrap potato-check" onclick="toggleCarb('potato')"
+                  ><input type="checkbox" id="chkPotato" checked /> <span class="carb-checkbox"></span>
+                  <span class="carb-check-label">🥔 Potato</span></label
+                >
+                <label class="carb-check-wrap rice-check" onclick="toggleCarb('rice')"
+                  ><input type="checkbox" id="chkRice" checked /> <span class="carb-checkbox"></span>
+                  <span class="carb-check-label">🍚 Rice</span></label
+                >
+                <label class="carb-check-wrap noodle-check" onclick="toggleCarb('noodle')"
+                  ><input type="checkbox" id="chkNoodle" checked /> <span class="carb-checkbox"></span>
+                  <span class="carb-check-label">🍜 Noodles</span></label
+                >
+                <label class="carb-check-wrap bread-check" onclick="toggleCarb('bread')"
+                  ><input type="checkbox" id="chkBread" checked /> <span class="carb-checkbox"></span>
+                  <span class="carb-check-label">🫓 Bread/Wrap</span></label
+                >
+              </div></div>
+            </div>
+            <div class="filter-section">
+              <div class="filter-section-label" onclick="toggleFilterSection(this)"><span>🥩 Protein</span><span class="filter-section-arrow">▼</span></div>
+              <div class="filter-section-body"><div class="filter-dropdown-inner">
+                <label class="carb-check-wrap" style="border-color: var(--carb-potato)" onclick="toggleProteinFilter('chicken')"
+                  ><input type="checkbox" id="chkPChicken" checked />
+                  <span class="carb-checkbox" style="border-color: var(--carb-potato)"></span>
+                  <span class="carb-check-label">🍗 Chicken</span></label
+                >
+                <label class="carb-check-wrap" style="border-color: #e84747" onclick="toggleProteinFilter('beef')"
+                  ><input type="checkbox" id="chkPBeef" checked />
+                  <span class="carb-checkbox" style="border-color: #e84747"></span>
+                  <span class="carb-check-label">🥩 Beef</span></label
+                >
+                <label class="carb-check-wrap" style="border-color: #ffb347" onclick="toggleProteinFilter('eggs')"
+                  ><input type="checkbox" id="chkPEggs" checked />
+                  <span class="carb-checkbox" style="border-color: #ffb347"></span>
+                  <span class="carb-check-label">🥚 Eggs</span></label
+                >
+                <label class="carb-check-wrap" style="border-color: #47b3e8" onclick="toggleProteinFilter('fish')"
+                  ><input type="checkbox" id="chkPFish" checked />
+                  <span class="carb-checkbox" style="border-color: #47b3e8"></span>
+                  <span class="carb-check-label">🐟 Fish</span></label
+                >
+                <label class="carb-check-wrap" style="border-color: #47e8a3" onclick="toggleProteinFilter('tofu')"
+                  ><input type="checkbox" id="chkPTofu" checked />
+                  <span class="carb-checkbox" style="border-color: #47e8a3"></span>
+                  <span class="carb-check-label">🫘 Tofu</span></label
+                >
+              </div></div>
+            </div>
+            <div class="filter-section">
+              <div class="filter-section-label" onclick="toggleFilterSection(this)"><span>📊 Macros</span><span class="filter-section-arrow">▼</span></div>
+              <div class="filter-section-body"><div class="filter-dropdown-inner" style="flex-wrap: wrap; gap: 12px 20px; align-items: flex-end">
             <div style="display: flex; flex-direction: column; gap: 4px">
               <label style="font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px"
                 >🔥 Max kcal</label
@@ -4730,15 +4891,6 @@
             </div>
             <div style="display: flex; flex-direction: column; gap: 4px">
               <label style="font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px"
-                >⏱ Max Zeit</label
-              >
-              <div style="display: flex; align-items: center; gap: 6px">
-                <input type="number" id="mfTimeMax" class="mf-num" placeholder="—" oninput="applyMacroFilterLive()" />
-                <span style="font-size: 11px; color: #555">min</span>
-              </div>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 4px">
-              <label style="font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px"
                 >⭐ Min Saturation Score</label
               >
               <div style="display: flex; align-items: center; gap: 6px">
@@ -4755,63 +4907,35 @@
               </div>
             </div>
             <button class="mf-reset-btn" onclick="resetMacroFilter()" style="align-self: flex-end">✕ Reset</button>
-          </div>
-        </div>
-        <div class="filter-dropdown" id="panel-servings">
-          <div class="filter-dropdown-inner" style="align-items: center; gap: 14px">
-            <span
-              style="
-                font-size: 12px;
-                color: var(--muted);
-                font-weight: 600;
-                text-transform: uppercase;
-                letter-spacing: 0.6px;
-              "
-              >🍽️ Servings</span
-            >
-            <div class="serving-stepper">
-              <button class="step-btn" onclick="changeGlobalServings(-1)">−</button>
-              <span
-                class="serving-val"
-                id="globalServingVal"
-                style="width: 40px; height: 36px; line-height: 36px; font-size: 20px"
-                >1</span
-              >
-              <button class="step-btn" onclick="changeGlobalServings(1)">+</button>
+              </div></div>
             </div>
-            <span style="font-size: 11px; color: #555">Applies to all recipe macros</span>
-          </div>
-        </div>
-        <div class="filter-dropdown" id="panel-protein">
-          <div class="filter-dropdown-inner">
-            <label
-              class="carb-check-wrap"
-              style="border-color: var(--carb-potato)"
-              onclick="toggleProteinFilter('chicken')"
-              ><input type="checkbox" id="chkPChicken" checked />
-              <span class="carb-checkbox" style="border-color: var(--carb-potato)"></span>
-              <span class="carb-check-label">🍗 Chicken</span></label
-            >
-            <label class="carb-check-wrap" style="border-color: #e84747" onclick="toggleProteinFilter('beef')"
-              ><input type="checkbox" id="chkPBeef" checked />
-              <span class="carb-checkbox" style="border-color: #e84747"></span>
-              <span class="carb-check-label">🥩 Beef</span></label
-            >
-            <label class="carb-check-wrap" style="border-color: #ffb347" onclick="toggleProteinFilter('eggs')"
-              ><input type="checkbox" id="chkPEggs" checked />
-              <span class="carb-checkbox" style="border-color: #ffb347"></span>
-              <span class="carb-check-label">🥚 Eggs</span></label
-            >
-            <label class="carb-check-wrap" style="border-color: #47b3e8" onclick="toggleProteinFilter('fish')"
-              ><input type="checkbox" id="chkPFish" checked />
-              <span class="carb-checkbox" style="border-color: #47b3e8"></span>
-              <span class="carb-check-label">🐟 Fish</span></label
-            >
-            <label class="carb-check-wrap" style="border-color: #47e8a3" onclick="toggleProteinFilter('tofu')"
-              ><input type="checkbox" id="chkPTofu" checked />
-              <span class="carb-checkbox" style="border-color: #47e8a3"></span>
-              <span class="carb-check-label">🫘 Tofu</span></label
-            >
+            <div class="filter-section">
+              <div class="filter-section-label" onclick="toggleFilterSection(this)"><span>🍽️ Servings, Time &amp; Video</span><span class="filter-section-arrow">▼</span></div>
+              <div class="filter-section-body"><div class="filter-dropdown-inner" style="align-items: flex-start; gap: 16px 24px; flex-wrap: wrap">
+                <div style="display: flex; flex-direction: column; gap: 8px">
+                  <span style="font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px">🍽️ Servings</span>
+                  <div class="serving-stepper">
+                    <button class="step-btn" onclick="changeGlobalServings(-1)">−</button>
+                    <span class="serving-val" id="globalServingVal" style="width: 40px; height: 36px; line-height: 36px; font-size: 20px">1</span>
+                    <button class="step-btn" onclick="changeGlobalServings(1)">+</button>
+                  </div>
+                  <span style="font-size: 11px; color: #555">Applies to all recipe macros</span>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 8px">
+                  <label style="font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px">⏱ Max Time</label>
+                  <div style="display: flex; align-items: center; gap: 6px">
+                    <input type="number" id="mfTimeMax" class="mf-num" placeholder="—" oninput="applyMacroFilterLive()" />
+                    <span style="font-size: 11px; color: #555">min</span>
+                  </div>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 8px; justify-content: center">
+                  <label class="video-check-wrap" onclick="toggleVideoFilter()"
+                    ><input type="checkbox" id="chkVideoOnly" /> <span class="video-checkbox"></span>
+                    <span class="video-check-label">▶️ With Video</span></label
+                  >
+                </div>
+              </div></div>
+            </div>
           </div>
         </div>
       </div>
@@ -5733,47 +5857,41 @@
         };
         return e[activeProtein] || e.chicken_thigh;
       }
-      function toggleFilterPanel(e) {
-        const a = {
-          cuisine: "pillCuisine",
-          carbs: "pillCarbs",
-          protein: "pillProtein",
-          macros: "pillMacros",
-          servings: "pillServings",
-        };
-        ["cuisine", "carbs", "protein", "macros", "servings"].forEach((t) => {
-          const i = document.getElementById("panel-" + t),
-            n = document.getElementById(a[t]);
-          if (t === e) {
-            const e = i.classList.toggle("open");
-            n.classList.toggle("open", e);
-          } else (i.classList.remove("open"), n.classList.remove("open"));
-        });
+      function toggleFilterSection(el) {
+        el.closest(".filter-section").classList.toggle("open");
+      }
+      function toggleFilterPanel() {
+        const panel = document.getElementById("filterPanel");
+        const btn = document.getElementById("btnFilterToggle");
+        const arrow = document.getElementById("filterPillArrow");
+        if (!panel) return;
+        const isOpen = panel.style.display !== "none";
+        panel.style.display = isOpen ? "none" : "block";
+        if (btn) btn.classList.toggle("open", !isOpen);
+        if (arrow) arrow.style.transform = isOpen ? "" : "rotate(180deg)";
       }
       function buildDisplayNumbers() {}
       function updatePillStates() {
-        const e = document.getElementById("pillCuisine");
-        e && e.classList.toggle("has-active", "all" !== currentCuisineFilter);
-        const a = document.getElementById("pillCarbs");
-        a &&
-          a.classList.toggle(
-            "has-active",
-            Object.values(carbEnabled).some((e) => !e),
-          );
-        const t = document.getElementById("pillProtein");
-        t &&
-          t.classList.toggle(
-            "has-active",
-            Object.values(proteinEnabled).some((e) => !e),
-          );
-        const i =
-            macroFilter.kcalMax < 9999 ||
-            macroFilter.protMin > 0 ||
-            macroFilter.carbMax < 999 ||
-            macroFilter.fatMax < 999 ||
-            macroFilter.timeMax < 999,
-          n = document.getElementById("pillMacros");
-        n && n.classList.toggle("has-active", i);
+        let count = 0;
+        if (currentCuisineFilter !== "all") count++;
+        if (Object.values(carbEnabled).some((e) => !e)) count++;
+        if (Object.values(proteinEnabled).some((e) => !e)) count++;
+        if (
+          macroFilter.kcalMax < 9999 ||
+          macroFilter.protMin > 0 ||
+          macroFilter.carbMax < 999 ||
+          macroFilter.fatMax < 999 ||
+          macroFilter.timeMax < 999
+        ) count++;
+        if (videoFilterOnly) count++;
+        if (flavorFilter !== "all" || spicyFilter || dipFilter) count++;
+        const badge = document.getElementById("filterCountBadge");
+        const btn = document.getElementById("btnFilterToggle");
+        if (badge) {
+          badge.textContent = count;
+          badge.style.display = count > 0 ? "inline-block" : "none";
+        }
+        if (btn) btn.classList.toggle("has-active", count > 0);
       }
       function adminToggleRecipe(e) {
         (HIDDEN_RECIPE_IDS.has(e) ? HIDDEN_RECIPE_IDS.delete(e) : HIDDEN_RECIPE_IDS.add(e),
