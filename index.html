@@ -6503,11 +6503,20 @@
           const a = document.querySelector(`.card[data-id="${e.id}"]`);
           if (!a) return;
           const t = baseMacros(e.carb),
-            i = getSauceMacros(e),
-            n = Math.round(t.kcal + i.kcal),
-            s = Math.round(t.p + i.p),
-            o = Math.round(t.c + i.c),
-            r = Math.round(t.f + i.f),
+            i = getSauceMacros(e);
+          let seKcal = 0, seP = 0, seC = 0, seF = 0;
+          if (e.sideEgg) {
+            const nut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
+            const gPP = Math.round((sideEggCount * sideEggSizeG) / Math.max(weights.servings, 1));
+            seKcal = Math.round((nut.kcal * gPP) / 100);
+            seP    = Math.round(((nut.p  * gPP) / 100) * 10) / 10;
+            seC    = Math.round(((nut.c  * gPP) / 100) * 10) / 10;
+            seF    = Math.round(((nut.f  * gPP) / 100) * 10) / 10;
+          }
+          const n = Math.round(t.kcal + i.kcal + seKcal),
+            s = Math.round(t.p + i.p + seP),
+            o = Math.round(t.c + i.c + seC),
+            r = Math.round(t.f + i.f + seF),
             c = calcScore(e, s, r);
           ((a.querySelector('[data-macro="kcal"]').textContent = n),
             (a.querySelector('[data-macro="prot"]').textContent = s + "g"),
