@@ -2183,6 +2183,18 @@ const R = [
   flavor: "savory",
   hint: "",
 },
+{
+id: "mediterranean-smashed-potato-chicken",
+protein: "chicken",
+displayNum: 114,
+carb: "potato",
+time: 45,
+title: "Crispy Smashed Potato Chicken",
+desc: "Garlic-herb chicken thighs on shatteringly crispy smashed potatoes — lemon yogurt sauce, big texture contrast.",
+tags: ["mediterranean", "comfort"],
+flavor: "savory",
+hint: "",
+},
 
 ];
 
@@ -7882,6 +7894,64 @@ const RECIPE_DETAILS = {
     { title: "Whole Cumin Seeds First", text: "Dropping whole cumin seeds into the hot oil as the very first step — before anything else — infuses the entire oil with a deep, toasty cumin aroma that carries through the whole dish. Ground cumin added later cannot replicate this base layer of flavour." },
   ],
   notes: "Keema aloo is one of the best meal prep dishes in this collection — it tastes significantly better the next day and keeps 4 days in the fridge. Serve with a flatbread or naan for a more complete meal.",
+},
+
+"mediterranean-smashed-potato-chicken": {
+image: null,
+video: "",
+ingredients: [
+{ section: "Protein", items: [{ name: "Boneless skinless chicken thighs", amt: "{{proteinG}}g raw" }] },
+{ section: "Carb Base", items: [{ name: "Waxy potatoes (baby potatoes)", amt: "{{carbG}}g" }] },
+{ section: "Marinade", items: [
+{ name: "Olive oil", amt: "1 tsp" },
+{ name: "Garlic (minced)", amt: "3 cloves" },
+{ name: "Smoked paprika", amt: "1 tsp" },
+{ name: "Dried oregano", amt: "1 tsp" },
+{ name: "Lemon zest", amt: "1 piece" },
+{ name: "Salt & pepper", amt: "to taste" },
+]},
+{ section: "Potato Seasoning", items: [
+{ name: "Olive oil", amt: "1 tsp" },
+{ name: "Garlic powder", amt: "0.5 tsp" },
+{ name: "Smoked paprika", amt: "0.5 tsp" },
+{ name: "Salt", amt: "to taste" },
+]},
+{ section: "Lemon Yogurt Sauce", items: [
+{ name: "Greek yogurt (0% fat)", amt: "100g" },
+{ name: "Garlic (minced)", amt: "1 clove" },
+{ name: "Lemon juice", amt: "1 tsp" },
+{ name: "Salt & pepper", amt: "to taste" },
+]},
+{ section: "Cucumber Herb Salad", items: [
+{ name: "Cucumber", amt: "250g" },
+{ name: "Red onion", amt: "0.5 piece" },
+{ name: "Fresh parsley", amt: "small handful" },
+{ name: "Fresh mint", amt: "small handful" },
+{ name: "Lemon juice", amt: "1 tsp" },
+{ name: "Olive oil", amt: "1 tsp" },
+{ name: "Salt & pepper", amt: "to taste" },
+]},
+{ section: "To Serve", items: [
+{ name: "Butter", amt: "5g" },
+{ name: "Fresh parsley", amt: "small handful" },
+]},
+],
+steps: [
+"Cover potatoes in cold salted water, bring to a boil, and cook 18–20 minutes until completely tender. Drain and let steam-dry for 2 minutes.",
+"Transfer potatoes to a lined baking tray. Press each one flat with a glass or small pot until roughly 1.5cm thick — the rougher the smash, the crispier the edges. Season with olive oil, garlic powder, smoked paprika, and salt.",
+"Roast at 220°C on the top rack for 20–25 minutes until the edges are deeply golden and the underside shatters when lifted. Don't move them during roasting.",
+"While potatoes roast, combine chicken thighs with olive oil, garlic, smoked paprika, oregano, lemon zest, salt, and pepper. Marinate for at least 10 minutes.",
+"Soak red onion slices in cold water for 5 minutes, then drain. Toss with sliced cucumber, parsley, mint, lemon juice, olive oil, and salt. Set aside.",
+"Heat a dry pan over high heat — no oil. Place thighs smooth-side down and sear undisturbed for 4–5 minutes until a deep golden crust forms. Flip and cook 3–4 minutes more.",
+"Add butter to the pan in the last 30 seconds — tilt the pan and baste the chicken with the foamy butter. Remove from heat and rest 2 minutes.",
+"Mix Greek yogurt with garlic, lemon juice, and salt for the sauce.",
+"Plate with smashed potatoes as the base, chicken thigh on top, yogurt sauce to the side, and the cucumber salad next to it. Finish with fresh parsley and cracked black pepper.",
+],
+hacks: [
+{ title: "Dry Pan = Better Crust", text: "Cooking chicken thighs in a dry pan forces the fat to render out of the thigh itself — you get a deeper, more even sear than with added oil. The thigh has enough fat to baste itself for the first few minutes." },
+{ title: "Steam Dry Before Smashing", text: "Letting the potatoes steam-dry for 2 minutes after draining removes excess surface moisture — this is what makes them crisp instead of steam in the oven. Even 2 minutes makes a visible difference on the finished crust." },
+],
+notes: "Leftovers keep 3 days in the fridge — reheat potatoes in a dry pan or air fryer to bring back the crispiness. Store salad separately to keep it crisp.",
 },
 
 };
