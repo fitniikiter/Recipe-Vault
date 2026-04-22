@@ -4641,6 +4641,35 @@
           animation: none !important;
         }
       }
+      #scrollTopBtn {
+        position: fixed;
+        bottom: 28px;
+        right: 20px;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        font-size: 22px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transform: translateY(12px);
+        transition: opacity 0.25s, transform 0.25s;
+        pointer-events: none;
+        z-index: 1100;
+      }
+      #scrollTopBtn.visible {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+      #scrollTopBtn:hover {
+        filter: brightness(1.15);
+      }
     </style>
   </head>
   <body>
@@ -9609,6 +9638,7 @@
         </div>
       </div>
     </div>
+    <button id="scrollTopBtn" title="Back to top">&#8679;</button>
     <div class="admin-indicator" onclick="promptAdminPassword()">🔐 ADMIN MODE — Click to exit</div>
     <div class="admin-modal-overlay" id="adminModalOverlay" onclick="event.target === this && closeAdminEdit()">
       <div class="admin-modal">
@@ -9663,5 +9693,20 @@
         </div>
       </div>
     </div>
+    <script>
+      (function () {
+        const btn = document.getElementById("scrollTopBtn");
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 400) {
+            btn.classList.add("visible");
+          } else {
+            btn.classList.remove("visible");
+          }
+        }, { passive: true });
+        btn.addEventListener("click", function () {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      })();
+    </script>
   </body>
 </html>
