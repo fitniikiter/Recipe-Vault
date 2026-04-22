@@ -1883,7 +1883,7 @@ const R = [
 {
   id: "american-cowboy-hash",
   protein: "beef",
-  displayNum: 114,
+  displayNum: 121,
   carb: "potato",
   time: 25,
   title: "Cowboy Hash",
@@ -1896,7 +1896,7 @@ const R = [
 {
   id: "american-bbq-beef-stuffed-potato",
   protein: "beef",
-  displayNum: 115,
+  displayNum: 122,
   carb: "potato",
   time: 45,
   title: "BBQ Beef Stuffed Potato",
@@ -1908,7 +1908,7 @@ const R = [
 {
   id: "american-beef-gravy-smashed-potato",
   protein: "beef",
-  displayNum: 116,
+  displayNum: 123,
   carb: "potato",
   time: 30,
   title: "Beef & Gravy Smashed Potatoes",
@@ -1920,7 +1920,7 @@ const R = [
 {
   id: "american-bacon-beef-potato-skillet",
   protein: "beef",
-  displayNum: 117,
+  displayNum: 124,
   carb: "potato",
   time: 30,
   title: "Bacon Beef Potato Skillet",
@@ -1932,7 +1932,7 @@ const R = [
 {
   id: "american-philly-cheesesteak-hash",
   protein: "beef",
-  displayNum: 118,
+  displayNum: 125,
   carb: "potato",
   time: 25,
   title: "Philly Cheesesteak Hash",
@@ -1944,7 +1944,7 @@ const R = [
 {
   id: "american-crispy-beef-tater-bowl",
   protein: "beef",
-  displayNum: 119,
+  displayNum: 126,
   carb: "potato",
   time: 30,
   title: "Crispy Beef Tater Bowl",
@@ -1956,7 +1956,7 @@ const R = [
 {
   id: "mexican-beef-taco-potato-bowl",
   protein: "beef",
-  displayNum: 120,
+  displayNum: 127,
   carb: "potato",
   time: 30,
   title: "Mexican Beef Taco Potato Bowl",
@@ -1968,7 +1968,7 @@ const R = [
 {
   id: "mexican-birria-beef-potato-stew",
   protein: "beef",
-  displayNum: 121,
+  displayNum: 128,
   carb: "potato",
   time: 45,
   title: "Birria-Style Beef Potato Stew",
@@ -1980,7 +1980,7 @@ const R = [
 {
   id: "mexican-picadillo-potato",
   protein: "beef",
-  displayNum: 122,
+  displayNum: 129,
   carb: "potato",
   time: 30,
   title: "Mexican Picadillo Potato Bowl",
@@ -1992,7 +1992,7 @@ const R = [
 {
   id: "mexican-chorizo-beef-potato-skillet",
   protein: "beef",
-  displayNum: 123,
+  displayNum: 130,
   carb: "potato",
   time: 25,
   title: "Chorizo-Style Beef Potato Skillet",
@@ -2005,7 +2005,7 @@ const R = [
 {
   id: "mexican-enchilada-stuffed-potato",
   protein: "beef",
-  displayNum: 124,
+  displayNum: 131,
   carb: "potato",
   time: 50,
   title: "Enchilada Stuffed Potato",
@@ -2017,7 +2017,7 @@ const R = [
 {
   id: "korean-bulgogi-beef-potato-bowl",
   protein: "beef",
-  displayNum: 125,
+  displayNum: 132,
   carb: "potato",
   time: 30,
   title: "Korean Bulgogi Beef Potato Bowl",
@@ -2029,7 +2029,7 @@ const R = [
 {
   id: "korean-kimchi-beef-potato-hash",
   protein: "beef",
-  displayNum: 126,
+  displayNum: 133,
   carb: "potato",
   time: 20,
   title: "Kimchi Beef Potato Hash",
@@ -2041,7 +2041,7 @@ const R = [
 {
   id: "korean-tteokbokki-beef-potato",
   protein: "beef",
-  displayNum: 127,
+  displayNum: 134,
   carb: "potato",
   time: 25,
   title: "Tteokbokki-Style Beef Potato Bowl",
@@ -2053,7 +2053,7 @@ const R = [
 {
   id: "korean-beef-jjigae-potato",
   protein: "beef",
-  displayNum: 128,
+  displayNum: 135,
   carb: "potato",
   time: 35,
   title: "Korean Beef Doenjang Jjigae",
@@ -2065,7 +2065,7 @@ const R = [
 {
   id: "middle-eastern-shawarma-beef-potato",
   protein: "beef",
-  displayNum: 129,
+  displayNum: 136,
   carb: "potato",
   time: 30,
   title: "Shawarma Beef Potato Bowl",
@@ -2077,7 +2077,7 @@ const R = [
 {
   id: "moroccan-spiced-beef-potato",
   protein: "beef",
-  displayNum: 130,
+  displayNum: 137,
   carb: "potato",
   time: 35,
   title: "Moroccan Spiced Beef & Potato",
@@ -2089,7 +2089,7 @@ const R = [
 {
   id: "turkish-manti-beef-potato-bowl",
   protein: "beef",
-  displayNum: 131,
+  displayNum: 138,
   carb: "potato",
   time: 25,
   title: "Turkish Manti-Style Beef Bowl",
@@ -2101,7 +2101,7 @@ const R = [
 {
   id: "japanese-curry-beef-potato",
   protein: "beef",
-  displayNum: 132,
+  displayNum: 139,
   carb: "potato",
   time: 35,
   title: "Japanese Beef Curry",
@@ -2113,7 +2113,7 @@ const R = [
 {
   id: "chinese-mapo-beef-potato-bowl",
   protein: "beef",
-  displayNum: 133,
+  displayNum: 140,
   carb: "potato",
   time: 25,
   title: "Ma Po Style Beef Potato Bowl",
@@ -2125,7 +2125,7 @@ const R = [
 {
   id: "thai-basil-beef-potato-hash",
   protein: "beef",
-  displayNum: 134,
+  displayNum: 141,
   carb: "potato",
   time: 25,
   title: "Thai Basil Beef Potato Hash",
@@ -2138,7 +2138,7 @@ const R = [
 {
   id: "japanese-teriyaki-beef-potato-bowl",
   protein: "beef",
-  displayNum: 135,
+  displayNum: 142,
   carb: "potato",
   time: 30,
   title: "Teriyaki Beef Potato Bowl",
@@ -2150,7 +2150,7 @@ const R = [
 {
   id: "spanish-beef-patatas-bravas-bowl",
   protein: "beef",
-  displayNum: 136,
+  displayNum: 143,
   carb: "potato",
   time: 35,
   title: "Beef Patatas Bravas Bowl",
@@ -2162,7 +2162,7 @@ const R = [
 {
   id: "filipino-beef-adobo-potato-bowl",
   protein: "beef",
-  displayNum: 137,
+  displayNum: 144,
   carb: "potato",
   time: 35,
   title: "Filipino Beef Adobo Potato Bowl",
@@ -2174,7 +2174,7 @@ const R = [
 {
   id: "indian-keema-aloo",
   protein: "beef",
-  displayNum: 138,
+  displayNum: 145,
   carb: "potato",
   time: 35,
   title: "Keema Aloo",
@@ -2184,14 +2184,14 @@ const R = [
   hint: "",
 },
 {
-id: "mediterranean-smashed-potato-chicken",
+id: "mediterranean-smashed-potato-bowl",
 protein: "chicken",
-displayNum: 114,
+displayNum: 146,
 carb: "potato",
 time: 45,
-title: "Crispy Smashed Potato Chicken",
+title: "Greek Smashed Potato Bowl",
 desc: "Garlic-herb chicken thighs on shatteringly crispy smashed potatoes — lemon yogurt sauce, big texture contrast.",
-tags: ["mediterranean", "comfort"],
+tags: ["mediterranean", "comfort", "Greek"],
 flavor: "savory",
 hint: "",
 },
@@ -7896,7 +7896,7 @@ const RECIPE_DETAILS = {
   notes: "Keema aloo is one of the best meal prep dishes in this collection — it tastes significantly better the next day and keeps 4 days in the fridge. Serve with a flatbread or naan for a more complete meal.",
 },
 
-"mediterranean-smashed-potato-chicken": {
+"mediterranean-smashed-potato-bowl": {
 image: null,
 video: "",
 ingredients: [
