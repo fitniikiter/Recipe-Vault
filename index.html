@@ -898,8 +898,9 @@
       }
       .filter-dropdown-inner {
         display: flex;
-        flex-direction: column;
         gap: 8px;
+        flex-wrap: wrap;
+        align-items: center;
       }
       .filter-btn {
         background: var(--card);
@@ -4767,7 +4768,7 @@
             </div>
             <div class="filter-section">
               <div class="filter-section-label" onclick="toggleFilterSection(this)"><span>🍚 Carbs</span><span class="filter-section-arrow">▼</span></div>
-              <div class="filter-section-body"><div class="filter-dropdown-inner">
+              <div class="filter-section-body"><div class="filter-dropdown-inner" style="flex-direction: column; align-items: flex-start">
                 <label class="carb-check-wrap potato-check" onclick="toggleCarb('potato')"
                   ><input type="checkbox" id="chkPotato" checked /> <span class="carb-checkbox"></span>
                   <span class="carb-check-label">🥔 Potato</span></label
@@ -4788,7 +4789,7 @@
             </div>
             <div class="filter-section">
               <div class="filter-section-label" onclick="toggleFilterSection(this)"><span>🥩 Protein</span><span class="filter-section-arrow">▼</span></div>
-              <div class="filter-section-body"><div class="filter-dropdown-inner">
+              <div class="filter-section-body"><div class="filter-dropdown-inner" style="flex-direction: column; align-items: flex-start">
                 <label class="carb-check-wrap" style="border-color: var(--carb-potato)" onclick="toggleProteinFilter('chicken')"
                   ><input type="checkbox" id="chkPChicken" checked />
                   <span class="carb-checkbox" style="border-color: var(--carb-potato)"></span>
