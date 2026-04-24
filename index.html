@@ -6823,17 +6823,28 @@
         const a = parseFloat(document.getElementById("mfCarbMax")?.value);
         if (!a || a <= 0) return;
         const t = Math.max(weights.servings, 1);
-        (["potato", "rice", "noodle", "bread"].forEach((e) => {
-          const i = NUT[e];
+        // clear cache so getSauceMacros returns fresh values
+        Object.keys(_sauceMacroCache).forEach((k) => delete _sauceMacroCache[k]);
+        (["potato", "rice", "noodle", "bread"].forEach((carbType) => {
+          const i = NUT[carbType];
           if (!i || !i.c) return;
-          const n = Math.round((a * t * 100) / i.c);
-          weights[e] = Math.max(10, Math.min(2e3, n));
-          const s = document.getElementById(e + "Input");
-          s && (s.value = weights[e]);
-          const o = document.getElementById("mw" + e.charAt(0).toUpperCase() + e.slice(1));
-          o && (o.value = weights[e]);
-        }),
-          Object.keys(_sauceMacroCache).forEach((e) => delete _sauceMacroCache[e]));
+          // find the highest sauce-carb contribution across all recipes of this carb type
+          let maxSauceCarbs = 0;
+          R.forEach((recipe) => {
+            if (recipe.carb === carbType) {
+              const sm = getSauceMacros(recipe);
+              if (sm.c > maxSauceCarbs) maxSauceCarbs = sm.c;
+            }
+          });
+          // ingredient weight needed so that ingredient_carbs + max_sauce_carbs <= target
+          const targetIngredientCarbs = Math.max(0, a - maxSauceCarbs);
+          const n = Math.round((targetIngredientCarbs * t * 100) / i.c);
+          weights[carbType] = Math.max(10, Math.min(2e3, n));
+          const s = document.getElementById(carbType + "Input");
+          s && (s.value = weights[carbType]);
+          const o = document.getElementById("mw" + carbType.charAt(0).toUpperCase() + carbType.slice(1));
+          o && (o.value = weights[carbType]);
+        }));
       }
       function resetMacroFilter() {
         macroFilter = { kcalMax: 9999, protMin: 0, carbMax: 999, fatMax: 999, scoreMin: 1, timeMax: 999 };
