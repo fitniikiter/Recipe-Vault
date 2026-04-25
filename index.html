@@ -6510,7 +6510,7 @@
         (R.forEach((e) => {
           const i = document.createElement("div");
           ((i.className = "card"), (i.dataset.id = e.id), (i.dataset.id = e.id), (i.onclick = () => openModal(e.id)));
-          const n = e.tags.filter(t => t !== "spicy" && t !== "dip").map((e) => `<span class="tag tag-${e}">${tagLabel(e)}</span>`).join(""),
+          const n = e.tags.filter(t => t !== "spicy" && t !== "dip" && t !== e.protein).map((e) => `<span class="tag tag-${e}">${tagLabel(e)}</span>`).join(""),
             s = e.protein === "none" ? "none" : (e.protein || "chicken"),
             o =
               { chicken: "🍗 Chicken", beef: "🥩 Beef", eggs: "🥚 Eggs", fish: "🐟 Fish", tofu: "🫘 Tofu" }[s] ||
@@ -7080,7 +7080,7 @@
             "🍗 Chicken",
           n = { chicken: "chicken", beef: "beef", eggs: "eggs", salmon: "salmon", tofu: "tofu" }[t] || "chicken",
           s = document.getElementById("modalTagsRow"),
-          o = (a.tags || []).filter(e => e !== "spicy" && e !== "dip").map((e) => `<span class="tag tag-${e}">${tagLabel(e)}</span>`).join("");
+          o = (a.tags || []).filter(e => e !== "spicy" && e !== "dip" && e !== a.protein).map((e) => `<span class="tag tag-${e}">${tagLabel(e)}</span>`).join("");
         ((s.innerHTML = `\n    <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:${o ? "6px" : "0"};">\n      ${a.carb !== "none" ? `<span class="carb-badge ${a.carb}" style="font-size:10px;padding:4px 10px;">${{ potato: "🥔 Potato", rice: "🍚 Rice", noodle: "🍜 Noodle", bread: "🫓 Bread" }[a.carb]}</span>` : ""}\n      ${t !== "none" ? `<span class="protein-badge ${n}" style="font-size:10px;padding:4px 10px;">${i}</span>` : ""}\n      <span class="flavor-badge ${a.flavor || "savory"}" style="font-size:10px;padding:4px 10px;">${"sweet" === a.flavor ? "🍯 Sweet" : "🧂 Savory"}</span>\n      ${ALCOHOL_RECIPE_IDS.has(a.id) ? '<span class="flavor-badge alcohol" style="font-size:10px;padding:4px 10px;">🍶 Alcohol</span>' : ""}\n      ${SPICY_RECIPE_IDS.has(a.id) ? '<span class="flavor-badge spicy" style="font-size:10px;padding:4px 10px;">🌶️ Spicy</span>' : ""}\n      ${DIP_RECIPE_IDS.has(a.id) ? '<span class="flavor-badge dip" style="font-size:10px;padding:4px 10px;">🥣 Dip</span>' : ""}\n    </div>\n    ${o ? `<div style="display:flex;flex-wrap:wrap;gap:5px;">${o}</div>` : ""}\n  `),
           (modalServings = weights.servings), updateModalMacros(a));
         const r = getRecipeDetail(a),
