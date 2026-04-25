@@ -8256,8 +8256,9 @@
       function calcSauceMacros(e) {
         const a = getRecipeDetail(e);
         if (!a || !a.ingredients) return { kcal: e.sauce_kcal, p: e.sauce_p, c: e.sauce_c, f: e.sauce_f };
-        // For fixed-batch recipes (none/none): always show full-batch macros, don't divide by servings
-        const t = (e.protein === "none" && e.carb === "none") ? 1 : Math.max(weights.servings, 1);
+        // Sauce amounts are written for a 2-serving batch; divide by 2 to get per-portion.
+        // none/none recipes show full-batch macros (divide by 1).
+        const t = (e.protein === "none" && e.carb === "none") ? 1 : 2;
         let i = 0, n = 0, s = 0, o = 0;
         a.ingredients.forEach((e) => {
           e.items.forEach((e) => {
@@ -8278,10 +8279,8 @@
       }
       const _sauceMacroCache = {};
       function getSauceMacros(e) {
-        // none/none recipes always use t=1 so cache key doesn't need servings suffix
-        const cacheKey = (e.protein === "none" && e.carb === "none")
-          ? e.id
-          : e.id + "_s" + Math.max(weights.servings, 1);
+        // Sauce macros are fixed per-portion (always divided by base serving 2), so cache by id only
+        const cacheKey = e.id;
         if (_sauceMacroCache[cacheKey]) return _sauceMacroCache[cacheKey];
         const a = calcSauceMacros(e);
         return ((_sauceMacroCache[cacheKey] = a), a);
