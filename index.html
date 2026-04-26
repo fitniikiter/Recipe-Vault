@@ -2119,6 +2119,18 @@
       .ing-list li .ing-item-name {
         color: var(--text);
       }
+      .ing-not-in-steps {
+        display: inline-block;
+        width: 15px; height: 15px; line-height: 15px;
+        border-radius: 50%;
+        background: rgba(255,160,0,0.18);
+        color: #f90;
+        font-size: 9px; font-weight: 800;
+        text-align: center;
+        margin-left: 5px;
+        vertical-align: middle;
+        cursor: default;
+      }
       .ing-list li .ing-item-amt {
         color: var(--accent);
         font-weight: 700;
@@ -7203,6 +7215,35 @@
           "<div class=\"ing-macro-hint\">Per portion &middot; " + gPP + "g &middot; per 100g: " + sgNut.kcal + "kcal " + sgNut.p + "g P " + sgNut.c + "g C " + sgNut.f + "g F</div>" +
           "</div></div>";
       }
+      let _ingIdAliasMap = null;
+      function _getIngIdAliasMap() {
+        if (_ingIdAliasMap) return _ingIdAliasMap;
+        _ingIdAliasMap = {};
+        Object.entries(ING_NAME_MAP).forEach(([alias, id]) => {
+          if (!_ingIdAliasMap[id]) _ingIdAliasMap[id] = [];
+          _ingIdAliasMap[id].push(alias.toLowerCase());
+        });
+        return _ingIdAliasMap;
+      }
+      function _isIngInSteps(item, stepsText) {
+        const amt = (item.amt || "").toLowerCase().trim();
+        // placeholders, optional, "to taste" and "—" are always considered present
+        if (amt.includes("{{") || amt === "to taste" || amt === "—" || amt.includes("optional") || amt.includes("to taste")) return true;
+        const name = (item.name || "").toLowerCase().trim();
+        if (!name) return true;
+        // generic seasoning/oil entries are always implied in cooking steps
+        if (/\b(salt|pepper|spice|seasoning|neutral oil|cooking oil|oil)\b/.test(name)) return true;
+        // direct name match
+        if (stepsText.includes(name)) return true;
+        // match via canonical id and all ING_NAME_MAP aliases
+        const id = item.id || findIngredientId(item.name);
+        if (id) {
+          if (stepsText.includes(id.toLowerCase().replace(/_/g, " "))) return true;
+          const aliases = _getIngIdAliasMap()[id] || [];
+          for (const alias of aliases) { if (stepsText.includes(alias)) return true; }
+        }
+        return false;
+      }
       function buildIngredientsTab(e, a) {
         void 0 !== a && (modalServings = Math.max(1, a));
         const t = getRecipeDetail(e),
@@ -7304,6 +7345,7 @@
           v = 0,
           w = 0,
           _ = !1;
+        const _recipeStepsText = (t.steps || []).join(" ").toLowerCase();
         t.ingredients.forEach((a) => {
           ((y += `<div class="ing-section-title">${a.section}</div><ul class="ing-list">`),
             a.items.forEach((a) => {
@@ -7351,12 +7393,14 @@
                   };
                 } else ((h = a.id || findIngredientId(m)), (g = h ? calcIngredientMacros(h, d) : null));
               } catch (e) {}
+              const _inSteps = _isIngInSteps(a, _recipeStepsText);
+              const _warnBadge = _inSteps ? "" : ' <span class="ing-not-in-steps" title="Not mentioned in recipe steps">!</span>';
               if (g) {
                 ((_ = !0), (b += g.kcal), (f += g.p), (v += g.c), (w += g.f));
                 Math.random().toString(36).slice(2, 7);
-                y += `<li class="has-macros" onclick="toggleIngMacro(this)">\n          <div class="ing-main-row">\n            <span class="ing-item-name">${m}</span>\n            <div style="display:flex;align-items:center;gap:8px;">\n              <span class="ing-item-amt">${d}</span>\n              <span class="ing-expand-icon">▼</span>\n            </div>\n          </div>\n          <div class="ing-macro-panel">\n            <div class="ing-macro-grid">\n              <div class="ing-macro-cell mk"><span class="imc-val">${g.kcal}</span><span class="imc-lbl">kcal</span></div>\n              <div class="ing-macro-cell mp"><span class="imc-val">${g.p}g</span><span class="imc-lbl">protein</span></div>\n              <div class="ing-macro-cell mc"><span class="imc-val">${g.c}g</span><span class="imc-lbl">carbs</span></div>\n              <div class="ing-macro-cell mf"><span class="imc-val">${g.f}g</span><span class="imc-lbl">fat</span></div>\n              ${g.a > 0 ? `<div class="ing-macro-cell ma"><span class="imc-val">${g.a}g</span><span class="imc-lbl">alcohol</span></div>` : ""}\n            </div>\n            <div class="ing-macro-hint">${i > 1 ? `${i} servings` : "Per portion"} · based on ${g.grams}g</div>\n          </div>\n        </li>`;
+                y += `<li class="has-macros" onclick="toggleIngMacro(this)">\n          <div class="ing-main-row">\n            <span class="ing-item-name">${m}${_warnBadge}</span>\n            <div style="display:flex;align-items:center;gap:8px;">\n              <span class="ing-item-amt">${d}</span>\n              <span class="ing-expand-icon">▼</span>\n            </div>\n          </div>\n          <div class="ing-macro-panel">\n            <div class="ing-macro-grid">\n              <div class="ing-macro-cell mk"><span class="imc-val">${g.kcal}</span><span class="imc-lbl">kcal</span></div>\n              <div class="ing-macro-cell mp"><span class="imc-val">${g.p}g</span><span class="imc-lbl">protein</span></div>\n              <div class="ing-macro-cell mc"><span class="imc-val">${g.c}g</span><span class="imc-lbl">carbs</span></div>\n              <div class="ing-macro-cell mf"><span class="imc-val">${g.f}g</span><span class="imc-lbl">fat</span></div>\n              ${g.a > 0 ? `<div class="ing-macro-cell ma"><span class="imc-val">${g.a}g</span><span class="imc-lbl">alcohol</span></div>` : ""}\n            </div>\n            <div class="ing-macro-hint">${i > 1 ? `${i} servings` : "Per portion"} · based on ${g.grams}g</div>\n          </div>\n        </li>`;
               } else
-                y += `<li><div class="ing-main-row"><span class="ing-item-name">${m}</span><span class="ing-item-amt">${d}</span></div></li>`;
+                y += `<li><div class="ing-main-row"><span class="ing-item-name">${m}${_warnBadge}</span><span class="ing-item-amt">${d}</span></div></li>`;
             }),
             (y += "</ul>"));
         });
