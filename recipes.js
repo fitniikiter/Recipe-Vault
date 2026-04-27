@@ -2201,7 +2201,7 @@ hint: "",
   displayNum: 147,
   carb: "potato",
   time: 40,
-  title: "Chimichurri Mayo Chicken & Smashed Potatoes",
+  title: "Chimichurri Smashed Potato Bowl",
   desc: "Seared chicken thighs smothered in creamy green chimichurri mayo — on aggressively crispy smashed potatoes with a tomato red onion salad.",
   tags: ["argentinian"],
   flavor: "savory",
@@ -7996,7 +7996,7 @@ notes: "Leftovers keep 3 days in the fridge — reheat potatoes in a dry pan or 
     { section: "Protein", items: [{ name: "Boneless skinless chicken thighs", amt: "{{proteinG}}g raw" }] },
     { section: "Carb Base", items: [{ name: "Waxy potatoes (small)", amt: "{{carbG}}g" }] },
     { section: "Smashed Potatoes", items: [
-      { name: "Olive oil", amt: "1 tbsp" },
+      { name: "Olive oil", amt: "1 tsp" },
       { name: "Garlic (minced)", amt: "3 cloves" },
     ]},
     { section: "Chimichurri Mayo", items: [
