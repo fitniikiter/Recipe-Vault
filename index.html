@@ -4831,100 +4831,73 @@
             </div>
             <div class="filter-section">
               <div class="filter-section-label" onclick="toggleFilterSection(this)"><span>📊 Macros</span><span class="filter-section-arrow">▼</span></div>
-              <div class="filter-section-body"><div class="filter-dropdown-inner" style="flex-wrap: wrap; gap: 12px 20px; align-items: flex-end">
-            <div style="display: flex; flex-direction: column; gap: 4px">
-              <label style="font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px"
-                >🔥 Max kcal</label
-              >
-              <div style="display: flex; align-items: center; gap: 6px">
-                <input type="number" id="mfKcalMax" class="mf-num" placeholder="—" oninput="applyMacroFilterLive()" />
-                <span style="font-size: 11px; color: #555">kcal</span>
+              <div class="filter-section-body"><div class="filter-dropdown-inner" style="flex-direction: column; align-items: flex-start; gap: 10px">
+
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <label style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px">🔥 Max kcal</label>
+              <input type="hidden" id="mfKcalMax">
+              <div data-preset-group style="display:flex;flex-wrap:wrap;gap:4px;">
+                <button class="filter-btn" onclick="setMacroPreset('mfKcalMax',400,this)">400</button>
+                <button class="filter-btn" onclick="setMacroPreset('mfKcalMax',500,this)">500</button>
+                <button class="filter-btn" onclick="setMacroPreset('mfKcalMax',600,this)">600</button>
+                <button class="filter-btn" onclick="setMacroPreset('mfKcalMax',700,this)">700</button>
+                <button class="filter-btn" onclick="setMacroPreset('mfKcalMax',800,this)">800 kcal</button>
               </div>
             </div>
-            <div style="display: flex; flex-direction: column; gap: 4px">
-              <div
-                style="
-                  font-size: 10px;
-                  color: var(--muted);
-                  text-transform: uppercase;
-                  letter-spacing: 0.6px;
-                  display: flex;
-                  align-items: center;
-                  gap: 6px;
-                "
-                >💪 Min Protein
+
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;display:flex;align-items:center;gap:6px">
+                💪 Min Protein
                 <input type="checkbox" id="chkAutoProtein" style="display:none">
-                <button class="filter-btn auto-toggle-btn" id="btnAutoProtein"
-                  onclick="toggleAutoProteinBtn(this)"
-                  title="Automatically adjusts protein weight so every recipe hits your protein target"
-                  >Set weight auto</button
-                ></div
-              >
-              <div style="display: flex; align-items: center; gap: 6px">
-                <input
-                  type="number"
-                  id="mfProtMin"
-                  class="mf-num"
-                  placeholder="—"
-                  oninput="applyMacroFilterLive()"
-                />
-                <span style="font-size: 11px; color: #555">g</span>
+                <button class="filter-btn auto-toggle-btn" id="btnAutoProtein" onclick="toggleAutoProteinBtn(this)" title="Automatically adjusts protein weight so every recipe hits your protein target">Set weight auto</button>
+              </div>
+              <input type="hidden" id="mfProtMin">
+              <div data-preset-group style="display:flex;flex-wrap:wrap;gap:4px;">
+                <button class="filter-btn" onclick="setMacroPreset('mfProtMin',30,this)">30g</button>
+                <button class="filter-btn" onclick="setMacroPreset('mfProtMin',50,this)">50g</button>
+                <button class="filter-btn" onclick="setMacroPreset('mfProtMin',80,this)">80g</button>
+                <button class="filter-btn" onclick="setMacroPreset('mfProtMin',100,this)">100g</button>
+                <button class="filter-btn" onclick="setMacroPreset('mfProtMin',120,this)">120g</button>
               </div>
             </div>
-            <div style="display: flex; flex-direction: column; gap: 4px">
-              <div
-                style="
-                  font-size: 10px;
-                  color: var(--muted);
-                  text-transform: uppercase;
-                  letter-spacing: 0.6px;
-                  display: flex;
-                  align-items: center;
-                  gap: 6px;
-                "
-                >🍚 Max Carbs
+
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;display:flex;align-items:center;gap:6px">
+                🍚 Max Carbs
                 <input type="checkbox" id="chkAutoCarb" style="display:none">
-                <button class="filter-btn auto-toggle-btn" id="btnAutoCarb"
-                  onclick="toggleAutoCarbBtn(this)"
-                  title="Automatically adjusts carb weight so every recipe stays within your carb target"
-                  >Set weight auto</button
-                ></div
-              >
-              <div style="display: flex; align-items: center; gap: 6px">
-                <input
-                  type="number"
-                  id="mfCarbMax"
-                  class="mf-num"
-                  placeholder="—"
-                  oninput="applyMacroFilterLive()"
-                />
-                <span style="font-size: 11px; color: #555">g</span>
+                <button class="filter-btn auto-toggle-btn" id="btnAutoCarb" onclick="toggleAutoCarbBtn(this)" title="Automatically adjusts carb weight so every recipe stays within your carb target">Set weight auto</button>
+              </div>
+              <input type="hidden" id="mfCarbMax">
+              <div data-preset-group style="display:flex;flex-wrap:wrap;gap:4px;">
+                <button class="filter-btn" onclick="setMacroPreset('mfCarbMax',50,this)">50g</button>
+                <button class="filter-btn" onclick="setMacroPreset('mfCarbMax',75,this)">75g</button>
+                <button class="filter-btn" onclick="setMacroPreset('mfCarbMax',100,this)">100g</button>
+                <button class="filter-btn" onclick="setMacroPreset('mfCarbMax',150,this)">150g</button>
               </div>
             </div>
-            <div style="display: flex; flex-direction: column; gap: 4px">
-              <label style="font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px"
-                >🧈 Max Fat</label
-              >
-              <div style="display: flex; align-items: center; gap: 6px">
-                <input type="number" id="mfFatMax" class="mf-num" placeholder="—" oninput="applyMacroFilterLive()" />
-                <span style="font-size: 11px; color: #555">g</span>
+
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <label style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px">🧈 Max Fat</label>
+              <input type="hidden" id="mfFatMax">
+              <div data-preset-group style="display:flex;flex-wrap:wrap;gap:4px;">
+                <button class="filter-btn" onclick="setMacroPreset('mfFatMax',15,this)">15g</button>
+                <button class="filter-btn" onclick="setMacroPreset('mfFatMax',20,this)">20g</button>
+                <button class="filter-btn" onclick="setMacroPreset('mfFatMax',25,this)">25g</button>
+                <button class="filter-btn" onclick="setMacroPreset('mfFatMax',30,this)">30g</button>
               </div>
             </div>
-            <div style="display: flex; flex-direction: column; gap: 4px">
-              <label style="font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px"
-                >⭐ Min Saturation Score</label
-              >
-              <div style="display: flex; align-items: center; gap: 6px">
-                <input
-                  type="number"
-                  id="mfScoreMin"
-                  class="mf-num"
-                  placeholder="—"
-                  min="1"
-                  max="10"
-                  oninput="applyMacroFilterLive()"
-                />
-                <span style="font-size: 11px; color: #555">/10</span>
+
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <label style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px">⭐ Min Saturation Score</label>
+              <input type="hidden" id="mfScoreMin">
+              <div data-preset-group style="display:flex;flex-wrap:wrap;gap:4px;">
+                <button class="filter-btn" onclick="setMacroPreset('mfScoreMin',4,this)">4</button>
+                <button class="filter-btn" onclick="setMacroPreset('mfScoreMin',5,this)">5</button>
+                <button class="filter-btn" onclick="setMacroPreset('mfScoreMin',6,this)">6</button>
+                <button class="filter-btn" onclick="setMacroPreset('mfScoreMin',7,this)">7</button>
+                <button class="filter-btn" onclick="setMacroPreset('mfScoreMin',8,this)">8</button>
+                <button class="filter-btn" onclick="setMacroPreset('mfScoreMin',9,this)">9</button>
+                <button class="filter-btn" onclick="setMacroPreset('mfScoreMin',10,this)">10</button>
               </div>
             </div>
             <button class="mf-reset-btn" onclick="resetMacroFilter()" style="align-self: flex-end">✕ Reset</button>
@@ -4944,9 +4917,13 @@
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 8px">
                   <label style="font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px">⏱ Max Time</label>
-                  <div style="display: flex; align-items: center; gap: 6px">
-                    <input type="number" id="mfTimeMax" class="mf-num" placeholder="—" oninput="applyMacroFilterLive()" />
-                    <span style="font-size: 11px; color: #555">min</span>
+                  <input type="hidden" id="mfTimeMax">
+                  <div data-preset-group style="display:flex;flex-wrap:wrap;gap:4px;">
+                    <button class="filter-btn" onclick="setMacroPreset('mfTimeMax',15,this)">15 min</button>
+                    <button class="filter-btn" onclick="setMacroPreset('mfTimeMax',20,this)">20 min</button>
+                    <button class="filter-btn" onclick="setMacroPreset('mfTimeMax',25,this)">25 min</button>
+                    <button class="filter-btn" onclick="setMacroPreset('mfTimeMax',30,this)">30 min</button>
+                    <button class="filter-btn" onclick="setMacroPreset('mfTimeMax',45,this)">45 min</button>
                   </div>
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 8px; justify-content: center">
@@ -6122,6 +6099,20 @@
         if (enabled) syncDietaryFromProtein();
         updatePillStates(); filterRecipes();
       }
+      function setMacroPreset(inputId, value, btn) {
+        const input = document.getElementById(inputId);
+        if (!input) return;
+        const current = parseFloat(input.value);
+        const grp = btn.closest('[data-preset-group]');
+        if (grp) grp.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        if (current === value) {
+          input.value = '';
+        } else {
+          input.value = value;
+          btn.classList.add('active');
+        }
+        applyMacroFilterLive();
+      }
       function toggleAutoProteinBtn(btn) {
         btn.classList.toggle("active");
         const on = btn.classList.contains("active");
@@ -6381,6 +6372,7 @@
             const a = document.getElementById(e);
             a && (a.value = "");
           }),
+          document.querySelectorAll('[data-preset-group] .filter-btn').forEach(b => b.classList.remove('active')),
           (weights.servings = 1));
         const a = document.getElementById("globalServingVal");
         a && (a.textContent = "1");
@@ -6908,6 +6900,7 @@
             const a = document.getElementById(e);
             a && (a.value = "");
           }));
+        document.querySelectorAll('[data-preset-group] .filter-btn').forEach(b => b.classList.remove('active'));
         (Object.entries({
           mfKcalMax: 9999,
           mfProtMin: 0,
