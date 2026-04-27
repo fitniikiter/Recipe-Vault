@@ -925,6 +925,26 @@
         color: #000;
         border-color: var(--accent);
       }
+      /* carb type colors */
+      #btnPotato.active  { background: var(--carb-potato); border-color: var(--carb-potato); color: #000; }
+      #btnRice.active    { background: var(--carb-rice);   border-color: var(--carb-rice);   color: #000; }
+      #btnNoodle.active  { background: var(--carb-noodle); border-color: var(--carb-noodle); color: #fff; }
+      #btnBread.active   { background: var(--carb-bread);  border-color: var(--carb-bread);  color: #fff; }
+      /* protein type colors */
+      #btnPChicken.active { background: var(--carb-potato); border-color: var(--carb-potato); color: #000; }
+      #btnPBeef.active    { background: #e84747; border-color: #e84747; color: #fff; }
+      #btnPEggs.active    { background: #ffb347; border-color: #ffb347; color: #000; }
+      #btnPFish.active    { background: #47b3e8; border-color: #47b3e8; color: #000; }
+      #btnPTofu.active    { background: #47e8a3; border-color: #47e8a3; color: #000; }
+      /* small inline auto-toggle button */
+      .auto-toggle-btn {
+        padding: 3px 8px;
+        font-size: 9px;
+        letter-spacing: 0.3px;
+        border-radius: 12px;
+        margin-left: 4px;
+        vertical-align: middle;
+      }
       .carb-bar {
         padding: 12px 40px;
         border-bottom: 1px solid var(--border);
@@ -4780,53 +4800,30 @@
             </div>
             <div class="filter-section">
               <div class="filter-section-label" onclick="toggleFilterSection(this)"><span>🍚 Carbs</span><span class="filter-section-arrow">▼</span></div>
-              <div class="filter-section-body"><div class="filter-dropdown-inner" style="flex-direction: column; align-items: flex-start">
-                <label class="carb-check-wrap potato-check" onclick="toggleCarb('potato')"
-                  ><input type="checkbox" id="chkPotato" checked /> <span class="carb-checkbox"></span>
-                  <span class="carb-check-label">🥔 Potato</span></label
-                >
-                <label class="carb-check-wrap rice-check" onclick="toggleCarb('rice')"
-                  ><input type="checkbox" id="chkRice" checked /> <span class="carb-checkbox"></span>
-                  <span class="carb-check-label">🍚 Rice</span></label
-                >
-                <label class="carb-check-wrap noodle-check" onclick="toggleCarb('noodle')"
-                  ><input type="checkbox" id="chkNoodle" checked /> <span class="carb-checkbox"></span>
-                  <span class="carb-check-label">🍜 Noodles</span></label
-                >
-                <label class="carb-check-wrap bread-check" onclick="toggleCarb('bread')"
-                  ><input type="checkbox" id="chkBread" checked /> <span class="carb-checkbox"></span>
-                  <span class="carb-check-label">🫓 Bread/Wrap</span></label
-                >
+              <div class="filter-section-body"><div class="filter-dropdown-inner">
+                <input type="checkbox" id="chkPotato" style="display:none" checked>
+                <input type="checkbox" id="chkRice"   style="display:none" checked>
+                <input type="checkbox" id="chkNoodle" style="display:none" checked>
+                <input type="checkbox" id="chkBread"  style="display:none" checked>
+                <button class="filter-btn active" id="btnPotato" onclick="toggleCarbBtn('potato', this)">🥔 Potato</button>
+                <button class="filter-btn active" id="btnRice"   onclick="toggleCarbBtn('rice', this)">🍚 Rice</button>
+                <button class="filter-btn active" id="btnNoodle" onclick="toggleCarbBtn('noodle', this)">🍜 Noodles</button>
+                <button class="filter-btn active" id="btnBread"  onclick="toggleCarbBtn('bread', this)">🫓 Bread/Wrap</button>
               </div></div>
             </div>
             <div class="filter-section">
               <div class="filter-section-label" onclick="toggleFilterSection(this)"><span>🥩 Protein</span><span class="filter-section-arrow">▼</span></div>
-              <div class="filter-section-body"><div class="filter-dropdown-inner" style="flex-direction: column; align-items: flex-start">
-                <label class="carb-check-wrap" style="border-color: var(--carb-potato)" onclick="toggleProteinFilter('chicken')"
-                  ><input type="checkbox" id="chkPChicken" checked />
-                  <span class="carb-checkbox" style="border-color: var(--carb-potato)"></span>
-                  <span class="carb-check-label">🍗 Chicken</span></label
-                >
-                <label class="carb-check-wrap" style="border-color: #e84747" onclick="toggleProteinFilter('beef')"
-                  ><input type="checkbox" id="chkPBeef" checked />
-                  <span class="carb-checkbox" style="border-color: #e84747"></span>
-                  <span class="carb-check-label">🥩 Beef</span></label
-                >
-                <label class="carb-check-wrap" style="border-color: #ffb347" onclick="toggleProteinFilter('eggs')"
-                  ><input type="checkbox" id="chkPEggs" checked />
-                  <span class="carb-checkbox" style="border-color: #ffb347"></span>
-                  <span class="carb-check-label">🥚 Eggs</span></label
-                >
-                <label class="carb-check-wrap" style="border-color: #47b3e8" onclick="toggleProteinFilter('fish')"
-                  ><input type="checkbox" id="chkPFish" checked />
-                  <span class="carb-checkbox" style="border-color: #47b3e8"></span>
-                  <span class="carb-check-label">🐟 Fish</span></label
-                >
-                <label class="carb-check-wrap" style="border-color: #47e8a3" onclick="toggleProteinFilter('tofu')"
-                  ><input type="checkbox" id="chkPTofu" checked />
-                  <span class="carb-checkbox" style="border-color: #47e8a3"></span>
-                  <span class="carb-check-label">🫘 Tofu</span></label
-                >
+              <div class="filter-section-body"><div class="filter-dropdown-inner">
+                <input type="checkbox" id="chkPChicken" style="display:none" checked>
+                <input type="checkbox" id="chkPBeef"    style="display:none" checked>
+                <input type="checkbox" id="chkPEggs"    style="display:none" checked>
+                <input type="checkbox" id="chkPFish"    style="display:none" checked>
+                <input type="checkbox" id="chkPTofu"    style="display:none" checked>
+                <button class="filter-btn active" id="btnPChicken" onclick="toggleProteinBtn('chicken', this)">🍗 Chicken</button>
+                <button class="filter-btn active" id="btnPBeef"    onclick="toggleProteinBtn('beef', this)">🥩 Beef</button>
+                <button class="filter-btn active" id="btnPEggs"    onclick="toggleProteinBtn('eggs', this)">🥚 Eggs</button>
+                <button class="filter-btn active" id="btnPFish"    onclick="toggleProteinBtn('fish', this)">🐟 Fish</button>
+                <button class="filter-btn active" id="btnPTofu"    onclick="toggleProteinBtn('tofu', this)">🫘 Tofu</button>
               </div></div>
             </div>
             <div class="filter-section">
@@ -4853,21 +4850,11 @@
                   gap: 6px;
                 "
                 >💪 Min Protein
-                <label
-                  class="carb-check-wrap"
-                  style="border: none; padding: 0; margin-left: 2px; display: inline-flex"
-                  onclick="toggleAutoProtein()"
+                <input type="checkbox" id="chkAutoProtein" style="display:none">
+                <button class="filter-btn auto-toggle-btn" id="btnAutoProtein"
+                  onclick="toggleAutoProteinBtn(this)"
                   title="Automatically adjusts protein weight so every recipe hits your protein target"
-                  ><input type="checkbox" id="chkAutoProtein" />
-                  <span
-                    class="carb-checkbox"
-                    style="border-color: var(--accent3); width: 13px; height: 13px; flex-shrink: 0"
-                  ></span>
-                  <span
-                    class="carb-check-label"
-                    style="color: #555; font-size: 9px; letter-spacing: 0.3px; text-transform: uppercase"
-                    >Set weight auto</span
-                  ></label
+                  >Set weight auto</button
                 ></div
               >
               <div style="display: flex; align-items: center; gap: 6px">
@@ -4893,21 +4880,11 @@
                   gap: 6px;
                 "
                 >🍚 Max Carbs
-                <label
-                  class="carb-check-wrap"
-                  style="border: none; padding: 0; margin-left: 2px; display: inline-flex"
-                  onclick="toggleAutoCarb()"
+                <input type="checkbox" id="chkAutoCarb" style="display:none">
+                <button class="filter-btn auto-toggle-btn" id="btnAutoCarb"
+                  onclick="toggleAutoCarbBtn(this)"
                   title="Automatically adjusts carb weight so every recipe stays within your carb target"
-                  ><input type="checkbox" id="chkAutoCarb" />
-                  <span
-                    class="carb-checkbox"
-                    style="border-color: var(--tag-asian); width: 13px; height: 13px; flex-shrink: 0"
-                  ></span>
-                  <span
-                    class="carb-check-label"
-                    style="color: #555; font-size: 9px; letter-spacing: 0.3px; text-transform: uppercase"
-                    >Set weight auto</span
-                  ></label
+                  >Set weight auto</button
                 ></div
               >
               <div style="display: flex; align-items: center; gap: 6px">
@@ -4970,10 +4947,8 @@
                   </div>
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 8px; justify-content: center">
-                  <label class="video-check-wrap" onclick="toggleVideoFilter()"
-                    ><input type="checkbox" id="chkVideoOnly" /> <span class="video-checkbox"></span>
-                    <span class="video-check-label">▶️ With Video</span></label
-                  >
+                  <input type="checkbox" id="chkVideoOnly" style="display:none">
+                  <button class="filter-btn" id="btnVideoOnly" onclick="toggleVideoBtn(this)">▶️ With Video</button>
                 </div>
               </div></div>
             </div>
@@ -6113,6 +6088,61 @@
           e && ((videoFilterOnly = e.checked), filterRecipes());
         }, 0);
       }
+      // sync a filter button's active class without triggering its handler
+      function _syncFilterBtn(btnId, val) {
+        const btn = document.getElementById(btnId);
+        if (btn) btn.classList.toggle("active", val);
+      }
+      function toggleCarbBtn(type, btn) {
+        btn.classList.toggle("active");
+        const enabled = btn.classList.contains("active");
+        const chk = document.getElementById("chk" + type.charAt(0).toUpperCase() + type.slice(1));
+        if (chk) chk.checked = enabled;
+        carbEnabled[type] = enabled;
+        const input = document.getElementById(type + "Input");
+        if (input) {
+          if (enabled) {
+            const w = Math.round(weights.chicken * (CARB_RATIOS[type] || 0.5));
+            input.value = w; weights[type] = w;
+          } else {
+            input.dataset.prev = input.value; input.value = 0; weights[type] = 0;
+          }
+        }
+        filterRecipes(); updateCalcDisplay();
+      }
+      function toggleProteinBtn(type, btn) {
+        btn.classList.toggle("active");
+        const enabled = btn.classList.contains("active");
+        const chk = document.getElementById("chkP" + type.charAt(0).toUpperCase() + type.slice(1));
+        if (chk) chk.checked = enabled;
+        proteinEnabled[type] = enabled;
+        if (enabled) syncDietaryFromProtein();
+        updatePillStates(); filterRecipes();
+      }
+      function toggleAutoProteinBtn(btn) {
+        btn.classList.toggle("active");
+        const on = btn.classList.contains("active");
+        const chk = document.getElementById("chkAutoProtein");
+        if (chk) chk.checked = on;
+        if (on) applyAutoProteinWeight();
+        updateCardMacros(); filterRecipes(); updateCalcDisplay();
+      }
+      function toggleAutoCarbBtn(btn) {
+        btn.classList.toggle("active");
+        const on = btn.classList.contains("active");
+        const chk = document.getElementById("chkAutoCarb");
+        if (chk) chk.checked = on;
+        if (on) applyAutoCarbWeight();
+        updateCardMacros(); filterRecipes(); updateCalcDisplay();
+      }
+      function toggleVideoBtn(btn) {
+        btn.classList.toggle("active");
+        const on = btn.classList.contains("active");
+        const chk = document.getElementById("chkVideoOnly");
+        if (chk) chk.checked = on;
+        videoFilterOnly = on;
+        filterRecipes();
+      }
       const DIETARY_FILTERS = [
         {
           id: "no_alcohol",
@@ -6332,13 +6362,16 @@
           ["Potato", "Rice", "Noodle", "Bread"].forEach((e) => {
             const a = document.getElementById("chk" + e);
             (a && (a.checked = !0), (carbEnabled[e.toLowerCase()] = !0));
+            _syncFilterBtn("btn" + e, true);
           }),
           ["Chicken", "Beef", "Eggs", "Fish", "Tofu"].forEach((e) => {
             const a = document.getElementById("chkP" + e);
             (a && (a.checked = !0), (proteinEnabled[e.toLowerCase()] = !0));
+            _syncFilterBtn("btnP" + e, true);
           }));
         const e = document.getElementById("chkVideoOnly");
         (e && (e.checked = !1),
+        _syncFilterBtn("btnVideoOnly", false),
           (videoFilterOnly = !1),
           (macroFilter = { kcalMax: 9999, protMin: 0, carbMax: 999, fatMax: 999, scoreMin: 1, timeMax: 999 }),
           ["mfKcalMax", "mfProtMin", "mfCarbMax", "mfFatMax", "mfTimeMax", "mfScoreMin"].forEach((e) => {
@@ -6386,6 +6419,7 @@
           const chkNoodle = document.getElementById("chkNoodle");
           if (chkBread) chkBread.checked = false;
           if (chkNoodle) chkNoodle.checked = false;
+          _syncFilterBtn("btnBread", false); _syncFilterBtn("btnNoodle", false);
         } else {
           // Only re-enable if not manually disabled
           if (!localStorage.getItem("carbManualDisabled_bread")) carbEnabled["bread"] = true;
@@ -6408,6 +6442,7 @@
                 t.checked = false;
                 const i = e.replace("chkP", "").toLowerCase();
                 proteinEnabled[i] = false;
+                _syncFilterBtn("btn" + e.replace("chk", ""), false);
               }
             }
           };
@@ -6862,8 +6897,10 @@
         macroFilter = { kcalMax: 9999, protMin: 0, carbMax: 999, fatMax: 999, scoreMin: 1, timeMax: 999 };
         const e = document.getElementById("chkAutoProtein");
         e && (e.checked = !1);
+        _syncFilterBtn("btnAutoProtein", false);
         const a = document.getElementById("chkAutoCarb");
         (a && (a.checked = !1),
+        _syncFilterBtn("btnAutoCarb", false),
           ["mfKcalMax", "mfProtMin", "mfCarbMax", "mfFatMax", "mfTimeMax", "mfScoreMin"].forEach((e) => {
             const a = document.getElementById(e);
             a && (a.value = "");
@@ -6885,7 +6922,9 @@
         const t = parseFloat(a) > 0;
         carbEnabled[e] = t;
         const i = document.getElementById("chk" + e.charAt(0).toUpperCase() + e.slice(1));
-        (i && (i.checked = t), (weights[e] = parseFloat(a) || 0), filterRecipes(), updateCalcDisplay());
+        (i && (i.checked = t));
+        _syncFilterBtn("btn" + e.charAt(0).toUpperCase() + e.slice(1), t);
+        ((weights[e] = parseFloat(a) || 0), filterRecipes(), updateCalcDisplay());
       }
       function toggleCarb(e) {
         setTimeout(() => {
@@ -7848,6 +7887,7 @@
               i.checked = t;
               const e = a.replace("chkP", "").toLowerCase();
               ((proteinEnabled[e] = t), t && syncDietaryFromProtein());
+              _syncFilterBtn("btn" + a.replace("chk", ""), t);
             }
           }
         }
