@@ -4302,43 +4302,46 @@
         display: block;
       }
       .dietary-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        display: flex;
+        flex-wrap: wrap;
         gap: 8px;
         margin-bottom: 12px;
       }
       .dietary-btn {
-        display: flex;
+        display: inline-flex;
         align-items: center;
-        gap: 8px;
-        padding: 10px 14px;
-        background: var(--surface);
-        border: 1.5px solid var(--border);
-        border-radius: 8px;
+        gap: 5px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        color: var(--muted);
+        padding: 7px 12px;
+        border-radius: 20px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 11px;
+        font-weight: 500;
         cursor: pointer;
         transition: all 0.15s;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
         user-select: none;
       }
       .dietary-btn:hover {
-        border-color: #555;
+        border-color: var(--accent2);
+        color: var(--accent2);
       }
       .dietary-btn.active {
+        background: var(--accent2);
+        color: #fff;
         border-color: var(--accent2);
-        background: rgba(255, 107, 53, 0.08);
       }
       .dietary-btn .diet-icon {
-        font-size: 18px;
+        font-size: 13px;
       }
       .dietary-btn .diet-label {
-        font-size: 12px;
-        font-weight: 600;
-        color: var(--text);
+        font-size: 11px;
+        font-weight: 500;
       }
-      .dietary-btn .diet-sub {
-        font-size: 10px;
-        color: var(--muted);
-        margin-top: 1px;
-      }
+      .dietary-btn .diet-sub { display: none; }
       .dietary-active-bar {
         font-size: 11px;
         color: var(--accent2);
@@ -6312,7 +6315,7 @@
         e &&
           ((e.innerHTML = DIETARY_FILTERS.map(
             (e) =>
-              `\n    <div class="dietary-btn ${activeDietary.has(e.id) ? "active" : ""}" onclick="toggleDietary('${e.id}')">\n      <span class="diet-icon">${e.icon}</span>\n      <div>\n        <div class="diet-label">${e.label}</div>\n        <div class="diet-sub">${e.sub}</div>\n      </div>\n    </div>`,
+              `<button class="dietary-btn ${activeDietary.has(e.id) ? "active" : ""}" onclick="toggleDietary('${e.id}')"><span class="diet-icon">${e.icon}</span><span class="diet-label">${e.label}</span></button>`,
           ).join("")),
           updateDietaryBar());
       }
