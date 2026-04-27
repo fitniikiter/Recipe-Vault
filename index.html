@@ -4524,25 +4524,29 @@
       }
       .mf-slider-val.active { color:var(--accent); }
       input[type="range"].mf-slider {
-        -webkit-appearance:none; appearance:none; width:100%; height:4px; border-radius:2px;
-        background:linear-gradient(to right, var(--accent) var(--fill,0%), rgba(255,255,255,0.1) var(--fill,0%));
-        outline:none; cursor:pointer; transition:opacity 0.15s;
+        -webkit-appearance:none; appearance:none; width:100%; height:6px; border-radius:3px;
+        background:linear-gradient(to right, var(--accent) var(--fill,0%), rgba(255,255,255,0.18) var(--fill,0%));
+        outline:none; cursor:pointer;
       }
       input[type="range"].mf-slider.off {
-        background:rgba(255,255,255,0.08);
+        background:rgba(255,255,255,0.18);
       }
       input[type="range"].mf-slider::-webkit-slider-thumb {
         -webkit-appearance:none; appearance:none;
-        width:16px; height:16px; border-radius:50%; background:var(--accent);
-        box-shadow:0 0 0 3px rgba(255,160,0,0.15); transition:transform 0.1s;
+        width:18px; height:18px; border-radius:50%; background:var(--accent);
+        box-shadow:0 0 0 3px rgba(255,160,0,0.2); transition:transform 0.1s;
       }
-      input[type="range"].mf-slider.off::-webkit-slider-thumb { background:#555; box-shadow:none; }
-      input[type="range"].mf-slider::-webkit-slider-thumb:hover { transform:scale(1.2); }
+      input[type="range"].mf-slider.off::-webkit-slider-thumb {
+        background:#888; box-shadow:0 0 0 2px rgba(255,255,255,0.15);
+      }
+      input[type="range"].mf-slider::-webkit-slider-thumb:hover { transform:scale(1.15); }
       input[type="range"].mf-slider::-moz-range-thumb {
-        width:16px; height:16px; border-radius:50%; background:var(--accent);
-        border:none; box-shadow:0 0 0 3px rgba(255,160,0,0.15);
+        width:18px; height:18px; border-radius:50%; background:var(--accent);
+        border:none; box-shadow:0 0 0 3px rgba(255,160,0,0.2);
       }
-      input[type="range"].mf-slider.off::-moz-range-thumb { background:#555; box-shadow:none; }
+      input[type="range"].mf-slider.off::-moz-range-thumb {
+        background:#888; box-shadow:0 0 0 2px rgba(255,255,255,0.15); border:none;
+      }
       .score-row {
         display: flex;
         align-items: center;
