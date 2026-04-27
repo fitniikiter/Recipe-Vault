@@ -4513,6 +4513,36 @@
         border-color: var(--accent);
         color: var(--accent);
       }
+      .mf-slider-wrap { display:flex; flex-direction:column; gap:5px; width:100%; }
+      .mf-slider-header { display:flex; justify-content:space-between; align-items:center; }
+      .mf-slider-header > label, .mf-slider-header > div {
+        font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.6px;
+      }
+      .mf-slider-val {
+        font-size:13px; font-weight:700; font-family:"Bebas Neue",sans-serif;
+        color:var(--muted); min-width:48px; text-align:right; transition:color 0.15s;
+      }
+      .mf-slider-val.active { color:var(--accent); }
+      input[type="range"].mf-slider {
+        -webkit-appearance:none; appearance:none; width:100%; height:4px; border-radius:2px;
+        background:linear-gradient(to right, var(--accent) var(--fill,0%), rgba(255,255,255,0.1) var(--fill,0%));
+        outline:none; cursor:pointer; transition:opacity 0.15s;
+      }
+      input[type="range"].mf-slider.off {
+        background:rgba(255,255,255,0.08);
+      }
+      input[type="range"].mf-slider::-webkit-slider-thumb {
+        -webkit-appearance:none; appearance:none;
+        width:16px; height:16px; border-radius:50%; background:var(--accent);
+        box-shadow:0 0 0 3px rgba(255,160,0,0.15); transition:transform 0.1s;
+      }
+      input[type="range"].mf-slider.off::-webkit-slider-thumb { background:#555; box-shadow:none; }
+      input[type="range"].mf-slider::-webkit-slider-thumb:hover { transform:scale(1.2); }
+      input[type="range"].mf-slider::-moz-range-thumb {
+        width:16px; height:16px; border-radius:50%; background:var(--accent);
+        border:none; box-shadow:0 0 0 3px rgba(255,160,0,0.15);
+      }
+      input[type="range"].mf-slider.off::-moz-range-thumb { background:#555; box-shadow:none; }
       .score-row {
         display: flex;
         align-items: center;
@@ -4831,76 +4861,49 @@
             </div>
             <div class="filter-section">
               <div class="filter-section-label" onclick="toggleFilterSection(this)"><span>📊 Macros</span><span class="filter-section-arrow">▼</span></div>
-              <div class="filter-section-body"><div class="filter-dropdown-inner" style="flex-direction: column; align-items: flex-start; gap: 10px">
-
-            <div style="display:flex;flex-direction:column;gap:4px">
-              <label style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px">🔥 Max kcal</label>
-              <input type="hidden" id="mfKcalMax">
-              <div data-preset-group style="display:flex;flex-wrap:wrap;gap:4px;">
-                <button class="filter-btn" onclick="setMacroPreset('mfKcalMax',400,this)">400</button>
-                <button class="filter-btn" onclick="setMacroPreset('mfKcalMax',500,this)">500</button>
-                <button class="filter-btn" onclick="setMacroPreset('mfKcalMax',600,this)">600</button>
-                <button class="filter-btn" onclick="setMacroPreset('mfKcalMax',700,this)">700</button>
-                <button class="filter-btn" onclick="setMacroPreset('mfKcalMax',800,this)">800 kcal</button>
-              </div>
-            </div>
-
-            <div style="display:flex;flex-direction:column;gap:4px">
-              <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;display:flex;align-items:center;gap:6px">
-                💪 Min Protein
-                <input type="checkbox" id="chkAutoProtein" style="display:none">
-                <button class="filter-btn auto-toggle-btn" id="btnAutoProtein" onclick="toggleAutoProteinBtn(this)" title="Automatically adjusts protein weight so every recipe hits your protein target">Set weight auto</button>
-              </div>
-              <input type="hidden" id="mfProtMin">
-              <div data-preset-group style="display:flex;flex-wrap:wrap;gap:4px;">
-                <button class="filter-btn" onclick="setMacroPreset('mfProtMin',30,this)">30g</button>
-                <button class="filter-btn" onclick="setMacroPreset('mfProtMin',50,this)">50g</button>
-                <button class="filter-btn" onclick="setMacroPreset('mfProtMin',80,this)">80g</button>
-                <button class="filter-btn" onclick="setMacroPreset('mfProtMin',100,this)">100g</button>
-                <button class="filter-btn" onclick="setMacroPreset('mfProtMin',120,this)">120g</button>
-              </div>
-            </div>
-
-            <div style="display:flex;flex-direction:column;gap:4px">
-              <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;display:flex;align-items:center;gap:6px">
-                🍚 Max Carbs
-                <input type="checkbox" id="chkAutoCarb" style="display:none">
-                <button class="filter-btn auto-toggle-btn" id="btnAutoCarb" onclick="toggleAutoCarbBtn(this)" title="Automatically adjusts carb weight so every recipe stays within your carb target">Set weight auto</button>
-              </div>
-              <input type="hidden" id="mfCarbMax">
-              <div data-preset-group style="display:flex;flex-wrap:wrap;gap:4px;">
-                <button class="filter-btn" onclick="setMacroPreset('mfCarbMax',50,this)">50g</button>
-                <button class="filter-btn" onclick="setMacroPreset('mfCarbMax',75,this)">75g</button>
-                <button class="filter-btn" onclick="setMacroPreset('mfCarbMax',100,this)">100g</button>
-                <button class="filter-btn" onclick="setMacroPreset('mfCarbMax',150,this)">150g</button>
-              </div>
-            </div>
-
-            <div style="display:flex;flex-direction:column;gap:4px">
-              <label style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px">🧈 Max Fat</label>
-              <input type="hidden" id="mfFatMax">
-              <div data-preset-group style="display:flex;flex-wrap:wrap;gap:4px;">
-                <button class="filter-btn" onclick="setMacroPreset('mfFatMax',15,this)">15g</button>
-                <button class="filter-btn" onclick="setMacroPreset('mfFatMax',20,this)">20g</button>
-                <button class="filter-btn" onclick="setMacroPreset('mfFatMax',25,this)">25g</button>
-                <button class="filter-btn" onclick="setMacroPreset('mfFatMax',30,this)">30g</button>
-              </div>
-            </div>
-
-            <div style="display:flex;flex-direction:column;gap:4px">
-              <label style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px">⭐ Min Saturation Score</label>
-              <input type="hidden" id="mfScoreMin">
-              <div data-preset-group style="display:flex;flex-wrap:wrap;gap:4px;">
-                <button class="filter-btn" onclick="setMacroPreset('mfScoreMin',4,this)">4</button>
-                <button class="filter-btn" onclick="setMacroPreset('mfScoreMin',5,this)">5</button>
-                <button class="filter-btn" onclick="setMacroPreset('mfScoreMin',6,this)">6</button>
-                <button class="filter-btn" onclick="setMacroPreset('mfScoreMin',7,this)">7</button>
-                <button class="filter-btn" onclick="setMacroPreset('mfScoreMin',8,this)">8</button>
-                <button class="filter-btn" onclick="setMacroPreset('mfScoreMin',9,this)">9</button>
-                <button class="filter-btn" onclick="setMacroPreset('mfScoreMin',10,this)">10</button>
-              </div>
-            </div>
-            <button class="mf-reset-btn" onclick="resetMacroFilter()" style="align-self: flex-end">✕ Reset</button>
+              <div class="filter-section-body"><div class="filter-dropdown-inner" style="flex-direction:column;gap:12px;width:100%;box-sizing:border-box">
+                <div class="mf-slider-wrap">
+                  <div class="mf-slider-header">
+                    <label>🔥 Max kcal</label>
+                    <span class="mf-slider-val" id="mfKcalMaxD">—</span>
+                  </div>
+                  <input type="range" class="mf-slider off" id="mfKcalMax" min="200" max="1500" step="50" value="1500" data-nofilter="1500" oninput="_mfSliderInput(this,'mfKcalMaxD','{v} kcal')">
+                </div>
+                <div class="mf-slider-wrap">
+                  <div class="mf-slider-header">
+                    <div>💪 Min Protein
+                      <input type="checkbox" id="chkAutoProtein" style="display:none">
+                      <button class="filter-btn auto-toggle-btn" id="btnAutoProtein" onclick="toggleAutoProteinBtn(this)" title="Auto-adjusts protein weight to hit your target">Auto weight</button>
+                    </div>
+                    <span class="mf-slider-val" id="mfProtMinD">—</span>
+                  </div>
+                  <input type="range" class="mf-slider off" id="mfProtMin" min="0" max="200" step="5" value="0" data-nofilter="0" oninput="_mfSliderInput(this,'mfProtMinD','{v}g')">
+                </div>
+                <div class="mf-slider-wrap">
+                  <div class="mf-slider-header">
+                    <div>🍚 Max Carbs
+                      <input type="checkbox" id="chkAutoCarb" style="display:none">
+                      <button class="filter-btn auto-toggle-btn" id="btnAutoCarb" onclick="toggleAutoCarbBtn(this)" title="Auto-adjusts carb weight to stay within your target">Auto weight</button>
+                    </div>
+                    <span class="mf-slider-val" id="mfCarbMaxD">—</span>
+                  </div>
+                  <input type="range" class="mf-slider off" id="mfCarbMax" min="20" max="300" step="5" value="300" data-nofilter="300" oninput="_mfSliderInput(this,'mfCarbMaxD','{v}g')">
+                </div>
+                <div class="mf-slider-wrap">
+                  <div class="mf-slider-header">
+                    <label>🧈 Max Fat</label>
+                    <span class="mf-slider-val" id="mfFatMaxD">—</span>
+                  </div>
+                  <input type="range" class="mf-slider off" id="mfFatMax" min="5" max="80" step="1" value="80" data-nofilter="80" oninput="_mfSliderInput(this,'mfFatMaxD','{v}g')">
+                </div>
+                <div class="mf-slider-wrap">
+                  <div class="mf-slider-header">
+                    <label>⭐ Min Score</label>
+                    <span class="mf-slider-val" id="mfScoreMinD">—</span>
+                  </div>
+                  <input type="range" class="mf-slider off" id="mfScoreMin" min="1" max="10" step="1" value="1" data-nofilter="1" oninput="_mfSliderInput(this,'mfScoreMinD','{v}/10')">
+                </div>
+                <button class="mf-reset-btn" onclick="resetMacroFilter()" style="align-self:flex-end">✕ Reset</button>
               </div></div>
             </div>
             <div class="filter-section">
@@ -4915,16 +4918,12 @@
                   </div>
                   <span style="font-size: 11px; color: #555">Applies to all recipe macros</span>
                 </div>
-                <div style="display: flex; flex-direction: column; gap: 8px">
-                  <label style="font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px">⏱ Max Time</label>
-                  <input type="hidden" id="mfTimeMax">
-                  <div data-preset-group style="display:flex;flex-wrap:wrap;gap:4px;">
-                    <button class="filter-btn" onclick="setMacroPreset('mfTimeMax',15,this)">15 min</button>
-                    <button class="filter-btn" onclick="setMacroPreset('mfTimeMax',20,this)">20 min</button>
-                    <button class="filter-btn" onclick="setMacroPreset('mfTimeMax',25,this)">25 min</button>
-                    <button class="filter-btn" onclick="setMacroPreset('mfTimeMax',30,this)">30 min</button>
-                    <button class="filter-btn" onclick="setMacroPreset('mfTimeMax',45,this)">45 min</button>
+                <div class="mf-slider-wrap">
+                  <div class="mf-slider-header">
+                    <label>⏱ Max Time</label>
+                    <span class="mf-slider-val" id="mfTimeMaxD">—</span>
                   </div>
+                  <input type="range" class="mf-slider off" id="mfTimeMax" min="10" max="60" step="5" value="60" data-nofilter="60" oninput="_mfSliderInput(this,'mfTimeMaxD','{v} min')">
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 8px; justify-content: center">
                   <input type="checkbox" id="chkVideoOnly" style="display:none">
@@ -6367,12 +6366,7 @@
         (e && (e.checked = !1),
         _syncFilterBtn("btnVideoOnly", false),
           (videoFilterOnly = !1),
-          (macroFilter = { kcalMax: 9999, protMin: 0, carbMax: 999, fatMax: 999, scoreMin: 1, timeMax: 999 }),
-          ["mfKcalMax", "mfProtMin", "mfCarbMax", "mfFatMax", "mfTimeMax", "mfScoreMin"].forEach((e) => {
-            const a = document.getElementById(e);
-            a && (a.value = "");
-          }),
-          document.querySelectorAll('[data-preset-group] .filter-btn').forEach(b => b.classList.remove('active')),
+          resetMacroFilter(),
           (weights.servings = 1));
         const a = document.getElementById("globalServingVal");
         a && (a.textContent = "1");
@@ -6819,13 +6813,49 @@
           updatePillStates(),
           filterRecipes());
       }
+      function _mfSliderVal(id) {
+        const el = document.getElementById(id);
+        if (!el) return NaN;
+        const v = parseFloat(el.value);
+        const nf = parseFloat(el.dataset?.nofilter ?? "");
+        return (!isNaN(nf) && v === nf) ? NaN : v;
+      }
+      function _mfSliderInput(slider, displayId, template) {
+        const v = parseFloat(slider.value);
+        const noFilter = parseFloat(slider.dataset.nofilter);
+        const isOff = v === noFilter;
+        const min = parseFloat(slider.min), max = parseFloat(slider.max);
+        const fillPct = ((v - min) / (max - min) * 100).toFixed(1) + '%';
+        slider.style.setProperty('--fill', isOff ? '0%' : fillPct);
+        slider.classList.toggle('off', isOff);
+        const display = document.getElementById(displayId);
+        if (display) {
+          display.textContent = isOff ? '—' : template.replace('{v}', v);
+          display.classList.toggle('active', !isOff);
+        }
+        applyMacroFilterLive();
+      }
+      function _resetSlider(id, displayId) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const nf = el.dataset.nofilter;
+        if (nf !== undefined) el.value = nf;
+        el.classList.add('off');
+        el.style.setProperty('--fill', '0%');
+        const d = displayId && document.getElementById(displayId);
+        if (d) { d.textContent = '—'; d.classList.remove('active'); }
+      }
       function applyMacroFilterLive() {
-        ((macroFilter.kcalMax = parseFloat(document.getElementById("mfKcalMax")?.value) || 9999),
-          (macroFilter.protMin = parseFloat(document.getElementById("mfProtMin")?.value) || 0),
-          (macroFilter.carbMax = parseFloat(document.getElementById("mfCarbMax")?.value) || 999),
-          (macroFilter.fatMax = parseFloat(document.getElementById("mfFatMax")?.value) || 999),
-          (macroFilter.timeMax = parseFloat(document.getElementById("mfTimeMax")?.value) || 999),
-          (macroFilter.scoreMin = parseFloat(document.getElementById("mfScoreMin")?.value) || 1),
+        const _r = (id, fallback) => {
+          const v = _mfSliderVal(id);
+          return isNaN(v) ? fallback : v;
+        };
+        ((macroFilter.kcalMax = _r("mfKcalMax", 9999)),
+          (macroFilter.protMin = _r("mfProtMin", 0)),
+          (macroFilter.carbMax = _r("mfCarbMax", 999)),
+          (macroFilter.fatMax = _r("mfFatMax", 999)),
+          (macroFilter.timeMax = _r("mfTimeMax", 999)),
+          (macroFilter.scoreMin = _r("mfScoreMin", 1)),
           applyAutoProteinWeight(),
           applyAutoCarbWeight(),
           updateCardMacros(),
@@ -6841,8 +6871,8 @@
       function applyAutoProteinWeight() {
         const e = document.getElementById("chkAutoProtein");
         if (!e || !e.checked) return;
-        const a = parseFloat(document.getElementById("mfProtMin")?.value);
-        if (!a || a <= 0) return;
+        const a = _mfSliderVal("mfProtMin");
+        if (isNaN(a) || a <= 0) return;
         const t = Math.max(weights.servings, 1),
           i = NUT[activeProtein] || NUT.chicken_thigh;
         if (!i || !i.p) return;
@@ -6862,8 +6892,8 @@
       function applyAutoCarbWeight() {
         const e = document.getElementById("chkAutoCarb");
         if (!e || !e.checked) return;
-        const a = parseFloat(document.getElementById("mfCarbMax")?.value);
-        if (!a || a <= 0) return;
+        const a = _mfSliderVal("mfCarbMax");
+        if (isNaN(a) || a <= 0) return;
         const t = Math.max(weights.servings, 1);
         // clear cache so getSauceMacros returns fresh values
         Object.keys(_sauceMacroCache).forEach((k) => delete _sauceMacroCache[k]);
@@ -6894,25 +6924,15 @@
         e && (e.checked = !1);
         _syncFilterBtn("btnAutoProtein", false);
         const a = document.getElementById("chkAutoCarb");
-        (a && (a.checked = !1),
-        _syncFilterBtn("btnAutoCarb", false),
-          ["mfKcalMax", "mfProtMin", "mfCarbMax", "mfFatMax", "mfTimeMax", "mfScoreMin"].forEach((e) => {
-            const a = document.getElementById(e);
-            a && (a.value = "");
-          }));
-        document.querySelectorAll('[data-preset-group] .filter-btn').forEach(b => b.classList.remove('active'));
-        (Object.entries({
-          mfKcalMax: 9999,
-          mfProtMin: 0,
-          mfCarbMax: 999,
-          mfFatMax: 999,
-          mfScoreMin: 1,
-          mfTimeMax: 999,
-        }).forEach(([e, a]) => {
-          const t = document.getElementById(e);
-          t && (t.value = a);
-        }),
-          filterRecipes());
+        a && (a.checked = !1);
+        _syncFilterBtn("btnAutoCarb", false);
+        _resetSlider("mfKcalMax", "mfKcalMaxD");
+        _resetSlider("mfProtMin", "mfProtMinD");
+        _resetSlider("mfCarbMax", "mfCarbMaxD");
+        _resetSlider("mfFatMax", "mfFatMaxD");
+        _resetSlider("mfScoreMin", "mfScoreMinD");
+        _resetSlider("mfTimeMax", "mfTimeMaxD");
+        filterRecipes();
       }
       function syncCarbFilter(e, a) {
         const t = parseFloat(a) > 0;
