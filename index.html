@@ -4876,26 +4876,18 @@
         <div id="filterPanel" style="display:none">
           <div class="filter-panel-grid">
             <div class="filter-section">
-              <div class="filter-section-label" onclick="toggleFilterSection(this)"><span>🌍 Cuisine &amp; Flavor</span><span class="filter-section-arrow">▼</span></div>
+              <div class="filter-section-label" onclick="toggleFilterSection(this)"><span>🥩 Protein</span><span class="filter-section-arrow">▼</span></div>
               <div class="filter-section-body"><div class="filter-dropdown-inner">
-                <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
-                <button class="filter-btn" onclick="setFilter('korean', this)">Korean</button>
-                <button class="filter-btn" onclick="setFilter('japanese', this)">Japanese</button>
-                <button class="filter-btn" onclick="setFilter('chinese', this)">Chinese</button>
-                <button class="filter-btn" onclick="setFilter('thai', this)">Thai</button>
-                <button class="filter-btn" onclick="setFilter('asian', this)">Asian</button>
-                <button class="filter-btn" onclick="setFilter('american', this)">American</button>
-                <button class="filter-btn" onclick="setFilter('mexican', this)">Mexican</button>
-                <button class="filter-btn" onclick="setFilter('middle-eastern', this)">Middle Eastern</button>
-                <button class="filter-btn" onclick="setFilter('mediterranean', this)">Mediterranean</button>
-                <button class="filter-btn" onclick="setFilter('indian', this)">Indian</button>
-                <button class="filter-btn" onclick="setFilter('comfort', this)">Comfort</button>
-                <button class="filter-btn" onclick="setFilter('fusion', this)">Fusion</button>
-                <span style="width: 1px; height: 20px; background: var(--border); display: inline-block; margin: 0 4px"></span>
-                <button class="filter-btn sweet" onclick="setFlavorFilter('sweet', this)">🍯 Sweet</button>
-                <button class="filter-btn savory" onclick="setFlavorFilter('savory', this)">🧂 Savory</button>
-                <button class="filter-btn spicy" onclick="setSpicyFilter(this)">🌶️ Spicy</button>
-                <button class="filter-btn dip" onclick="setDipFilter(this)">🥣 Dip</button>
+                <input type="checkbox" id="chkPChicken" style="display:none" checked>
+                <input type="checkbox" id="chkPBeef"    style="display:none" checked>
+                <input type="checkbox" id="chkPEggs"    style="display:none" checked>
+                <input type="checkbox" id="chkPFish"    style="display:none" checked>
+                <input type="checkbox" id="chkPTofu"    style="display:none" checked>
+                <button class="filter-btn active" id="btnPChicken" onclick="toggleProteinBtn('chicken', this)">🍗 Chicken</button>
+                <button class="filter-btn active" id="btnPBeef"    onclick="toggleProteinBtn('beef', this)">🥩 Beef</button>
+                <button class="filter-btn active" id="btnPEggs"    onclick="toggleProteinBtn('eggs', this)">🥚 Eggs</button>
+                <button class="filter-btn active" id="btnPFish"    onclick="toggleProteinBtn('fish', this)">🐟 Fish</button>
+                <button class="filter-btn active" id="btnPTofu"    onclick="toggleProteinBtn('tofu', this)">🫘 Tofu</button>
               </div></div>
             </div>
             <div class="filter-section">
@@ -4909,21 +4901,6 @@
                 <button class="filter-btn active" id="btnRice"   onclick="toggleCarbBtn('rice', this)">🍚 Rice</button>
                 <button class="filter-btn active" id="btnNoodle" onclick="toggleCarbBtn('noodle', this)">🍜 Noodles</button>
                 <button class="filter-btn active" id="btnBread"  onclick="toggleCarbBtn('bread', this)">🫓 Bread/Wrap</button>
-              </div></div>
-            </div>
-            <div class="filter-section">
-              <div class="filter-section-label" onclick="toggleFilterSection(this)"><span>🥩 Protein</span><span class="filter-section-arrow">▼</span></div>
-              <div class="filter-section-body"><div class="filter-dropdown-inner">
-                <input type="checkbox" id="chkPChicken" style="display:none" checked>
-                <input type="checkbox" id="chkPBeef"    style="display:none" checked>
-                <input type="checkbox" id="chkPEggs"    style="display:none" checked>
-                <input type="checkbox" id="chkPFish"    style="display:none" checked>
-                <input type="checkbox" id="chkPTofu"    style="display:none" checked>
-                <button class="filter-btn active" id="btnPChicken" onclick="toggleProteinBtn('chicken', this)">🍗 Chicken</button>
-                <button class="filter-btn active" id="btnPBeef"    onclick="toggleProteinBtn('beef', this)">🥩 Beef</button>
-                <button class="filter-btn active" id="btnPEggs"    onclick="toggleProteinBtn('eggs', this)">🥚 Eggs</button>
-                <button class="filter-btn active" id="btnPFish"    onclick="toggleProteinBtn('fish', this)">🐟 Fish</button>
-                <button class="filter-btn active" id="btnPTofu"    onclick="toggleProteinBtn('tofu', this)">🫘 Tofu</button>
               </div></div>
             </div>
             <div class="filter-section">
@@ -4974,16 +4951,15 @@
               </div></div>
             </div>
             <div class="filter-section">
-              <div class="filter-section-label" onclick="toggleFilterSection(this)"><span>🍽️ Servings, Time &amp; Video</span><span class="filter-section-arrow">▼</span></div>
-              <div class="filter-section-body"><div class="filter-dropdown-inner" style="align-items: flex-start; gap: 16px 24px; flex-wrap: wrap">
-                <div style="display: flex; flex-direction: column; gap: 8px">
-                  <span style="font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px">🍽️ Servings</span>
-                  <div class="serving-stepper">
-                    <button class="step-btn" onclick="changeGlobalServings(-1)">−</button>
-                    <span class="serving-val" id="globalServingVal" style="width: 40px; height: 36px; line-height: 36px; font-size: 20px">1</span>
-                    <button class="step-btn" onclick="changeGlobalServings(1)">+</button>
+              <div class="filter-section-label" onclick="toggleFilterSection(this)"><span>🍽️ Servings &amp; Time</span><span class="filter-section-arrow">▼</span></div>
+              <div class="filter-section-body"><div style="display:flex;flex-direction:column;gap:12px;width:100%;box-sizing:border-box;padding:4px 0">
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;font-family:'Bebas Neue',sans-serif">🍽️ Servings</span>
+                  <div style="display:flex;align-items:center;gap:5px">
+                    <button class="step-btn" onclick="changeGlobalServings(-1)" style="width:28px;height:28px">−</button>
+                    <span class="serving-val" id="globalServingVal" style="width:30px;height:28px;line-height:28px;font-size:17px;text-align:center">1</span>
+                    <button class="step-btn" onclick="changeGlobalServings(1)" style="width:28px;height:28px">+</button>
                   </div>
-                  <span style="font-size: 11px; color: #555">Applies to all recipe macros</span>
                 </div>
                 <div class="mf-slider-wrap">
                   <div class="mf-slider-header">
@@ -4992,10 +4968,33 @@
                   </div>
                   <input type="range" class="mf-slider off" id="mfTimeMax" min="10" max="60" step="5" value="60" data-nofilter="60" oninput="_mfSliderInput(this,'mfTimeMaxD','{v} min')">
                 </div>
-                <div style="display: flex; flex-direction: column; gap: 8px; justify-content: center">
+                <div>
                   <input type="checkbox" id="chkVideoOnly" style="display:none">
-                  <button class="filter-btn" id="btnVideoOnly" onclick="toggleVideoBtn(this)">▶️ With Video</button>
+                  <button class="filter-btn" id="btnVideoOnly" onclick="toggleVideoBtn(this)" style="width:100%;justify-content:center">▶️ With Video</button>
                 </div>
+              </div></div>
+            </div>
+            <div class="filter-section">
+              <div class="filter-section-label" onclick="toggleFilterSection(this)"><span>🌍 Cuisine &amp; Flavor</span><span class="filter-section-arrow">▼</span></div>
+              <div class="filter-section-body"><div class="filter-dropdown-inner">
+                <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
+                <button class="filter-btn" onclick="setFilter('korean', this)">Korean</button>
+                <button class="filter-btn" onclick="setFilter('japanese', this)">Japanese</button>
+                <button class="filter-btn" onclick="setFilter('chinese', this)">Chinese</button>
+                <button class="filter-btn" onclick="setFilter('thai', this)">Thai</button>
+                <button class="filter-btn" onclick="setFilter('asian', this)">Asian</button>
+                <button class="filter-btn" onclick="setFilter('american', this)">American</button>
+                <button class="filter-btn" onclick="setFilter('mexican', this)">Mexican</button>
+                <button class="filter-btn" onclick="setFilter('middle-eastern', this)">Middle Eastern</button>
+                <button class="filter-btn" onclick="setFilter('mediterranean', this)">Mediterranean</button>
+                <button class="filter-btn" onclick="setFilter('indian', this)">Indian</button>
+                <button class="filter-btn" onclick="setFilter('comfort', this)">Comfort</button>
+                <button class="filter-btn" onclick="setFilter('fusion', this)">Fusion</button>
+                <span style="width: 1px; height: 20px; background: var(--border); display: inline-block; margin: 0 4px"></span>
+                <button class="filter-btn sweet" onclick="setFlavorFilter('sweet', this)">🍯 Sweet</button>
+                <button class="filter-btn savory" onclick="setFlavorFilter('savory', this)">🧂 Savory</button>
+                <button class="filter-btn spicy" onclick="setSpicyFilter(this)">🌶️ Spicy</button>
+                <button class="filter-btn dip" onclick="setDipFilter(this)">🥣 Dip</button>
               </div></div>
             </div>
           </div>
