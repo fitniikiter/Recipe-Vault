@@ -174,6 +174,16 @@
         border-color: var(--accent);
         color: #cc7000;
       }
+      html.light .filter-section-label {
+        background: #fff;
+        border-color: #ddd;
+      }
+      html.light .filter-section-label:hover {
+        border-color: #aaa;
+      }
+      html.light .filter-section.open > .filter-section-label {
+        background: rgba(255,140,0,0.06);
+      }
       html.light .filter-btn,
       html.light .filter-pill {
         background: var(--card);
@@ -805,10 +815,11 @@
       .filter-section {
         display: flex;
         flex-direction: column;
+        margin-bottom: 6px;
       }
       .filter-section-label {
         font-family: "Bebas Neue", sans-serif;
-        font-size: 13px;
+        font-size: 12px;
         letter-spacing: 1px;
         color: var(--muted);
         text-transform: uppercase;
@@ -816,17 +827,21 @@
         justify-content: space-between;
         align-items: center;
         cursor: pointer;
-        padding: 6px 0;
-        border-bottom: 1px solid var(--border);
-        transition: color 0.15s;
+        padding: 7px 14px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        background: var(--card);
+        transition: color 0.15s, border-color 0.15s, background 0.15s;
         user-select: none;
       }
       .filter-section-label:hover {
+        border-color: #555;
         color: var(--text);
       }
       .filter-section.open > .filter-section-label {
         color: var(--accent);
-        border-bottom-color: var(--accent);
+        border-color: var(--accent);
+        background: rgba(255,160,0,0.07);
       }
       .filter-section-arrow {
         font-size: 9px;
@@ -840,7 +855,7 @@
       }
       .filter-section-body {
         display: none;
-        padding-top: 10px;
+        padding: 10px 4px 4px;
       }
       .filter-section.open > .filter-section-body {
         display: block;
@@ -4785,7 +4800,6 @@
           gap: 0 !important;
         }
         #btnFilterToggle { display: none !important; }
-        .filter-section-label { padding: 8px 0 !important; }
       }
     </style>
   </head>
