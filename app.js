@@ -1,0 +1,4268 @@
+const NUT = {
+  chicken_thigh: { kcal: 149, p: 18.6, c: 0, f: 7.92 },
+  chicken_breast: { kcal: 112, p: 22.5, c: 0, f: 1.93 },
+  beef_regular: { kcal: 248, p: 17.5, c: 0, f: 19.4 },
+  beef_lean: { kcal: 137, p: 21.4, c: 0, f: 5 },
+  eggs: { kcal: 147, p: 12.4, c: 0.96, f: 9.96 },
+  salmon: { kcal: 203, p: 20.3, c: 0, f: 13.1 },
+  tofu: { kcal: 144, p: 17.3, c: 2.78, f: 8.72 },
+  potato: { kcal: 77, p: 2, c: 17.5, f: 0.1 },
+  rice: { kcal: 365, p: 7.1, c: 80, f: 0.7 },
+  noodle: { kcal: 357, p: 13, c: 71, f: 1.5 },
+  bread: { kcal: 265, p: 9, c: 51, f: 3.2 },
+};
+((NUT.chicken = NUT.chicken_thigh), (NUT.egg = NUT.eggs));
+const INGREDIENT_DB = {
+  soy_sauce: { kcal: 60, p: 8, c: 8, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 30, emoji: "🫙" },
+  oyster_sauce: { kcal: 87, p: 3, c: 18, f: 0.3, unit_g: { tbsp: 18, tsp: 6 }, typical_g: 25, emoji: "🫙" },
+  fish_sauce: { kcal: 25, p: 4, c: 3, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 15, emoji: "🫙" },
+  hoisin: { kcal: 220, p: 4, c: 43, f: 4, unit_g: { tbsp: 16, tsp: 5 }, typical_g: 20, emoji: "🫙" },
+  gochujang: { kcal: 190, p: 5, c: 37, f: 2, unit_g: { tbsp: 18, tsp: 6 }, typical_g: 25, emoji: "🌶️" },
+  miso: { kcal: 199, p: 12, c: 27, f: 6, unit_g: { tbsp: 18, tsp: 6 }, typical_g: 20, emoji: "🫙" },
+  doenjang: { kcal: 180, p: 11, c: 22, f: 5, unit_g: { tbsp: 18, tsp: 6 }, typical_g: 20, emoji: "🫙" },
+  teriyaki: { kcal: 89, p: 5, c: 15, f: 1, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 30, emoji: "🫙" },
+  sesame_oil: { kcal: 884, p: 0, c: 0, f: 100, unit_g: { tbsp: 14, tsp: 4 }, typical_g: 7, emoji: "🫙" },
+  sriracha: { kcal: 100, p: 1, c: 20, f: 1, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 10, emoji: "🌶️" },
+  tahini: { kcal: 592, p: 17, c: 21, f: 53, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 20, emoji: "🫙" },
+  harissa: { kcal: 152, p: 3, c: 12, f: 10, unit_g: { tbsp: 16, tsp: 5 }, typical_g: 15, emoji: "🌶️" },
+  worcestershire: { kcal: 78, p: 1, c: 19, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 10, emoji: "🫙" },
+  ketchup: { kcal: 101, p: 1, c: 25, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 20, emoji: "🫙" },
+  mayo: { kcal: 680, p: 1, c: 2, f: 75, unit_g: { tbsp: 14, tsp: 5 }, typical_g: 15, emoji: "🫙" },
+  mayo_light: { kcal: 330, p: 0.5, c: 6, f: 33, unit_g: { tbsp: 14, tsp: 5 }, typical_g: 15, emoji: "🫙" },
+  hot_sauce: { kcal: 30, p: 1, c: 5, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 10, emoji: "🌶️" },
+  peanut_butter: { kcal: 593, p: 25, c: 20, f: 51, unit_g: { tbsp: 16, tsp: 5 }, typical_g: 20, emoji: "🥜" },
+  coconut_milk: { kcal: 197, p: 2, c: 6, f: 21, unit_g: { tbsp: 15, ml: 1 }, typical_g: 60, emoji: "🥥" },
+  rice_vinegar: { kcal: 18, p: 0, c: 4, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 15, emoji: "🫙" },
+  apple_cider_vinegar: { kcal: 21, p: 0, c: 0.9, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 10, emoji: "🫙" },
+  mirin: { kcal: 233, p: 0.5, c: 55, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 15, emoji: "🫙" },
+  sake: { kcal: 134, p: 0.5, c: 5, f: 0, a: 14, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 15, emoji: "🫙" },
+  toum: { kcal: 650, p: 2, c: 6, f: 70, unit_g: { tbsp: 14, tsp: 5 }, typical_g: 15, emoji: "🧄" },
+  dijon: { kcal: 66, p: 4, c: 5, f: 4, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 10, emoji: "🫙" },
+  bbq_sauce: { kcal: 172, p: 1, c: 40, f: 1, unit_g: { tbsp: 16, tsp: 5 }, typical_g: 30, emoji: "🫙" },
+  chipotle_adobo: { kcal: 120, p: 2, c: 18, f: 5, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 15, emoji: "🌶️" },
+  sweet_soy: { kcal: 260, p: 6, c: 57, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 20, emoji: "🫙" },
+  ponzu: { kcal: 51, p: 3, c: 9, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 15, emoji: "🫙" },
+  shio_koji: { kcal: 80, p: 3, c: 16, f: 0, unit_g: { tbsp: 18, tsp: 6 }, typical_g: 20, emoji: "🫙" },
+  yuzu_kosho: { kcal: 62, p: 2, c: 8, f: 2, unit_g: { tsp: 5 }, typical_g: 5, emoji: "🫙" },
+  tamarind: { kcal: 239, p: 3, c: 57, f: 0.6, unit_g: { tbsp: 16, tsp: 5 }, typical_g: 15, emoji: "🫙" },
+  balsamic_glaze: { kcal: 160, p: 1, c: 38, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 15, emoji: "🫙" },
+  chili_oil: { kcal: 500, p: 2, c: 5, f: 52, unit_g: { tbsp: 14, tsp: 5 }, typical_g: 10, emoji: "🌶️" },
+  gochugaru: { kcal: 282, p: 14, c: 48, f: 5, unit_g: { tbsp: 9, tsp: 3 }, typical_g: 5, emoji: "🌶️" },
+  cumin: { kcal: 375, p: 18, c: 44, f: 22, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 3, emoji: "🌿" },
+  coriander: { kcal: 298, p: 12, c: 55, f: 18, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 3, emoji: "🌿" },
+  turmeric: { kcal: 354, p: 8, c: 65, f: 10, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 3, emoji: "🌿" },
+  smoked_paprika: { kcal: 282, p: 14, c: 54, f: 13, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 4, emoji: "🌿" },
+  paprika: { kcal: 282, p: 14, c: 54, f: 13, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 4, emoji: "🌿" },
+  chili_flakes: { kcal: 318, p: 12, c: 56, f: 17, unit_g: { tbsp: 6, tsp: 2 }, typical_g: 2, emoji: "🌶️" },
+  five_spice: { kcal: 300, p: 10, c: 55, f: 10, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 3, emoji: "🌿" },
+  zaatar: { kcal: 270, p: 10, c: 35, f: 12, unit_g: { tbsp: 8, tsp: 3 }, typical_g: 5, emoji: "🌿" },
+  sumac: { kcal: 260, p: 5, c: 45, f: 10, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 4, emoji: "🌿" },
+  baharat: { kcal: 290, p: 10, c: 50, f: 10, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 4, emoji: "🌿" },
+  ras_el_hanout: { kcal: 285, p: 10, c: 48, f: 12, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 4, emoji: "🌿" },
+  curry_powder: { kcal: 325, p: 13, c: 55, f: 14, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 5, emoji: "🌿" },
+  garam_masala: { kcal: 350, p: 14, c: 52, f: 15, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 4, emoji: "🌿" },
+  tandoori_masala: { kcal: 300, p: 12, c: 50, f: 12, unit_g: { tbsp: 8, tsp: 3 }, typical_g: 5, emoji: "🌿" },
+  tikka_paste: { kcal: 150, p: 5, c: 12, f: 10, unit_g: { tbsp: 18, tsp: 6 }, typical_g: 25, emoji: "🌿" },
+  kasuri_methi: { kcal: 280, p: 23, c: 44, f: 6, unit_g: { tbsp: 4, tsp: 1.5 }, typical_g: 3, emoji: "🌿" },
+  oregano: { kcal: 265, p: 9, c: 64, f: 4, unit_g: { tbsp: 4, tsp: 1.5 }, typical_g: 2, emoji: "🌿" },
+  thyme: { kcal: 276, p: 9, c: 64, f: 7, unit_g: { tbsp: 4, tsp: 1.5 }, typical_g: 2, emoji: "🌿" },
+  dill_dried: { kcal: 253, p: 20, c: 56, f: 4, unit_g: { tbsp: 4, tsp: 1.5 }, typical_g: 2, emoji: "🌿" },
+  bay_leaf: { kcal: 313, p: 8, c: 75, f: 8, unit_g: { tbsp: 2, tsp: 1 }, typical_g: 1, emoji: "🌿" },
+  cinnamon: { kcal: 247, p: 4, c: 81, f: 1, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 2, emoji: "🌿" },
+  cardamom: { kcal: 311, p: 11, c: 68, f: 7, unit_g: { tbsp: 6, tsp: 2 }, typical_g: 2, emoji: "🌿" },
+  star_anise: { kcal: 337, p: 18, c: 50, f: 16, unit_g: { tbsp: 6, tsp: 2 }, typical_g: 2, emoji: "🌿" },
+  allspice: { kcal: 263, p: 6, c: 72, f: 9, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 2, emoji: "🌿" },
+  garlic_powder: { kcal: 331, p: 17, c: 73, f: 1, unit_g: { tbsp: 8, tsp: 3 }, typical_g: 3, emoji: "🧄" },
+  onion_powder: { kcal: 341, p: 10, c: 80, f: 1, unit_g: { tbsp: 8, tsp: 3 }, typical_g: 3, emoji: "🧅" },
+  cayenne: { kcal: 318, p: 12, c: 57, f: 17, unit_g: { tbsp: 6, tsp: 2 }, typical_g: 2, emoji: "🌶️" },
+  black_pepper: { kcal: 251, p: 10, c: 64, f: 3, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 2, emoji: "🌿" },
+  msg: { kcal: 0, p: 0, c: 0, f: 0, unit_g: { tsp: 4 }, typical_g: 2, emoji: "🌿" },
+  saffron: { kcal: 310, p: 11, c: 65, f: 6, unit_g: { tsp: 0.5 }, typical_g: 0.2, emoji: "🌿" },
+  jerk_seasoning: { kcal: 270, p: 10, c: 48, f: 8, unit_g: { tbsp: 8, tsp: 3 }, typical_g: 5, emoji: "🌿" },
+  dukkah: { kcal: 450, p: 15, c: 25, f: 38, unit_g: { tbsp: 10, tsp: 3 }, typical_g: 10, emoji: "🌿" },
+  furikake: { kcal: 200, p: 10, c: 30, f: 6, unit_g: { tbsp: 8, tsp: 3 }, typical_g: 5, emoji: "🌿" },
+  tajin: { kcal: 120, p: 3, c: 25, f: 2, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 4, emoji: "🌿" },
+  garlic: { kcal: 149, p: 6, c: 33, f: 0.5, unit_g: { clove: 5 }, typical_g: 15, emoji: "🧄" },
+  ginger: { kcal: 80, p: 2, c: 18, f: 1, unit_g: { tbsp: 8, tsp: 3 }, typical_g: 10, emoji: "🫚" },
+  scallion: { kcal: 32, p: 2, c: 7, f: 0.2, unit_g: { stalk: 15 }, typical_g: 30, emoji: "🌱" },
+  onion: { kcal: 40, p: 1, c: 9, f: 0.1, unit_g: { whole: 110 }, typical_g: 80, emoji: "🧅" },
+  lemon: { kcal: 29, p: 1, c: 9, f: 0, unit_g: { whole: 58, tbsp: 15 }, typical_g: 15, emoji: "🍋" },
+  lime: { kcal: 30, p: 1, c: 11, f: 0, unit_g: { whole: 44, tbsp: 15 }, typical_g: 15, emoji: "🍋" },
+  cilantro: { kcal: 23, p: 2, c: 4, f: 0, unit_g: { handful: 15 }, typical_g: 10, emoji: "🌿" },
+  parsley: { kcal: 36, p: 3, c: 6, f: 1, unit_g: { handful: 15 }, typical_g: 10, emoji: "🌿" },
+  basil: { kcal: 23, p: 3, c: 3, f: 1, unit_g: { handful: 10 }, typical_g: 8, emoji: "🌿" },
+  mint: { kcal: 44, p: 3, c: 9, f: 1, unit_g: { handful: 10 }, typical_g: 8, emoji: "🌿" },
+  rosemary: { kcal: 131, p: 3, c: 21, f: 6, unit_g: { tbsp: 2, tsp: 1 }, typical_g: 3, emoji: "🌿" },
+  chives: { kcal: 30, p: 3, c: 4, f: 1, unit_g: { tbsp: 5, tsp: 2 }, typical_g: 8, emoji: "🌿" },
+  dill_fresh: { kcal: 43, p: 4, c: 7, f: 1, unit_g: { handful: 10 }, typical_g: 8, emoji: "🌿" },
+  lemongrass: { kcal: 99, p: 2, c: 25, f: 1, unit_g: { stalk: 20 }, typical_g: 20, emoji: "🌿" },
+  kaffir_lime: { kcal: 50, p: 1, c: 12, f: 0, unit_g: { whole: 2 }, typical_g: 2, emoji: "🌿" },
+  thai_basil: { kcal: 22, p: 3, c: 3, f: 0, unit_g: { handful: 10 }, typical_g: 10, emoji: "🌿" },
+  pandan: { kcal: 100, p: 2, c: 22, f: 1, unit_g: { whole: 5 }, typical_g: 5, emoji: "🌿" },
+  chili_fresh: { kcal: 40, p: 2, c: 9, f: 0, unit_g: { whole: 15 }, typical_g: 10, emoji: "🌶️" },
+  tomato: { kcal: 18, p: 1, c: 4, f: 0, unit_g: { whole: 120 }, typical_g: 100, emoji: "🍅" },
+  cucumber: { kcal: 15, p: 1, c: 4, f: 0, unit_g: { whole: 200 }, typical_g: 80, emoji: "🥒" },
+  avocado: { kcal: 160, p: 2, c: 9, f: 15, unit_g: { whole: 150 }, typical_g: 75, emoji: "🥑" },
+  bell_pepper: { kcal: 31, p: 1, c: 6, f: 0.3, unit_g: { whole: 160 }, typical_g: 80, emoji: "🫑" },
+  cabbage: { kcal: 25, p: 1.3, c: 5.8, f: 0.1, unit_g: { handful: 60 }, typical_g: 80, emoji: "🥬" },
+  carrot: { kcal: 41, p: 1, c: 10, f: 0, unit_g: { whole: 80 }, typical_g: 50, emoji: "🥕" },
+  corn: { kcal: 86, p: 3.3, c: 19, f: 1.4, unit_g: { whole: 150 }, typical_g: 80, emoji: "🌽" },
+  leek: { kcal: 61, p: 2, c: 14, f: 0, unit_g: { whole: 80 }, typical_g: 60, emoji: "🌿" },
+  mushroom: { kcal: 22, p: 3.1, c: 3.3, f: 0.3, unit_g: { whole: 20 }, typical_g: 80, emoji: "🍄" },
+  spinach: { kcal: 23, p: 2.9, c: 3.6, f: 0.4, unit_g: { handful: 30 }, typical_g: 60, emoji: "🥬" },
+  bok_choy: { kcal: 13, p: 1.5, c: 2.2, f: 0.2, unit_g: { whole: 200 }, typical_g: 120, emoji: "🥬" },
+  kimchi: { kcal: 15, p: 1, c: 3, f: 0, unit_g: { tbsp: 30 }, typical_g: 60, emoji: "🥬" },
+  butter: { kcal: 717, p: 0.9, c: 0, f: 81, unit_g: { tbsp: 14, tsp: 5 }, typical_g: 15, emoji: "🧈" },
+  eggs_dairy: { kcal: 143, p: 12.6, c: 0.7, f: 9.5, unit_g: { whole: 58 }, typical_g: 58, emoji: "🥚" },
+  milk: { kcal: 61, p: 3.2, c: 4.8, f: 3.3, unit_g: { tbsp: 15, ml: 1 }, typical_g: 50, emoji: "🥛" },
+  heavy_cream: { kcal: 340, p: 2.8, c: 2.7, f: 37, unit_g: { tbsp: 15, ml: 1 }, typical_g: 30, emoji: "🥛" },
+  sour_cream: { kcal: 193, p: 2.9, c: 4.7, f: 19, unit_g: { tbsp: 14, tsp: 5 }, typical_g: 30, emoji: "🥛" },
+  cream_cheese: { kcal: 342, p: 6, c: 4, f: 34, unit_g: { tbsp: 14, tsp: 5 }, typical_g: 25, emoji: "🧀" },
+  creme_fraiche: { kcal: 292, p: 3, c: 3, f: 30, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 30, emoji: "🥛" },
+  yogurt: { kcal: 59, p: 10, c: 3.6, f: 0.4, unit_g: { tbsp: 15 }, typical_g: 80, emoji: "🥛" },
+  labneh: { kcal: 190, p: 8, c: 4, f: 16, unit_g: { tbsp: 15 }, typical_g: 40, emoji: "🥛" },
+  cheese_parm: { kcal: 431, p: 38, c: 4, f: 29, unit_g: { tbsp: 8, tsp: 3 }, typical_g: 15, emoji: "🧀" },
+  cheese_mozz: { kcal: 280, p: 22, c: 2.2, f: 22, unit_g: { slice: 30 }, typical_g: 30, emoji: "🧀" },
+  cheese_feta: { kcal: 264, p: 14, c: 4, f: 21, unit_g: { tbsp: 15 }, typical_g: 30, emoji: "🧀" },
+  cheese_cheddar: { kcal: 402, p: 25, c: 1, f: 33, unit_g: { slice: 30 }, typical_g: 30, emoji: "🧀" },
+  cheese_gruyere: { kcal: 413, p: 30, c: 0, f: 32, unit_g: { slice: 30 }, typical_g: 25, emoji: "🧀" },
+  cheese_provolone: { kcal: 352, p: 26, c: 2, f: 27, unit_g: { slice: 28 }, typical_g: 28, emoji: "🧀" },
+  quark_low_fat: { kcal: 67, p: 12, c: 4, f: 0.2, unit_g: { tbsp: 30, g: 1 }, typical_g: 150, emoji: "🥛" },
+  skyr: { kcal: 63, p: 11, c: 4, f: 0.2, unit_g: { tbsp: 30, g: 1 }, typical_g: 150, emoji: "🥛" },
+  cottage_cheese: { kcal: 98, p: 11, c: 3, f: 4.3, unit_g: { tbsp: 30, g: 1 }, typical_g: 100, emoji: "🥛" },
+  ricotta: { kcal: 174, p: 11, c: 3, f: 13, unit_g: { tbsp: 30, g: 1 }, typical_g: 80, emoji: "🥛" },
+  greek_yogurt: { kcal: 73, p: 10, c: 4, f: 0.4, unit_g: { tbsp: 30, g: 1 }, typical_g: 150, emoji: "🥛" },
+  olive_oil: { kcal: 884, p: 0, c: 0, f: 100, unit_g: { tbsp: 14, tsp: 4 }, typical_g: 10, emoji: "🫙" },
+  neutral_oil: { kcal: 884, p: 0, c: 0, f: 100, unit_g: { tbsp: 14, tsp: 4 }, typical_g: 10, emoji: "🫙" },
+  chicken_stock: { kcal: 15, p: 1, c: 1, f: 0.5, unit_g: { tbsp: 15, ml: 1 }, typical_g: 100, emoji: "🍲" },
+  canned_tomato: { kcal: 32, p: 1.5, c: 7, f: 0.2, unit_g: { tbsp: 15 }, typical_g: 200, emoji: "🍅" },
+  tomato_paste: { kcal: 82, p: 4, c: 19, f: 0.4, unit_g: { tbsp: 16, tsp: 5 }, typical_g: 20, emoji: "🍅" },
+  black_beans: { kcal: 132, p: 8.9, c: 24, f: 0.5, unit_g: { tbsp: 30 }, typical_g: 80, emoji: "🫘" },
+  kidney_beans: { kcal: 127, p: 9, c: 23, f: 0.5, unit_g: { tbsp: 30 }, typical_g: 80, emoji: "🫘" },
+  coconut_cream: { kcal: 330, p: 3.3, c: 7.7, f: 34, unit_g: { tbsp: 15, ml: 1 }, typical_g: 40, emoji: "🥥" },
+  panko: { kcal: 385, p: 11, c: 73, f: 7, unit_g: { tbsp: 8, tsp: 3 }, typical_g: 20, emoji: "🍞" },
+  breadcrumbs: { kcal: 395, p: 13, c: 72, f: 5, unit_g: { tbsp: 8, tsp: 3 }, typical_g: 20, emoji: "🍞" },
+  flour: { kcal: 364, p: 10, c: 76, f: 1, unit_g: { tbsp: 10, tsp: 3 }, typical_g: 15, emoji: "🌾" },
+  cornstarch: { kcal: 381, p: 0.3, c: 91, f: 0.1, unit_g: { tbsp: 10, tsp: 3 }, typical_g: 8, emoji: "🌾" },
+  honey: { kcal: 304, p: 0.3, c: 82, f: 0, unit_g: { tbsp: 21, tsp: 7 }, typical_g: 15, emoji: "🍯" },
+  sugar: { kcal: 387, p: 0, c: 100, f: 0, unit_g: { tbsp: 12, tsp: 4 }, typical_g: 10, emoji: "🍚" },
+  sesame_seeds: { kcal: 573, p: 18, c: 23, f: 50, unit_g: { tbsp: 9, tsp: 3 }, typical_g: 5, emoji: "🌿" },
+  peanuts: { kcal: 567, p: 26, c: 16, f: 49, unit_g: { tbsp: 15 }, typical_g: 20, emoji: "🥜" },
+  almonds: { kcal: 579, p: 21, c: 22, f: 50, unit_g: { tbsp: 15 }, typical_g: 15, emoji: "🌰" },
+  pine_nuts: { kcal: 673, p: 14, c: 13, f: 68, unit_g: { tbsp: 10 }, typical_g: 10, emoji: "🌰" },
+  raisins: { kcal: 299, p: 3.1, c: 79, f: 0.5, unit_g: { tbsp: 10 }, typical_g: 15, emoji: "🍇" },
+  dashi: { kcal: 5, p: 0, c: 1, f: 0, unit_g: { tbsp: 15, ml: 1 }, typical_g: 100, emoji: "🍲" },
+  japanese_curry_roux: { kcal: 488, p: 7, c: 53, f: 29, unit_g: { tbsp: 20 }, typical_g: 40, emoji: "🍛" },
+  nori: { kcal: 35, p: 6, c: 5, f: 0, unit_g: { sheet: 2 }, typical_g: 2, emoji: "🌿" },
+  glass_noodles: { kcal: 351, p: 0, c: 86, f: 0.1, unit_g: { tbsp: 20 }, typical_g: 30, emoji: "🍜" },
+  rice_paper: { kcal: 344, p: 1, c: 82, f: 0, unit_g: { sheet: 10 }, typical_g: 10, emoji: "🫓" },
+  pickled_veg: { kcal: 20, p: 1, c: 5, f: 0, unit_g: { tbsp: 15 }, typical_g: 30, emoji: "🥒" },
+  dried_chili: { kcal: 274, p: 12, c: 56, f: 5, unit_g: { whole: 2 }, typical_g: 3, emoji: "🌶️" },
+  pomegranate_mol: { kcal: 320, p: 1, c: 77, f: 0, unit_g: { tbsp: 21, tsp: 7 }, typical_g: 15, emoji: "🍎" },
+  preserved_lemon: { kcal: 43, p: 1, c: 10, f: 0, unit_g: { tbsp: 15 }, typical_g: 15, emoji: "🍋" },
+  potato: { kcal: 77, p: 2, c: 17.5, f: 0.1, unit_g: { whole: 150, g: 1 }, typical_g: 300, emoji: "🥔" },
+  rice: { kcal: 365, p: 7.1, c: 80, f: 0.7, unit_g: { g: 1 }, typical_g: 80, emoji: "🍚" },
+  rice_cooked: { kcal: 130, p: 2.7, c: 28, f: 0.3, unit_g: { g: 1 }, typical_g: 150, emoji: "🍚" },
+  noodle: { kcal: 357, p: 13, c: 71, f: 1.5, unit_g: { g: 1 }, typical_g: 80, emoji: "🍜" },
+  bread: { kcal: 265, p: 9, c: 51, f: 3.2, unit_g: { slice: 35, whole: 200 }, typical_g: 80, emoji: "🫓" },
+  chicken_thigh: { kcal: 144, p: 18.6, c: 0, f: 7.9, unit_g: { g: 1 }, typical_g: 150, emoji: "🍗" },
+  chicken_breast: { kcal: 106, p: 23.2, c: 0, f: 1.9, unit_g: { g: 1 }, typical_g: 150, emoji: "🍗" },
+  beef_regular: { kcal: 254, p: 17.2, c: 0, f: 20, unit_g: { g: 1 }, typical_g: 150, emoji: "🥩" },
+  beef_lean: { kcal: 137, p: 21.4, c: 0, f: 5.5, unit_g: { g: 1 }, typical_g: 150, emoji: "🥩" },
+  eggs: { kcal: 143, p: 12.6, c: 0.7, f: 9.5, unit_g: { whole: 58 }, typical_g: 58, emoji: "🥚" },
+  salmon: { kcal: 208, p: 20.4, c: 0, f: 13.4, unit_g: { g: 1 }, typical_g: 150, emoji: "🐟" },
+  tofu: { kcal: 76, p: 8.1, c: 1.9, f: 4.8, unit_g: { g: 1 }, typical_g: 150, emoji: "🫘" },
+  tuna_canned: { kcal: 116, p: 26, c: 0, f: 1, unit_g: { g: 1 }, typical_g: 130, emoji: "🐟" },
+  shrimp: { kcal: 99, p: 21, c: 0, f: 0.3, unit_g: { g: 1 }, typical_g: 150, emoji: "🦐" },
+  cod: { kcal: 82, p: 18, c: 0, f: 0.7, unit_g: { g: 1 }, typical_g: 150, emoji: "🐟" },
+  turkey_mince: { kcal: 150, p: 21, c: 0, f: 7, unit_g: { g: 1 }, typical_g: 150, emoji: "🦃" },
+  pork_tenderloin: { kcal: 143, p: 21, c: 0, f: 6, unit_g: { g: 1 }, typical_g: 150, emoji: "🥩" },
+  lamb_mince: { kcal: 282, p: 17, c: 0, f: 23, unit_g: { g: 1 }, typical_g: 150, emoji: "🥩" },
+  broccoli: { kcal: 34, p: 3, c: 7, f: 0.4, unit_g: { whole: 200, handful: 80 }, typical_g: 100, emoji: "🥦" },
+  zucchini: { kcal: 17, p: 1, c: 3, f: 0.3, unit_g: { whole: 200 }, typical_g: 150, emoji: "🥒" },
+  eggplant: { kcal: 25, p: 1, c: 6, f: 0.2, unit_g: { whole: 300 }, typical_g: 150, emoji: "🍆" },
+  bean_sprouts: { kcal: 30, p: 3, c: 6, f: 0, unit_g: { handful: 50 }, typical_g: 80, emoji: "🌱" },
+  water: { kcal: 0, p: 0, c: 0, f: 0, typical_g: 15, unit_g: { tbsp: 15, tsp: 5, cup: 240 } },
+  edamame: { kcal: 122, p: 11, c: 10, f: 5, unit_g: { tbsp: 20 }, typical_g: 80, emoji: "🫘" },
+  snap_peas: { kcal: 42, p: 3, c: 8, f: 0.2, unit_g: { handful: 50 }, typical_g: 60, emoji: "🫛" },
+  kale: { kcal: 49, p: 4, c: 9, f: 1, unit_g: { handful: 30 }, typical_g: 60, emoji: "🥬" },
+  lettuce: { kcal: 15, p: 1, c: 3, f: 0, unit_g: { handful: 30 }, typical_g: 50, emoji: "🥬" },
+  daikon: { kcal: 18, p: 1, c: 4, f: 0, unit_g: { whole: 300 }, typical_g: 80, emoji: "🌿" },
+  jalapeño: { kcal: 29, p: 1, c: 7, f: 0.3, unit_g: { whole: 14 }, typical_g: 14, emoji: "🌶️" },
+  quark_low_fat: { kcal: 67, p: 12, c: 4, f: 0.2, unit_g: { tbsp: 30 }, typical_g: 150, emoji: "🥛" },
+  skyr: { kcal: 63, p: 11, c: 4, f: 0.2, unit_g: { tbsp: 30 }, typical_g: 150, emoji: "🥛" },
+  cottage_cheese: { kcal: 98, p: 11, c: 3, f: 4.3, unit_g: { tbsp: 30 }, typical_g: 100, emoji: "🥛" },
+  ricotta: { kcal: 174, p: 11, c: 3, f: 13, unit_g: { tbsp: 30 }, typical_g: 80, emoji: "🧀" },
+  tuna_canned: { kcal: 116, p: 26, c: 0, f: 1, unit_g: { g: 1 }, typical_g: 130, emoji: "🐟" },
+  shrimp: { kcal: 99, p: 21, c: 0, f: 0.3, unit_g: { g: 1 }, typical_g: 150, emoji: "🦐" },
+  cod: { kcal: 82, p: 18, c: 0, f: 0.7, unit_g: { g: 1 }, typical_g: 150, emoji: "🐟" },
+  turkey_mince: { kcal: 150, p: 21, c: 0, f: 7, unit_g: { g: 1 }, typical_g: 150, emoji: "🦃" },
+  red_wine_vinegar: { kcal: 19, p: 0, c: 0.3, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 10, emoji: "🫙" },
+  capers: { kcal: 23, p: 2, c: 5, f: 0.9, unit_g: { tbsp: 15 }, typical_g: 10, emoji: "🫙" },
+  white_wine: { kcal: 82, p: 0, c: 3, f: 0, a: 11, unit_g: { tbsp: 15, ml: 1 }, typical_g: 30, emoji: "🍷" },
+  curry_paste: { kcal: 150, p: 5, c: 12, f: 10, unit_g: { tbsp: 18, tsp: 6 }, typical_g: 25, emoji: "🌿" },
+  // === MISSING INGREDIENT MAPPINGS (added) ===
+  banana: { kcal: 89, p: 1.1, c: 23, f: 0.3, unit_g: { piece: 120, g: 1 }, typical_g: 120, emoji: "🍌" },
+  oats: { kcal: 389, p: 17, c: 66, f: 7, unit_g: { cup: 90, g: 1 }, typical_g: 80, emoji: "🌾" },
+  dark_chocolate: { kcal: 546, p: 5, c: 60, f: 31, unit_g: { g: 1, tbsp: 15 }, typical_g: 20, emoji: "🍫" },
+  chocolate_chips: { kcal: 540, p: 5, c: 60, f: 30, unit_g: { g: 1, tbsp: 15 }, typical_g: 20, emoji: "🍫" },
+  whey_protein: { kcal: 370, p: 74, c: 7, f: 4, unit_g: { g: 1, scoop: 30 }, typical_g: 30, emoji: "💪" },
+  almond_milk: { kcal: 16, p: 0.6, c: 1, f: 1, unit_g: { ml: 1, cup: 240 }, typical_g: 100, emoji: "🥛" },
+  vanilla_extract: { kcal: 288, p: 0, c: 13, f: 0.1, unit_g: { tsp: 4, g: 1 }, typical_g: 4, emoji: "🫙" },
+  baking_powder: { kcal: 53, p: 0, c: 28, f: 0, unit_g: { tsp: 4, g: 1 }, typical_g: 4, emoji: "🫙" },
+  couscous: { kcal: 376, p: 13, c: 77, f: 0.6, unit_g: { g: 1, cup: 180 }, typical_g: 80, emoji: "🌾" },
+  bulgur: { kcal: 342, p: 12, c: 76, f: 1.3, unit_g: { g: 1, cup: 180 }, typical_g: 80, emoji: "🌾" },
+  rice_vermicelli: { kcal: 364, p: 6, c: 80, f: 0.6, unit_g: { g: 1 }, typical_g: 80, emoji: "🍜" },
+  frozen_peas: { kcal: 77, p: 5, c: 14, f: 0.4, unit_g: { g: 1, cup: 150 }, typical_g: 80, emoji: "🫛" },
+  green_olives: { kcal: 145, p: 1, c: 4, f: 15, unit_g: { g: 1, piece: 5 }, typical_g: 30, emoji: "🫒" },
+  black_olives: { kcal: 115, p: 0.8, c: 6, f: 10, unit_g: { g: 1, piece: 5 }, typical_g: 30, emoji: "🫒" },
+  mustard: { kcal: 66, p: 4, c: 6, f: 4, unit_g: { tsp: 5, tbsp: 15 }, typical_g: 10, emoji: "🫙" },
+  pickle_juice: { kcal: 3, p: 0, c: 0.4, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 15, emoji: "🫙" },
+  berbere: { kcal: 251, p: 11, c: 43, f: 6, unit_g: { tsp: 3, tbsp: 9 }, typical_g: 5, emoji: "🌶️" },
+  bay_leaves: { kcal: 313, p: 8, c: 75, f: 8, unit_g: { piece: 0.5 }, typical_g: 1, emoji: "🌿" },
+  cloves: { kcal: 274, p: 6, c: 66, f: 13, unit_g: { tsp: 2, piece: 0.2 }, typical_g: 1, emoji: "🌿" },
+  // === NEW ENTRIES (USDA FoodData Central) ===
+  anchovy_paste: { kcal: 128, p: 22, c: 0, f: 4, unit_g: { tsp: 5, tbsp: 15 }, typical_g: 10, emoji: "🐟" },
+  doubanjiang: { kcal: 100, p: 7, c: 8, f: 4, unit_g: { tbsp: 18, tsp: 6 }, typical_g: 20, emoji: "🫙" },
+  gherkins: { kcal: 11, p: 0.4, c: 2.4, f: 0.1, unit_g: { piece: 30, tbsp: 15 }, typical_g: 30, emoji: "🥒" },
+  naan: { kcal: 317, p: 9, c: 56, f: 7, unit_g: { piece: 90, g: 1 }, typical_g: 90, emoji: "🫓" },
+  flour: { kcal: 364, p: 10, c: 76, f: 1, unit_g: { tbsp: 8, tsp: 3, g: 1 }, typical_g: 30, emoji: "🌾" },
+  pasta: { kcal: 371, p: 13, c: 74, f: 1.5, unit_g: { g: 1 }, typical_g: 80, emoji: "🍝" },
+  radish: { kcal: 16, p: 0.7, c: 3.4, f: 0.1, unit_g: { piece: 10, slice: 3 }, typical_g: 30, emoji: "🌿" },
+  shallot: { kcal: 72, p: 2.5, c: 17, f: 0.1, unit_g: { piece: 30, tbsp: 15 }, typical_g: 30, emoji: "🧅" },
+  tomatillo: { kcal: 32, p: 1, c: 5.8, f: 1, unit_g: { piece: 35 }, typical_g: 50, emoji: "🍅" },
+  tortilla_wheat: { kcal: 312, p: 8, c: 51, f: 8, unit_g: { piece: 45, g: 1 }, typical_g: 45, emoji: "🌯" },
+  brown_sugar: { kcal: 377, p: 0, c: 97, f: 0, unit_g: { tsp: 4, tbsp: 12 }, typical_g: 10, emoji: "🍯" },
+  white_pepper: { kcal: 296, p: 10, c: 69, f: 2.1, unit_g: { tsp: 2, g: 1 }, typical_g: 1, emoji: "🌿" },
+  fried_shallots: { kcal: 490, p: 8, c: 57, f: 25, unit_g: { tbsp: 12 }, typical_g: 10, emoji: "🧅" },
+  galangal: { kcal: 70, p: 1.7, c: 15, f: 0.8, unit_g: { tsp: 3, tbsp: 9 }, typical_g: 5, emoji: "🌿" },
+  pine_nuts: { kcal: 673, p: 14, c: 13, f: 68, unit_g: { tbsp: 9, g: 1 }, typical_g: 15, emoji: "🌰" },
+  pomegranate_mol: { kcal: 267, p: 1, c: 68, f: 0.3, unit_g: { tbsp: 20, tsp: 7 }, typical_g: 15, emoji: "🫙" },
+  soy_milk: { kcal: 33, p: 3, c: 2, f: 2, unit_g: { ml: 1, cup: 240 }, typical_g: 100, emoji: "🥛" },
+
+};
+function parseIngredientGrams(e, a) {
+  if (!e) return null;
+  const t = INGREDIENT_DB[a];
+  if (!t) return null;
+  const i = e.toString().toLowerCase().trim();
+  let n = 0;
+  const s = { "½": 0.5, "¼": 0.25, "¾": 0.75, "⅓": 0.33, "⅔": 0.67, "⅛": 0.125 };
+  let o = i;
+  for (const [e, a] of Object.entries(s)) o = o.replace(e, a + " ");
+  const r = o.match(/([\d]+(?:\.\d+)?(?:\s*\/\s*[\d]+)?)/);
+  if (r) {
+    const e = r[1].split("/");
+    n = 2 === e.length ? parseFloat(e[0]) / parseFloat(e[1]) : parseFloat(e[0]);
+  }
+  0 === n && (n = 1);
+  const c = t.unit_g || {};
+  return i.includes("tbsp")
+    ? n * (c.tbsp || 15)
+    : i.includes("tsp")
+      ? n * (c.tsp || 5)
+      : i.includes("ml")
+        ? n * (c.ml || 1)
+        : i.includes("clove")
+          ? n * (c.clove || 5)
+          : i.includes("stalk") || i.includes("sprig")
+            ? n * (c.stalk || 15)
+            : i.includes("whole")
+              ? n * (c.whole || 100)
+              : i.includes("slice")
+                ? n * (c.slice || 30)
+                : i.includes("sheet")
+                  ? n * (c.sheet || 2)
+                  : i.includes("handful")
+                    ? n * (c.handful || 30)
+                    : i.includes("pinch")
+                      ? 0.5 * n
+                      : i.includes("splash")
+                        ? 5 * n
+                        : i.includes("drizzle")
+                          ? 7 * n
+                          : i.includes("g")
+                            ? n
+                            : i.includes("cup")
+                              ? 240 * n
+                              : t.typical_g || null;
+}
+function calcIngredientMacros(e, a) {
+  const t = INGREDIENT_DB[e];
+  if (!t) return null;
+  const i = parseIngredientGrams(a, e);
+  if (!i) return null;
+  const n = i / 100,
+    s = 7 * (t.a || 0) * n;
+  return {
+    grams: Math.round(i),
+    kcal: Math.round(t.kcal * n + s),
+    p: Math.round(t.p * n * 10) / 10,
+    c: Math.round(t.c * n * 10) / 10,
+    f: Math.round(t.f * n * 10) / 10,
+    a: t.a ? Math.round((t.a || 0) * n * 10) / 10 : 0,
+  };
+}
+function loadHiddenIds() {
+  try {
+    const e = localStorage.getItem("hiddenRecipeIds");
+    if (null !== e) return new Set(JSON.parse(e));
+  } catch (e) {}
+  return null;
+}
+function saveHiddenIds() {
+  try {
+    localStorage.setItem("hiddenRecipeIds", JSON.stringify([...HIDDEN_RECIPE_IDS]));
+  } catch (e) {}
+}
+const DEFAULT_HIDDEN_IDS = new Set([]),
+  _savedHidden = loadHiddenIds();
+let HIDDEN_RECIPE_IDS = null !== _savedHidden ? _savedHidden : new Set(DEFAULT_HIDDEN_IDS);
+
+let spicyFilter = false,
+  dipFilter = false,
+  currentCuisineFilter = "all",
+  weights = { chicken: 150, potato: 150, rice: 150, noodle: 150, bread: 150, eggs: 0, servings: 1 };
+const CARB_RATIOS = { potato: 1.25, rice: 0.33, noodle: 0.33, bread: 0.2 };
+const TAG_FLAGS = {
+  "korean": "🇰🇷", "japanese": "🇯🇵", "thai": "🇹🇭", "mexican": "🇲🇽",
+  "chinese": "🇨🇳", "indian": "🇮🇳", "vietnamese": "🇻🇳", "american": "🇺🇸",
+  "turkish": "🇹🇷", "greek": "🇬🇷", "moroccan": "🇲🇦", "indonesian": "🇮🇩",
+  "filipino": "🇵🇭", "taiwanese": "🇹🇼", "peruvian": "🇵🇪", "ethiopian": "🇪🇹",
+  "argentinian": "🇦🇷", "mediterranean": "🌊", "middle-eastern": "🌙",
+  "north-african": "🌍", "asian": "🌏", "hawaiian": "🌺", "german": "🇩🇪", "italian": "🇮🇹", "french": "🇫🇷", "spanish": "🇪🇸", "british": "🇬🇧",
+  // Auto-injected ingredient tags
+  "beef": "🥩", "eggs": "🥚", "fish": "🐟", "shrimp": "🦐",
+  "tofu": "🫘", "cheese": "🧀", "turkey": "🦃", "pork": "🐷",
+};
+function tagLabel(e) {
+  const flag = TAG_FLAGS[e];
+  const text = e.replace(/-/g, " ");
+  const label = text.charAt(0).toUpperCase() + text.slice(1);
+  return flag ? flag + "\u00a0" + label : label;
+}
+function clockEmoji(e) {
+  return e <= 15
+    ? "🕐"
+    : e <= 25
+      ? "🕑"
+      : e <= 35
+        ? "🕒"
+        : e <= 45
+          ? "🕓"
+          : e <= 55 || e <= 70 || e <= 90
+            ? "🕔"
+            : "🕕";
+}
+function autoCalcCarbs() {
+  const e = weights.chicken;
+  ((weights.potato = Math.round(e * CARB_RATIOS.potato)),
+    (weights.rice = Math.round(e * CARB_RATIOS.rice)),
+    (weights.noodle = Math.round(e * CARB_RATIOS.noodle)),
+    (weights.bread = Math.round(e * CARB_RATIOS.bread)));
+}
+let eggSizeG = 58,
+  eggCount = 2,
+  sideEggSizeG = 58,
+  sideEggCount = 1,
+  activeProtein = "chicken_thigh",
+  carbEnabled = { potato: !0, rice: !0, noodle: !0, bread: !0, sweet_potato: !0 };
+function baseMacros(e) {
+  if (!e || e === "none") return { kcal: 0, p: 0, c: 0, f: 0 };
+  const a = Math.max(weights.servings, 1),
+    t = NUT[activeProtein] || NUT.chicken_thigh,
+    i = NUT[e] || { kcal: 0, p: 0, c: 0, f: 0 },
+    n = weights.chicken / 100,
+    s = weights[e] ? weights[e] / 100 : 0,
+    o = "eggs" === activeProtein ? 0 : weights.eggs * (eggSizeG / 100),
+    r = NUT.eggs;
+  return {
+    kcal: (n * t.kcal + s * i.kcal + o * r.kcal) / a,
+    p: (n * t.p + s * i.p + o * r.p) / a,
+    c: (n * t.c + s * i.c + o * r.c) / a,
+    f: (n * t.f + s * i.f + o * r.f) / a,
+  };
+}
+const PROTEIN_DEFS = [
+  {
+    key: "chicken",
+    icon: "🍗",
+    name: "Chicken",
+    variants: [
+      { key: "chicken_thigh", label: "Thigh", sub: "150 kcal · 17g P · 9g F per 100g" },
+      { key: "chicken_breast", label: "Breast", sub: "110 kcal · 23g P · 1.5g F per 100g" },
+    ],
+  },
+  {
+    key: "beef",
+    icon: "🥩",
+    name: "Beef",
+    variants: [
+      { key: "beef_regular", label: "Regular (20% fat)", sub: "215 kcal · 17g P · 16g F per 100g" },
+      { key: "beef_lean", label: "Lean (5% fat)", sub: "145 kcal · 20g P · 7g F per 100g" },
+    ],
+  },
+  { key: "eggs", icon: "🥚", name: "Eggs", variants: null },
+  { key: "salmon", icon: "🐟", name: "Salmon", variants: null },
+  { key: "tofu", icon: "🫘", name: "Tofu", variants: null },
+];
+function selectProtein(e) {
+  const a = PROTEIN_DEFS.find((a) => a.key === e);
+  if (!a) return;
+  ((activeProtein = a.variants ? a.variants[0].key : e),
+    document.querySelectorAll(".protein-btn").forEach((a) => {
+      a.classList.toggle("active", a.dataset.protein === e);
+    }));
+  const t = document.getElementById("eggControls"),
+    i = document.getElementById("proteinWeightSection");
+  (t && (t.style.display = "eggs" === e ? "block" : "none"),
+    i && (i.style.display = "eggs" === e ? "none" : "block"));
+  const n = document.getElementById("proteinInputLabel");
+  n &&
+    (n.textContent =
+      ({ chicken: "🍗", beef: "🥩", eggs: "🥚", salmon: "🐟", tofu: "🫘" }[e] || "🍗") + " Protein — raw weight");
+  const s = document.getElementById("variantRow");
+  if (s)
+    if (a.variants)
+      ((s.innerHTML =
+        a.variants
+          .map(
+            (a) =>
+              `<button class="variant-btn ${activeProtein === a.key ? "active" : ""}" onclick="selectVariant('${a.key}','${e}')" title="${a.sub}">${a.label}</button>`,
+          )
+          .join("") +
+        `<span class="protein-macro-hint" id="proteinHint">${a.variants.find((e) => e.key === activeProtein)?.sub || ""}</span>`),
+        (s.style.display = "flex"));
+    else {
+      const a = NUT["eggs" === e ? "eggs" : e];
+      ((s.innerHTML = `<span class="protein-macro-hint">${a ? a.kcal + " kcal · " + a.p + "g Protein · " + a.f + "g Fat per 100g" : ""}</span>`),
+        (s.style.display = "flex"));
+    }
+  (updateCardMacros(), filterRecipes(), updateCalcDisplay());
+}
+function selectVariant(e, a) {
+  ((activeProtein = e),
+    document.querySelectorAll(".variant-btn").forEach((a) => {
+      a.classList.toggle(
+        "active",
+        a.textContent.trim() === document.querySelector(`.variant-btn[onclick*="${e}"]`)?.textContent.trim(),
+      );
+    }));
+  const t = PROTEIN_DEFS.find((e) => e.key === a),
+    i = document.getElementById("variantRow");
+  (i &&
+    t?.variants &&
+    (i.innerHTML =
+      t.variants
+        .map(
+          (e) =>
+            `<button class="variant-btn ${activeProtein === e.key ? "active" : ""}" onclick="selectVariant('${e.key}','${a}')" title="${e.sub}">${e.label}</button>`,
+        )
+        .join("") +
+      `<span class="protein-macro-hint">${t.variants.find((e) => e.key === activeProtein)?.sub || ""}</span>`),
+    updateCardMacros(),
+    filterRecipes(),
+    updateCalcDisplay());
+}
+let proteinEnabled = { chicken: !0, beef: !0, eggs: !0, fish: !0, tofu: !0 },
+  videoFilterOnly = !1,
+  flavorFilter = "all";
+const FISH_PROTEIN_IDS = new Set(["salmon", "shrimp", "cod", "tuna_canned"]);
+function getRecipeProtein(e) {
+  const a = e.protein || "chicken";
+  return FISH_PROTEIN_IDS.has(a) ? "fish" : a;
+}
+function getActiveProteinDisplay() {
+  const e = {
+    chicken_thigh: { ing: "Chicken thigh (boneless, skinless, raw)", short: "Chicken thigh" },
+    chicken_breast: { ing: "Chicken breast (boneless, skinless, raw)", short: "Chicken breast" },
+    beef_regular: { ing: "Ground beef (20% fat, raw)", short: "Ground beef (20% fat)" },
+    beef_lean: { ing: "Lean ground beef (5% fat, raw)", short: "Lean ground beef" },
+    eggs: { ing: "Eggs (whole)", short: "Eggs" },
+    salmon: { ing: "Salmon fillet (skin on, raw)", short: "Salmon" },
+    tofu: { ing: "Firm tofu", short: "Tofu" },
+  };
+  return e[activeProtein] || e.chicken_thigh;
+}
+function toggleFilterSection(el) {
+  el.closest(".filter-section").classList.toggle("open");
+}
+function toggleFilterPanel() {
+  const panel = document.getElementById("filterPanel");
+  const btn = document.getElementById("btnFilterToggle");
+  const arrow = document.getElementById("filterPillArrow");
+  if (!panel) return;
+  const isOpen = panel.style.display !== "none";
+  panel.style.display = isOpen ? "none" : "block";
+  if (btn) btn.classList.toggle("open", !isOpen);
+  if (arrow) arrow.style.transform = isOpen ? "" : "rotate(180deg)";
+}
+function buildDisplayNumbers() {}
+function updatePillStates() {
+  let count = 0;
+  if (currentCuisineFilter !== "all") count++;
+  if (Object.values(carbEnabled).some((e) => !e)) count++;
+  if (Object.values(proteinEnabled).some((e) => !e)) count++;
+  if (
+    macroFilter.kcalMax < 9999 ||
+    macroFilter.protMin > 0 ||
+    macroFilter.carbMax < 999 ||
+    macroFilter.fatMax < 999 ||
+    macroFilter.timeMax < 999
+  ) count++;
+  if (videoFilterOnly) count++;
+  if (flavorFilter !== "all" || spicyFilter || dipFilter) count++;
+  const badge = document.getElementById("filterCountBadge");
+  const btn = document.getElementById("btnFilterToggle");
+  if (badge) {
+    badge.textContent = count;
+    badge.style.display = count > 0 ? "inline-block" : "none";
+  }
+  if (btn) btn.classList.toggle("has-active", count > 0);
+}
+function adminToggleRecipe(e) {
+  (HIDDEN_RECIPE_IDS.has(e) ? HIDDEN_RECIPE_IDS.delete(e) : HIDDEN_RECIPE_IDS.add(e),
+    saveHiddenIds(),
+    buildDisplayNumbers(),
+    filterRecipes());
+  const a = document.querySelector(`.card[data-id="${e}"]`);
+  if (a) {
+    const t = a.querySelector(".admin-toggle-btn");
+    if (t) {
+      const a = HIDDEN_RECIPE_IDS.has(e);
+      ((t.textContent = a ? "👁 Show" : "🚫 Hide"),
+        (t.style.background = a ? "#2a5a2a" : "#5a2a2a"),
+        (t.style.color = a ? "#47e8a3" : "#e84747"));
+    }
+  }
+}
+function setModalEggSize(e, a) {
+  eggSizeG = e;
+  const t = { 48: "S", 58: "M", 68: "L" }[e];
+  (document.querySelectorAll(".egg-size-btn").forEach((e) => {
+    e.classList.toggle("active", e.id === "egg" + t);
+  }),
+    (weights.eggs = eggCount));
+  const i = R.find((e) => e.id === a);
+  (i && (buildIngredientsTab(i), updateModalMacros(i)), updateCardMacros(), updateCalcDisplay());
+}
+function changeModalEggCount(e, a) {
+  eggCount = Math.max(1, Math.min(20, eggCount + e));
+  const t = document.getElementById("modalEggCountVal");
+  t && (t.textContent = eggCount);
+  const i = document.getElementById("eggCountVal");
+  (i && (i.textContent = eggCount), (weights.eggs = eggCount));
+  const n = R.find((e) => e.id === a);
+  (n && (buildIngredientsTab(n), updateModalMacros(n)), updateCardMacros(), updateCalcDisplay());
+}
+// Side-egg controls for sideEgg: true recipes
+function setSideEggSize(g, id) {
+  sideEggSizeG = g;
+  // Update active state on size buttons by matching their label to sideEggSizeG
+  const sizeMap = {"S": 48, "M": 58, "L": 68};
+  document.querySelectorAll("#sideEggRow .modal-variant-btn").forEach(function(btn) {
+    btn.classList.toggle("active", sizeMap[btn.textContent.trim()] === sideEggSizeG);
+  });
+  // Recalculate macros inline (same as changeSideEggCount)
+  const nut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
+  const gPP = Math.round((sideEggCount * sideEggSizeG) / Math.max(modalServings, 1));
+  const grid = document.querySelector("#sideEggRow .ing-macro-grid");
+  if (grid) {
+    grid.innerHTML =
+      "<div class=\"ing-macro-cell mk\"><span class=\"imc-val\">" + Math.round((nut.kcal * gPP) / 100) + "</span><span class=\"imc-lbl\">kcal</span></div>" +
+      "<div class=\"ing-macro-cell mp\"><span class=\"imc-val\">" + (Math.round(nut.p * gPP) / 100).toFixed(1) + "g</span><span class=\"imc-lbl\">protein</span></div>" +
+      "<div class=\"ing-macro-cell mc\"><span class=\"imc-val\">" + (Math.round(nut.c * gPP) / 100).toFixed(1) + "g</span><span class=\"imc-lbl\">carbs</span></div>" +
+      "<div class=\"ing-macro-cell mf\"><span class=\"imc-val\">" + (Math.round(nut.f * gPP) / 100).toFixed(1) + "g</span><span class=\"imc-lbl\">fat</span></div>";
+  }
+  const hint = document.querySelector("#sideEggRow .ing-macro-hint");
+  if (hint) hint.textContent = "Per portion \u00b7 " + gPP + "g \u00b7 per 100g: " + nut.kcal + "kcal " + nut.p + "g P " + nut.c + "g C " + nut.f + "g F";
+  const portionHint = document.querySelector("#sideEggRow .modal-weight-hint");
+  if (portionHint) portionHint.textContent = gPP + "g per portion";
+  const r = R.find((r) => r.id === id);
+  r && updateModalMacros(r);
+}
+function changeSideEggCount(delta, id) {
+  sideEggCount = Math.max(0, Math.min(10, sideEggCount + delta));
+  // Update the count display directly — no full tab rebuild to avoid overwriting the value
+  const el = document.getElementById("sideEggCountVal");
+  if (el) el.textContent = sideEggCount;
+  // Update the size buttons active state — don't touch them, sideEggSizeG hasn't changed
+  // Recalculate and update the macro panel inside sideEggRow
+  const nut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
+  const gPP = Math.round((sideEggCount * sideEggSizeG) / Math.max(modalServings, 1));
+  const grid = document.querySelector("#sideEggRow .ing-macro-grid");
+  if (grid) {
+    grid.innerHTML =
+      "<div class=\"ing-macro-cell mk\"><span class=\"imc-val\">" + Math.round((nut.kcal * gPP) / 100) + "</span><span class=\"imc-lbl\">kcal</span></div>" +
+      "<div class=\"ing-macro-cell mp\"><span class=\"imc-val\">" + (Math.round(nut.p * gPP) / 100).toFixed(1) + "g</span><span class=\"imc-lbl\">protein</span></div>" +
+      "<div class=\"ing-macro-cell mc\"><span class=\"imc-val\">" + (Math.round(nut.c * gPP) / 100).toFixed(1) + "g</span><span class=\"imc-lbl\">carbs</span></div>" +
+      "<div class=\"ing-macro-cell mf\"><span class=\"imc-val\">" + (Math.round(nut.f * gPP) / 100).toFixed(1) + "g</span><span class=\"imc-lbl\">fat</span></div>";
+  }
+  const hint = document.querySelector("#sideEggRow .ing-macro-hint");
+  if (hint) hint.textContent = "Per portion \u00b7 " + gPP + "g \u00b7 per 100g: " + nut.kcal + "kcal " + nut.p + "g P " + nut.c + "g C " + nut.f + "g F";
+  const portionHint = document.querySelector("#sideEggRow .modal-weight-hint");
+  if (portionHint) portionHint.textContent = gPP + "g per portion";
+  // Only update the modal macro totals
+  const r = R.find((r) => r.id === id);
+  r && updateModalMacros(r);
+}
+function selectModalVariant(e, a) {
+  activeProtein = e;
+  const t =
+      { chicken_thigh: "chicken", chicken_breast: "chicken", beef_regular: "beef", beef_lean: "beef" }[e] || e,
+    i = PROTEIN_DEFS.find((e) => e.key === t);
+  document.querySelectorAll(".protein-btn").forEach((e) => {
+    e.classList.toggle("active", e.dataset.protein === t);
+  });
+  const n = document.getElementById("variantRow");
+  n &&
+    i &&
+    i.variants &&
+    ((n.innerHTML =
+      i.variants
+        .map(
+          (e) =>
+            `<button class="variant-btn ${activeProtein === e.key ? "active" : ""}" onclick="selectVariant('${e.key}','${t}')" title="${e.sub}">${e.label}</button>`,
+        )
+        .join("") +
+      `<span class="protein-macro-hint" id="proteinHint">${i.variants.find((e) => e.key === activeProtein)?.sub || ""}</span>`),
+    (n.style.display = "flex"));
+  const s = document.getElementById("proteinInputLabel");
+  s &&
+    (s.textContent =
+      ({ chicken: "🍗", beef: "🥩", eggs: "🥚", salmon: "🐟", tofu: "🫘" }[t] || "🍗") + " Protein — raw weight");
+  const o = R.find((e) => e.id === a);
+  (o && (buildIngredientsTab(o), refreshRecipeTabIfOpen(o), updateModalMacros(o)),
+    updateCardMacros(),
+    filterRecipes(),
+    updateCalcDisplay());
+}
+let _weightDebounceTimer = null;
+function updateModalWeight(e, a, t) {
+  clearTimeout(_weightDebounceTimer);
+  const inputId = e === "prot" ? "mwProt" : "mwCarb";
+  // Strip leading zeros immediately on mobile
+  const el = document.getElementById(inputId);
+  if (el && el.value && el.value.length > 1 && el.value[0] === "0") {
+    el.value = String(parseInt(el.value) || 0);
+    a = el.value;
+  }
+  _weightDebounceTimer = setTimeout(() => {
+    const i = Math.max(0, Math.min(3e3, parseInt(a) || 0)),
+      n = R.find((r) => r.id === t);
+    if (n) {
+      if ("prot" === e) {
+        weights.chicken = i;
+        autoCalcCarbs();
+        const el = document.getElementById("chickenInput");
+        el && (el.value = i);
+      } else weights[n.carb] = i;
+      buildIngredientsTab(n);
+      refreshRecipeTabIfOpen(n);
+      updateModalMacros(n);
+      updateCardMacros();
+      filterRecipes();
+      updateCalcDisplay();
+      const refEl = document.getElementById(inputId);
+      if (refEl) { refEl.focus(); try { const l = refEl.value.length; refEl.setSelectionRange(l, l); } catch(ex) {} }
+    }
+  }, 600);
+}
+function updateGlobalWeight(e) {
+  const a = Math.max(50, Math.min(3e3, parseInt(e) || 500));
+  ((weights.chicken = a),
+    autoCalcCarbs(),
+    Object.keys(_sauceMacroCache).forEach((e) => delete _sauceMacroCache[e]));
+  const t = document.getElementById("chickenInput");
+  (t && (t.value = a),
+    document.querySelectorAll(".card-weight-input").forEach((e) => {
+      parseInt(e.value) !== a && (e.value = a);
+    }),
+    updateCardMacros(),
+    currentModalRecipe && refreshRecipeTabIfOpen(R.find((e) => e.id === currentModalRecipe.id)),
+    filterRecipes(),
+    updateCalcDisplay());
+}
+function toggleProteinFilter(e) {
+  setTimeout(() => {
+    const a = document.getElementById("chkP" + e.charAt(0).toUpperCase() + e.slice(1));
+    a &&
+      ((proteinEnabled[e] = a.checked),
+      a.checked && syncDietaryFromProtein(),
+      updatePillStates(),
+      filterRecipes());
+  }, 0);
+}
+function toggleVideoFilter() {
+  setTimeout(() => {
+    const e = document.getElementById("chkVideoOnly");
+    e && ((videoFilterOnly = e.checked), filterRecipes());
+  }, 0);
+}
+// sync a filter button's active class without triggering its handler
+function _syncFilterBtn(btnId, val) {
+  const btn = document.getElementById(btnId);
+  if (btn) btn.classList.toggle("active", val);
+}
+function toggleCarbBtn(type, btn) {
+  btn.classList.toggle("active");
+  const enabled = btn.classList.contains("active");
+  const chk = document.getElementById("chk" + type.charAt(0).toUpperCase() + type.slice(1));
+  if (chk) chk.checked = enabled;
+  carbEnabled[type] = enabled;
+  const input = document.getElementById(type + "Input");
+  if (input) {
+    if (enabled) {
+      const w = Math.round(weights.chicken * (CARB_RATIOS[type] || 0.5));
+      input.value = w; weights[type] = w;
+    } else {
+      input.dataset.prev = input.value; input.value = 0; weights[type] = 0;
+    }
+  }
+  filterRecipes(); updateCalcDisplay();
+}
+function toggleProteinBtn(type, btn) {
+  btn.classList.toggle("active");
+  const enabled = btn.classList.contains("active");
+  const chk = document.getElementById("chkP" + type.charAt(0).toUpperCase() + type.slice(1));
+  if (chk) chk.checked = enabled;
+  proteinEnabled[type] = enabled;
+  if (enabled) syncDietaryFromProtein();
+  updatePillStates(); filterRecipes();
+}
+function setMacroPreset(inputId, value, btn) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+  const current = parseFloat(input.value);
+  const grp = btn.closest('[data-preset-group]');
+  if (grp) grp.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  if (current === value) {
+    input.value = '';
+  } else {
+    input.value = value;
+    btn.classList.add('active');
+  }
+  applyMacroFilterLive();
+}
+function toggleAutoProteinBtn(btn) {
+  btn.classList.toggle("active");
+  const on = btn.classList.contains("active");
+  const chk = document.getElementById("chkAutoProtein");
+  if (chk) chk.checked = on;
+  if (on) applyAutoProteinWeight();
+  updateCardMacros(); filterRecipes(); updateCalcDisplay();
+}
+function toggleAutoCarbBtn(btn) {
+  btn.classList.toggle("active");
+  const on = btn.classList.contains("active");
+  const chk = document.getElementById("chkAutoCarb");
+  if (chk) chk.checked = on;
+  if (on) applyAutoCarbWeight();
+  updateCardMacros(); filterRecipes(); updateCalcDisplay();
+}
+function toggleVideoBtn(btn) {
+  btn.classList.toggle("active");
+  const on = btn.classList.contains("active");
+  const chk = document.getElementById("chkVideoOnly");
+  if (chk) chk.checked = on;
+  videoFilterOnly = on;
+  filterRecipes();
+}
+const DIETARY_FILTERS = [
+  {
+    id: "no_alcohol",
+    icon: "🍶",
+    label: "No Alcohol",
+    sub: "No sake/wine/mirin",
+    blocks: ["sake", "white_wine", "mirin"],
+  },
+  {
+    id: "halal",
+    icon: "☪️",
+    label: "Halal",
+    sub: "No alcohol, no pork",
+    blocks: ["sake", "white_wine", "mirin"],
+  },
+  {
+    id: "gluten_free",
+    icon: "🌾",
+    label: "Gluten-Free",
+    sub: "No wheat/barley/rye",
+    blocks: ["panko", "flour", "worcestershire", "hoisin"],
+  },
+  {
+    id: "dairy_free",
+    icon: "🥛",
+    label: "Dairy-Free",
+    sub: "No milk/cheese/butter",
+    blocks: [
+      "butter",
+      "milk",
+      "heavy_cream",
+      "cream_cheese",
+      "sour_cream",
+      "creme_fraiche",
+      "labneh",
+      "cheese_parm",
+      "cheese_mozz",
+      "cheese_feta",
+      "cheese_cheddar",
+      "cheese_gruyere",
+      "cheese_provolone",
+      "yogurt",
+      "quark_low_fat",
+      "skyr",
+      "cottage_cheese",
+      "ricotta",
+    ],
+  },
+  {
+    id: "nut_free",
+    icon: "🥜",
+    label: "Nut-Free",
+    sub: "No peanuts/tree nuts",
+    blocks: ["peanuts", "pine_nuts", "peanut_butter", "almonds", "tahini"],
+  },
+  {
+    id: "no_soy",
+    icon: "🫘",
+    label: "No Soy",
+    sub: "No soy sauce/tofu",
+    blocks: ["soy_sauce", "hoisin", "miso", "doenjang", "teriyaki", "oyster_sauce", "tofu"],
+  },
+  {
+    id: "no_fish",
+    icon: "🐟",
+    label: "No Fish/Seafood",
+    sub: "No fish/seafood",
+    blocks: ["fish_sauce", "dashi", "salmon", "shrimp", "cod", "tuna_canned"],
+  },
+  { id: "no_eggs", icon: "🥚", label: "No Eggs", sub: "Egg-free recipes only", blocks: ["eggs", "eggs_dairy"] },
+  { id: "no_beef", icon: "🐄", label: "No Beef", sub: "Beef-free only", blocks: ["beef_regular", "beef_lean"] },
+  { id: "no_pork", icon: "🐷", label: "No Pork", sub: "Pork-free only", blocks: [] },
+  {
+    id: "low_spice",
+    icon: "🌶️",
+    label: "Low Spice",
+    sub: "Mild recipes only",
+    blocks: [
+      "gochujang",
+      "gochugaru",
+      "harissa",
+      "sriracha",
+      "hot_sauce",
+      "chili_flakes",
+      "dried_chili",
+      "chili_fresh",
+      "chipotle_adobo",
+      "cayenne",
+    ],
+  },
+  {
+    id: "no_garlic",
+    icon: "🧄",
+    label: "No Garlic/Onion",
+    sub: "FODMAP-friendly",
+    blocks: ["garlic", "onion", "garlic_powder", "onion_powder"],
+  },
+  {
+    id: "vegetarian",
+    icon: "🌱",
+    label: "Vegetarian",
+    sub: "No meat",
+    blocks: [
+      "chicken_thigh",
+      "chicken_breast",
+      "beef_regular",
+      "beef_lean",
+      "salmon",
+      "shrimp",
+      "cod",
+      "tuna_canned",
+      "turkey_mince",
+      "fish_sauce",
+      "dashi",
+    ],
+  },
+  {
+    id: "vegan",
+    icon: "🌿",
+    label: "Vegan",
+    sub: "No animal products",
+    blocks: [
+      "chicken_thigh",
+      "chicken_breast",
+      "beef_regular",
+      "beef_lean",
+      "salmon",
+      "shrimp",
+      "cod",
+      "tuna_canned",
+      "turkey_mince",
+      "fish_sauce",
+      "dashi",
+      "oyster_sauce",
+      "eggs",
+      "eggs_dairy",
+      "butter",
+      "milk",
+      "heavy_cream",
+      "cream_cheese",
+      "sour_cream",
+      "creme_fraiche",
+      "labneh",
+      "cheese_parm",
+      "cheese_mozz",
+      "cheese_feta",
+      "cheese_cheddar",
+      "cheese_gruyere",
+      "cheese_provolone",
+      "yogurt",
+      "quark_low_fat",
+      "skyr",
+      "cottage_cheese",
+      "ricotta",
+      "honey",
+    ],
+  },
+];
+let activeDietary = new Set(JSON.parse(localStorage.getItem("dietaryFilters") || "[]"));
+function saveDietary() {
+  try {
+    localStorage.setItem("dietaryFilters", JSON.stringify([...activeDietary]));
+  } catch (e) {}
+}
+function buildDietaryGrid() {
+  const e = document.getElementById("dietaryGrid");
+  e &&
+    ((e.innerHTML = DIETARY_FILTERS.map(
+      (e) =>
+        `<button class="dietary-btn ${activeDietary.has(e.id) ? "active" : ""}" onclick="toggleDietary('${e.id}')"><span class="diet-icon">${e.icon}</span><span class="diet-label">${e.label}</span></button>`,
+    ).join("")),
+    updateDietaryBar());
+}
+function updateDietaryBar() {
+  const e = document.getElementById("dietaryActiveBar");
+  if (!e) return;
+  if (0 === activeDietary.size) return void (e.textContent = "");
+  const a = [...activeDietary].map((e) => DIETARY_FILTERS.find((a) => a.id === e)?.label).filter(Boolean);
+  e.textContent = a.join(" · ");
+}
+function toggleDietary(e) {
+  const a = DIETARY_FILTERS.find((a) => a.id === e);
+  a &&
+    (activeDietary.has(e)
+      ? (activeDietary.delete(e),
+        a.blocks.forEach((e) => {
+          [...activeDietary].some((a) => {
+            const t = DIETARY_FILTERS.find((e) => e.id === a);
+            return t && t.blocks.includes(e);
+          }) || disabledIngredients.delete(e);
+        }),
+        savePantry())
+      : (activeDietary.add(e),
+        a.blocks.forEach((e) => {
+          disabledIngredients.add(e);
+        }),
+        savePantry()),
+    saveDietary(),
+    applyDietaryToProteinFilters(),
+    buildDietaryGrid(),
+    updatePantryCounts(),
+    document.getElementById("pantry-sauces")?.children.length > 0 && renderPantry(),
+    updatePillStates(),
+    filterRecipes());
+}
+function isPantryModified() {
+  return disabledIngredients.size > 0 || activeDietary.size > 0;
+}
+function resetAllFilters() {
+  isPantryModified() ? document.getElementById("resetConfirmOverlay").classList.add("open") : doResetAll();
+}
+function doResetAll() {
+  (document.getElementById("resetConfirmOverlay").classList.remove("open"),
+    (currentCuisineFilter = "all"),
+    document.querySelectorAll(".filter-btn").forEach((e) => e.classList.remove("active")),
+    document.querySelector(".filter-btn")?.classList.add("active"),
+    ["Potato", "Rice", "Noodle", "Bread"].forEach((e) => {
+      const a = document.getElementById("chk" + e);
+      (a && (a.checked = !0), (carbEnabled[e.toLowerCase()] = !0));
+      _syncFilterBtn("btn" + e, true);
+    }),
+    ["Chicken", "Beef", "Eggs", "Fish", "Tofu"].forEach((e) => {
+      const a = document.getElementById("chkP" + e);
+      (a && (a.checked = !0), (proteinEnabled[e.toLowerCase()] = !0));
+      _syncFilterBtn("btnP" + e, true);
+    }));
+  const e = document.getElementById("chkVideoOnly");
+  (e && (e.checked = !1),
+  _syncFilterBtn("btnVideoOnly", false),
+    (videoFilterOnly = !1),
+    resetMacroFilter(),
+    (weights.servings = 1));
+  const a = document.getElementById("globalServingVal");
+  a && (a.textContent = "1");
+  const t = document.getElementById("servingsInput");
+  t && (t.textContent = "1");
+  const i = document.getElementById("pillServingsLabel");
+  (i && (i.textContent = "1 Serving"),
+    (flavorFilter = "all"),
+    (spicyFilter = false),
+    (dipFilter = false),
+    document.querySelector(".filter-btn.spicy") && document.querySelector(".filter-btn.spicy").classList.remove("active"),
+    document.querySelector(".filter-btn.dip") && document.querySelector(".filter-btn.dip").classList.remove("active"),
+    document
+      .querySelectorAll(".filter-btn.sweet, .filter-btn.savory")
+      .forEach((e) => e.classList.remove("active")));
+  const n = document.getElementById("searchInput");
+  (n && (n.value = ""), disabledIngredients.clear(), activeDietary.clear(), savePantry(), saveDietary());
+  try {
+    localStorage.removeItem("dietaryFilters");
+  } catch (e) {}
+  (document.getElementById("pantry-sauces")?.children.length > 0 && (renderPantry(), buildDietaryGrid()),
+    updatePillStates(),
+    updateCardMacros(),
+    filterRecipes(),
+    updateCalcDisplay());
+}
+function applyDietaryToProteinFilters() {
+  const e = activeDietary.has("no_beef"),
+    a = activeDietary.has("no_eggs"),
+    t = activeDietary.has("no_fish"),
+    i = activeDietary.has("vegetarian"),
+    n = activeDietary.has("vegan");
+  activeDietary.has("halal") && ["sake", "white_wine", "mirin"].forEach((e) => disabledIngredients.add(e));
+  // Gluten-free: disable bread/noodle carb options
+  if (activeDietary.has("gluten_free")) {
+    carbEnabled["bread"] = false;
+    carbEnabled["noodle"] = false;
+    const chkBread = document.getElementById("chkBread");
+    const chkNoodle = document.getElementById("chkNoodle");
+    if (chkBread) chkBread.checked = false;
+    if (chkNoodle) chkNoodle.checked = false;
+    _syncFilterBtn("btnBread", false); _syncFilterBtn("btnNoodle", false);
+  } else {
+    // Only re-enable if not manually disabled
+    if (!localStorage.getItem("carbManualDisabled_bread")) carbEnabled["bread"] = true;
+    if (!localStorage.getItem("carbManualDisabled_noodle")) carbEnabled["noodle"] = true;
+  }
+  const s = i || n,
+    o = e || i || n,
+    r = a || n,
+    c = t || i || n,
+    l = t || i || n,
+    d = t || i || n,
+    m = t || i || n,
+    h = i || n,
+    p = (e, shouldDisable) => {
+      // Only force-disable when dietary requires it
+      // Never re-enable — respect user's manual protein filter state
+      if (shouldDisable) {
+        const t = document.getElementById(e);
+        if (t && t.checked) {
+          t.checked = false;
+          const i = e.replace("chkP", "").toLowerCase();
+          proteinEnabled[i] = false;
+          _syncFilterBtn("btn" + e.replace("chk", ""), false);
+        }
+      }
+    };
+  (p("chkPChicken", s), p("chkPBeef", o), p("chkPEggs", r), p("chkPFish", c));
+  const u = {
+    chicken_thigh: s,
+    chicken_breast: s,
+    beef_regular: o,
+    beef_lean: o,
+    eggs: r,
+    eggs_dairy: r,
+    salmon: c,
+    shrimp: l,
+    cod: d,
+    tuna_canned: m,
+    turkey_mince: h,
+  };
+  Object.entries(u).forEach(([e, a]) => {
+    if (a) disabledIngredients.add(e);
+    else {
+      [...activeDietary].some((a) => {
+        const t = DIETARY_FILTERS.find((e) => e.id === a);
+        return t && t.blocks.includes(e);
+      }) || disabledIngredients.delete(e);
+    }
+  });
+}
+function syncDietaryFromProtein() {
+  const e = [];
+  (proteinEnabled.fish && activeDietary.has("no_fish") && (activeDietary.delete("no_fish"), e.push("no_fish")),
+    (proteinEnabled.beef || proteinEnabled.beef_lean) &&
+      activeDietary.has("no_beef") &&
+      (activeDietary.delete("no_beef"), e.push("no_beef")),
+    proteinEnabled.eggs && activeDietary.has("no_eggs") && (activeDietary.delete("no_eggs"), e.push("no_eggs")),
+    (proteinEnabled.chicken || proteinEnabled.beef) &&
+      activeDietary.has("vegetarian") &&
+      (activeDietary.delete("vegetarian"), e.push("vegetarian")),
+    (proteinEnabled.chicken || proteinEnabled.beef || proteinEnabled.fish || proteinEnabled.eggs) &&
+      activeDietary.has("vegan") &&
+      (activeDietary.delete("vegan"), e.push("vegan")),
+    e.length > 0 &&
+      (saveDietary(),
+      e.forEach((e) => {
+        const a = DIETARY_FILTERS.find((a) => a.id === e);
+        a &&
+          a.blocks.forEach((e) => {
+            [...activeDietary].some((a) => {
+              const t = DIETARY_FILTERS.find((e) => e.id === a);
+              return t && t.blocks.includes(e);
+            }) || disabledIngredients.delete(e);
+          });
+      }),
+      savePantry(),
+      buildDietaryGrid(),
+      updateDietaryBar()));
+}
+function toggleDietaryPanel() {
+  const e = document.getElementById("dietaryPanel");
+  e && e.classList.toggle("open");
+}
+function togglePantrySection(e) {
+  const a = document.getElementById("psec-" + e);
+  a && a.classList.toggle("open");
+}
+function updatePantryCounts() {
+  ["sauces", "spices", "fresh", "dairy", "staples", "proteins", "carbs"].forEach((e) => {
+    const a = PANTRY_ITEMS[e] || [],
+      t = a.filter((e) => disabledIngredients.has(e.id)).length,
+      i = document.getElementById("pcount-" + e);
+    i && (i.textContent = t > 0 ? `${a.length - t}/${a.length}` : `${a.length}/${a.length}`);
+  });
+}
+function toggleCardSauce(e, a) {
+  e.stopPropagation();
+  const t = document.getElementById("sauce-btn-" + a),
+    i = document.getElementById("sauce-panel-" + a);
+  if (!t || !i) return;
+  if (t.classList.contains("open")) return (t.classList.remove("open"), void i.classList.remove("open"));
+  {
+    const e = RECIPE_DETAILS[a];
+    if (e && e.ingredients) {
+      const t = R.find((e) => e.id === a),
+        n = Math.max(weights.servings, 1),
+        s = Math.round(weights.chicken / n),
+        o = t ? Math.round(weights[t.carb] / n) : 0;
+      let r = "<ul>";
+      (e.ingredients.forEach((e) => {
+        ((r += `<li class="card-sauce-section" style="list-style:none;">${e.section}</li>`),
+          e.items.forEach((e) => {
+            const a = (e.amt || "").includes("{{proteinG}}") || (e.amt || "").includes("{{carbG}}"),
+              t = (e.amt || "")
+                .replace("{{proteinG}}", s)
+                .replace("{{carbG}}", o)
+                .replace("{{servings}}", n);
+            let i = a ? t : scaleAmt(t, n),
+              c = e.name;
+            (
+              
+              (r += `<li><span class="si-name">${c}</span><span class="si-amt">${i}</span></li>`));
+          }));
+      }),
+        (r += "</ul>"),
+        (i.innerHTML = r));
+    } else i.innerHTML = '<div style="font-size:11px;color:#555;">Full ingredient list coming soon.</div>';
+  }
+  (t.classList.add("open"), i.classList.add("open"));
+}
+function buildAllCards() {
+  const e = document.getElementById("recipeGrid"),
+    a = { potato: "🥔 Potato", rice: "🍚 Rice", noodle: "🍜 Noodle", bread: "🫓 Bread" },
+    t = document.createDocumentFragment();
+  (R.forEach((e) => {
+    const i = document.createElement("div");
+    ((i.className = "card"), (i.dataset.id = e.id), (i.dataset.id = e.id), (i.onclick = () => openModal(e.id)));
+    const n = e.tags.filter(t => t !== "spicy" && t !== "dip" && t !== e.protein).map((e) => `<span class="tag tag-${e}">${tagLabel(e)}</span>`).join(""),
+      s = e.protein === "none" ? "none" : (e.protein || "chicken"),
+      o =
+        { chicken: "🍗 Chicken", beef: "🥩 Beef", eggs: "🥚 Eggs", fish: "🐟 Fish", tofu: "🫘 Tofu" }[s] ||
+        "🍗 Chicken",
+      r = RECIPE_DETAILS[e.id];
+    let c = "";
+    (r && r.image
+      ? (c = `<div class="card-thumb-wrap"><img class="card-thumb" src="${r.image}" loading="lazy" alt="${e.title}"></div>`)
+      : r &&
+        r.video &&
+        (c = `<div class="card-thumb-wrap"><img class="card-thumb" src="https://img.youtube.com/vi/${r.video}/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/${r.video}/hqdefault.jpg'" loading="lazy" alt="${e.title}"><div class="play-overlay"><span>▶️</span></div></div>`),
+      (i.innerHTML = `${c}\n      <div class="card-top">\n        <div class="card-num">#${String(e.displayNum).padStart(3, "0")}</div>\n        <div class="card-time"><span class="time-icon">${clockEmoji(e.time)}</span>${e.time} min</div>\n      </div>\n      <div class="card-title">${e.title}</div>\n      <div class="card-desc">${e.desc}</div>\n      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin-bottom:10px;">\n        ${e.carb !== "none" ? '<span class="carb-badge ' + e.carb + '" style="margin-bottom:0;vertical-align:middle;">' + a[e.carb] + '</span>' : ""}\n        ${s !== "none" ? `<span class="protein-badge ${s}" style="margin-bottom:0;vertical-align:middle;">${o}</span>` : ""}\n        <span class="flavor-badge ${e.flavor || "savory"}" style="margin-bottom:0;">${"sweet" === e.flavor ? "🍯 Sweet" : "🧂 Savory"}</span>\n        ${ALCOHOL_RECIPE_IDS.has(e.id) ? '<span class="flavor-badge alcohol" style="margin-bottom:0;">🍶 Alcohol</span>' : ""}\n        ${SPICY_RECIPE_IDS.has(e.id) ? '<span class="flavor-badge spicy" style="margin-bottom:0;">🌶️ Spicy</span>' : ""}\n        ${DIP_RECIPE_IDS.has(e.id) ? '<span class="flavor-badge dip" style="margin-bottom:0;">🥣 Dip</span>' : ""}\n      </div>\n      <div class="macro-row">\n        <div class="macro-box kcal-box">    <span class="val" data-macro="kcal">—</span>  <span class="lbl">kcal</span></div>\n        <div class="macro-box protein-box"> <span class="val" data-macro="prot">—</span> <span class="lbl">protein</span></div>\n        <div class="macro-box carbs-box">   <span class="val" data-macro="carbs">—</span><span class="lbl">carbs</span></div>\n        <div class="macro-box fat-box">     <span class="val" data-macro="fat">—</span>  <span class="lbl">fat</span></div>\n      </div>\n      <div style="font-size:9px;color:#555;text-align:right;margin-top:-8px;margin-bottom:6px;" data-macro-context>per portion · <span data-serving-label>1 serving</span></div>\n      <div class="score-row">\n        <span class="score-badge" data-score></span>\n        <div class="score-bar-bg"><div class="score-bar-fill" data-fill></div></div>\n        <span class="score-label" data-scorelabel></span>\n      </div>\n      <div class="card-bottom"><div class="tags">${n}</div></div>\n      <div class="card-click-hint">tap to open recipe →</div>`),
+      t.appendChild(i));
+  }),
+    e.appendChild(t));
+}
+function updateCardMacros() {
+  (R.forEach((e) => {
+    const a = document.querySelector(`.card[data-id="${e.id}"]`);
+    if (!a) return;
+    const t = baseMacros(e.carb),
+      i = getSauceMacros(e);
+    let seKcal = 0, seP = 0, seC = 0, seF = 0;
+    if (e.sideEgg) {
+      const nut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
+      const gPP = Math.round((sideEggCount * sideEggSizeG) / Math.max(weights.servings, 1));
+      seKcal = Math.round((nut.kcal * gPP) / 100);
+      seP    = Math.round(((nut.p  * gPP) / 100) * 10) / 10;
+      seC    = Math.round(((nut.c  * gPP) / 100) * 10) / 10;
+      seF    = Math.round(((nut.f  * gPP) / 100) * 10) / 10;
+    }
+    const n = Math.round(t.kcal + i.kcal + seKcal),
+      s = Math.round(t.p + i.p + seP),
+      o = Math.round(t.c + i.c + seC),
+      r = Math.round(t.f + i.f + seF),
+      c = calcScore(e, s, r);
+    ((a.querySelector('[data-macro="kcal"]').textContent = n),
+      (a.querySelector('[data-macro="prot"]').textContent = s + "g"),
+      (a.querySelector('[data-macro="carbs"]').textContent = o + "g"),
+      (a.querySelector('[data-macro="fat"]').textContent = r + "g"));
+    const l = a.querySelector("[data-score]");
+    ((l.textContent = c + "/10"), (l.className = "score-badge sc-" + c));
+    const d = a.querySelector("[data-fill]");
+    ((d.className = "score-bar-fill fill-" + c),
+      (d.style.width = 10 * c + "%"),
+      (a.querySelector("[data-scorelabel]").textContent = scoreLabel(c)));
+    const m = a.querySelector("[data-serving-label]");
+    m && (m.textContent = weights.servings + (1 === weights.servings ? " serving" : " servings"));
+  }),
+    refreshOpenSaucePanels());
+}
+function refreshOpenSaucePanels() {
+  document.querySelectorAll(".card-sauce-panel.open").forEach((e) => {
+    const a = e.id.replace("sauce-panel-", "");
+    if (!a) return;
+    const t = RECIPE_DETAILS[a];
+    if (!t || !t.ingredients) return;
+    const i = R.find((e) => e.id === a);
+    if (!i) return;
+    const n = Math.max(weights.servings, 1),
+      s = Math.round(weights.chicken / n),
+      o = i ? Math.round(weights[i.carb] / n) : 0;
+    let r = "<ul>";
+    (t.ingredients.forEach((e) => {
+      ((r += `<li class="card-sauce-section" style="list-style:none;">${e.section}</li>`),
+        e.items.forEach((e) => {
+          const a = (e.amt || "").includes("{{proteinG}}") || (e.amt || "").includes("{{carbG}}"),
+            t = (e.amt || "")
+              .replace("{{proteinG}}", s)
+              .replace("{{carbG}}", o)
+              .replace("{{servings}}", n);
+          let i = a ? t : scaleAmt(t, n),
+            c = e.name;
+          (
+            
+            (r += `<li><span class="si-name">${c}</span><span class="si-amt">${i}</span></li>`));
+        }));
+    }),
+      (r += "</ul>"),
+      (e.innerHTML = r));
+  });
+}
+function filterRecipes() {
+  const e = document.getElementById("searchInput").value.toLowerCase();
+  let a = 0;
+  const t = document.getElementById("noResults");
+  (R.forEach((t) => {
+    const i = document.querySelector(`.card[data-id="${t.id}"]`);
+    if (!i) return;
+    if (HIDDEN_RECIPE_IDS.has(t.id))
+      return void (adminMode
+        ? ((i.style.display = ""), (i.style.opacity = "0.35"))
+        : ((i.style.display = "none"), (i.style.opacity = "")));
+    if (((i.style.opacity = ""), (t.carb !== "none" && !carbEnabled[t.carb]))) return void (i.style.display = "none");
+    if ("sweet_potato" === t.carb && !carbEnabled.potato) return void (i.style.display = "none");
+    // Hide none/none recipes when carb or protein filters are active
+    if (t.carb === "none" && t.protein === "none") {
+      const carbFiltered = Object.values(carbEnabled).some(v => !v);
+      const protFiltered = Object.values(proteinEnabled).some(v => !v);
+      if (carbFiltered || protFiltered) return void (i.style.display = "none");
+    }
+    const n = getRecipeProtein(t);
+    if (n !== "none" && !proteinEnabled[n]) return void (i.style.display = "none");
+    if (videoFilterOnly) {
+      const e = RECIPE_DETAILS[t.id];
+      if (!e || !e.video) return void (i.style.display = "none");
+    }
+    const s = "all" === currentCuisineFilter || t.tags.includes(currentCuisineFilter),
+      o = (() => {
+        if (!e) return true;
+        // Number search: "7" or "#007" -> match by displayNum
+        if (/^\d+$/.test(e.trim())) return t.displayNum === parseInt(e.trim());
+        if (e.trim().startsWith("#") && /^#\d+$/.test(e.trim())) return t.displayNum === parseInt(e.trim().slice(1));
+        // Multi-word search: ALL words must match somewhere in title, desc or tags
+        const words = e.trim().split(/\s+/).filter(Boolean);
+        // Build full searchable text: title + desc + tags + flavor + special badges
+        const _badges = [];
+        if (t.flavor) _badges.push(t.flavor);
+        if (SPICY_RECIPE_IDS.has(t.id)) _badges.push("spicy");
+        if (DIP_RECIPE_IDS.has(t.id)) _badges.push("dip");
+        if (ALCOHOL_RECIPE_IDS.has(t.id)) _badges.push("alcohol");
+        if (t.carb) _badges.push(t.carb);
+        if (t.protein) _badges.push(t.protein);
+        const searchText = t.title.toLowerCase() + " " + t.desc.toLowerCase() + " " + t.tags.join(" ").toLowerCase() + " " + _badges.join(" ");
+        return words.every(w => searchText.includes(w));
+      })(),
+      r = baseMacros(t.carb),
+      c = getSauceMacros(t),
+      l = Math.round(r.kcal + c.kcal),
+      d = Math.round(r.p + c.p),
+      m = Math.round(r.c + c.c),
+      h = Math.round(r.f + c.f),
+      p = calcScore(t, d, h),
+      u =
+        l <= macroFilter.kcalMax &&
+        d >= macroFilter.protMin &&
+        m <= macroFilter.carbMax &&
+        h <= macroFilter.fatMax &&
+        p >= macroFilter.scoreMin &&
+        t.time <= macroFilter.timeMax,
+      g = Object.entries(INGREDIENT_RECIPE_MAP).some(([e, a]) => disabledIngredients.has(e) && a.includes(t.id)),
+      k = "all" === flavorFilter || (t.flavor || "savory") === flavorFilter,
+      j = !spicyFilter || SPICY_RECIPE_IDS.has(t.id),
+      q = !dipFilter || DIP_RECIPE_IDS.has(t.id),
+      y = s && o && u && !g && k && j && q;
+    ((i.style.display = y ? "" : "none"), y && a++);
+  }),
+    (document.getElementById("visibleCount").textContent = a));
+  const i = R.filter((e) => !HIDDEN_RECIPE_IDS.has(e.id)).length,
+    n = document.getElementById("totalCount");
+  (n && (n.textContent = i), t && (t.style.display = 0 === a ? "block" : "none"));
+}
+function setFilter(e, a) {
+  ((currentCuisineFilter = e),
+    document
+      .querySelectorAll("#panel-cuisine .filter-btn:not(.sweet):not(.savory)")
+      .forEach((e) => e.classList.remove("active")),
+    a.classList.add("active"));
+  const t = document.getElementById("pillCuisine");
+  (t &&
+    ("all" !== currentCuisineFilter || "all" !== flavorFilter
+      ? t.classList.add("has-active")
+      : t.classList.remove("has-active")),
+    filterRecipes());
+}
+function calcScore(e, a, t) {
+  let i = a >= 45 ? 3 : a >= 35 ? 2 : a >= 25 ? 1 : 0;
+  let n = { potato: 3, noodle: 2, rice: 1, bread: 1 }[e.carb] || 1,
+    s = t >= 15 ? 2 : t >= 8 ? 1 : 0;
+  const o = e.title.toLowerCase(),
+    r = e.desc.toLowerCase();
+  const c =
+    i +
+    n +
+    s +
+    ([
+      "stew",
+      "soup",
+      "braise",
+      "braised",
+      "congee",
+      "porridge",
+      "stew",
+      "hotpot",
+      "tagine",
+      "goulash",
+      "caldo",
+      "chowder",
+    ].some((e) => o.includes(e) || r.includes(e))
+      ? 2
+      : ["curry", "bowl", "bake", "gratin", "casserole"].some((e) => o.includes(e) || r.includes(e))
+        ? 1
+        : 0);
+  return Math.max(1, Math.min(10, c));
+}
+function scoreLabel(e) {
+  return e <= 2
+    ? "Stays hungry"
+    : e <= 4
+      ? "Not very filling"
+      : e <= 6
+        ? "Decent saturation"
+        : e <= 8
+          ? "Keeps you full"
+          : "Very filling";
+}
+let macroFilter = { kcalMax: 9999, protMin: 0, carbMax: 999, fatMax: 999, scoreMin: 1, timeMax: 999 };
+function applyMacroFilter() {
+  const e = (e) => {
+    const a = document.getElementById(e);
+    return a ? parseFloat(a.value) : null;
+  };
+  ((macroFilter.kcalMax = e("mfKcalMax") ?? 9999),
+    (macroFilter.protMin = e("mfProtMin") ?? 0),
+    (macroFilter.carbMax = e("mfCarbMax") ?? 999),
+    (macroFilter.fatMax = e("mfFatMax") ?? 999),
+    (macroFilter.scoreMin = e("mfScoreMin") ?? 1),
+    (macroFilter.timeMax = e("mfTimeMax") ?? 999),
+    filterRecipes());
+}
+function applyMacroFilterLive() {
+  (applyMacroFilter(), updatePillStates());
+}
+function applyMacroFilterLive() {
+  ((macroFilter.kcalMax = parseFloat(document.getElementById("mfKcalMax")?.value) || 9999),
+    (macroFilter.protMin = parseFloat(document.getElementById("mfProtMin")?.value) || 0),
+    (macroFilter.carbMax = parseFloat(document.getElementById("mfCarbMax")?.value) || 999),
+    (macroFilter.fatMax = parseFloat(document.getElementById("mfFatMax")?.value) || 999),
+    (macroFilter.timeMax = parseFloat(document.getElementById("mfTimeMax")?.value) || 999),
+    (macroFilter.scoreMin = parseFloat(document.getElementById("mfScoreMin")?.value) || 1),
+    applyAutoProteinWeight(),
+    applyAutoCarbWeight(),
+    updateCardMacros(),
+    updatePillStates(),
+    filterRecipes());
+}
+function toggleAutoProtein() {
+  setTimeout(() => {
+    const e = document.getElementById("chkAutoProtein");
+    e && (e.checked && applyAutoProteinWeight(), updateCardMacros(), filterRecipes(), updateCalcDisplay());
+  }, 0);
+}
+function applyAutoProteinWeight() {
+  const e = document.getElementById("chkAutoProtein");
+  if (!e || !e.checked) return;
+  const a = parseFloat(document.getElementById("mfProtMin")?.value);
+  if (!a || a <= 0) return;
+  const t = Math.max(weights.servings, 1),
+    i = NUT[activeProtein] || NUT.chicken_thigh;
+  if (!i || !i.p) return;
+  const n = Math.round((a * t * 100) / i.p);
+  ((weights.chicken = Math.max(50, Math.min(3e3, n))), autoCalcCarbs());
+  const s = document.getElementById("chickenInput");
+  s && (s.value = weights.chicken);
+  const o = document.getElementById("mwProt");
+  (o && (o.value = weights.chicken), Object.keys(_sauceMacroCache).forEach((e) => delete _sauceMacroCache[e]));
+}
+function resetMacroFilter() {
+  (["mfKcalMax", "mfProtMin", "mfCarbMax", "mfFatMax", "mfTimeMax", "mfScoreMin"].forEach((e) => {
+    const a = document.getElementById(e);
+    a && (a.value = "");
+  }),
+    (macroFilter = { kcalMax: 9999, protMin: 0, carbMax: 999, fatMax: 999, scoreMin: 1, timeMax: 999 }),
+    updatePillStates(),
+    filterRecipes());
+}
+function _mfSliderVal(id) {
+  const el = document.getElementById(id);
+  if (!el) return NaN;
+  const v = parseFloat(el.value);
+  const nf = parseFloat(el.dataset?.nofilter ?? "");
+  return (!isNaN(nf) && v === nf) ? NaN : v;
+}
+function _mfSliderInput(slider, displayId, template) {
+  const v = parseFloat(slider.value);
+  const noFilter = parseFloat(slider.dataset.nofilter);
+  const isOff = v === noFilter;
+  const min = parseFloat(slider.min), max = parseFloat(slider.max);
+  const fillPct = ((v - min) / (max - min) * 100).toFixed(1) + '%';
+  slider.style.setProperty('--fill', isOff ? '0%' : fillPct);
+  slider.classList.toggle('off', isOff);
+  const display = document.getElementById(displayId);
+  if (display) {
+    display.textContent = isOff ? '—' : template.replace('{v}', v);
+    display.classList.toggle('active', !isOff);
+  }
+  applyMacroFilterLive();
+}
+function _resetSlider(id, displayId) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const nf = el.dataset.nofilter;
+  if (nf !== undefined) el.value = nf;
+  el.classList.add('off');
+  el.style.setProperty('--fill', '0%');
+  const d = displayId && document.getElementById(displayId);
+  if (d) { d.textContent = '—'; d.classList.remove('active'); }
+}
+function applyMacroFilterLive() {
+  const _r = (id, fallback) => {
+    const v = _mfSliderVal(id);
+    return isNaN(v) ? fallback : v;
+  };
+  ((macroFilter.kcalMax = _r("mfKcalMax", 9999)),
+    (macroFilter.protMin = _r("mfProtMin", 0)),
+    (macroFilter.carbMax = _r("mfCarbMax", 999)),
+    (macroFilter.fatMax = _r("mfFatMax", 999)),
+    (macroFilter.timeMax = _r("mfTimeMax", 999)),
+    (macroFilter.scoreMin = _r("mfScoreMin", 1)),
+    applyAutoProteinWeight(),
+    applyAutoCarbWeight(),
+    updateCardMacros(),
+    updatePillStates(),
+    filterRecipes());
+}
+function toggleAutoProtein() {
+  setTimeout(() => {
+    const e = document.getElementById("chkAutoProtein");
+    e && (e.checked && applyAutoProteinWeight(), updateCardMacros(), filterRecipes(), updateCalcDisplay());
+  }, 0);
+}
+function applyAutoProteinWeight() {
+  const e = document.getElementById("chkAutoProtein");
+  if (!e || !e.checked) return;
+  const a = _mfSliderVal("mfProtMin");
+  if (isNaN(a) || a <= 0) return;
+  const t = Math.max(weights.servings, 1),
+    i = NUT[activeProtein] || NUT.chicken_thigh;
+  if (!i || !i.p) return;
+  const n = Math.round((a * t * 100) / i.p);
+  ((weights.chicken = Math.max(50, Math.min(3e3, n))), autoCalcCarbs());
+  const s = document.getElementById("chickenInput");
+  s && (s.value = weights.chicken);
+  const o = document.getElementById("mwProt");
+  (o && (o.value = weights.chicken), Object.keys(_sauceMacroCache).forEach((e) => delete _sauceMacroCache[e]));
+}
+function toggleAutoCarb() {
+  setTimeout(() => {
+    const e = document.getElementById("chkAutoCarb");
+    e && (e.checked && applyAutoCarbWeight(), updateCardMacros(), filterRecipes(), updateCalcDisplay());
+  }, 0);
+}
+function applyAutoCarbWeight() {
+  const e = document.getElementById("chkAutoCarb");
+  if (!e || !e.checked) return;
+  const a = _mfSliderVal("mfCarbMax");
+  if (isNaN(a) || a <= 0) return;
+  const t = Math.max(weights.servings, 1);
+  // clear cache so getSauceMacros returns fresh values
+  Object.keys(_sauceMacroCache).forEach((k) => delete _sauceMacroCache[k]);
+  (["potato", "rice", "noodle", "bread"].forEach((carbType) => {
+    const i = NUT[carbType];
+    if (!i || !i.c) return;
+    // find the highest sauce-carb contribution across all recipes of this carb type
+    let maxSauceCarbs = 0;
+    R.forEach((recipe) => {
+      if (recipe.carb === carbType) {
+        const sm = getSauceMacros(recipe);
+        if (sm.c > maxSauceCarbs) maxSauceCarbs = sm.c;
+      }
+    });
+    // ingredient weight needed so that ingredient_carbs + max_sauce_carbs <= target
+    const targetIngredientCarbs = Math.max(0, a - maxSauceCarbs);
+    const n = Math.round((targetIngredientCarbs * t * 100) / i.c);
+    weights[carbType] = Math.max(10, Math.min(2e3, n));
+    const s = document.getElementById(carbType + "Input");
+    s && (s.value = weights[carbType]);
+    const o = document.getElementById("mw" + carbType.charAt(0).toUpperCase() + carbType.slice(1));
+    o && (o.value = weights[carbType]);
+  }));
+}
+function resetMacroFilter() {
+  macroFilter = { kcalMax: 9999, protMin: 0, carbMax: 999, fatMax: 999, scoreMin: 1, timeMax: 999 };
+  const e = document.getElementById("chkAutoProtein");
+  e && (e.checked = !1);
+  _syncFilterBtn("btnAutoProtein", false);
+  const a = document.getElementById("chkAutoCarb");
+  a && (a.checked = !1);
+  _syncFilterBtn("btnAutoCarb", false);
+  _resetSlider("mfKcalMax", "mfKcalMaxD");
+  _resetSlider("mfProtMin", "mfProtMinD");
+  _resetSlider("mfCarbMax", "mfCarbMaxD");
+  _resetSlider("mfFatMax", "mfFatMaxD");
+  _resetSlider("mfScoreMin", "mfScoreMinD");
+  _resetSlider("mfTimeMax", "mfTimeMaxD");
+  filterRecipes();
+}
+function syncCarbFilter(e, a) {
+  const t = parseFloat(a) > 0;
+  carbEnabled[e] = t;
+  const i = document.getElementById("chk" + e.charAt(0).toUpperCase() + e.slice(1));
+  (i && (i.checked = t));
+  _syncFilterBtn("btn" + e.charAt(0).toUpperCase() + e.slice(1), t);
+  ((weights[e] = parseFloat(a) || 0), filterRecipes(), updateCalcDisplay());
+}
+function toggleCarb(e) {
+  setTimeout(() => {
+    const a = document.getElementById("chk" + e.charAt(0).toUpperCase() + e.slice(1));
+    if (!a) return;
+    carbEnabled[e] = a.checked;
+    const t = document.getElementById(e + "Input");
+    if (t)
+      if (a.checked) {
+        const a = CARB_RATIOS[e] || 0.5,
+          i = Math.round(weights.chicken * a);
+        ((t.value = i), (weights[e] = i));
+      } else ((t.dataset.prev = t.value), (t.value = 0), (weights[e] = 0));
+    (filterRecipes(), updateCalcDisplay());
+  }, 0);
+}
+function setEggSize(e) {
+  ((eggSizeG = { S: 48, M: 58, L: 68 }[e] || 58),
+    document.querySelectorAll(".egg-size-btn").forEach((e) => e.classList.remove("active")));
+  const a = document.getElementById("egg" + e);
+  (a && a.classList.add("active"),
+    (weights.eggs = eggCount),
+    updateCardMacros(),
+    filterRecipes(),
+    updateCalcDisplay());
+}
+function changeEggCount(e) {
+  eggCount = Math.max(0, Math.min(20, eggCount + e));
+  const a = document.getElementById("eggCountVal");
+  (a && (a.textContent = eggCount),
+    (weights.eggs = eggCount),
+    updateCardMacros(),
+    filterRecipes(),
+    updateCalcDisplay());
+}
+function changeGlobalServings(e) {
+  const a = Math.max(1, Math.min(10, weights.servings + e));
+  weights.servings = a;
+  const t = document.getElementById("servingsInput");
+  t && (t.textContent = a);
+  const i = document.getElementById("globalServingVal");
+  i && (i.textContent = a);
+  const n = document.getElementById("pillServingsLabel");
+  n && (n.textContent = a + (1 === a ? " Serving" : " Servings"));
+  const s = document.getElementById("pillServings");
+  (s && s.classList.toggle("has-active", 2 !== a), updateCardMacros(), filterRecipes(), updateCalcDisplay());
+}
+function changeServings(e) {
+  const a = document.getElementById("servingsInput"),
+    t = parseInt(a.textContent) || 2,
+    i = Math.max(1, Math.min(10, t + e));
+  ((a.textContent = i),
+    (weights.servings = i),
+    Object.keys(_sauceMacroCache).forEach((e) => delete _sauceMacroCache[e]),
+    updateCardMacros(),
+    currentModalRecipe && refreshRecipeTabIfOpen(R.find((e) => e.id === currentModalRecipe.id)),
+    filterRecipes(),
+    updateCalcDisplay());
+}
+function updateCalc() {
+  ((weights.chicken = parseFloat(document.getElementById("chickenInput").value) || 0),
+    (weights.servings = parseInt(document.getElementById("servingsInput").textContent) || 1),
+    autoCalcCarbs(),
+    document.querySelectorAll(".card-weight-input").forEach((e) => {
+      e.value = weights.chicken;
+    }),
+    ["potato", "rice", "noodle", "bread"].forEach((e) => {
+      const a = document.getElementById("chk" + e.charAt(0).toUpperCase() + e.slice(1));
+      a && (carbEnabled[e] = a.checked);
+    }),
+    updateCalcDisplay(),
+    updateCardMacros(),
+    filterRecipes());
+}
+function makeResultGrid(e) {
+  return `\n    <div class="result-card kcal"><span class="r-val">${Math.round(e.kcal)}</span><span class="r-unit">kcal</span><span class="r-lbl">Calories</span></div>\n    <div class="result-card protein"><span class="r-val">${Math.round(e.p)}</span><span class="r-unit">g</span><span class="r-lbl">Protein</span></div>\n    <div class="result-card carbs"><span class="r-val">${Math.round(e.c)}</span><span class="r-unit">g</span><span class="r-lbl">Carbs</span></div>\n    <div class="result-card fat"><span class="r-val">${Math.round(e.f)}</span><span class="r-unit">g</span><span class="r-lbl">Fat</span></div>\n  `;
+}
+function updateCalcDisplay() {
+  ["potato", "rice", "noodle", "bread"].forEach((e) => {
+    const a = baseMacros(e),
+      t = document.getElementById("res-" + e + "-grid");
+    t && (t.innerHTML = makeResultGrid(a));
+  });
+  const e = Math.max(weights.servings, 1);
+  let a = [
+    {
+      label: `Protein — ${activeProtein.replace("_", " ")} (${weights.chicken}g raw)`,
+      g: weights.chicken,
+      n: NUT[activeProtein] || NUT.chicken_thigh,
+    },
+    { label: `🥚 Eggs (${weights.eggs} × ${eggSizeG}g)`, g: weights.eggs * eggSizeG, n: NUT.eggs },
+  ];
+  ["potato", "rice", "noodle", "bread"].forEach((e) => {
+    if (weights[e] > 0) {
+      const t = {
+        potato: "🥔 Potato",
+        rice: "🍚 Rice (dry)",
+        noodle: "🍜 Noodles (dry)",
+        bread: "🫓 Bread/Wrap",
+      };
+      a.push({ label: `${t[e]} (${weights[e]}g raw)`, g: weights[e], n: NUT[e] });
+    }
+  });
+  let t = 0,
+    i = 0,
+    n = 0,
+    s = 0;
+  const o = document.getElementById("breakdownBody");
+  o &&
+    (o.innerHTML =
+      a
+        .map((a) => {
+          const o = ((a.g / 100) * a.n.kcal) / e,
+            r = ((a.g / 100) * a.n.p) / e,
+            c = ((a.g / 100) * a.n.c) / e,
+            l = ((a.g / 100) * a.n.f) / e;
+          return (
+            (t += o),
+            (i += r),
+            (n += c),
+            (s += l),
+            `<tr>\n      <td>${a.label}</td>\n      <td>${Math.round(a.g / e)}g per portion</td>\n      <td>${Math.round(o)}</td>\n      <td>${Math.round(r)}g</td>\n      <td>${Math.round(c)}g</td>\n      <td>${Math.round(10 * l) / 10}g</td>\n    </tr>`
+          );
+        })
+        .join("") +
+      `\n    <tr class="total-row">\n      <td>Base total per portion</td><td>—</td>\n      <td>${Math.round(t)}</td>\n      <td>${Math.round(i)}g</td>\n      <td>${Math.round(n)}g</td>\n      <td>${Math.round(10 * s) / 10}g</td>\n    </tr>`);
+}
+
+function getRecipeDetail(e) {
+  if (adminOverrides && adminOverrides[e.id]) return { ...(RECIPE_DETAILS[e.id] || {}), ...adminOverrides[e.id] };
+  if (RECIPE_DETAILS[e.id]) return RECIPE_DETAILS[e.id];
+  const a = { potato: "potato", rice: "rice", noodle: "noodles", bread: "bread/wrap" }[e.carb],
+    t = activeProtein.replace("_", " ");
+  return {
+    ingredients: [
+      { section: "Protein", items: [{ name: t + " (raw)", amt: "{{proteinG}}g" }] },
+      { section: "Carb Base", items: [{ name: a + " (raw)", amt: "{{carbG}}g" }] },
+      {
+        section: "Sauce & Seasonings",
+        items: [
+          { name: "See full recipe on YouTube", amt: "—" },
+          { name: "Key spices & sauce", amt: "per recipe" },
+        ],
+      },
+    ],
+    steps: [
+      "Full step-by-step coming soon — subscribe on YouTube to be notified when this recipe drops! 🎬",
+      "In the meantime: season your " +
+        t +
+        ", cook your " +
+        a +
+        ", and use the macro calculator to dial in your portions.",
+    ],
+    hacks: [],
+    video: null,
+    placeholder: !0,
+  };
+}
+let currentModalRecipe = null;
+function updateModalMacros(e) {
+  if (!e) return;
+  const a = weights.servings;
+  weights.servings = modalServings;
+  // For eggs-protein recipes: temporarily override so baseMacros uses egg values
+  const _pAP = activeProtein, _pCh = weights.chicken;
+  if (e.protein === "eggs") { activeProtein = "eggs"; weights.chicken = eggCount * eggSizeG; }
+  const t = baseMacros(e.carb);
+  activeProtein = _pAP; weights.chicken = _pCh;
+  const i = getSauceMacros(e);
+  weights.servings = a;
+  let seKcal = 0, seP = 0, seC = 0, seF = 0;
+  if (e.sideEgg) {
+    const nut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
+    const gPP = Math.round((sideEggCount * sideEggSizeG) / Math.max(modalServings, 1));
+    seKcal = Math.round((nut.kcal * gPP) / 100);
+    seP    = Math.round(((nut.p * gPP) / 100) * 10) / 10;
+    seC    = Math.round(((nut.c * gPP) / 100) * 10) / 10;
+    seF    = Math.round(((nut.f * gPP) / 100) * 10) / 10;
+  }
+  const _unused = null,
+    n = Math.round(t.kcal + i.kcal + seKcal),
+    s = Math.round(t.p + i.p + seP),
+    o = Math.round(t.c + i.c + seC),
+    r = Math.round(t.f + i.f + seF);
+  ((document.getElementById("mKcal").textContent = n),
+    (document.getElementById("mProt").textContent = s + "g"),
+    (document.getElementById("mCarbs").textContent = o + "g"),
+    (document.getElementById("mFat").textContent = r + "g"));
+}
+function openModal(e) {
+  const a = R.find((a) => a.id === e);
+  if (!a) return;
+  ((currentModalRecipe = a),
+    (document.getElementById("modalNum").textContent = "#" + String(a.displayNum).padStart(3, "0")),
+    (function(){ const sl=document.getElementById("modalServingLabel"); if(sl) sl.textContent="1 serving"; })(),
+    (document.getElementById("modalTitle").textContent = a.title),
+    (document.getElementById("modalDesc").textContent = a.desc),
+    (function(){ const hb=document.getElementById("modalHintBox"),ht=document.getElementById("modalHintText"); if(a.hint){ht.textContent=a.hint;hb.style.display="flex";}else{hb.style.display="none";ht.textContent="";} })(),
+    (document.getElementById("modalTime").innerHTML =
+      `<span class="time-icon">${clockEmoji(a.time)}</span>${a.time} min`));
+  const t = a.protein === "none" ? "none" : (a.protein || "chicken"),
+    i =
+      { chicken: "🍗 Chicken", beef: "🥩 Beef", eggs: "🥚 Eggs", fish: "🐟 Fish", tofu: "🫘 Tofu" }[t] ||
+      "🍗 Chicken",
+    n = { chicken: "chicken", beef: "beef", eggs: "eggs", salmon: "salmon", tofu: "tofu" }[t] || "chicken",
+    s = document.getElementById("modalTagsRow"),
+    o = (a.tags || []).filter(e => e !== "spicy" && e !== "dip" && e !== a.protein).map((e) => `<span class="tag tag-${e}">${tagLabel(e)}</span>`).join("");
+  ((s.innerHTML = `\n    <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:${o ? "6px" : "0"};">\n      ${a.carb !== "none" ? `<span class="carb-badge ${a.carb}" style="font-size:10px;padding:4px 10px;">${{ potato: "🥔 Potato", rice: "🍚 Rice", noodle: "🍜 Noodle", bread: "🫓 Bread" }[a.carb]}</span>` : ""}\n      ${t !== "none" ? `<span class="protein-badge ${n}" style="font-size:10px;padding:4px 10px;">${i}</span>` : ""}\n      <span class="flavor-badge ${a.flavor || "savory"}" style="font-size:10px;padding:4px 10px;">${"sweet" === a.flavor ? "🍯 Sweet" : "🧂 Savory"}</span>\n      ${ALCOHOL_RECIPE_IDS.has(a.id) ? '<span class="flavor-badge alcohol" style="font-size:10px;padding:4px 10px;">🍶 Alcohol</span>' : ""}\n      ${SPICY_RECIPE_IDS.has(a.id) ? '<span class="flavor-badge spicy" style="font-size:10px;padding:4px 10px;">🌶️ Spicy</span>' : ""}\n      ${DIP_RECIPE_IDS.has(a.id) ? '<span class="flavor-badge dip" style="font-size:10px;padding:4px 10px;">🥣 Dip</span>' : ""}\n    </div>\n    ${o ? `<div style="display:flex;flex-wrap:wrap;gap:5px;">${o}</div>` : ""}\n  `),
+    (modalServings = weights.servings), updateModalMacros(a));
+  const r = getRecipeDetail(a),
+    c = document.getElementById("modalTabs");
+  ((c.innerHTML = `\n    <div class="modal-tab active" onclick="switchModalTab('ingredients',this)">🥄 Ingredients</div>\n    <div class="modal-tab" onclick="switchModalTab('recipe',this)">👨‍🍳 Recipe</div>\n    ${r.video ? '<div class="modal-tab" onclick="switchModalTab(\'video\',this)">▶️ Video</div>' : ""}\n  `),
+    buildIngredientsTab(a, modalServings),
+    buildRecipeTab(a),
+    r.video && buildVideoTab(a),
+    switchModalTab("ingredients", c.querySelector(".modal-tab")),
+    (function(){
+      const modal = document.getElementById("recipeModal");
+      modal.classList.toggle("no-protein", a.protein === "none");
+      modal.classList.toggle("no-carb", a.carb === "none");
+    })(),
+    document.getElementById("recipeModal").classList.add("open"),
+    (document.body.style.overflow = "hidden"));
+  const l = document.querySelector(".modal-body"),
+    d = document.getElementById("modalCollapsible");
+  l &&
+    d &&
+    ((l.onscroll = () => {}),
+    (l.scrollTop = 0),
+    d.classList.remove("collapsed"));
+}
+function closeModal(e) {
+  e.target === document.getElementById("recipeModal") && closeModalDirect();
+}
+function closeModalDirect() {
+  (document.getElementById("recipeModal").classList.remove("open"), (document.body.style.overflow = ""));
+}
+function switchModalTab(e, a) {
+  (document.querySelectorAll("#modalTabs .modal-tab").forEach((e) => e.classList.remove("active")),
+    document.querySelectorAll(".modal-tab-content").forEach((e) => e.classList.remove("active")),
+    a && a.classList.add("active"));
+  const t = document.getElementById("tab-" + e);
+  if ((t && t.classList.add("active"), "recipe" === e && currentModalRecipe)) {
+    const e = R.find((e) => e.id === currentModalRecipe.id);
+    e && buildRecipeTab(e);
+  }
+}
+function refreshRecipeTabIfOpen(e) {
+  const a = document.getElementById("tab-recipe");
+  a && a.classList.contains("active") && e && buildRecipeTab(e);
+}
+document.addEventListener("keydown", (e) => {
+  "Escape" === e.key && closeModalDirect();
+});
+let modalServings = 2;
+function scaleAmt(e, a) {
+  if (!e || 1 === a) return e;
+  if (
+    /^(pinch|splash|drizzle|handful|large handful|small handful|big handful|sprinkle|squeeze|to taste|to coat|to finish|to garnish|to serve|alongside|reserved|see note|see qty|per recipe|—|few|extra sprinkle|generous)$/i.test(
+      e.trim(),
+    )
+  )
+    return e;
+  const t = { "½": 0.5, "¼": 0.25, "¾": 0.75, "⅓": 1 / 3, "⅔": 2 / 3, "⅛": 0.125 };
+  function i(e) {
+    if (e === Math.round(e)) return String(Math.round(e));
+    const a = [
+        [0.25, "¼"],
+        [0.5, "½"],
+        [0.75, "¾"],
+        [1 / 3, "⅓"],
+        [2 / 3, "⅔"],
+        [0.125, "⅛"],
+      ],
+      t = e % 1,
+      i = Math.floor(e);
+    for (const [e, n] of a) if (Math.abs(t - e) < 0.05) return i > 0 ? i + n : n;
+    return (Math.round(10 * e) / 10).toString();
+  }
+  const n = e.match(/^([½¼¾⅓⅔⅛]|\d+(?:[.,]\d+)?(?:[-–]\d+(?:[.,]\d+)?)?)(\s*)(.*)/);
+  if (!n) return e;
+  let s,
+    o = n[1],
+    r = n[2],
+    c = n[3];
+  if (/^per /i.test(c.trim())) return e;
+  if (t[o]) s = t[o];
+  else {
+    if (o.includes("-") || o.includes("–")) {
+      const t = o.split(/[-–]/),
+        n = parseFloat(t[0]),
+        s = parseFloat(t[1]);
+      return isNaN(n) || isNaN(s) ? e : i(n * a) + "–" + i(s * a) + r + c;
+    }
+    s = parseFloat(o.replace(",", "."));
+  }
+  if (isNaN(s)) return e;
+  return i(s * a) + r + c;
+}
+function buildSideEggBlock(recipeId, gPP, sgK, sgP, sgC, sgF, sgNut) {
+  const sizes = [{k:"S",g:48},{k:"M",g:58},{k:"L",g:68}];
+  const btns = sizes.map(function(a) {
+    const active = sideEggSizeG === a.g ? " active" : "";
+    return "<button class=\"modal-variant-btn" + active + "\" style=\"padding:2px 8px;font-size:10px;\" " +
+      "onclick=\"setSideEggSize(" + a.g + ",'" + recipeId + "');event.stopPropagation()\">" + a.k + "</button>";
+  }).join("");
+  return "<div class=\"modal-weight-row\" id=\"sideEggRow\">" +
+    "<div class=\"modal-weight-row-main\" onclick=\"toggleWeightRow('sideEggRow')\" style=\"flex-wrap:nowrap;align-items:center;\">" +
+    "<label style=\"flex-shrink:0;white-space:nowrap;\">🍳 Fried Egg</label>" +
+    "<div style=\"display:flex;align-items:center;gap:6px;margin-left:8px;\">" +
+    "<div style=\"display:inline-flex;gap:4px;\">" + btns + "</div>" +
+    "<div class=\"serving-stepper\" style=\"margin-left:4px;\">" +
+    "<button class=\"step-btn\" onclick=\"changeSideEggCount(-1,'" + recipeId + "');event.stopPropagation()\">&#8722;</button>" +
+    "<span class=\"serving-val\" id=\"sideEggCountVal\" style=\"width:32px;height:28px;line-height:28px;font-size:14px;\">" + sideEggCount + "</span>" +
+    "<button class=\"step-btn\" onclick=\"changeSideEggCount(1,'" + recipeId + "');event.stopPropagation()\">+</button>" +
+    "</div></div>" +
+    "<span class=\"modal-weight-hint\" style=\"margin-left:auto;\">" + gPP + "g per portion</span>" +
+    "<span class=\"modal-weight-expand\">\u25bc</span>" +
+    "</div>" +
+    "<div class=\"modal-weight-macro-panel\">" +
+    "<div class=\"ing-macro-grid\" style=\"margin-top:8px;\">" +
+    "<div class=\"ing-macro-cell mk\"><span class=\"imc-val\">" + sgK + "</span><span class=\"imc-lbl\">kcal</span></div>" +
+    "<div class=\"ing-macro-cell mp\"><span class=\"imc-val\">" + sgP + "g</span><span class=\"imc-lbl\">protein</span></div>" +
+    "<div class=\"ing-macro-cell mc\"><span class=\"imc-val\">" + sgC + "g</span><span class=\"imc-lbl\">carbs</span></div>" +
+    "<div class=\"ing-macro-cell mf\"><span class=\"imc-val\">" + sgF + "g</span><span class=\"imc-lbl\">fat</span></div>" +
+    "</div>" +
+    "<div class=\"ing-macro-hint\">Per portion &middot; " + gPP + "g &middot; per 100g: " + sgNut.kcal + "kcal " + sgNut.p + "g P " + sgNut.c + "g C " + sgNut.f + "g F</div>" +
+    "</div></div>";
+}
+let _ingIdAliasMap = null;
+function _getIngIdAliasMap() {
+  if (_ingIdAliasMap) return _ingIdAliasMap;
+  _ingIdAliasMap = {};
+  Object.entries(ING_NAME_MAP).forEach(([alias, id]) => {
+    if (!_ingIdAliasMap[id]) _ingIdAliasMap[id] = [];
+    _ingIdAliasMap[id].push(alias.toLowerCase());
+  });
+  return _ingIdAliasMap;
+}
+function _isIngInSteps(item, stepsText) {
+  const amt = (item.amt || "").toLowerCase().trim();
+  // placeholders, optional, "to taste" and "—" are always considered present
+  if (amt.includes("{{") || amt === "to taste" || amt === "—" || amt.includes("optional") || amt.includes("to taste")) return true;
+  const name = (item.name || "").toLowerCase().trim();
+  if (!name) return true;
+  // generic seasoning/oil entries are always implied in cooking steps
+  if (/\b(salt|pepper|spice|seasoning|neutral oil|cooking oil|oil)\b/.test(name)) return true;
+  // direct name match
+  if (stepsText.includes(name)) return true;
+  // match via canonical id and all ING_NAME_MAP aliases
+  const id = item.id || findIngredientId(item.name);
+  if (id) {
+    if (stepsText.includes(id.toLowerCase().replace(/_/g, " "))) return true;
+    const aliases = _getIngIdAliasMap()[id] || [];
+    for (const alias of aliases) { if (stepsText.includes(alias)) return true; }
+  }
+  return false;
+}
+function buildIngredientsTab(e, a) {
+  void 0 !== a && (modalServings = Math.max(1, a));
+  const t = getRecipeDetail(e),
+    i = modalServings,
+    n = e.protein || "chicken",
+    s = PROTEIN_DEFS.find((e) => e.key === n),
+    o = "eggs" === n,
+    _isNoneProtein = "none" === n,
+    r = o
+      ? "eggs"
+      : "salmon" === n
+        ? "salmon"
+        : "tofu" === n
+          ? "tofu"
+          : s && s.variants && s.variants.find((e) => e.key === activeProtein)
+            ? activeProtein
+            : s && s.variants
+              ? s.variants[0].key
+              : n,
+    c = {
+      chicken_thigh: { ing: "Chicken thigh (boneless, skinless, raw)", short: "Chicken Thigh" },
+      chicken_breast: { ing: "Chicken breast (boneless, skinless, raw)", short: "Chicken Breast" },
+      beef_regular: { ing: "Ground beef (20% fat, raw)", short: "Ground Beef (20%)" },
+      beef_lean: { ing: "Lean ground beef (5% fat, raw)", short: "Lean Ground Beef" },
+      eggs: { ing: "Eggs (whole)", short: "Eggs" },
+      salmon: { ing: "Salmon fillet (skin on, raw)", short: "Salmon" },
+      tofu: { ing: "Firm tofu", short: "Tofu" },
+    },
+    l = c[r] || c.chicken_thigh,
+    d =
+      {
+        chicken_thigh: "🍗",
+        chicken_breast: "🍗",
+        beef_regular: "🥩",
+        beef_lean: "🥩",
+        eggs: "🥚",
+        salmon: "🐟",
+        tofu: "🫘",
+      }[r] || "🍗",
+    m = { potato: "🥔", rice: "🍚", noodle: "🍜", bread: "🫓" }[e.carb] || "🍽️",
+    h = { potato: "Potato", rice: "Rice", noodle: "Noodles", bread: "Bread/Wrap" }[e.carb] || "Carb",
+    p = o ? Math.round((eggCount * eggSizeG) / i) : Math.round(weights.chicken / i),
+    u = Math.round((weights[e.carb] || 0) / i);
+  let g = "";
+  if (!o && s && s.variants) {
+    const a = s.variants
+      .map(
+        (a) =>
+          `<button class="modal-variant-btn ${r === a.key ? "active" : ""}"\n        onclick="selectModalVariant('${a.key}', '${e.id}')">${a.label}</button>`,
+      )
+      .join("");
+    g = `<div class="modal-variant-row">\n      <label>${d} Variant</label>\n      ${a}\n    </div>`;
+  }
+  let k = "";
+  if (o) {
+    k = `<div class="modal-variant-row">\n      <label>🥚 Egg Size</label>\n      ${[
+      { k: "S", g: 48 },
+      { k: "M", g: 58 },
+      { k: "L", g: 68 },
+    ]
+      .map(
+        (a) =>
+          `<button class="modal-variant-btn ${eggSizeG === a.g ? "active" : ""}"\n        onclick="setModalEggSize(${a.g}, '${e.id}')">${a.k} ~${a.g}g</button>`,
+      )
+      .join(
+        "",
+      )}\n    </div>\n    <div class="modal-weight-row">\n      <div class="modal-weight-row-main" style="cursor:default;flex-wrap:nowrap;align-items:center;gap:8px;">\n        <label style="flex-shrink:0;white-space:nowrap;">🥚 Egg Count</label>\n        <div class="serving-stepper" style="margin-left:0;">\n          <button class="step-btn" onclick="changeModalEggCount(-1, '${e.id}')">−</button>\n          <span class="serving-val" id="modalEggCountVal" style="width:36px;height:30px;line-height:30px;font-size:15px;">${eggCount}</span>\n          <button class="step-btn" onclick="changeModalEggCount(1, '${e.id}')">+</button>\n        </div>\n        <span class="modal-weight-hint" style="margin-left:auto;">${p}g per portion</span>\n      </div>\n    </div>`;
+  }
+  // Side-egg stepper for sideEgg: true recipes
+  const _hasSideEgg = !!e.sideEgg;
+  const _sgPP = Math.round((sideEggCount * sideEggSizeG) / Math.max(i, 1));
+  const _sgNut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
+  const _sgK = Math.round((_sgNut.kcal * _sgPP) / 100);
+  const _sgP = Math.round((_sgNut.p * _sgPP) / 100 * 10) / 10;
+  const _sgC = Math.round((_sgNut.c * _sgPP) / 100 * 10) / 10;
+  const _sgF = Math.round((_sgNut.f * _sgPP) / 100 * 10) / 10;
+  const _sideEggBlock = _hasSideEgg ? buildSideEggBlock(e.id, _sgPP, _sgK, _sgP, _sgC, _sgF, _sgNut) : "";
+  let y = `\n  <div class="serving-control">\n    <label>🍽️ Servings</label>\n    <div class="serving-stepper">\n      <button class="step-btn" onclick="changeModalServings(-1, '${e.id}')">−</button>\n      <span class="serving-val" id="modalServingVal">${i}</span>\n      <button class="step-btn" onclick="changeModalServings(1, '${e.id}')">+</button>\n    </div>\n    <span class="modal-weight-hint">per portion</span>\n  </div>\n  ${g}\n  ${
+      (o || _isNoneProtein)
+        ? k
+        : (() => {
+            const a = NUT[r] || NUT.chicken_thigh,
+              t = Math.round((a.kcal * p) / 100),
+              i = Math.round(((a.p * p) / 100) * 10) / 10,
+              n = Math.round(((a.c * p) / 100) * 10) / 10,
+              s = Math.round(((a.f * p) / 100) * 10) / 10;
+            return `\n  <div class="modal-weight-row" id="protWeightRow">\n    <div class="modal-weight-row-main" onclick="toggleWeightRow('protWeightRow')">\n      <label>${d} ${l.short}</label>\n      <input type="number" class="modal-weight-input" id="mwProt" value="${weights.chicken}"\n        min="50" max="3000"\n        onclick="event.stopPropagation()"\n        oninput="updateModalWeight('prot', this.value, '${e.id}')">\n      <span class="modal-weight-unit">g batch total</span>\n      <span class="modal-weight-hint">${p}g per portion</span>\n      <span class="modal-weight-expand">▼</span>\n    </div>\n    <div class="modal-weight-macro-panel">\n      <div class="ing-macro-grid" style="margin-top:8px;">\n        <div class="ing-macro-cell mk"><span class="imc-val">${t}</span><span class="imc-lbl">kcal</span></div>\n        <div class="ing-macro-cell mp"><span class="imc-val">${i}g</span><span class="imc-lbl">protein</span></div>\n        <div class="ing-macro-cell mc"><span class="imc-val">${n}g</span><span class="imc-lbl">carbs</span></div>\n        <div class="ing-macro-cell mf"><span class="imc-val">${s}g</span><span class="imc-lbl">fat</span></div>\n      </div>\n      <div class="ing-macro-hint">Per portion · ${p}g · per 100g: ${a.kcal}kcal ${a.p}g P ${a.c}g C ${a.f}g F</div>\n    </div>\n  </div>`;
+          })()
+    }\n  <div class="modal-weight-row" id="carbWeightRow">\n    ${(() => {
+      const a = NUT[e.carb] || {},
+        t = Math.round(((a.kcal || 0) * u) / 100),
+        i = Math.round((((a.p || 0) * u) / 100) * 10) / 10,
+        n = Math.round((((a.c || 0) * u) / 100) * 10) / 10,
+        s = Math.round((((a.f || 0) * u) / 100) * 10) / 10;
+      return `\n    <div class="modal-weight-row-main" onclick="toggleWeightRow('carbWeightRow')">\n      <label>${m} ${h}</label>\n      <input type="number" class="modal-weight-input" id="mwCarb" value="${weights[e.carb] || 0}"\n        min="0" max="3000"\n        onclick="event.stopPropagation()"\n        oninput="updateModalWeight('carb', this.value, '${e.id}')">\n      <span class="modal-weight-unit">g batch total</span>\n      <span class="modal-weight-hint">${u}g per portion</span>\n      <span class="modal-weight-expand">▼</span>\n    </div>\n    <div class="modal-weight-macro-panel">\n      <div class="ing-macro-grid" style="margin-top:8px;">\n        <div class="ing-macro-cell mk"><span class="imc-val">${t}</span><span class="imc-lbl">kcal</span></div>\n        <div class="ing-macro-cell mp"><span class="imc-val">${i}g</span><span class="imc-lbl">protein</span></div>\n        <div class="ing-macro-cell mc"><span class="imc-val">${n}g</span><span class="imc-lbl">carbs</span></div>\n        <div class="ing-macro-cell mf"><span class="imc-val">${s}g</span><span class="imc-lbl">fat</span></div>\n      </div>\n      <div class="ing-macro-hint">Per portion · ${u}g · per 100g: ${a.kcal || 0}kcal ${a.p || 0}g P ${a.c || 0}g C ${a.f || 0}g F</div>\n    </div>`;
+    })()}\n  </div>${_hasSideEgg ? _sideEggBlock : ""}`,
+    b = 0,
+    f = 0,
+    v = 0,
+    w = 0,
+    _ = !1;
+  const _recipeStepsText = (t.steps || []).join(" ").toLowerCase();
+  t.ingredients.forEach((a) => {
+    ((y += `<div class="ing-section-title">${a.section}</div><ul class="ing-list">`),
+      a.items.forEach((a) => {
+        const t = (a.amt || "").includes("{{proteinG}}") || (a.amt || "").includes("{{carbG}}") || (a.amt || "").includes("{{eggCount}}"),
+          n = o ? eggCount * eggSizeG : weights.chicken,
+          s = weights[e.carb] || 0,
+          c = (a.amt || "")
+            .replace("{{proteinG}}", Math.round(n))
+            .replace("{{carbG}}", Math.round(s))
+            .replace("{{eggCount}}", eggCount)
+            .replace("{{servings}}", i);
+        let d = t ? c : scaleAmt(c, i),
+          m = a.name;
+        a.amt && a.amt.includes("{{proteinG}}") && (m = l.ing);
+        let h = null,
+          g = null;
+        try {
+          if (a.amt && a.amt.includes("{{proteinG}}")) {
+            const e = NUT[r] || NUT.chicken_thigh;
+            g = {
+              grams: p,
+              kcal: Math.round((e.kcal * p) / 100),
+              p: Math.round(((e.p * p) / 100) * 10) / 10,
+              c: Math.round(((e.c * p) / 100) * 10) / 10,
+              f: Math.round(((e.f * p) / 100) * 10) / 10,
+            };
+          } else if (a.amt && a.amt.includes("{{carbG}}")) {
+            const a = NUT[e.carb] || {};
+            g = {
+              grams: u,
+              kcal: Math.round(((a.kcal || 0) * u) / 100),
+              p: Math.round((((a.p || 0) * u) / 100) * 10) / 10,
+              c: Math.round((((a.c || 0) * u) / 100) * 10) / 10,
+              f: Math.round((((a.f || 0) * u) / 100) * 10) / 10,
+            };
+          } else if (a.amt && a.amt.includes("{{eggCount}}")) {
+            const _eggNut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
+            const _eggG = Math.round((eggCount * eggSizeG) / Math.max(i, 1));
+            g = {
+              grams: _eggG,
+              kcal: Math.round((_eggNut.kcal * _eggG) / 100),
+              p: Math.round(((_eggNut.p * _eggG) / 100) * 10) / 10,
+              c: Math.round(((_eggNut.c * _eggG) / 100) * 10) / 10,
+              f: Math.round(((_eggNut.f * _eggG) / 100) * 10) / 10,
+            };
+          } else ((h = a.id || findIngredientId(m)), (g = h ? calcIngredientMacros(h, d) : null));
+        } catch (e) {}
+        const _inSteps = _isIngInSteps(a, _recipeStepsText);
+        const _warnBadge = _inSteps ? "" : ' <span class="ing-not-in-steps" title="Not mentioned in recipe steps">!</span>';
+        if (g) {
+          ((_ = !0), (b += g.kcal), (f += g.p), (v += g.c), (w += g.f));
+          Math.random().toString(36).slice(2, 7);
+          y += `<li class="has-macros" onclick="toggleIngMacro(this)">\n          <div class="ing-main-row">\n            <span class="ing-item-name">${m}${_warnBadge}</span>\n            <div style="display:flex;align-items:center;gap:8px;">\n              <span class="ing-item-amt">${d}</span>\n              <span class="ing-expand-icon">▼</span>\n            </div>\n          </div>\n          <div class="ing-macro-panel">\n            <div class="ing-macro-grid">\n              <div class="ing-macro-cell mk"><span class="imc-val">${g.kcal}</span><span class="imc-lbl">kcal</span></div>\n              <div class="ing-macro-cell mp"><span class="imc-val">${g.p}g</span><span class="imc-lbl">protein</span></div>\n              <div class="ing-macro-cell mc"><span class="imc-val">${g.c}g</span><span class="imc-lbl">carbs</span></div>\n              <div class="ing-macro-cell mf"><span class="imc-val">${g.f}g</span><span class="imc-lbl">fat</span></div>\n              ${g.a > 0 ? `<div class="ing-macro-cell ma"><span class="imc-val">${g.a}g</span><span class="imc-lbl">alcohol</span></div>` : ""}\n            </div>\n            <div class="ing-macro-hint">${i > 1 ? `${i} servings` : "Per portion"} · based on ${g.grams}g</div>\n          </div>\n        </li>`;
+        } else
+          y += `<li><div class="ing-main-row"><span class="ing-item-name">${m}${_warnBadge}</span><span class="ing-item-amt">${d}</span></div></li>`;
+      }),
+      (y += "</ul>"));
+  });
+  const _svBak = weights.servings;
+  weights.servings = modalServings;
+  const _pAP2 = activeProtein, _pCh2 = weights.chicken;
+  if (e.protein === "eggs") { activeProtein = "eggs"; weights.chicken = eggCount * eggSizeG; }
+  const S = baseMacros(e.carb),
+    C = getSauceMacros(e);
+  activeProtein = _pAP2; weights.chicken = _pCh2;
+  let _seKcal = 0, _seP = 0, _seC = 0, _seF = 0;
+  if (e.sideEgg) {
+    const _nut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
+    const _gPP = Math.round((sideEggCount * sideEggSizeG) / Math.max(modalServings, 1));
+    _seKcal = Math.round((_nut.kcal * _gPP) / 100);
+    _seP    = Math.round((_nut.p  * _gPP) / 100 * 10) / 10;
+    _seC    = Math.round((_nut.c  * _gPP) / 100 * 10) / 10;
+    _seF    = Math.round((_nut.f  * _gPP) / 100 * 10) / 10;
+  }
+  const T = Math.round(S.kcal + C.kcal + _seKcal),
+    x = Math.round(S.p + C.p + _seP),
+    B = Math.round(S.c + C.c + _seC),
+    P = Math.round(S.f + C.f + _seF);
+  weights.servings = _svBak;
+  ((y += `<div class="ing-total-bar">\n    <div class="ing-total-title">📊 Total per portion</div>\n    <div class="ing-total-grid">\n      <div class="ing-total-cell mk"><span class="itc-val">${T}</span><span class="itc-lbl">kcal</span></div>\n      <div class="ing-total-cell mp"><span class="itc-val">${x}g</span><span class="itc-lbl">protein</span></div>\n      <div class="ing-total-cell mc"><span class="itc-val">${B}g</span><span class="itc-lbl">carbs</span></div>\n      <div class="ing-total-cell mf"><span class="itc-val">${P}g</span><span class="itc-lbl">fat</span></div>\n    </div>\n    <div class="ing-macro-hint" style="margin-top:8px;">Tap any ingredient to see its macros</div>\n  </div>`),
+    t.placeholder
+      ? (y += '<div class="ing-note">📌 Full ingredient list coming soon — follow on YouTube & TikTok!</div>')
+      : (y += '<div class="ing-note">📌 Weights are global — changes apply to all recipes.</div>'),
+    (document.getElementById("tab-ingredients").innerHTML = y));
+}
+function changeModalServings(e, a) {
+  ((modalServings = Math.max(1, Math.min(10, modalServings + e))), (weights.servings = modalServings));
+  if (a) Object.keys(_sauceMacroCache).forEach(k => { if (k === a || k.startsWith(a + "_s")) delete _sauceMacroCache[k]; });
+  const _sl = document.getElementById("modalServingLabel");
+  if (_sl) _sl.textContent = modalServings + (modalServings === 1 ? " serving" : " servings");
+  const t = document.getElementById("servingsInput");
+  t && (t.textContent = modalServings);
+  const i = document.getElementById("globalServingVal");
+  i && (i.textContent = modalServings);
+  const n = document.getElementById("pillServingsLabel");
+  n && (n.textContent = modalServings + (1 === modalServings ? " Serving" : " Servings"));
+  const s = document.getElementById("pillServings");
+  s && s.classList.toggle("has-active", 2 !== modalServings);
+  const o = R.find((e) => e.id === a);
+  o && (buildIngredientsTab(o), updateModalMacros(o), updateCardMacros(), updateCalcDisplay());
+}
+function toggleStepIng(e, a) {
+  const t = document.getElementById(a);
+  t && (e.classList.toggle("open"), t.classList.toggle("open"));
+}
+function buildRecipeTab(e) {
+  const a = getRecipeDetail(e);
+  let t = "";
+  const i = [];
+  (a.ingredients || []).forEach((e) => {
+    (e.items || []).forEach((a) => {
+      i.push({ ...a, section: e.section });
+    });
+  });
+  const n = Math.max(weights.servings, 1),
+    s = Math.round(weights.chicken),
+    o = e ? Math.round(weights[e.carb]) : 0,
+    _proteinNames = {
+      chicken_thigh: "Chicken thigh (boneless, skinless, raw)",
+      chicken_breast: "Chicken breast (boneless, skinless, raw)",
+      beef_regular: "Ground beef (20% fat, raw)",
+      beef_lean: "Lean ground beef (5% fat, raw)",
+      eggs: "Eggs (whole)",
+      salmon: "Salmon fillet (skin on, raw)",
+      tofu: "Firm tofu",
+    },
+    _proteinLabel = _proteinNames[activeProtein] || _proteinNames.chicken_thigh,
+    _carbNames = { potato: "Potato (raw)", rice: "Rice (dry)", noodle: "Noodles (dry)", bread: "Bread / Wrap" },
+    _carbLabel = _carbNames[e ? e.carb : "potato"] || "Carb base";
+  (a.steps.length &&
+    ((t += '<div class="step-list">'),
+    a.steps.forEach((a, r) => {
+      const c = a.toLowerCase(),
+        l = i.filter((a) =>
+          a.name
+            .toLowerCase()
+            .replace(/[(){}]/g, "")
+            .replace(/{{proteing}}/g, "chicken")
+            .replace(/{{carbg}}/g, e ? e.carb : "potato")
+            .trim()
+            .split(/[\s,\/]+/)
+            .filter((e) => e.length > 3)
+            .some((e) => c.includes(e)),
+        );
+      let d = "";
+      if (l.length > 0) {
+        const a = "step-ing-" + e.id + "-" + r,
+          t = l
+            .map((e) => {
+              const a = (e.amt || "").includes("{{proteinG}}") || (e.amt || "").includes("{{carbG}}"),
+                t = (e.amt || "")
+                  .replace("{{proteinG}}", s)
+                  .replace("{{carbG}}", o)
+                  .replace("{{servings}}", n);
+              let i = a ? t : scaleAmt(t, n),
+                r = e.name;
+              e.amt && e.amt.includes("{{proteinG}}") && (r = _proteinLabel);
+              e.amt && e.amt.includes("{{carbG}}") && (r = _carbLabel);
+              return (
+                `<div class="step-ing-item">\n            <span class="sii-name">${r}</span>\n            <span class="sii-amt">${i}</span>\n          </div>`
+              );
+            })
+            .join("");
+        d = `\n          <div class="step-ing-btn" onclick="toggleStepIng(this,'${a}')">\n            🥄 ${l.length} ingredient${l.length > 1 ? "s" : ""} <span class="sia-arrow">▼</span>\n          </div>\n          <div class="step-ing-panel" id="${a}">\n            ${t}\n          </div>`;
+      }
+      t += `<div class="step">\n        <div class="step-num">${r + 1}</div>\n        <div class="step-text">\n          <div>${a}</div>\n          ${d}\n        </div>\n      </div>`;
+    }),
+    (t += "</div>")),
+    a.hacks &&
+      a.hacks.length &&
+      a.hacks.forEach((e) => {
+        t += `<div class="hack-box"><strong>💡 80/20 hack — ${e.title}:</strong> ${e.text}</div>`;
+      }),
+    a.notes && (t += `<div class="ing-note" style="margin-top:16px;">📌 ${a.notes}</div>`));
+  const r = detectEquipment(a.steps);
+  (r.length &&
+    ((t += '<div class="equipment-row"><span class="equipment-label">🛠 Need:</span>'),
+    r.forEach((e) => {
+      t += `<span class="equipment-tag">${e.icon} ${e.label}</span>`;
+    }),
+    (t += "</div>")),
+    (document.getElementById("tab-recipe").innerHTML = t));
+}
+const EQUIPMENT_MAP = [
+  {
+    icon: "🔥",
+    label: "Oven",
+    keys: ["oven", "roast at", "bake at", "grill/broil", "broil", "180c", "190c", "200c", "210c", "220c", "°c"],
+  },
+  {
+    icon: "🍳",
+    label: "Pan / Wok",
+    keys: ["pan", "wok", "skillet", "sear", "fry", "sauté", "saute", "non-stick", "cast iron"],
+  },
+  { icon: "🫕", label: "Pot", keys: ["pot", "boil", "simmer", "braise", "soup", "stock", "poach", "blanch"] },
+  { icon: "💨", label: "Air Fryer", keys: ["air fry", "airfry", "air-fry"] },
+  { icon: "🧈", label: "Grill", keys: ["grill", "griddle", "bbq", "char mark", "charcoal"] },
+  { icon: "⚡", label: "Blender", keys: ["blend", "blender", "food processor", "stick blender"] },
+  { icon: "🔪", label: "Sharp Knife", keys: ["julienne", "mince", "finely", "thin slice", "shave", "julien"] },
+  {
+    icon: "⏲️",
+    label: "Timer",
+    keys: ["12 min", "15 min", "20 min", "25 min", "30 min", "35 min", "40 min", "45 min", "50 min"],
+  },
+  { icon: "🥣", label: "Mixing Bowl", keys: ["mixing bowl", "in a bowl", "toss in", "combine in"] },
+  { icon: "🫙", label: "Sandwich Press", keys: ["sandwich press", "press down", "panini"] },
+];
+function detectEquipment(e) {
+  if (!e || !e.length) return [];
+  const a = e.join(" ").toLowerCase(),
+    t = [];
+  return (
+    EQUIPMENT_MAP.forEach((e) => {
+      e.keys.some((e) => a.includes(e)) && t.push(e);
+    }),
+    t
+  );
+}
+function buildVideoTab(e) {
+  const a = getRecipeDetail(e);
+  let t = "";
+  (a.video &&
+    (t = `<div class="video-embed"><iframe src="https://www.youtube.com/embed/${a.video}" allowfullscreen loading="lazy"></iframe></div>`),
+    (document.getElementById("tab-video").innerHTML = t));
+}
+const PANTRY_ITEMS = {
+    sauces: [
+      { id: "soy_sauce", name: "Soy Sauce" },
+      { id: "oyster_sauce", name: "Oyster Sauce" },
+      { id: "fish_sauce", name: "Fish Sauce" },
+      { id: "hoisin", name: "Hoisin Sauce" },
+      { id: "gochujang", name: "Gochujang" },
+      { id: "miso", name: "Miso Paste" },
+      { id: "doenjang", name: "Doenjang (Korean Soybean Paste)" },
+      { id: "teriyaki", name: "Teriyaki Sauce" },
+      { id: "sesame_oil", name: "Sesame Oil" },
+      { id: "sriracha", name: "Sriracha" },
+      { id: "tahini", name: "Tahini" },
+      { id: "harissa", name: "Harissa" },
+      { id: "worcestershire", name: "Worcestershire" },
+      { id: "ketchup", name: "Ketchup / Tomato Paste" },
+      { id: "mayo", name: "Mayonnaise" },
+      { id: "hot_sauce", name: "Hot Sauce" },
+      { id: "peanut_butter", name: "Peanut Butter" },
+      { id: "coconut_milk", name: "Coconut Milk" },
+      { id: "rice_vinegar", name: "Rice Vinegar" },
+      { id: "apple_cider_vinegar", name: "Apple Cider Vinegar" },
+      { id: "mirin", name: "Mirin" },
+      { id: "sake", name: "Sake / Dry White Wine" },
+      { id: "toum", name: "Toum / Garlic Sauce" },
+      { id: "dijon", name: "Dijon / Whole Grain Mustard" },
+      { id: "bbq_sauce", name: "BBQ Sauce" },
+      { id: "chipotle_adobo", name: "Chipotle in Adobo" },
+      { id: "sweet_soy", name: "Sweet Soy Sauce (Kecap Manis)" },
+      { id: "ponzu", name: "Ponzu Sauce" },
+      { id: "shio_koji", name: "Shio Koji" },
+      { id: "yuzu_kosho", name: "Yuzu Kosho" },
+      { id: "tamarind", name: "Tamarind Paste" },
+      { id: "balsamic_glaze", name: "Balsamic Glaze" },
+      { id: "chili_oil", name: "Chili Oil" },
+    ],
+    spices: [
+      { id: "gochugaru", name: "Gochugaru (Korean Chili)" },
+      { id: "cumin", name: "Cumin" },
+      { id: "coriander", name: "Ground Coriander" },
+      { id: "turmeric", name: "Turmeric" },
+      { id: "smoked_paprika", name: "Smoked Paprika" },
+      { id: "paprika", name: "Paprika" },
+      { id: "chili_flakes", name: "Chili Flakes" },
+      { id: "five_spice", name: "Chinese 5-Spice" },
+      { id: "zaatar", name: "Za'atar" },
+      { id: "sumac", name: "Sumac" },
+      { id: "baharat", name: "Baharat" },
+      { id: "ras_el_hanout", name: "Ras el Hanout" },
+      { id: "curry_powder", name: "Curry Powder" },
+      { id: "garam_masala", name: "Garam Masala" },
+      { id: "tandoori_masala", name: "Tandoori Masala" },
+      { id: "tikka_paste", name: "Tikka Masala Paste" },
+      { id: "kasuri_methi", name: "Kasuri Methi (Dried Fenugreek)" },
+      { id: "oregano", name: "Dried Oregano" },
+      { id: "thyme", name: "Dried Thyme" },
+      { id: "dill_dried", name: "Dried Dill" },
+      { id: "bay_leaf", name: "Bay Leaves" },
+      { id: "cinnamon", name: "Cinnamon" },
+      { id: "cardamom", name: "Cardamom" },
+      { id: "star_anise", name: "Star Anise" },
+      { id: "allspice", name: "Allspice" },
+      { id: "garlic_powder", name: "Garlic Powder" },
+      { id: "onion_powder", name: "Onion Powder" },
+      { id: "cayenne", name: "Cayenne Pepper" },
+      { id: "black_pepper", name: "Black Pepper" },
+      { id: "msg", name: "MSG" },
+      { id: "saffron", name: "Saffron" },
+      { id: "jerk_seasoning", name: "Jerk Seasoning" },
+      { id: "dukkah", name: "Dukkah" },
+      { id: "furikake", name: "Furikake" },
+      { id: "tajin", name: "Tajin / Chili Lime Seasoning" },
+    ],
+    fresh: [
+      { id: "garlic", name: "Garlic" },
+      { id: "ginger", name: "Fresh Ginger" },
+      { id: "scallion", name: "Spring Onion / Scallion" },
+      { id: "onion", name: "Onion" },
+      { id: "lemon", name: "Lemon" },
+      { id: "lime", name: "Lime" },
+      { id: "cilantro", name: "Fresh Cilantro" },
+      { id: "parsley", name: "Fresh Parsley" },
+      { id: "basil", name: "Fresh Basil" },
+      { id: "mint", name: "Fresh Mint" },
+      { id: "rosemary", name: "Fresh Rosemary" },
+      { id: "chives", name: "Fresh Chives" },
+      { id: "dill_fresh", name: "Fresh Dill" },
+      { id: "lemongrass", name: "Lemongrass" },
+      { id: "kaffir_lime", name: "Kaffir Lime Leaves" },
+      { id: "thai_basil", name: "Thai Basil" },
+      { id: "pandan", name: "Pandan Leaves" },
+      { id: "chili_fresh", name: "Fresh Chili" },
+      { id: "tomato", name: "Fresh Tomato" },
+      { id: "cucumber", name: "Cucumber" },
+      { id: "avocado", name: "Avocado" },
+      { id: "bell_pepper", name: "Bell Pepper / Capsicum" },
+      { id: "cabbage", name: "Cabbage (White / Red)" },
+      { id: "carrot", name: "Carrot" },
+      { id: "corn", name: "Corn (Fresh / Frozen)" },
+      { id: "leek", name: "Leek" },
+      { id: "mushroom", name: "Mushrooms" },
+      { id: "spinach", name: "Spinach" },
+      { id: "bok_choy", name: "Bok Choy" },
+      { id: "kimchi", name: "Kimchi" },
+    ],
+    dairy: [
+      { id: "butter", name: "Butter" },
+      { id: "eggs_dairy", name: "Eggs" },
+      { id: "milk", name: "Milk" },
+      { id: "heavy_cream", name: "Heavy Cream" },
+      { id: "sour_cream", name: "Sour Cream" },
+      { id: "cream_cheese", name: "Cream Cheese" },
+      { id: "creme_fraiche", name: "Crème Fraîche" },
+      { id: "yogurt", name: "Greek Yogurt" },
+      { id: "quark_low_fat", name: "Low-Fat Quark" },
+      { id: "skyr", name: "Skyr" },
+      { id: "cottage_cheese", name: "Cottage Cheese" },
+      { id: "ricotta", name: "Ricotta" },
+      { id: "labneh", name: "Labneh" },
+      { id: "cheese_parm", name: "Parmesan" },
+      { id: "cheese_mozz", name: "Mozzarella" },
+      { id: "cheese_feta", name: "Feta" },
+      { id: "cheese_cheddar", name: "Cheddar" },
+      { id: "cheese_gruyere", name: "Gruyère / Emmental" },
+      { id: "cheese_provolone", name: "Provolone / Swiss" },
+    ],
+    staples: [
+      { id: "olive_oil", name: "Olive Oil" },
+      { id: "neutral_oil", name: "Neutral Oil (Sunflower etc.)" },
+      { id: "chicken_stock", name: "Chicken Stock / Broth" },
+      { id: "canned_tomato", name: "Canned Tomatoes" },
+      { id: "tomato_paste", name: "Tomato Paste" },
+      { id: "black_beans", name: "Black Beans (canned)" },
+      { id: "kidney_beans", name: "Kidney Beans (canned)" },
+      { id: "coconut_cream", name: "Coconut Cream" },
+      { id: "panko", name: "Panko Breadcrumbs" },
+      { id: "breadcrumbs", name: "Regular Breadcrumbs" },
+      { id: "flour", name: "All-Purpose Flour" },
+      { id: "cornstarch", name: "Cornstarch" },
+      { id: "honey", name: "Honey" },
+      { id: "sugar", name: "Sugar / Brown Sugar" },
+      { id: "sesame_seeds", name: "Sesame Seeds" },
+      { id: "peanuts", name: "Peanuts / Cashews" },
+      { id: "almonds", name: "Almonds (blanched)" },
+      { id: "pine_nuts", name: "Pine Nuts" },
+      { id: "raisins", name: "Raisins" },
+      { id: "dashi", name: "Dashi / Dashi Powder" },
+      { id: "japanese_curry_roux", name: "Japanese Curry Roux (S&B)" },
+      { id: "nori", name: "Nori / Seaweed" },
+      { id: "glass_noodles", name: "Glass Noodles" },
+      { id: "rice_paper", name: "Rice Paper" },
+      { id: "pickled_veg", name: "Pickled Veg / Gherkins" },
+      { id: "dried_chili", name: "Dried Chili" },
+      { id: "pomegranate_mol", name: "Pomegranate Molasses" },
+      { id: "preserved_lemon", name: "Preserved Lemon" },
+    ],
+    proteins: [
+      { id: "chicken_thigh", name: "Chicken Thigh" },
+      { id: "chicken_breast", name: "Chicken Breast" },
+      { id: "beef_regular", name: "Ground Beef (Regular)" },
+      { id: "beef_lean", name: "Lean Ground Beef" },
+      { id: "eggs", name: "Eggs" },
+      { id: "salmon", name: "Salmon" },
+      { id: "tofu", name: "Firm Tofu" },
+      { id: "tuna_canned", name: "Tuna (Canned in Water)" },
+      { id: "shrimp", name: "Shrimp / Prawns" },
+      { id: "cod", name: "Cod / White Fish" },
+      { id: "turkey_mince", name: "Turkey Mince" },
+      { id: "quark_low_fat", name: "Low-Fat Quark" },
+      { id: "skyr", name: "Skyr" },
+      { id: "cottage_cheese", name: "Cottage Cheese" },
+    ],
+    carbs: [
+      { id: "potato", name: "Potato" },
+      { id: "rice", name: "Rice (White, Dry)" },
+      { id: "noodle", name: "Noodles (Egg / Wheat, Dry)" },
+      { id: "bread", name: "Bread / Wrap" },
+    ],
+  },
+  INGREDIENT_RECIPE_MAP = {},
+          ALCOHOL_RECIPE_IDS = new Set(),
+          SPICY_RECIPE_IDS = new Set(),
+          DIP_RECIPE_IDS = new Set();
+let disabledIngredients = new Set(JSON.parse(localStorage.getItem("pantryDisabled") || "[]"));
+function savePantry() {
+  try {
+    localStorage.setItem("pantryDisabled", JSON.stringify([...disabledIngredients]));
+  } catch (e) {}
+}
+function pantrySearchFilter() {
+  const e = document.getElementById("pantrySearch")?.value.toLowerCase() || "";
+  (document.querySelectorAll(".ing-item").forEach((a) => {
+    const t = a.querySelector(".ing-name")?.textContent.toLowerCase() || "";
+    a.classList.toggle("hidden", e.length > 0 && !t.includes(e));
+  }),
+    document.querySelectorAll(".pantry-section").forEach((a) => {
+      const t = [...a.querySelectorAll(".ing-item")].every((e) => e.classList.contains("hidden"));
+      a.style.display = t && e.length > 0 ? "none" : "";
+    }));
+}
+function renderPantry() {
+  (Object.entries({
+    sauces: "pantry-sauces",
+    spices: "pantry-spices",
+    fresh: "pantry-fresh",
+    dairy: "pantry-dairy",
+    staples: "pantry-staples",
+    proteins: "pantry-proteins",
+    carbs: "pantry-carbs",
+  }).forEach(([e, a]) => {
+    const t = document.getElementById(a);
+    t &&
+      (t.innerHTML = PANTRY_ITEMS[e]
+        .map((e) => {
+          const a = disabledIngredients.has(e.id),
+            t = (INGREDIENT_RECIPE_MAP[e.id] || []).length;
+          return `<div class="ing-item ${a ? "disabled" : ""}" onclick="toggleIngredient('${e.id}',this)">\n        <span class="ing-checkbox"></span>\n        <span class="ing-name">${e.name}${t ? ` <span style="color:#555;font-size:10px">(${t})</span>` : ""}</span>\n      </div>`;
+        })
+        .join(""));
+  }),
+    updatePantryCounts());
+}
+function updatePantryAfterRender() {
+  updatePantryCounts();
+}
+function toggleIngredient(e, a) {
+  if (disabledIngredients.has(e)) {
+    const t = DIETARY_FILTERS.filter((a) => activeDietary.has(a.id) && a.blocks.includes(e));
+    (t.forEach((a) => {
+      (activeDietary.delete(a.id),
+        a.blocks.forEach((a) => {
+          if (a === e) return;
+          [...activeDietary].some((e) => {
+            const t = DIETARY_FILTERS.find((a) => a.id === e);
+            return t && t.blocks.includes(a);
+          }) || disabledIngredients.delete(a);
+        }));
+    }),
+      t.length > 0 && (saveDietary(), buildDietaryGrid(), updateDietaryBar()),
+      disabledIngredients.delete(e),
+      a.classList.remove("disabled"));
+  } else (disabledIngredients.add(e), a.classList.add("disabled"));
+  (savePantry(), updatePantryCounts());
+  if (
+    [
+      "chicken_thigh",
+      "chicken_breast",
+      "beef_regular",
+      "beef_lean",
+      "eggs",
+      "eggs_dairy",
+      "salmon",
+      "shrimp",
+      "cod",
+      "tuna_canned",
+      "turkey_mince",
+    ].includes(e)
+  ) {
+    const a = {
+      chicken_thigh: "chkPChicken",
+      chicken_breast: "chkPChicken",
+      beef_regular: "chkPBeef",
+      beef_lean: "chkPBeef",
+      eggs: "chkPEggs",
+      eggs_dairy: "chkPEggs",
+      salmon: "chkPFish",
+      shrimp: "chkPFish",
+      cod: "chkPFish",
+      tuna_canned: "chkPFish",
+    }[e];
+    if (a) {
+      const t = !disabledIngredients.has(e),
+        i = document.getElementById(a);
+      if (i) {
+        i.checked = t;
+        const e = a.replace("chkP", "").toLowerCase();
+        ((proteinEnabled[e] = t), t && syncDietaryFromProtein());
+        _syncFilterBtn("btn" + a.replace("chk", ""), t);
+      }
+    }
+  }
+  filterRecipes();
+}
+function pantrySelectAll() {
+  (disabledIngredients.clear(),
+    activeDietary.clear(),
+    saveDietary(),
+    buildDietaryGrid(),
+    updateDietaryBar(),
+    savePantry(),
+    renderPantry(),
+    filterRecipes());
+}
+function pantrySelectNone() {
+  (Object.values(PANTRY_ITEMS)
+    .flat()
+    .forEach((e) => disabledIngredients.add(e.id)),
+    savePantry(),
+    renderPantry(),
+    filterRecipes());
+}
+function switchTab(e, a) {
+  (document.querySelectorAll(".nav-tab").forEach((e) => e.classList.remove("active")),
+    a.classList.add("active"),
+    document.querySelectorAll(".page").forEach((e) => e.classList.remove("active")),
+    document.getElementById("page-" + e).classList.add("active"),
+    "pantry" === e && (renderPantry(), buildDietaryGrid()),
+    "compare" === e && buildCompareTable());
+}
+const ADMIN_HASH = "4fdb10503bb511548ce67d426a58d23f2863c3e4bf16c517dccb2196405fdec7";
+let adminMode = !1,
+  adminClickCount = 0,
+  adminClickTimer = null,
+  editingRecipeId = null,
+  adminOverrides = {};
+try {
+  adminOverrides = JSON.parse(localStorage.getItem("adminOverrides") || "{}");
+} catch (e) {}
+function saveAdminOverrides() {
+  try {
+    localStorage.setItem("adminOverrides", JSON.stringify(adminOverrides));
+  } catch (e) {}
+}
+async function sha256(e) {
+  const a = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(e));
+  return Array.from(new Uint8Array(a))
+    .map((e) => e.toString(16).padStart(2, "0"))
+    .join("");
+}
+function handleProfileClick() {
+  (adminClickCount++,
+    clearTimeout(adminClickTimer),
+    (adminClickTimer = setTimeout(() => {
+      adminClickCount = 0;
+    }, 1500)),
+    adminClickCount >= 5 && ((adminClickCount = 0), clearTimeout(adminClickTimer), promptAdminPassword()));
+}
+async function promptAdminPassword() {
+  if (adminMode) return void deactivateAdmin();
+  const e = prompt("Admin-Passwort:");
+  if (!e) return;
+  (await sha256(e)) === ADMIN_HASH ? activateAdmin() : alert("Falsches Passwort.");
+}
+function activateAdmin() {
+  ((adminMode = !0),
+    document.body.classList.add("admin-mode"),
+    document.querySelectorAll(".card").forEach((e) => {
+      if (!e.querySelector(".admin-edit-btn")) {
+        const a = document.createElement("button");
+        ((a.className = "admin-edit-btn"),
+          (a.textContent = "✏️ Edit"),
+          (a.onclick = (a) => {
+            (a.stopPropagation(), openAdminEdit(e.dataset.id));
+          }),
+          e.appendChild(a));
+        const t = document.createElement("button"),
+          i = e.dataset.id,
+          n = HIDDEN_RECIPE_IDS.has(i);
+        ((t.className = "admin-toggle-btn"),
+          (t.textContent = n ? "👁 Show" : "🚫 Hide"),
+          (t.style.cssText = `position:absolute;top:8px;right:72px;border:none;border-radius:6px;font-size:10px;font-weight:700;padding:4px 8px;cursor:pointer;z-index:10;font-family:"DM Sans",sans-serif;text-transform:uppercase;letter-spacing:.5px;background:${n ? "#2a5a2a" : "#5a2a2a"};color:${n ? "#47e8a3" : "#e84747"};`),
+          (t.onclick = (e) => {
+            (e.stopPropagation(), adminToggleRecipe(i));
+          }),
+          e.appendChild(t));
+      }
+    }));
+}
+function deactivateAdmin() {
+  document.getElementById("exitModalOverlay").classList.add("open");
+}
+function exitAdminSaveAndDownload() {
+  saveAdminOverrides();
+  try {
+    localStorage.setItem("hiddenRecipes", JSON.stringify([...HIDDEN_RECIPE_IDS]));
+  } catch (e) {}
+  (document.getElementById("exitModalOverlay").classList.remove("open"),
+    (adminMode = !1),
+    document.body.classList.remove("admin-mode"),
+    exportAdminHTML());
+}
+function exitAdminSaveOnly() {
+  saveAdminOverrides();
+  try {
+    localStorage.setItem("hiddenRecipes", JSON.stringify([...HIDDEN_RECIPE_IDS]));
+  } catch (e) {}
+  (document.getElementById("exitModalOverlay").classList.remove("open"),
+    (adminMode = !1),
+    document.body.classList.remove("admin-mode"));
+}
+function exitAdminDiscard() {
+  try {
+    adminOverrides = JSON.parse(localStorage.getItem("adminOverrides") || "{}");
+  } catch (e) {}
+  (document.getElementById("exitModalOverlay").classList.remove("open"),
+    (adminMode = !1),
+    document.body.classList.remove("admin-mode"),
+    filterRecipes());
+}
+function getEffectiveDetail(e) {
+  return adminOverrides[e.id] ? { ...getRecipeDetail(e), ...adminOverrides[e.id] } : getRecipeDetail(e);
+}
+function openAdminEdit(e) {
+  const a = R.find((a) => a.id === e);
+  if (!a) return;
+  editingRecipeId = e;
+  const t = getEffectiveDetail(a),
+    i = document.getElementById("adminModalOverlay");
+  ((document.getElementById("aRecipeNum").value = a.id),
+    (document.getElementById("aTitle").value = a.title),
+    (document.getElementById("aDesc").value = a.desc),
+    (document.getElementById("aTime").value = a.time),
+    (document.getElementById("aTags").value = a.tags.join(", ")),
+    (document.getElementById("aVideoId").value = t.video || ""),
+    (document.getElementById("aImageUrl").value = t.image || ""),
+    (document.getElementById("aNotes").value = t.notes || ""),
+    (document.getElementById("aSkcal").value = a.sauce_kcal),
+    (document.getElementById("aSp").value = a.sauce_p),
+    (document.getElementById("aSc").value = a.sauce_c),
+    (document.getElementById("aSf").value = a.sauce_f),
+    renderAdminSteps(t.steps || []),
+    renderAdminHacks(t.hacks || []),
+    renderAdminIngredients(t.ingredients || []),
+    (document.getElementById("adminRecipeTitle").textContent = a.title),
+    updateAdminVisibilityBtn(),
+    i.classList.add("open"),
+    (document.body.style.overflow = "hidden"));
+}
+function renderAdminSteps(e) {
+  document.getElementById("adminStepsList").innerHTML = e
+    .map(
+      (e, a) =>
+        `\n    <div class="admin-step-row" data-idx="${a}">\n      <span class="admin-step-num">${a + 1}</span>\n      <textarea class="admin-step-text">${e}</textarea>\n      <button class="admin-step-del" onclick="removeAdminStep(${a})">✕</button>\n    </div>`,
+    )
+    .join("");
+}
+function removeAdminStep(e) {
+  const a = getAdminStepsValues();
+  (a.splice(e, 1), renderAdminSteps(a));
+}
+function addAdminStep() {
+  const e = getAdminStepsValues();
+  (e.push(""),
+    renderAdminSteps(e),
+    document.querySelectorAll("#adminStepsList .admin-step-text").forEach((a, t) => {
+      t === e.length - 1 && a.focus();
+    }));
+}
+function getAdminStepsValues() {
+  return [...document.querySelectorAll("#adminStepsList .admin-step-text")].map((e) => e.value);
+}
+function renderAdminHacks(e) {
+  document.getElementById("adminHacksList").innerHTML = e
+    .map(
+      (e, a) =>
+        `\n    <div class="admin-field" data-hack="${a}" style="border:1px solid #2a2a2a;padding:12px;border-radius:8px;position:relative;">\n      <label>💡 Hack ${a + 1} — Titel</label>\n      <input type="text" class="admin-hack-title" value="${e.title || ""}">\n      <label style="margin-top:8px;">Text</label>\n      <textarea class="admin-hack-text">${e.text || ""}</textarea>\n      <button class="admin-step-del" style="margin-top:4px;" onclick="removeAdminHack(${a})">✕ Hack entfernen</button>\n    </div>`,
+    )
+    .join("");
+}
+function removeAdminHack(e) {
+  const a = getAdminHacksValues();
+  (a.splice(e, 1), renderAdminHacks(a));
+}
+function addAdminHack() {
+  const e = getAdminHacksValues();
+  (e.push({ title: "", text: "" }), renderAdminHacks(e));
+}
+function getAdminHacksValues() {
+  return [...document.querySelectorAll("#adminHacksList [data-hack]")].map((e) => ({
+    title: e.querySelector(".admin-hack-title")?.value || "",
+    text: e.querySelector(".admin-hack-text")?.value || "",
+  }));
+}
+function renderAdminIngredients(e) {
+  const a = document.getElementById("adminIngList");
+  let t = "";
+  (e.forEach((e, a) => {
+    ((t += `<div class="admin-section-title">${e.section}</div>`),
+      e.items.forEach((e, i) => {
+        t += `<div class="admin-ing-row" data-sec="${a}" data-item="${i}">\n        <input type="text" class="admin-ing-name" value="${(e.name || "").replace(/"/g, "&quot;")}" placeholder="Ingredient name">\n        <input type="text" class="admin-ing-amt" value="${(e.amt || "").replace(/"/g, "&quot;")}" placeholder="Amount">\n        <button class="admin-step-del" onclick="this.closest('.admin-ing-row').remove()">✕</button>\n      </div>`;
+      }),
+      (t += `<button class="admin-add-btn" onclick="addAdminIngredient(${a})">+ Zutat</button>`));
+  }),
+    (a.innerHTML = t));
+}
+function addAdminIngredient(e) {
+  const a = document.querySelectorAll('#adminIngList .admin-ing-row[data-sec="' + e + '"]'),
+    t = [...a].pop(),
+    i = document.createElement("div");
+  ((i.className = "admin-ing-row"),
+    (i.dataset.sec = e),
+    (i.dataset.item = a.length),
+    (i.innerHTML =
+      '<input type="text" class="admin-ing-name" placeholder="Ingredient name"><input type="text" class="admin-ing-amt" placeholder="Amount"><button class="admin-step-del" onclick="this.closest(\'.admin-ing-row\').remove()">✕</button>'),
+    t ? t.after(i) : document.getElementById("adminIngList").appendChild(i),
+    i.querySelector("input").focus());
+}
+function getAdminIngredientsValue() {
+  const e = [...document.getElementById("adminIngList").children],
+    a = [];
+  let t = null;
+  return (
+    e.forEach((e) => {
+      if (e.classList.contains("admin-section-title")) ((t = { section: e.textContent, items: [] }), a.push(t));
+      else if (e.classList.contains("admin-ing-row") && t) {
+        const a = e.querySelector(".admin-ing-name")?.value || "",
+          i = e.querySelector(".admin-ing-amt")?.value || "";
+        a && t.items.push({ name: a, amt: i });
+      }
+    }),
+    a
+  );
+}
+function toggleRecipeVisibility() {
+  if (!editingRecipeId) return;
+  HIDDEN_RECIPE_IDS.has(editingRecipeId)
+    ? HIDDEN_RECIPE_IDS.delete(editingRecipeId)
+    : HIDDEN_RECIPE_IDS.add(editingRecipeId);
+  try {
+    localStorage.setItem("hiddenRecipes", JSON.stringify([...HIDDEN_RECIPE_IDS]));
+  } catch (e) {}
+  (updateAdminVisibilityBtn(), filterRecipes());
+}
+function updateAdminVisibilityBtn() {
+  const e = document.getElementById("adminVisibilityBtn");
+  if (!e || !editingRecipeId) return;
+  const a = HIDDEN_RECIPE_IDS.has(editingRecipeId);
+  ((e.textContent = a ? "👁 Show recipe" : "🚫 Hide recipe"),
+    (e.style.borderColor = a ? "#47e8a3" : "#e84747"),
+    (e.style.color = a ? "#47e8a3" : "#e84747"));
+}
+function saveAdminEdit() {
+  const e = R.find((e) => e.id === editingRecipeId);
+  if (!e) return;
+  parseInt(document.getElementById("aRecipeNum").value) || e.id;
+  ((e.title = document.getElementById("aTitle").value),
+    (e.desc = document.getElementById("aDesc").value),
+    (e.time = parseInt(document.getElementById("aTime").value) || e.time),
+    (e.tags = document
+      .getElementById("aTags")
+      .value.split(",")
+      .map((e) => e.trim())
+      .filter(Boolean)),
+    (e.sauce_kcal = parseFloat(document.getElementById("aSkcal").value) || 0),
+    (e.sauce_p = parseFloat(document.getElementById("aSp").value) || 0),
+    (e.sauce_c = parseFloat(document.getElementById("aSc").value) || 0),
+    (e.sauce_f = parseFloat(document.getElementById("aSf").value) || 0));
+  const a = document.getElementById("aVideoId").value.trim(),
+    t = document.getElementById("aImageUrl").value.trim(),
+    i = {
+      steps: getAdminStepsValues(),
+      hacks: getAdminHacksValues(),
+      ingredients: getAdminIngredientsValue(),
+      notes: document.getElementById("aNotes").value,
+      video: a || null,
+      image: t || null,
+      placeholder: !1,
+    };
+  ((adminOverrides[editingRecipeId] = i), delete _sauceMacroCache[editingRecipeId], saveAdminOverrides());
+  const n = document.querySelector(`.card[data-id="${editingRecipeId}"]`);
+  if (n) {
+    const a = baseMacros(e.carb),
+      t = getSauceMacros(e),
+      i = Math.round(a.kcal + t.kcal),
+      s = Math.round(a.p + t.p),
+      o = Math.round(a.c + t.c),
+      r = Math.round(a.f + t.f);
+    ((n.querySelector(".card-title").textContent = e.title),
+      (n.querySelector(".card-desc").textContent = e.desc));
+    const c = n.querySelector(".card-num-inline");
+    c && (c.textContent = "#" + String(editingRecipeId).padStart(3, "0"));
+    const l = n.querySelector('[data-macro="kcal"]');
+    l && (l.textContent = i);
+    const d = n.querySelector('[data-macro="prot"]');
+    d && (d.textContent = s + "g");
+    const m = n.querySelector('[data-macro="carb"]');
+    m && (m.textContent = o + "g");
+    const h = n.querySelector('[data-macro="fat"]');
+    h && (h.textContent = r + "g");
+  }
+  if (n) {
+    const a = n.querySelector(".card-thumb-wrap");
+    let t = "";
+    (i.image
+      ? (t =
+          '<div class="card-thumb-wrap"><img class="card-thumb" src="' +
+          i.image +
+          '" loading="lazy" alt="' +
+          e.title +
+          '"></div>')
+      : i.video &&
+        (t =
+          '<div class="card-thumb-wrap"><img class="card-thumb" src="https://img.youtube.com/vi/' +
+          i.video +
+          '/maxresdefault.jpg" onerror="this.src=\'https://img.youtube.com/vi/' +
+          i.video +
+          '/hqdefault.jpg\'" loading="lazy" alt="' +
+          e.title +
+          '"><div class="play-overlay"><span>▶️</span></div></div>'),
+      t ? (a ? (a.outerHTML = t) : n.insertAdjacentHTML("afterbegin", t)) : a && a.remove());
+  }
+  closeAdminEdit();
+}
+function closeAdminEdit() {
+  (document.getElementById("adminModalOverlay").classList.remove("open"),
+    (document.body.style.overflow = ""),
+    (editingRecipeId = null));
+}
+function exportAdminHTML() {
+  let e = document.documentElement.outerHTML;
+  const a = `<script>\n(function(){\n  const overrides = ${JSON.stringify(adminOverrides)};\n  Object.entries(overrides).forEach(([id, data]) => {\n    RECIPE_DETAILS[parseInt(id)] = data;\n  });\n})();\n<\/script>`;
+  e = e.replace("</body>", a + "</body>");
+  const t = new Blob([e], { type: "text/html" }),
+    i = document.createElement("a");
+  ((i.href = URL.createObjectURL(t)), (i.download = "fitniikiter-recipes.html"), i.click());
+}
+try {
+  const e = JSON.parse(localStorage.getItem("hiddenRecipes") || "null");
+  e && e.forEach((e) => HIDDEN_RECIPE_IDS.add(e));
+} catch (e) {}
+Object.entries(adminOverrides).forEach(([e, a]) => {
+  RECIPE_DETAILS[parseInt(e)] = { ...(RECIPE_DETAILS[parseInt(e)] || {}), ...a };
+});
+let c2Goal = "fat_loss",
+  c2Gender = "m",
+  c2ActivityFactor = 1.375;
+function setGoal(e) {
+  ((c2Goal = e),
+    document.getElementById("goalFatLoss").classList.toggle("active", "fat_loss" === e),
+    document.getElementById("goalMuscle").classList.toggle("active", "muscle" === e));
+}
+function setGender(e) {
+  ((c2Gender = e),
+    document.getElementById("genderM").classList.toggle("active", "m" === e),
+    document.getElementById("genderF").classList.toggle("active", "f" === e));
+}
+function setActivity(e) {
+  (document.querySelectorAll(".activity-opt").forEach((e) => e.classList.remove("active")),
+    e.classList.add("active"),
+    (c2ActivityFactor = parseFloat(e.dataset.factor)));
+}
+function runCalc() {
+  const e = parseFloat(document.getElementById("c2Age").value),
+    a = parseFloat(document.getElementById("c2Weight").value),
+    t = parseFloat(document.getElementById("c2Height").value),
+    i = parseFloat(document.getElementById("c2BF").value);
+  if (!e || !a || !t) return void alert("Please fill in age, weight and height.");
+  let n;
+  if (!isNaN(i) && i > 3 && i < 60) {
+    n = 370 + 21.6 * (a * (1 - i / 100));
+  } else n = "m" === c2Gender ? 10 * a + 6.25 * t - 5 * e + 5 : 10 * a + 6.25 * t - 5 * e - 161;
+  const s = Math.round(n * c2ActivityFactor);
+  let o, r, c, l;
+  ((n = Math.round(n)),
+    "fat_loss" === c2Goal
+      ? ((o = Math.min(Math.round(0.2 * s), 700)),
+        (r = s - o),
+        (c = -Math.round(((7 * o) / 7700) * 10) / 10),
+        (l = `−${o} kcal (deficit)`))
+      : ((o = Math.round(0.12 * s)),
+        (r = s + o),
+        (c = Math.round(((7 * o) / 7700) * 10) / 10),
+        (l = `+${o} kcal (surplus)`)));
+  const d = "fat_loss" === c2Goal ? 2 : 1.8,
+    m = Math.round(a * d),
+    h = 4 * m,
+    p = Math.round(0.25 * r),
+    u = Math.round(p / 9),
+    g = r - h - p,
+    k = Math.round(g / 4);
+  ((document.getElementById("rTDEE").textContent = s),
+    (document.getElementById("rTarget").textContent = r),
+    (document.getElementById("rProtein").textContent = m),
+    (document.getElementById("rProtG").textContent = m),
+    (document.getElementById("rProtKcal").textContent = h),
+    (document.getElementById("rCarbG").textContent = Math.max(0, k)),
+    (document.getElementById("rCarbKcal").textContent = Math.max(0, g)),
+    (document.getElementById("rFatG").textContent = u),
+    (document.getElementById("rFatKcal").textContent = p),
+    (document.getElementById("rBMR").textContent = n + " kcal"),
+    (document.getElementById("rTDEE2").textContent = s + " kcal"),
+    (document.getElementById("rAdjust").textContent = l),
+    (document.getElementById("rTarget2").textContent = r + " kcal"),
+    (document.getElementById("rProtDetail").textContent = `${m}g (${d}g × ${a}kg)`));
+  const y = "fat_loss" === c2Goal ? "−" : "+",
+    b = "fat_loss" === c2Goal ? "red" : "green",
+    f = document.getElementById("rWeekly");
+  ((f.textContent = `${y}${Math.abs(c)} kg/week`), (f.className = "rr-val " + b));
+  document.getElementById("resultsGoalLabel").textContent = {
+    fat_loss: "🔥 Fat Loss Plan",
+    muscle: "💪 Muscle Gain Plan",
+  }[c2Goal];
+  const v = {
+    fat_loss: `<strong>Fat Loss tip:</strong> At ${r} kcal/day you're in a ${o} kcal deficit — enough to lose roughly ${Math.abs(c)} kg/week without muscle loss. Hit your ${m}g protein target every day — it's the most important number on this page. The recipes in this vault are built for exactly this: high protein, controlled calories.`,
+    muscle: `<strong>Muscle Gain tip:</strong> At ${r} kcal/day you're in a ${o} kcal surplus — a lean bulk that minimizes fat gain. Prioritize your ${m}g protein target and make sure you're training hard enough to use the extra calories for muscle. Expect roughly ${c} kg gained per week, mostly muscle.`,
+  };
+  ((document.getElementById("calc2Tip").innerHTML = v[c2Goal]),
+    document.getElementById("calc2Results").classList.add("show"),
+    document.getElementById("calc2Results").scrollIntoView({ behavior: "smooth", block: "start" }));
+}
+function setDipFilter(a) {
+  dipFilter = !dipFilter;
+  a.classList.toggle("active", dipFilter);
+  const t = document.getElementById("pillCuisine");
+  t && (dipFilter || spicyFilter || "all" !== currentCuisineFilter || "all" !== flavorFilter ? t.classList.add("has-active") : t.classList.remove("has-active"));
+  filterRecipes();
+}
+function setSpicyFilter(a) {
+  spicyFilter = !spicyFilter;
+  a.classList.toggle("active", spicyFilter);
+  const t = document.getElementById("pillCuisine");
+  t && (spicyFilter || "all" !== currentCuisineFilter || "all" !== flavorFilter ? t.classList.add("has-active") : t.classList.remove("has-active"));
+  filterRecipes();
+}
+function setFlavorFilter(e, a) {
+  ((flavorFilter = e),
+    document
+      .querySelectorAll(".filter-btn.sweet, .filter-btn.savory")
+      .forEach((e) => e.classList.remove("active")),
+    "all" !== e && a.classList.add("active"));
+  const t = document.getElementById("pillCuisine");
+  (t &&
+    ("all" !== flavorFilter || "all" !== currentCuisineFilter
+      ? t.classList.add("has-active")
+      : t.classList.remove("has-active")),
+    filterRecipes());
+}
+function calcSauceMacros(e) {
+  const a = getRecipeDetail(e);
+  if (!a || !a.ingredients) return { kcal: e.sauce_kcal, p: e.sauce_p, c: e.sauce_c, f: e.sauce_f };
+  // none/none recipes show full-batch macros (divide by 1); all others divide by servings
+  const t = (e.protein === "none" && e.carb === "none") ? 1 : Math.max(weights.servings, 1);
+  let i = 0, n = 0, s = 0, o = 0;
+  a.ingredients.forEach((e) => {
+    e.items.forEach((e) => {
+      if (e.amt && (e.amt.includes("{{proteinG}}") || e.amt.includes("{{carbG}}"))) return;
+      const a = e.id || findIngredientId(e.name);
+      if (!a) return;
+      const c = calcIngredientMacros(a, e.amt || "");
+      if (c) { i += c.kcal / t; n += c.p / t; s += c.c / t; o += c.f / t; }
+    });
+  });
+  // Always return calculated values — no hardcoded fallback
+  return {
+    kcal: Math.round(i),
+    p: Math.round(10 * n) / 10,
+    c: Math.round(10 * s) / 10,
+    f: Math.round(10 * o) / 10,
+  };
+}
+const _sauceMacroCache = {};
+function getSauceMacros(e) {
+  const cacheKey = (e.protein === "none" && e.carb === "none")
+    ? e.id
+    : e.id + "_s" + Math.max(weights.servings, 1);
+  if (_sauceMacroCache[cacheKey]) return _sauceMacroCache[cacheKey];
+  const a = calcSauceMacros(e);
+  return ((_sauceMacroCache[cacheKey] = a), a);
+}
+function toggleIngMacro(e) {
+  e.classList.toggle("open");
+}
+function toggleWeightRow(e) {
+  const a = document.getElementById(e);
+  a && a.classList.toggle("open");
+}
+const ING_NAME_MAP = {
+  "soy sauce": "soy_sauce",
+  "soy sauce (low-sodium)": "soy_sauce",
+  "oyster sauce": "oyster_sauce",
+  "fish sauce": "fish_sauce",
+  hoisin: "hoisin",
+  gochujang: "gochujang",
+  miso: "miso",
+  doenjang: "doenjang",
+  teriyaki: "teriyaki",
+  "sesame oil": "sesame_oil",
+  sriracha: "sriracha",
+  tahini: "tahini",
+  harissa: "harissa",
+  worcestershire: "worcestershire",
+  ketchup: "ketchup",
+  mayo: "mayo",
+  mayonnaise: "mayo",
+  "light mayo": "mayo_light",
+  "light mayonnaise": "mayo_light",
+  "mayo light": "mayo_light",
+  "hot sauce": "hot_sauce",
+  "peanut butter": "peanut_butter",
+  "coconut milk": "coconut_milk",
+  "rice vinegar": "rice_vinegar",
+  "apple cider vinegar": "apple_cider_vinegar",
+  mirin: "mirin",
+  sake: "sake",
+  toum: "toum",
+  dijon: "dijon",
+  "bbq sauce": "bbq_sauce",
+  chipotle: "chipotle_adobo",
+  ponzu: "ponzu",
+  "shio koji": "shio_koji",
+  "yuzu kosho": "yuzu_kosho",
+  tamarind: "tamarind",
+  balsamic: "balsamic_glaze",
+  "chili oil": "chili_oil",
+  gochugaru: "gochugaru",
+  cumin: "cumin",
+  coriander: "coriander",
+  turmeric: "turmeric",
+  "smoked paprika": "smoked_paprika",
+  paprika: "paprika",
+  "chili flakes": "chili_flakes",
+  "red pepper flakes": "chili_flakes",
+  "five spice": "five_spice",
+  "5-spice": "five_spice",
+  zaatar: "zaatar",
+  "za'atar": "zaatar",
+  sumac: "sumac",
+  baharat: "baharat",
+  "ras el hanout": "ras_el_hanout",
+  "curry powder": "curry_powder",
+  "garam masala": "garam_masala",
+  tandoori: "tandoori_masala",
+  "tikka paste": "tikka_paste",
+  oregano: "oregano",
+  thyme: "thyme",
+  dill: "dill_dried",
+  "bay leaf": "bay_leaf",
+  cinnamon: "cinnamon",
+  cardamom: "cardamom",
+  "star anise": "star_anise",
+  allspice: "allspice",
+  "garlic powder": "garlic_powder",
+  "onion powder": "onion_powder",
+  cayenne: "cayenne",
+  "black pepper": "black_pepper",
+  pepper: "black_pepper",
+  msg: "msg",
+  saffron: "saffron",
+  "jerk seasoning": "jerk_seasoning",
+  dukkah: "dukkah",
+  furikake: "furikake",
+  tajin: "tajin",
+  garlic: "garlic",
+  "garlic clove": "garlic",
+  "garlic (minced)": "garlic",
+  ginger: "ginger",
+  "spring onion": "scallion",
+  scallion: "scallion",
+  "green onion": "scallion",
+  onion: "onion",
+  lemon: "lemon",
+  lime: "lime",
+  cilantro: "cilantro",
+  "coriander leaves": "cilantro",
+  parsley: "parsley",
+  basil: "basil",
+  mint: "mint",
+  rosemary: "rosemary",
+  chives: "chives",
+  "fresh dill": "dill_fresh",
+  lemongrass: "lemongrass",
+  "kaffir lime": "kaffir_lime",
+  "thai basil": "thai_basil",
+  pandan: "pandan",
+  "fresh chili": "chili_fresh",
+  chili: "chili_fresh",
+  tomato: "tomato",
+  cucumber: "cucumber",
+  avocado: "avocado",
+  "bell pepper": "bell_pepper",
+  cabbage: "cabbage",
+  carrot: "carrot",
+  corn: "corn",
+  leek: "leek",
+  mushroom: "mushroom",
+  spinach: "spinach",
+  "bok choy": "bok_choy",
+  kimchi: "kimchi",
+  butter: "butter",
+  egg: "eggs_dairy",
+  eggs: "eggs_dairy",
+  milk: "milk",
+  "heavy cream": "heavy_cream",
+  "sour cream": "sour_cream",
+  "cream cheese": "cream_cheese",
+  "crème fraîche": "creme_fraiche",
+  "creme fraiche": "creme_fraiche",
+  yogurt: "yogurt",
+  labneh: "labneh",
+  parmesan: "cheese_parm",
+  mozzarella: "cheese_mozz",
+  feta: "cheese_feta",
+  cheddar: "cheese_cheddar",
+  gruyere: "cheese_gruyere",
+  provolone: "cheese_provolone",
+  "olive oil": "olive_oil",
+  "neutral oil": "neutral_oil",
+  "cooking spray": "neutral_oil",
+  "chicken broth": "chicken_stock",
+  "chicken stock": "chicken_stock",
+  "canned tomato": "canned_tomato",
+  "crushed tomato": "canned_tomato",
+  "tomato paste": "tomato_paste",
+  "black beans": "black_beans",
+  "kidney beans": "kidney_beans",
+  "coconut cream": "coconut_cream",
+  panko: "panko",
+  breadcrumbs: "breadcrumbs",
+  flour: "flour",
+  cornstarch: "cornstarch",
+  "corn starch": "cornstarch",
+  honey: "honey",
+  sugar: "sugar",
+  "sesame seeds": "sesame_seeds",
+  peanuts: "peanuts",
+  almonds: "almonds",
+  "pine nuts": "pine_nuts",
+  raisins: "raisins",
+  dashi: "dashi",
+  "japanese curry": "japanese_curry_roux",
+  "curry roux": "japanese_curry_roux",
+  nori: "nori",
+  "glass noodles": "glass_noodles",
+  "rice paper": "rice_paper",
+  pickled: "pickled_veg",
+  "dried chili": "dried_chili",
+  "pomegranate molasses": "pomegranate_mol",
+  "preserved lemon": "preserved_lemon",
+  broccoli: "broccoli",
+  broccolini: "broccoli",
+  cauliflower: "broccoli",
+  zucchini: "zucchini",
+  courgette: "zucchini",
+  eggplant: "eggplant",
+  aubergine: "eggplant",
+  "bean sprouts": "bean_sprouts",
+  "bean sprout": "bean_sprouts",
+  "mung bean sprouts": "bean_sprouts",
+  edamame: "edamame",
+  "edamame (shelled, frozen)": "edamame",
+  "edamame (shelled)": "edamame",
+  "frozen edamame": "edamame",
+  "snap peas": "snap_peas",
+  "snow peas": "snap_peas",
+  "sugar snap": "snap_peas",
+  kale: "kale",
+  "swiss chard": "kale",
+  chard: "kale",
+  lettuce: "lettuce",
+  iceberg: "lettuce",
+  romaine: "lettuce",
+  arugula: "lettuce",
+  rocket: "lettuce",
+  daikon: "daikon",
+  mooli: "daikon",
+  jalapeño: "jalapeño",
+  jalapeno: "jalapeño",
+  serrano: "jalapeño",
+  "red wine vinegar": "red_wine_vinegar",
+  "sherry vinegar": "red_wine_vinegar",
+  capers: "capers",
+  "white wine": "white_wine",
+  "dry white wine": "white_wine",
+  "red wine": "white_wine",
+  "curry paste": "curry_paste",
+  "thai curry paste": "curry_paste",
+  "massaman curry paste": "curry_paste",
+  "green curry paste": "curry_paste",
+  "red curry paste": "curry_paste",
+  "tikka masala paste": "curry_paste",
+  "potato (raw, unpeeled)": "potato",
+  "potato (raw)": "potato",
+  "potato (diced": "potato",
+  "rice (dry)": "rice",
+  "jasmine rice": "rice",
+  "basmati rice": "rice",
+  "jasmine / basmati rice": "rice",
+  "short grain rice": "rice",
+  "day-old cooked rice": "rice",
+  "noodles / pasta": "noodle",
+  noodles: "noodle",
+  pasta: "noodle",
+  "rice noodles": "noodle",
+  "ramen noodles": "noodle",
+  "wheat noodles": "noodle",
+  "egg noodles": "noodle",
+  "udon noodles": "noodle",
+  "soba noodles": "noodle",
+  "bread / flatbread": "bread",
+  flatbread: "bread",
+  wrap: "bread",
+  "brioche buns": "bread",
+  "bao buns": "bread",
+  "steamed bao": "bread",
+  "french baguette": "bread",
+  pita: "bread",
+  tortilla: "bread",
+  "boneless skinless chicken thighs": "chicken",
+  "chicken thighs": "chicken",
+  "chicken breast": "chicken",
+  "chicken mince": "chicken",
+  "ground beef (lean)": "beef_lean",
+  "lean ground": "beef_lean",
+  "beef sirloin": "beef",
+  "beef flank": "beef",
+  "beef mince": "beef",
+  "salmon fillet": "salmon",
+  "salmon (skin": "salmon",
+  "firm tofu": "tofu",
+  "extra firm tofu": "tofu",
+  "silken tofu": "tofu",
+  "pomegranate seeds": "pomegranate_mol",
+  pomegranate: "pomegranate_mol",
+  "bean sprouts": "bok_choy",
+  sprouts: "bok_choy",
+  daikon: "pickled_veg",
+  radish: "pickled_veg",
+  jalapeño: "chili_fresh",
+  jalapeno: "chili_fresh",
+  serrano: "chili_fresh",
+  edamame: "edamame",
+  "snap peas": "bok_choy",
+  "snow peas": "bok_choy",
+  zucchini: "cucumber",
+  courgette: "cucumber",
+  eggplant: "bell_pepper",
+  aubergine: "bell_pepper",
+  broccoli: "bok_choy",
+  cauliflower: "bok_choy",
+  broccolini: "bok_choy",
+  kale: "spinach",
+  "swiss chard": "spinach",
+  arugula: "spinach",
+  rocket: "spinach",
+  "iceberg lettuce": "spinach",
+  romaine: "spinach",
+  lettuce: "spinach",
+  shallot: "onion",
+  "red onion": "onion",
+  "white onion": "onion",
+  "cherry tomato": "tomato",
+  "grape tomato": "tomato",
+  "sun-dried tomato": "tomato",
+  pear: "apple_cider_vinegar",
+  "apple (grated)": "apple_cider_vinegar",
+  "thai curry paste": "tikka_paste",
+  "massaman curry paste": "tikka_paste",
+  "green curry paste": "tikka_paste",
+  "red curry paste": "tikka_paste",
+  "tikka masala paste": "tikka_paste",
+  "curry paste": "tikka_paste",
+  "red wine vinegar": "apple_cider_vinegar",
+  "white wine vinegar": "apple_cider_vinegar",
+  "sherry vinegar": "apple_cider_vinegar",
+  vinegar: "apple_cider_vinegar",
+  capers: "pickled_veg",
+  pickles: "pickled_veg",
+  gherkins: "pickled_veg",
+  "dry white wine": "sake",
+  "white wine": "sake",
+  "red wine": "sake",
+  "beef stock": "chicken_stock",
+  "vegetable stock": "chicken_stock",
+  "water or stock": "chicken_stock",
+  "chicken or vegetable stock": "chicken_stock",
+  "beef broth": "chicken_stock",
+  "vegetable broth": "chicken_stock",
+  "american cheese": "cheese_cheddar",
+  "cheese slices": "cheese_cheddar",
+  velveeta: "cheese_cheddar",
+  "cheese sauce": "cheese_cheddar",
+  salt: "msg",
+  "kosher salt": "msg",
+  "sea salt": "msg",
+  "flaky salt": "msg",
+  "fresh herbs": "parsley",
+  "mixed herbs": "parsley",
+  herb: "parsley",
+  water: "water",
+  "hot water": "chicken_stock",
+  banana: "banana",
+  "banana (ripe)": "banana",
+  "ripe banana": "banana",
+  oats: "oats",
+  "rolled oats": "oats",
+  "oat flakes": "oats",
+  "haferflocken": "oats",
+  "dark chocolate chips": "chocolate_chips",
+  "chocolate chips": "chocolate_chips",
+  "milk chocolate chips": "chocolate_chips",
+  "vollmilch-schokotropfen": "chocolate_chips",
+  "schokotropfen": "chocolate_chips",
+  "dark chocolate": "dark_chocolate",
+  "whey protein": "whey_protein",
+  "whey protein (chocolate)": "whey_protein",
+  "chocolate whey": "whey_protein",
+  "protein powder": "whey_protein",
+  "almond milk": "almond_milk",
+  "almond milk (unsweetened)": "almond_milk",
+  "mandelmilch": "almond_milk",
+  "vanilla extract": "vanilla_extract",
+  "vanilla extract (sugar-free)": "vanilla_extract",
+  "baking powder": "baking_powder",
+  "backpulver": "baking_powder",
+  couscous: "couscous",
+  "couscous (dry)": "couscous",
+  bulgur: "bulgur",
+  "bulgur wheat (dry)": "bulgur",
+  "bulgur wheat": "bulgur",
+  "rice vermicelli": "rice_vermicelli",
+  "rice vermicelli (dry)": "rice_vermicelli",
+  "glass noodles": "glass_noodles",
+  "frozen peas": "frozen_peas",
+  "peas": "frozen_peas",
+  "green olives": "green_olives",
+  "green olives (sliced)": "green_olives",
+  "kalamata olives": "black_olives",
+  "kalamata olives (sliced)": "black_olives",
+  "black olives": "black_olives",
+  "olives": "green_olives",
+  mustard: "mustard",
+  "yellow mustard": "mustard",
+  "pickle juice": "pickle_juice",
+  berbere: "berbere",
+  "berbere spice blend": "berbere",
+  "bay leaves": "bay_leaves",
+  "bay leaf": "bay_leaves",
+  cloves: "cloves",
+  "cloves (ground)": "cloves",
+  "ground cloves": "cloves",
+  "neutral cooking oil": "neutral_oil",
+  "vegetable oil": "neutral_oil",
+  "canola oil": "neutral_oil",
+  "sunflower oil": "neutral_oil",
+  "cooking oil": "neutral_oil",
+  oil: "neutral_oil",
+  "unsalted butter": "butter",
+  "salted butter": "butter",
+  "whole egg": "eggs_dairy",
+  "egg yolk": "eggs_dairy",
+  "egg white": "eggs_dairy",
+  "light soy": "soy_sauce",
+  "dark soy": "soy_sauce",
+  tamari: "soy_sauce",
+  "low-sodium soy": "soy_sauce",
+  "spring roll wrapper": "rice_paper",
+  "wonton wrapper": "rice_paper",
+  "gyoza wrapper": "rice_paper",
+  "dumpling wrapper": "rice_paper",
+  quark: "quark_low_fat",
+  magerquark: "quark_low_fat",
+  "low-fat quark": "quark_low_fat",
+  "quark (low-fat)": "quark_low_fat",
+  skyr: "skyr",
+  "icelandic yogurt": "skyr",
+  "cottage cheese": "cottage_cheese",
+  hüttenkäse: "cottage_cheese",
+  ricotta: "ricotta",
+  "ricotta cheese": "ricotta",
+  tuna: "tuna_canned",
+  "canned tuna": "tuna_canned",
+  "tuna (canned)": "tuna_canned",
+  "tuna in water": "tuna_canned",
+  thunfisch: "tuna_canned",
+  shrimp: "shrimp",
+  prawns: "shrimp",
+  shrimps: "shrimp",
+  garnelen: "shrimp",
+  cod: "cod",
+  kabeljau: "cod",
+  "white fish": "cod",
+  tilapia: "cod",
+  "turkey mince": "turkey_mince",
+  "ground turkey": "turkey_mince",
+  turkey: "turkey_mince",
+  putenhack: "turkey_mince",
+  pute: "turkey_mince",
+};
+// Additional ingredient name mappings
+// === Protein / Meat ===
+ING_NAME_MAP["ground beef (20% fat)"] = "beef_regular";
+ING_NAME_MAP["ground beef (5% fat)"] = "beef_lean";
+ING_NAME_MAP["lean ground beef"] = "beef_lean";
+ING_NAME_MAP["lean ground beef (5% fat)"] = "beef_lean";
+ING_NAME_MAP["lean ground beef (95% lean)"] = "beef_lean";
+ING_NAME_MAP["chicken or anchovy broth"] = "chicken_stock";
+ING_NAME_MAP["ground turkey"] = "turkey_mince";
+ING_NAME_MAP["egg (whole)"] = "eggs";
+ING_NAME_MAP["egg (fried — optional)"] = "eggs";
+ING_NAME_MAP["eggs (whole)"] = "eggs";
+ING_NAME_MAP["whole eggs"] = "eggs";
+ING_NAME_MAP["soft-boiled egg"] = "eggs";
+ING_NAME_MAP["anchovy paste"] = "anchovy_paste";
+ING_NAME_MAP["anchovy paste (optional)"] = "anchovy_paste";
+// === Tofu / Dairy ===
+ING_NAME_MAP["silken or soft tofu"] = "tofu";
+ING_NAME_MAP["silken tofu"] = "tofu";
+ING_NAME_MAP["soft tofu"] = "tofu";
+ING_NAME_MAP["firm tofu"] = "tofu";
+ING_NAME_MAP["greek yogurt (0%)"] = "greek_yogurt";
+ING_NAME_MAP["crème fraîche or greek yogurt (10%)"] = "creme_fraiche";
+ING_NAME_MAP["soy milk (unsweetened)"] = "soy_milk";
+// === Vegetables ===
+ING_NAME_MAP["pak choi"] = "bok_choy";
+ING_NAME_MAP["pak choi (halved)"] = "bok_choy";
+ING_NAME_MAP["bok choy (halved)"] = "bok_choy";
+ING_NAME_MAP["baby spinach"] = "spinach";
+ING_NAME_MAP["cabbage (roughly chopped)"] = "cabbage";
+ING_NAME_MAP["cabbage (thinly sliced)"] = "cabbage";
+ING_NAME_MAP["white cabbage (finely shredded)"] = "cabbage";
+ING_NAME_MAP["carrot (finely diced)"] = "carrot";
+ING_NAME_MAP["carrot (julienned)"] = "carrot";
+ING_NAME_MAP["shredded carrot"] = "carrot";
+ING_NAME_MAP["cucumber (diced)"] = "cucumber";
+ING_NAME_MAP["cucumber (grated, squeezed dry)"] = "cucumber";
+ING_NAME_MAP["cucumber (julienned)"] = "cucumber";
+ING_NAME_MAP["cucumber (sliced)"] = "cucumber";
+ING_NAME_MAP["cucumber (thinly sliced)"] = "cucumber";
+ING_NAME_MAP["daikon / white radish (julienned)"] = "daikon";
+ING_NAME_MAP["daikon radish (grated)"] = "daikon";
+ING_NAME_MAP["onion (diced)"] = "onion";
+ING_NAME_MAP["onion (finely diced)"] = "onion";
+ING_NAME_MAP["onion (finely grated)"] = "onion";
+ING_NAME_MAP["onion (grated)"] = "onion";
+ING_NAME_MAP["onion (thinly sliced)"] = "onion";
+ING_NAME_MAP["white onion (finely diced)"] = "onion";
+ING_NAME_MAP["red onion (diced)"] = "onion";
+ING_NAME_MAP["red onion (finely diced)"] = "onion";
+ING_NAME_MAP["red onion (thinly sliced)"] = "onion";
+ING_NAME_MAP["red onion (cut into wedges)"] = "onion";
+ING_NAME_MAP["shallot (finely diced)"] = "shallot";
+ING_NAME_MAP["shallot (minced)"] = "shallot";
+ING_NAME_MAP["shallots (finely diced)"] = "shallot";
+ING_NAME_MAP["shallots (thinly sliced)"] = "shallot";
+ING_NAME_MAP["fried shallots (optional)"] = "fried_shallots";
+ING_NAME_MAP["fried shallots"] = "fried_shallots";
+ING_NAME_MAP["tomato (diced)"] = "tomato";
+ING_NAME_MAP["tomatoes (diced)"] = "tomato";
+ING_NAME_MAP["tomatoes (cut into wedges)"] = "tomato";
+ING_NAME_MAP["fresh tomato (diced)"] = "tomato";
+ING_NAME_MAP["ripe tomatoes (large)"] = "tomato";
+ING_NAME_MAP["cherry tomatoes (halved)"] = "tomato";
+ING_NAME_MAP["cherry tomatoes (quartered)"] = "tomato";
+ING_NAME_MAP["tomatillos (canned or fresh)"] = "tomatillo";
+ING_NAME_MAP["potato (roasted)"] = "potato";
+ING_NAME_MAP["potato (cubed, boiled or roasted)"] = "potato";
+ING_NAME_MAP["potato (roasted or boiled)"] = "potato";
+ING_NAME_MAP["potatoes (cubed)"] = "potato";
+ING_NAME_MAP["waxy potatoes"] = "potato";
+ING_NAME_MAP["waxy potatoes (diced small)"] = "potato";
+ING_NAME_MAP["waxy potatoes (drillinge)"] = "potato";
+ING_NAME_MAP["baby potatoes (drillinge)"] = "potato";
+ING_NAME_MAP["baby potatoes"] = "potato";
+ING_NAME_MAP["large baking potatoes"] = "potato";
+ING_NAME_MAP["radishes (thinly sliced)"] = "radish";
+ING_NAME_MAP["radish"] = "radish";
+ING_NAME_MAP["jalapeño (deseeded)"] = "jalapeño";
+ING_NAME_MAP["jalapeño (optional)"] = "jalapeño";
+ING_NAME_MAP["jalapeño (pickled or fresh)"] = "jalapeño";
+ING_NAME_MAP["jalapeño (sliced)"] = "jalapeño";
+ING_NAME_MAP["jalapeño slices"] = "jalapeño";
+ING_NAME_MAP["red chili (deseeded, chopped)"] = "chili_fresh";
+ING_NAME_MAP["red chili (sliced)"] = "chili_fresh";
+ING_NAME_MAP["red chili (optional)"] = "chili_fresh";
+ING_NAME_MAP["thai red chili (sliced)"] = "chili_fresh";
+ING_NAME_MAP["chili (sliced)"] = "chili_fresh";
+ING_NAME_MAP["chili (sliced, optional)"] = "chili_fresh";
+ING_NAME_MAP["dried red chilis"] = "chili_flakes";
+ING_NAME_MAP["green pepper (diced)"] = "bell_pepper";
+ING_NAME_MAP["red bell pepper (diced)"] = "bell_pepper";
+ING_NAME_MAP["red bell pepper (finely diced)"] = "bell_pepper";
+ING_NAME_MAP["red bell pepper (sliced)"] = "bell_pepper";
+ING_NAME_MAP["romaine lettuce (chopped)"] = "lettuce";
+ING_NAME_MAP["iceberg lettuce"] = "lettuce";
+ING_NAME_MAP["edamame (frozen, shelled)"] = "edamame";
+ING_NAME_MAP["steamed broccoli or edamame"] = "edamame";
+ING_NAME_MAP["canned corn (drained)"] = "corn";
+ING_NAME_MAP["frozen peas"] = "frozen_peas";
+// === Herbs & Spices ===
+ING_NAME_MAP["fresh basil"] = "basil";
+ING_NAME_MAP["fresh basil or parsley"] = "basil";
+ING_NAME_MAP["fresh thai basil"] = "thai_basil";
+ING_NAME_MAP["fresh thai basil (or regular basil)"] = "thai_basil";
+ING_NAME_MAP["fresh coriander"] = "cilantro";
+ING_NAME_MAP["fresh coriander (chopped)"] = "cilantro";
+ING_NAME_MAP["fresh coriander or parsley"] = "cilantro";
+ING_NAME_MAP["coriander (chopped)"] = "cilantro";
+ING_NAME_MAP["fresh mint"] = "mint";
+ING_NAME_MAP["fresh mint (chopped)"] = "mint";
+ING_NAME_MAP["fresh mint leaves"] = "mint";
+ING_NAME_MAP["fresh mint & coriander"] = "mint";
+ING_NAME_MAP["fresh dill or mint"] = "mint";
+ING_NAME_MAP["dried mint"] = "mint";
+ING_NAME_MAP["fresh parsley"] = "parsley";
+ING_NAME_MAP["fresh parsley (chopped)"] = "parsley";
+ING_NAME_MAP["fresh flat-leaf parsley"] = "parsley";
+ING_NAME_MAP["fresh flat-leaf parsley (chopped)"] = "parsley";
+ING_NAME_MAP["fresh flat-leaf parsley (finely chopped)"] = "parsley";
+ING_NAME_MAP["fresh parsley or chives"] = "parsley";
+ING_NAME_MAP["fresh parsley or coriander"] = "parsley";
+ING_NAME_MAP["fresh chives (chopped)"] = "chives";
+ING_NAME_MAP["fresh ginger (grated)"] = "ginger";
+ING_NAME_MAP["fresh ginger (sliced)"] = "ginger";
+ING_NAME_MAP["ginger (grated)"] = "ginger";
+ING_NAME_MAP["ginger slices"] = "ginger";
+ING_NAME_MAP["galangal powder (or extra ginger)"] = "galangal";
+ING_NAME_MAP["dried oregano"] = "oregano";
+ING_NAME_MAP["oregano (dried)"] = "oregano";
+ING_NAME_MAP["dried thyme"] = "thyme";
+ING_NAME_MAP["dried rosemary"] = "rosemary";
+ING_NAME_MAP["garlic (crushed)"] = "garlic";
+ING_NAME_MAP["garlic (minced)"] = "garlic";
+ING_NAME_MAP["garlic clove (minced)"] = "garlic";
+ING_NAME_MAP["garlic cloves (minced)"] = "garlic";
+ING_NAME_MAP["garlic cloves (crushed)"] = "garlic";
+ING_NAME_MAP["lemongrass (finely minced)"] = "lemongrass";
+ING_NAME_MAP["lemongrass (minced, inner stalk)"] = "lemongrass";
+ING_NAME_MAP["lemongrass stalks (finely minced)"] = "lemongrass";
+ING_NAME_MAP["white pepper"] = "white_pepper";
+ING_NAME_MAP["salt & white pepper"] = "white_pepper";
+ING_NAME_MAP["coriander (ground)"] = "coriander";
+ING_NAME_MAP["cumin (ground)"] = "cumin";
+ING_NAME_MAP["cinnamon (ground)"] = "cinnamon";
+ING_NAME_MAP["cinnamon stick"] = "cinnamon";
+ING_NAME_MAP["gochujang paste"] = "gochujang";
+ING_NAME_MAP["gochugaru (chili flakes)"] = "gochugaru";
+ING_NAME_MAP["gochugaru (korean chili flakes)"] = "gochugaru";
+ING_NAME_MAP["gochugaru or chili flakes"] = "gochugaru";
+ING_NAME_MAP["harissa paste"] = "harissa";
+ING_NAME_MAP["chipotle paste"] = "chipotle_adobo";
+ING_NAME_MAP["chipotle paste or smoked paprika"] = "chipotle_adobo";
+ING_NAME_MAP["doubanjiang"] = "doubanjiang";
+ING_NAME_MAP["doubanjiang (spicy bean paste)"] = "doubanjiang";
+ING_NAME_MAP["doubanjiang (or chili paste)"] = "doubanjiang";
+ING_NAME_MAP["five-spice powder"] = "five_spice";
+ING_NAME_MAP["five spice powder"] = "five_spice";
+ING_NAME_MAP["za'atar or mixed herbs"] = "zaatar";
+// === Sauces & Condiments ===
+ING_NAME_MAP["hoisin sauce (optional)"] = "hoisin";
+ING_NAME_MAP["sriracha (optional)"] = "sriracha";
+ING_NAME_MAP["sriracha or spicy mayo"] = "sriracha";
+ING_NAME_MAP["hot sauce (optional)"] = "hot_sauce";
+ING_NAME_MAP["dijon mustard"] = "dijon";
+ING_NAME_MAP["mustard"] = "dijon";
+ING_NAME_MAP["mayonnaise (light)"] = "mayo_light";
+ING_NAME_MAP["light mayonnaise"] = "mayo_light";
+ING_NAME_MAP["white miso paste"] = "miso";
+ING_NAME_MAP["dashi powder (dissolved in 1 tbsp water)"] = "dashi";
+ING_NAME_MAP["worcestershire sauce"] = "worcestershire";
+ING_NAME_MAP["pickle juice"] = "pickle_juice";
+ING_NAME_MAP["gherkins / pickles"] = "gherkins";
+ING_NAME_MAP["gherkins"] = "gherkins";
+ING_NAME_MAP["pickled ginger"] = "pickled_veg";
+ING_NAME_MAP["pickled ginger (beni shōga)"] = "pickled_veg";
+ING_NAME_MAP["kimchi (optional)"] = "kimchi";
+ING_NAME_MAP["kimchi (store-bought)"] = "kimchi";
+// === Citrus ===
+ING_NAME_MAP["lemon juice"] = "lemon";
+ING_NAME_MAP["lemon wedge"] = "lemon";
+ING_NAME_MAP["lemon zest"] = "lemon";
+ING_NAME_MAP["lemon (zest + juice)"] = "lemon";
+ING_NAME_MAP["lime juice"] = "lime";
+ING_NAME_MAP["lime juice (for crema)"] = "lime";
+ING_NAME_MAP["lime juice (for rice)"] = "lime";
+ING_NAME_MAP["lime wedge"] = "lime";
+ING_NAME_MAP["lime wedges"] = "lime";
+// === Bread / Carbs ===
+ING_NAME_MAP["naan bread"] = "naan";
+ING_NAME_MAP["naan"] = "naan";
+ING_NAME_MAP["flatbread / fladenbrot"] = "naan";
+ING_NAME_MAP["flatbread or pitta"] = "naan";
+ING_NAME_MAP["turkish flatbread (yufka or thin pide)"] = "naan";
+ING_NAME_MAP["sourdough bread (thick slices)"] = "bread";
+ING_NAME_MAP["sourdough or crusty bread"] = "bread";
+ING_NAME_MAP["baguette or sandwich roll"] = "bread";
+ING_NAME_MAP["brioche burger buns"] = "bread";
+ING_NAME_MAP["large wheat tortilla wraps"] = "tortilla_wheat";
+ING_NAME_MAP["whole wheat tortilla wraps"] = "tortilla_wheat";
+ING_NAME_MAP["small corn or wheat tortillas"] = "tortilla_wheat";
+ING_NAME_MAP["large wheat tortilla"] = "tortilla_wheat";
+ING_NAME_MAP["plain flour"] = "flour";
+ING_NAME_MAP["panko breadcrumbs"] = "panko";
+ING_NAME_MAP["rigatoni or penne pasta (dry)"] = "pasta";
+ING_NAME_MAP["egg noodles (dry)"] = "noodle";
+ING_NAME_MAP["thick wheat noodles (dry)"] = "noodle";
+ING_NAME_MAP["short-grain rice (uncooked)"] = "rice";
+ING_NAME_MAP["short grain rice (dry)"] = "rice";
+ING_NAME_MAP["short grain japanese rice (dry)"] = "rice";
+// === Other ===
+ING_NAME_MAP["brown sugar"] = "brown_sugar";
+ING_NAME_MAP["rice_cooked"] = "rice_cooked";
+ING_NAME_MAP["day-old jasmine rice (cooked)"] = "rice_cooked";
+ING_NAME_MAP["cooked jasmine rice"] = "rice_cooked";
+ING_NAME_MAP["cooked rice"] = "rice_cooked";
+ING_NAME_MAP["day-old rice"] = "rice_cooked";
+ING_NAME_MAP["nori sheets (optional)"] = "nori";
+ING_NAME_MAP["canned chopped tomatoes"] = "canned_tomato";
+ING_NAME_MAP["canned crushed tomatoes"] = "canned_tomato";
+ING_NAME_MAP["parmesan (grated)"] = "cheese_parm";
+ING_NAME_MAP["parmesan (for serving)"] = "cheese_parm";
+ING_NAME_MAP["cheese (parmesan)"] = "cheese_parm";
+ING_NAME_MAP["cheddar cheese (grated)"] = "cheese_cheddar";
+ING_NAME_MAP["cheddar or gouda slices"] = "cheese_cheddar";
+ING_NAME_MAP["feta cheese (crumbled)"] = "cheese_feta";
+ING_NAME_MAP["pine nuts"] = "pine_nuts";
+ING_NAME_MAP["roasted peanuts"] = "peanuts";
+ING_NAME_MAP["crushed roasted peanuts"] = "peanuts";
+ING_NAME_MAP["peanuts"] = "peanuts";
+ING_NAME_MAP["kalamata olives (optional)"] = "black_olives";
+ING_NAME_MAP["kalamata olives (sliced)"] = "black_olives";
+ING_NAME_MAP["green olives (sliced)"] = "green_olives";
+// === Missing mappings (audit fix) ===
+ING_NAME_MAP["canned white beans (cannellini)"] = "white_beans";
+ING_NAME_MAP["white beans"] = "white_beans";
+ING_NAME_MAP["cannellini beans"] = "white_beans";
+ING_NAME_MAP["caraway seeds"] = "caraway_seeds";
+ING_NAME_MAP["cashews (raw)"] = "cashews";
+ING_NAME_MAP["cashews"] = "cashews";
+ING_NAME_MAP["crusty sourdough or ciabatta"] = "bread";
+ING_NAME_MAP["sourdough or crusty bread"] = "bread";
+ING_NAME_MAP["geflügel-nürnberger sausages"] = "chicken_sausage";
+ING_NAME_MAP["nürnberger"] = "chicken_sausage";
+ING_NAME_MAP["ground beef (15% fat)"] = "beef_regular";
+ING_NAME_MAP["orange juice"] = "orange_juice";
+ING_NAME_MAP["pickle brine"] = "pickled_veg";
+ING_NAME_MAP["rigatoni or spaghetti (dry)"] = "noodle";
+ING_NAME_MAP["rigatoni or spaghetti"] = "noodle";
+ING_NAME_MAP["spaghetti or linguine (dry)"] = "noodle";
+ING_NAME_MAP["spaghetti or linguine"] = "noodle";
+ING_NAME_MAP["roti or chapati (store-bought)"] = "bread";
+ING_NAME_MAP["roti or chapati"] = "bread";
+ING_NAME_MAP["salsa or pico de gallo"] = "canned_tomato";
+ING_NAME_MAP["salsa roja (jarred)"] = "canned_tomato";
+ING_NAME_MAP["pico de gallo"] = "canned_tomato";
+ING_NAME_MAP["low-fat quark (magerquark)"] = "quark_low_fat";
+
+		function findIngredientId(e) {                             
+  if (!e) return null;
+  const a = e.toLowerCase().trim();
+  if (ING_NAME_MAP[a]) return ING_NAME_MAP[a];
+  let t = null,
+    i = 0;
+  for (const [e, n] of Object.entries(ING_NAME_MAP)) a.includes(e) && e.length > i && ((t = n), (i = e.length));
+  return t;
+}
+
+		function buildIngredientRecipeMap() {
+  // Auto-builds INGREDIENT_RECIPE_MAP from RECIPE_DETAILS at runtime
+  // No manual maintenance needed — filters always match actual recipe ingredients
+  if (typeof RECIPE_DETAILS === "undefined") return;
+  Object.entries(RECIPE_DETAILS).forEach(([recipeId, detail]) => {
+    if (!detail.ingredients) return;
+    detail.ingredients.forEach(section => {
+      (section.items || []).forEach(item => {
+        const ingId = findIngredientId(item.name);
+        if (!ingId) return;
+        if (!INGREDIENT_RECIPE_MAP[ingId]) INGREDIENT_RECIPE_MAP[ingId] = [];
+        if (!INGREDIENT_RECIPE_MAP[ingId].includes(recipeId)) {
+          INGREDIENT_RECIPE_MAP[ingId].push(recipeId);
+        }
+      });
+    });
+  });
+  // Rebuild ALCOHOL_RECIPE_IDS based on updated map
+  ALCOHOL_RECIPE_IDS.clear();
+  [...(INGREDIENT_RECIPE_MAP.sake || []),
+   ...(INGREDIENT_RECIPE_MAP.mirin || []),
+   ...(INGREDIENT_RECIPE_MAP.white_wine || [])
+  ].forEach(id => ALCOHOL_RECIPE_IDS.add(id));
+  // Rebuild SPICY_RECIPE_IDS from recipe tags
+  SPICY_RECIPE_IDS.clear();
+  R.forEach(r => { if (r.tags && r.tags.includes("spicy")) SPICY_RECIPE_IDS.add(r.id); });
+  DIP_RECIPE_IDS.clear();
+  R.forEach(r => { if (r.tags && r.tags.includes("dip")) DIP_RECIPE_IDS.add(r.id); });
+  // Auto-inject ingredient-based tags into recipe cards at runtime
+  // Maps tag name → ingredient IDs that trigger it
+  const INGREDIENT_AUTO_TAGS = {
+    "beef":   ["beef_lean", "beef_regular"],
+    "eggs":   ["eggs"],
+    "fish":   ["salmon", "tuna_canned", "cod", "anchovy_paste"],
+    "shrimp": ["shrimp"],
+    "tofu":   ["tofu"],
+    "cheese": ["cheese_parm", "cheese_cheddar", "cheese_feta", "cheese_mozzarella", "cheese_gouda"],
+    "turkey": ["turkey_mince"],
+    "pork":   ["pork_tenderloin"],
+  };
+  Object.entries(INGREDIENT_AUTO_TAGS).forEach(([tag, ingIds]) => {
+    ingIds.forEach(ingId => {
+      (INGREDIENT_RECIPE_MAP[ingId] || []).forEach(recipeId => {
+        const recipe = R.find(r => r.id === recipeId);
+        if (recipe && !recipe.tags.includes(tag)) recipe.tags.push(tag);
+      });
+    });
+  });
+}
+
+let compareSortKey = "default",
+  compareSortDir = {};
+function setCompareSort(e) {
+  (compareSortKey === e && "default" !== e
+    ? (compareSortDir[e] = "asc" === compareSortDir[e] ? "desc" : "asc")
+    : ((compareSortKey = e), compareSortDir[e] || (compareSortDir[e] = "satiety" === e ? "desc" : "asc")),
+    document.querySelectorAll(".csort-btn").forEach((a) => {
+      const t = a.dataset.sort === e;
+      a.classList.toggle("active", t);
+      const i = a.querySelector(".csort-arrow");
+      i && (i.textContent = t ? ("asc" === compareSortDir[e] ? "↑" : "↓") : "↕");
+    }),
+    buildCompareTable());
+}
+function sortCompareData(e) {
+  if ("default" === compareSortKey) return [...e];
+  const a = "asc" === compareSortDir[compareSortKey] ? 1 : -1;
+  return [...e].sort((e, t) => (e[compareSortKey] - t[compareSortKey]) * a);
+}
+const CARB_COMPARE = [
+    {
+      key: "potato",
+      name: "Potato",
+      icon: "🥔",
+      sub: "raw, unpeeled",
+      kcal: 77,
+      p: 2,
+      c: 17,
+      f: 0.1,
+      fiber: 2.2,
+      gi: 65,
+      giLabel: "med",
+      satiety: 4,
+      best: "Volume & fullness",
+    },
+    {
+      key: "sweet_potato",
+      name: "Sweet Potato",
+      icon: "🍠",
+      sub: "raw, unpeeled",
+      kcal: 86,
+      p: 1.6,
+      c: 20,
+      f: 0.1,
+      fiber: 3,
+      gi: 54,
+      giLabel: "med",
+      satiety: 4,
+      best: "Micronutrients & fiber",
+    },
+    {
+      key: "rice",
+      name: "White Rice",
+      icon: "🍚",
+      sub: "white, dry weight",
+      kcal: 365,
+      p: 7.1,
+      c: 80,
+      f: 0.7,
+      fiber: 0.4,
+      gi: 73,
+      giLabel: "high",
+      satiety: 2,
+      best: "Quick energy",
+    },
+    {
+      key: "noodle",
+      name: "Egg Noodle",
+      icon: "🍜",
+      sub: "egg noodle, dry weight",
+      kcal: 357,
+      p: 13,
+      c: 71,
+      f: 1.5,
+      fiber: 2.1,
+      gi: 55,
+      giLabel: "med",
+      satiety: 3,
+      best: "Higher protein carb",
+    },
+    {
+      key: "pasta",
+      name: "Pasta",
+      icon: "🍝",
+      sub: "durum wheat, dry weight",
+      kcal: 357,
+      p: 13,
+      c: 71,
+      f: 1.5,
+      fiber: 2.7,
+      gi: 50,
+      giLabel: "med",
+      satiety: 3,
+      best: "Protein-rich carb",
+    },
+    {
+      key: "bread",
+      name: "White Bread",
+      icon: "🫓",
+      sub: "white wheat, baked",
+      kcal: 265,
+      p: 9,
+      c: 51,
+      f: 3.2,
+      fiber: 2.7,
+      gi: 70,
+      giLabel: "high",
+      satiety: 3,
+      best: "Convenience & portability",
+    },
+    {
+      key: "tortilla",
+      name: "Tortilla",
+      icon: "🌯",
+      sub: "flour tortilla, baked",
+      kcal: 312,
+      p: 8,
+      c: 51,
+      f: 8,
+      fiber: 2.4,
+      gi: 52,
+      giLabel: "med",
+      satiety: 3,
+      best: "Wraps & bowls",
+    },
+    {
+      key: "oats",
+      name: "Oats",
+      icon: "🌾",
+      sub: "rolled oats, dry weight",
+      kcal: 389,
+      p: 17,
+      c: 66,
+      f: 7,
+      fiber: 10.6,
+      gi: 55,
+      giLabel: "med",
+      satiety: 5,
+      best: "Best satiety & fiber",
+    },
+    {
+      key: "quinoa",
+      name: "Quinoa",
+      icon: "🌱",
+      sub: "dry weight",
+      kcal: 368,
+      p: 14,
+      c: 64,
+      f: 6,
+      fiber: 7,
+      gi: 53,
+      giLabel: "med",
+      satiety: 4,
+      best: "Complete protein carb",
+    },
+  ],
+  PROTEIN_COMPARE = [
+    {
+      key: "chicken",
+      name: "Chicken Thigh",
+      icon: "🍗",
+      sub: "boneless, skinless, raw",
+      kcal: 149,
+      p: 18.6,
+      c: 0,
+      f: 7.92,
+      satiety: 4,
+      best: "Flavor & moisture",
+    },
+    {
+      key: "chicken_breast",
+      name: "Chicken Breast",
+      icon: "🍗",
+      sub: "boneless, skinless, raw",
+      kcal: 112,
+      p: 22.5,
+      c: 0,
+      f: 1.93,
+      satiety: 5,
+      best: "Leanest protein",
+    },
+    {
+      key: "beef",
+      name: "Beef (Regular)",
+      icon: "🥩",
+      sub: "ground beef ~20% fat, raw",
+      kcal: 248,
+      p: 17.5,
+      c: 0,
+      f: 19.4,
+      satiety: 4,
+      best: "Flavor & iron",
+    },
+    {
+      key: "beef_lean",
+      name: "Beef (Lean)",
+      icon: "🥩",
+      sub: "ground beef ~5% fat, raw",
+      kcal: 137,
+      p: 21.4,
+      c: 0,
+      f: 5.5,
+      satiety: 4,
+      best: "Lean + high protein",
+    },
+    {
+      key: "steak_ribeye",
+      name: "Steak (Ribeye)",
+      icon: "🥩",
+      sub: "raw, bone-out",
+      kcal: 270,
+      p: 21,
+      c: 0,
+      f: 21,
+      satiety: 4,
+      best: "Flavor & richness",
+    },
+    {
+      key: "steak_sirloin",
+      name: "Steak (Sirloin)",
+      icon: "🥩",
+      sub: "raw, trimmed",
+      kcal: 175,
+      p: 26,
+      c: 0,
+      f: 8,
+      satiety: 4,
+      best: "Lean & high protein",
+    },
+    {
+      key: "steak_flank",
+      name: "Steak (Flank)",
+      icon: "🥩",
+      sub: "raw, trimmed",
+      kcal: 160,
+      p: 27,
+      c: 0,
+      f: 5,
+      satiety: 4,
+      best: "Very lean, stir-fry",
+    },
+    {
+      key: "eggs",
+      name: "Eggs",
+      icon: "🥚",
+      sub: "whole egg, raw (~58g each)",
+      kcal: 147,
+      p: 12.4,
+      c: 0.96,
+      f: 9.96,
+      satiety: 4,
+      best: "Micronutrients & versatility",
+    },
+    {
+      key: "salmon",
+      name: "Salmon",
+      icon: "🐟",
+      sub: "atlantic salmon, raw",
+      kcal: 208,
+      p: 20,
+      c: 0,
+      f: 13,
+      satiety: 4,
+      best: "Omega-3 & heart health",
+    },
+    {
+      key: "tofu",
+      name: "Tofu",
+      icon: "🫘",
+      sub: "firm tofu",
+      kcal: 144,
+      p: 17.3,
+      c: 2.78,
+      f: 8.72,
+      satiety: 3,
+      best: "Plant-based option",
+    },
+    {
+      key: "edamame",
+      name: "Edamame",
+      icon: "🫘",
+      sub: "shelled, frozen, per 100g",
+      kcal: 109,
+      p: 11.2,
+      c: 7.61,
+      f: 4.73,
+      satiety: 4,
+      best: "Plant protein + fiber",
+    },
+    {
+      key: "tuna",
+      name: "Tuna (Canned)",
+      icon: "🐟",
+      sub: "in water, drained",
+      kcal: 116,
+      p: 25.5,
+      c: 0,
+      f: 1.0,
+      satiety: 3,
+      best: "Leanest protein, no cook",
+    },
+    {
+      key: "shrimp",
+      name: "Shrimp",
+      icon: "🦐",
+      sub: "raw, peeled",
+      kcal: 85,
+      p: 18.0,
+      c: 0.2,
+      f: 0.9,
+      satiety: 3,
+      best: "Ultra-lean, fast to cook",
+    },
+    {
+      key: "cod",
+      name: "Cod",
+      icon: "🐟",
+      sub: "raw fillet",
+      kcal: 82,
+      p: 17.8,
+      c: 0,
+      f: 0.7,
+      satiety: 3,
+      best: "Leanest white fish",
+    },
+    {
+      key: "turkey_mince",
+      name: "Turkey Mince",
+      icon: "🦃",
+      sub: "lean, raw",
+      kcal: 114,
+      p: 22.0,
+      c: 0,
+      f: 2.7,
+      satiety: 4,
+      best: "Lean beef alternative",
+    },
+    {
+      key: "cottage_cheese",
+      name: "Cottage Cheese",
+      icon: "🧀",
+      sub: "low-fat",
+      kcal: 72,
+      p: 12.4,
+      c: 2.7,
+      f: 1.0,
+      satiety: 3,
+      best: "High protein, low cal",
+    },
+    {
+      key: "skyr",
+      name: "Skyr",
+      icon: "🥛",
+      sub: "plain, 0% fat",
+      kcal: 63,
+      p: 11.0,
+      c: 4.0,
+      f: 0.2,
+      satiety: 3,
+      best: "Creamy, gut-friendly",
+    },
+    {
+      key: "quark",
+      name: "Quark (Low-Fat)",
+      icon: "🥛",
+      sub: "Magerquark",
+      kcal: 67,
+      p: 12.0,
+      c: 4.0,
+      f: 0.2,
+      satiety: 3,
+      best: "High protein, German staple",
+    },
+  ];
+function buildCompareTable() {
+  const e = { low: "gi-low", med: "gi-med", high: "gi-high" },
+    a = { low: "Low GI", med: "Med GI", high: "High GI" };
+  function t(e) {
+    return [1, 2, 3, 4, 5].map((a) => `<div class="satiety-dot ${a <= e ? "on" : ""}"></div>`).join("");
+  }
+  const i = document.getElementById("carbCards");
+  if (!i) return;
+  i.innerHTML = sortCompareData(CARB_COMPARE)
+    .map(
+      (i) =>
+        `\n    <div class="ccard c-${i.key}">\n      <div class="ccard-name">${i.icon} ${i.name}</div>\n      <div class="ccard-sub">${i.sub}</div>\n      <div class="ccard-macros">\n        <div class="ccard-macro mk"><span class="mv">${i.kcal}</span><span class="ml">kcal</span></div>\n        <div class="ccard-macro mp"><span class="mv">${i.p}g</span><span class="ml">protein</span></div>\n        <div class="ccard-macro mc"><span class="mv">${i.c}g</span><span class="ml">carbs</span></div>\n        <div class="ccard-macro mf"><span class="mv">${i.f}g</span><span class="ml">fat</span></div>\n      </div>\n      <div class="ccard-meta">\n        <div class="satiety-dots">${t(i.satiety)}</div>\n        <span class="satiety-label">Saturation</span>\n        <span class="gi-badge ${e[i.giLabel]}">${a[i.giLabel]}</span>\n        <span class="best-tag">${i.best}</span>\n      </div>\n    </div>\n  `,
+    )
+    .join("");
+  const n = document.getElementById("proteinCards");
+  n &&
+    (n.innerHTML = sortCompareData(PROTEIN_COMPARE)
+      .map((e) => {
+        const a = 4 * e.p + 4 * e.c + 9 * e.f,
+          i = a > 0 ? Math.round(((4 * e.p) / a) * 100) : 0;
+        return `\n    <div class="ccard c-${e.key}">\n      <div class="ccard-name">${e.icon} ${e.name}</div>\n      <div class="ccard-sub">${e.sub}</div>\n      <div class="ccard-macros">\n        <div class="ccard-macro mk"><span class="mv">${e.kcal}</span><span class="ml">kcal</span></div>\n        <div class="ccard-macro mp"><span class="mv">${e.p}g</span><span class="ml">protein</span></div>\n        <div class="ccard-macro mc"><span class="mv">${e.c}g</span><span class="ml">carbs</span></div>\n        <div class="ccard-macro mf"><span class="mv">${e.f}g</span><span class="ml">fat</span></div>\n      </div>\n      <div class="ccard-meta">\n        <div class="satiety-dots">${t(e.satiety)}</div>\n        <span class="satiety-label">Saturation</span>\n        <span class="pct-badge" title="% of total calories from protein">${i}% of kcal from protein</span>\n        <span class="best-tag">${e.best}</span>\n      </div>\n    </div>\n  `;
+      })
+      .join(""));
+}
+function shareRecipe() {
+  if (!currentModalRecipe) return;
+  const e = new URL(window.location.href);
+  e.searchParams.set("recipe", currentModalRecipe.id);
+  const url = e.toString();
+  const btn = document.getElementById("modalShareBtn");
+  function markCopied() {
+    btn.classList.add("copied");
+    btn.innerHTML = '<span class="share-icon">✓</span> Copied!';
+    setTimeout(() => { btn.classList.remove("copied"); btn.innerHTML = '<span class="share-icon">🔗</span> Share'; }, 2000);
+  }
+  function fallbackCopy() {
+    try {
+      const ta = document.createElement("textarea");
+      ta.value = url;
+      ta.style.cssText = "position:fixed;top:-9999px;left:-9999px;opacity:0;";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      ta.setSelectionRange(0, 99999);
+      const ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      if (ok) { markCopied(); } else { prompt("Copy this link:", url); }
+    } catch(err) { prompt("Copy this link:", url); }
+  }
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(url).then(markCopied).catch(fallbackCopy);
+  } else {
+    fallbackCopy();
+  }
+}
+function openHowItWorksModal() {
+  (document.getElementById("hiwOverlay").classList.add("open"), (document.body.style.overflow = "hidden"));
+}
+function closeHowItWorksModal() {
+  (document.getElementById("hiwOverlay").classList.remove("open"), (document.body.style.overflow = ""));
+}
+function toggleTheme() {
+  const e = document.documentElement.classList.toggle("light");
+  ((document.getElementById("themeIcon").textContent = e ? "🌙" : "☀️"),
+    (document.getElementById("themeLabel").textContent = e ? "Dark" : "Light"),
+    localStorage.setItem("fitniikiter_theme", e ? "light" : "dark"));
+}
+(!(function () {
+  const e = new URLSearchParams(window.location.search).get("recipe");
+  e &&
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        const a = R.find((a) => a.id === e || String(a.displayNum) === e);
+        a && openModal(a.id);
+      }, 100);
+    });
+})(),
+  document.addEventListener("keydown", (e) => {
+    "Escape" === e.key &&
+      document.getElementById("hiwOverlay")?.classList.contains("open") &&
+      closeHowItWorksModal();
+  }),
+  (function () {
+    const e = localStorage.getItem("fitniikiter_theme"),
+      a = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches,
+      t = e ? "light" === e : !a;
+    t && document.documentElement.classList.add("light");
+    const i = document.getElementById("themeIcon"),
+      n = document.getElementById("themeLabel");
+    (i && (i.textContent = t ? "🌙" : "☀️"),
+      n && (n.textContent = t ? "Dark" : "Light"),
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+        if (localStorage.getItem("fitniikiter_theme")) return;
+        const a = !e.matches;
+        document.documentElement.classList.toggle("light", a);
+        const t = document.getElementById("themeIcon"),
+          i = document.getElementById("themeLabel");
+        (t && (t.textContent = a ? "🌙" : "☀️"), i && (i.textContent = a ? "Dark" : "Light"));
+      }));
+  })(),
+  autoCalcCarbs(),
+  buildIngredientRecipeMap(),
+  buildAllCards(),
+  buildDisplayNumbers(),
+  (function () {
+    const e = document.getElementById("proteinSelector");
+    e &&
+      ((e.innerHTML = PROTEIN_DEFS.map(
+        (e) =>
+          `<div class="protein-btn ${"chicken" === e.key ? "active" : ""}" data-protein="${e.key}" onclick="selectProtein('${e.key}')">\n      <span class="pb-icon">${e.icon}</span>\n      <span class="pb-name">${e.name}</span>\n    </div>`,
+      ).join("")),
+      selectProtein("chicken"));
+  })(),
+  updateCardMacros(),
+  updateCalcDisplay(),
+  filterRecipes(),
+  updatePillStates(),
+  buildDietaryGrid(),
+  applyDietaryToProteinFilters(),
+  document.querySelectorAll('#page-recipes .filter-section').forEach(s => s.classList.add('open')),
+  activeDietary.forEach((e) => {
+    const a = DIETARY_FILTERS.find((a) => a.id === e);
+    a && a.blocks.forEach((e) => disabledIngredients.add(e));
+  }));
+
+(function () {
+  const btn = document.getElementById("scrollTopBtn");
+  window.addEventListener("scroll", function () {
+    if (window.scrollY > 400) {
+      btn.classList.add("visible");
+    } else {
+      btn.classList.remove("visible");
+    }
+  }, { passive: true });
+  btn.addEventListener("click", function () {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+})();
