@@ -4903,6 +4903,51 @@
         .nutdb-page { padding: 24px 12px; }
         .nutdb-table td, .nutdb-table thead th { padding: 9px 10px; }
       }
+      .prot-weight-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 0 2px;
+        margin-top: 8px;
+        border-top: 1px solid var(--border);
+      }
+      .prot-weight-label {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 11px;
+        letter-spacing: 0.8px;
+        color: var(--muted);
+        text-transform: uppercase;
+      }
+      .prot-weight-row {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .prot-weight-input {
+        width: 58px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: var(--text);
+        font-size: 13px;
+        font-family: "DM Sans", sans-serif;
+        padding: 4px 8px;
+        text-align: center;
+        outline: none;
+        -moz-appearance: textfield;
+        transition: border-color 0.15s;
+      }
+      .prot-weight-input::-webkit-inner-spin-button,
+      .prot-weight-input::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+      }
+      .prot-weight-input:focus {
+        border-color: var(--accent);
+      }
+      .prot-weight-unit {
+        font-size: 11px;
+        color: var(--muted);
+      }
     </style>
   </head>
   <body>
@@ -4993,7 +5038,15 @@
                 <button class="filter-btn active" id="btnPEggs"    onclick="toggleProteinBtn('eggs', this)">🥚 Eggs</button>
                 <button class="filter-btn active" id="btnPFish"    onclick="toggleProteinBtn('fish', this)">🐟 Fish</button>
                 <button class="filter-btn active" id="btnPTofu"    onclick="toggleProteinBtn('tofu', this)">🫘 Tofu</button>
-              </div></div>
+              </div>
+              <div class="prot-weight-wrap">
+                <span class="prot-weight-label">Protein weight</span>
+                <div class="prot-weight-row">
+                  <input type="number" id="filterProteinWeight" class="prot-weight-input" value="150" min="50" max="3000" oninput="updateGlobalWeight(this.value)" />
+                  <span class="prot-weight-unit">g</span>
+                </div>
+              </div>
+              </div>
             </div>
             <div class="filter-section">
               <div class="filter-section-label" onclick="toggleFilterSection(this)"><span>🍚 Carbs</span><span class="filter-section-arrow">▼</span></div>
@@ -6259,6 +6312,8 @@
               autoCalcCarbs();
               const el = document.getElementById("chickenInput");
               el && (el.value = i);
+              const fpw = document.getElementById("filterProteinWeight");
+              fpw && (fpw.value = i);
             } else weights[n.carb] = i;
             buildIngredientsTab(n);
             refreshRecipeTabIfOpen(n);
@@ -6277,7 +6332,9 @@
           autoCalcCarbs(),
           Object.keys(_sauceMacroCache).forEach((e) => delete _sauceMacroCache[e]));
         const t = document.getElementById("chickenInput");
+        const _fpw = document.getElementById("filterProteinWeight");
         (t && (t.value = a),
+          _fpw && parseInt(_fpw.value) !== a && (_fpw.value = a),
           document.querySelectorAll(".card-weight-input").forEach((e) => {
             parseInt(e.value) !== a && (e.value = a);
           }),
@@ -7036,6 +7093,8 @@
         ((weights.chicken = Math.max(50, Math.min(3e3, n))), autoCalcCarbs());
         const s = document.getElementById("chickenInput");
         s && (s.value = weights.chicken);
+        const fpw3 = document.getElementById("filterProteinWeight");
+        fpw3 && (fpw3.value = weights.chicken);
         const o = document.getElementById("mwProt");
         (o && (o.value = weights.chicken), Object.keys(_sauceMacroCache).forEach((e) => delete _sauceMacroCache[e]));
       }
@@ -7115,6 +7174,8 @@
         ((weights.chicken = Math.max(50, Math.min(3e3, n))), autoCalcCarbs());
         const s = document.getElementById("chickenInput");
         s && (s.value = weights.chicken);
+        const fpw4 = document.getElementById("filterProteinWeight");
+        fpw4 && (fpw4.value = weights.chicken);
         const o = document.getElementById("mwProt");
         (o && (o.value = weights.chicken), Object.keys(_sauceMacroCache).forEach((e) => delete _sauceMacroCache[e]));
       }
