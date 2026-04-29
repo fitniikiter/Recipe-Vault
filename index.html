@@ -550,10 +550,10 @@
         width: 5px;
       }
       .hiw-modal::-webkit-scrollbar-track {
-        background: 0 0;
+        background: #1a1a1a;
       }
       .hiw-modal::-webkit-scrollbar-thumb {
-        background: var(--border);
+        background: #ff6b00;
         border-radius: 3px;
       }
       .hiw-modal-close {
@@ -1898,13 +1898,9 @@
         max-height: 90vh;
         display: flex;
         flex-direction: column;
-        transform: translateY(20px);
-        transition: transform 0.25s;
         overflow: hidden;
       }
-      .modal-overlay.open .modal {
-        transform: translateY(0);
-      }
+      .modal-overlay.open .modal {}
       .modal-header {
         padding: 24px 28px 0;
         flex-shrink: 0;
@@ -2070,14 +2066,14 @@
         width: 6px;
       }
       .modal-body::-webkit-scrollbar-track {
-        background: 0 0;
+        background: #1a1a1a;
       }
       .modal-body::-webkit-scrollbar-thumb {
-        background: var(--border);
+        background: #ff6b00;
         border-radius: 3px;
       }
       .modal-body::-webkit-scrollbar-thumb:hover {
-        background: #555;
+        background: #ff8c33;
       }
       html.light .modal-body::-webkit-scrollbar-thumb {
         background: #ccc;
@@ -2089,14 +2085,14 @@
         width: 6px;
       }
       html::-webkit-scrollbar-track {
-        background: #0e0e0e;
+        background: #1a1a1a;
       }
       html::-webkit-scrollbar-thumb {
-        background: var(--border);
+        background: #ff6b00;
         border-radius: 3px;
       }
       html::-webkit-scrollbar-thumb:hover {
-        background: #555;
+        background: #ff8c33;
       }
       html.light::-webkit-scrollbar-track {
         background: #f4f4ef;
@@ -4801,6 +4797,112 @@
         }
         #btnFilterToggle { display: none !important; }
       }
+      .nutdb-page {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+      .nutdb-header {
+        margin-bottom: 24px;
+      }
+      .nutdb-header h2 {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 32px;
+        letter-spacing: 2px;
+        color: var(--text);
+        margin: 0 0 6px;
+      }
+      .nutdb-header p {
+        color: var(--muted);
+        font-size: 13px;
+        margin: 0;
+      }
+      .nutdb-controls {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      .nutdb-controls input {
+        flex: 1;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 10px 14px;
+        font-size: 14px;
+        color: var(--text);
+        outline: none;
+        transition: border-color 0.15s;
+      }
+      .nutdb-controls input:focus {
+        border-color: var(--accent);
+      }
+      .nutdb-count {
+        color: var(--muted);
+        font-size: 12px;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .nutdb-wrap {
+        overflow-x: auto;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+      }
+      .nutdb-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+      .nutdb-table thead th {
+        background: var(--card);
+        padding: 12px 16px;
+        text-align: left;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 13px;
+        letter-spacing: 1px;
+        color: var(--muted);
+        cursor: pointer;
+        user-select: none;
+        white-space: nowrap;
+        border-bottom: 1px solid var(--border);
+        transition: color 0.15s;
+      }
+      .nutdb-table thead th:hover {
+        color: var(--text);
+      }
+      .nutdb-table thead th.sort-active {
+        color: var(--accent);
+      }
+      .sort-arrow {
+        font-size: 10px;
+        margin-left: 4px;
+        opacity: 0.6;
+      }
+      .nutdb-table tbody tr {
+        border-bottom: 1px solid var(--border);
+        transition: background 0.12s;
+      }
+      .nutdb-table tbody tr:last-child {
+        border-bottom: none;
+      }
+      .nutdb-table tbody tr:hover {
+        background: var(--card);
+      }
+      .nutdb-table td {
+        padding: 10px 16px;
+        color: var(--text);
+      }
+      .nutdb-name {
+        text-transform: capitalize;
+        font-weight: 500;
+      }
+      html.light .nutdb-controls input {
+        background: #fff;
+      }
+      @media (max-width: 600px) {
+        .nutdb-page { padding: 24px 12px; }
+        .nutdb-table td, .nutdb-table thead th { padding: 9px 10px; }
+      }
     </style>
   </head>
   <body>
@@ -4816,6 +4918,9 @@
       </button>
       <button class="nav-tab" onclick="switchTab('calc', this)">
         <span class="tab-icon">🔥</span><span class="tab-label">Calorie Calculator</span>
+      </button>
+      <button class="nav-tab" onclick="switchTab('nutrition', this)">
+        <span class="tab-icon">🥦</span><span class="tab-label">Nutrition DB</span>
       </button>
       <div class="theme-toggle">
         <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">
@@ -5213,6 +5318,32 @@
         </div>
       </div>
     </div>
+    <div class="page" id="page-nutrition">
+      <div class="nutdb-page">
+        <div class="nutdb-header">
+          <h2>Nutrition Database</h2>
+          <p>All ingredients per 100g (raw/uncooked) — USDA FoodData Central</p>
+        </div>
+        <div class="nutdb-controls">
+          <input id="nutdbSearch" type="text" placeholder="Search ingredients..." oninput="nutdbFilter()" />
+          <span class="nutdb-count" id="nutdbCount"></span>
+        </div>
+        <div class="nutdb-wrap">
+          <table class="nutdb-table" id="nutdbTable">
+            <thead>
+              <tr>
+                <th onclick="nutdbSort('name')" data-col="name">Ingredient <span class="sort-arrow" data-col="name">↕</span></th>
+                <th onclick="nutdbSort('kcal')" data-col="kcal">Calories <span class="sort-arrow" data-col="kcal">↕</span></th>
+                <th onclick="nutdbSort('p')" data-col="p">Protein (g) <span class="sort-arrow" data-col="p">↕</span></th>
+                <th onclick="nutdbSort('c')" data-col="c">Carbs (g) <span class="sort-arrow" data-col="c">↕</span></th>
+                <th onclick="nutdbSort('f')" data-col="f">Fat (g) <span class="sort-arrow" data-col="f">↕</span></th>
+              </tr>
+            </thead>
+            <tbody id="nutdbBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
     <div class="page" id="page-compare">
       <div class="compare-page">
         <div class="compare-header">
@@ -5434,6 +5565,7 @@
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="nutrition.js?v=202604031347"></script>
   <script src="recipes.js?v=202604031347"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <script>
       const NUT = {
         chicken_thigh: { kcal: 149, p: 18.6, c: 0, f: 7.92 },
@@ -5924,15 +6056,49 @@
       function toggleFilterSection(el) {
         el.closest(".filter-section").classList.toggle("open");
       }
+      let _filterPanelAnimating = false;
       function toggleFilterPanel() {
         const panel = document.getElementById("filterPanel");
         const btn = document.getElementById("btnFilterToggle");
         const arrow = document.getElementById("filterPillArrow");
-        if (!panel) return;
+        if (!panel || _filterPanelAnimating) return;
         const isOpen = panel.style.display !== "none";
-        panel.style.display = isOpen ? "none" : "block";
         if (btn) btn.classList.toggle("open", !isOpen);
         if (arrow) arrow.style.transform = isOpen ? "" : "rotate(180deg)";
+        _filterPanelAnimating = true;
+        if (isOpen) {
+          anime({
+            targets: panel,
+            height: [panel.scrollHeight, 0],
+            opacity: [1, 0],
+            duration: 260,
+            easing: "easeInQuad",
+            begin: () => { panel.style.overflow = "hidden"; },
+            complete: () => {
+              panel.style.display = "none";
+              panel.style.height = "";
+              panel.style.overflow = "";
+              _filterPanelAnimating = false;
+            }
+          });
+        } else {
+          panel.style.display = "block";
+          panel.style.overflow = "hidden";
+          panel.style.height = "0";
+          const targetH = panel.scrollHeight;
+          anime({
+            targets: panel,
+            height: [0, targetH],
+            opacity: [0, 1],
+            duration: 300,
+            easing: "easeOutQuad",
+            complete: () => {
+              panel.style.height = "auto";
+              panel.style.overflow = "";
+              _filterPanelAnimating = false;
+            }
+          });
+        }
       }
       function buildDisplayNumbers() {}
       function updatePillStates() {
@@ -7233,6 +7399,14 @@
           })(),
           document.getElementById("recipeModal").classList.add("open"),
           (document.body.style.overflow = "hidden"));
+        anime({
+          targets: document.querySelector("#recipeModal .modal"),
+          scale: [0.92, 1],
+          translateY: [18, 0],
+          opacity: [0, 1],
+          duration: 340,
+          easing: "easeOutBack"
+        });
         const l = document.querySelector(".modal-body"),
           d = document.getElementById("modalCollapsible");
         l &&
@@ -8002,7 +8176,72 @@
           document.querySelectorAll(".page").forEach((e) => e.classList.remove("active")),
           document.getElementById("page-" + e).classList.add("active"),
           "pantry" === e && (renderPantry(), buildDietaryGrid()),
-          "compare" === e && buildCompareTable());
+          "compare" === e && buildCompareTable(),
+          "nutrition" === e && renderNutritionDB());
+      }
+
+      let _nutdbData = null;
+      let _nutdbSortCol = "name";
+      let _nutdbSortDir = 1;
+      let _nutdbQuery = "";
+
+      function _buildNutdbData() {
+        if (_nutdbData) return;
+        const raw = Object.assign({}, NUTRITION_DB, NUTRITION_CARBS);
+        _nutdbData = Object.entries(raw).map(([key, v]) => ({
+          key,
+          name: key.replace(/_/g, " "),
+          kcal: v.kcal ?? null,
+          p: v.p ?? null,
+          c: v.c ?? null,
+          f: v.f ?? null,
+        }));
+      }
+
+      function nutdbFilter() {
+        _nutdbQuery = document.getElementById("nutdbSearch").value.toLowerCase();
+        _nutdbRender();
+      }
+
+      function nutdbSort(col) {
+        if (_nutdbSortCol === col) {
+          _nutdbSortDir *= -1;
+        } else {
+          _nutdbSortCol = col;
+          _nutdbSortDir = col === "name" ? 1 : -1;
+        }
+        _nutdbRender();
+      }
+
+      function renderNutritionDB() {
+        _buildNutdbData();
+        _nutdbRender();
+      }
+
+      function _nutdbRender() {
+        _buildNutdbData();
+        const q = _nutdbQuery;
+        let rows = q ? _nutdbData.filter((r) => r.name.includes(q)) : _nutdbData.slice();
+        rows.sort((a, b) => {
+          if (_nutdbSortCol === "name") return _nutdbSortDir * a.name.localeCompare(b.name);
+          const av = a[_nutdbSortCol] ?? -1;
+          const bv = b[_nutdbSortCol] ?? -1;
+          return _nutdbSortDir * (av - bv);
+        });
+        document.querySelectorAll("#nutdbTable thead th").forEach((th) => {
+          const col = th.dataset.col;
+          th.classList.toggle("sort-active", col === _nutdbSortCol);
+          const arrow = th.querySelector(".sort-arrow");
+          if (arrow) arrow.textContent = col !== _nutdbSortCol ? "↕" : _nutdbSortDir === 1 ? "↑" : "↓";
+        });
+        const fmt = (v) => (v == null ? "—" : v);
+        document.getElementById("nutdbBody").innerHTML = rows
+          .map(
+            (r) =>
+              `<tr><td class="nutdb-name">${r.name}</td><td>${fmt(r.kcal)}</td><td>${fmt(r.p)}</td><td>${fmt(r.c)}</td><td>${fmt(r.f)}</td></tr>`
+          )
+          .join("");
+        document.getElementById("nutdbCount").textContent = rows.length + " ingredients";
       }
       const ADMIN_HASH = "4fdb10503bb511548ce67d426a58d23f2863c3e4bf16c517dccb2196405fdec7";
       let adminMode = !1,
@@ -9681,6 +9920,19 @@
         updateCardMacros(),
         updateCalcDisplay(),
         filterRecipes(),
+        (function () {
+          const visibleCards = Array.from(document.querySelectorAll("#recipeGrid .card")).filter(
+            (c) => c.style.display !== "none"
+          );
+          anime({
+            targets: visibleCards,
+            opacity: [0, 1],
+            translateY: [28, 0],
+            delay: anime.stagger(35, { start: 60 }),
+            duration: 420,
+            easing: "easeOutQuad"
+          });
+        })(),
         updatePillStates(),
         buildDietaryGrid(),
         applyDietaryToProteinFilters(),
