@@ -23,7 +23,7 @@ NO backend. NO framework. NO external dependencies. Always free.
 - All code comments in English
 - All recipe content in English (brand names in parentheses ok)
 - No external dependencies ever
-- Current recipe count: 148 — next displayNum is 149
+- Current recipe count: 149 — next displayNum is 150
 
 ## Recipe Structure (recipes.js)
 { id, displayNum, carb, time, title, desc, tags[], flavor,
