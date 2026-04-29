@@ -186,7 +186,6 @@
       }
       html.light .filter-btn,
       html.light .filter-pill {
-        background: var(--card);
         color: var(--muted);
       }
       html.light .filter-pill:hover {
@@ -918,14 +917,14 @@
         align-items: center;
       }
       .filter-btn {
-        background: var(--card);
+        background: transparent;
         border: 1px solid var(--border);
         color: var(--muted);
-        padding: 7px 12px;
+        padding: 2px 7px;
         border-radius: 20px;
         font-family: "DM Sans", sans-serif;
-        font-size: 11px;
-        font-weight: 500;
+        font-size: 9px;
+        font-weight: 700;
         cursor: pointer;
         transition: all 0.15s;
         text-transform: uppercase;
@@ -936,21 +935,21 @@
         color: var(--accent);
       }
       .filter-btn.active {
-        background: var(--accent);
-        color: #000;
-        border-color: var(--accent);
+        background: rgba(255, 107, 0, 0.15);
+        color: var(--accent);
+        border-color: rgba(255, 107, 0, 0.35);
       }
       /* carb type colors */
-      #btnPotato.active  { background: var(--carb-potato); border-color: var(--carb-potato); color: #000; }
-      #btnRice.active    { background: var(--carb-rice);   border-color: var(--carb-rice);   color: #000; }
-      #btnNoodle.active  { background: var(--carb-noodle); border-color: var(--carb-noodle); color: #fff; }
-      #btnBread.active   { background: var(--carb-bread);  border-color: var(--carb-bread);  color: #fff; }
+      #btnPotato.active  { background: rgba(232,163, 71,0.18); border-color: rgba(232,163, 71,0.4); color: #e8a347; }
+      #btnRice.active    { background: rgba( 71,179,232,0.18); border-color: rgba( 71,179,232,0.4); color: #47b3e8; }
+      #btnNoodle.active  { background: rgba(200, 71,232,0.18); border-color: rgba(200, 71,232,0.4); color: #c847e8; }
+      #btnBread.active   { background: rgba(232, 71, 71,0.18); border-color: rgba(232, 71, 71,0.4); color: #e84747; }
       /* protein type colors */
-      #btnPChicken.active { background: var(--carb-potato); border-color: var(--carb-potato); color: #000; }
-      #btnPBeef.active    { background: #e84747; border-color: #e84747; color: #fff; }
-      #btnPEggs.active    { background: #ffb347; border-color: #ffb347; color: #000; }
-      #btnPFish.active    { background: #47b3e8; border-color: #47b3e8; color: #000; }
-      #btnPTofu.active    { background: #47e8a3; border-color: #47e8a3; color: #000; }
+      #btnPChicken.active { background: rgba(232,163, 71,0.18); border-color: rgba(232,163, 71,0.4); color: #e8a347; }
+      #btnPBeef.active    { background: rgba(232, 71, 71,0.18); border-color: rgba(232, 71, 71,0.4); color: #e84747; }
+      #btnPEggs.active    { background: rgba(255,179, 71,0.18); border-color: rgba(255,179, 71,0.4); color: #ffb347; }
+      #btnPFish.active    { background: rgba( 71,179,232,0.18); border-color: rgba( 71,179,232,0.4); color: #47b3e8; }
+      #btnPTofu.active    { background: rgba( 71,232,163,0.18); border-color: rgba( 71,232,163,0.4); color: #47e8a3; }
       /* small inline auto-toggle button */
       .auto-toggle-btn {
         padding: 3px 8px;
