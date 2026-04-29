@@ -2081,17 +2081,28 @@
       html.light .modal-body::-webkit-scrollbar-thumb:hover {
         background: #aaa;
       }
-      html::-webkit-scrollbar {
+      :root {
+        scrollbar-color: #ff6b00 #1a1a1a;
+        scrollbar-width: thin;
+      }
+      html.light {
+        scrollbar-color: #ccc #f4f4ef;
+      }
+      html::-webkit-scrollbar,
+      .filter-bar::-webkit-scrollbar {
         width: 6px;
       }
-      html::-webkit-scrollbar-track {
+      html::-webkit-scrollbar-track,
+      .filter-bar::-webkit-scrollbar-track {
         background: #1a1a1a;
       }
-      html::-webkit-scrollbar-thumb {
+      html::-webkit-scrollbar-thumb,
+      .filter-bar::-webkit-scrollbar-thumb {
         background: #ff6b00;
         border-radius: 3px;
       }
-      html::-webkit-scrollbar-thumb:hover {
+      html::-webkit-scrollbar-thumb:hover,
+      .filter-bar::-webkit-scrollbar-thumb:hover {
         background: #ff8c33;
       }
       html.light::-webkit-scrollbar-track {
@@ -5042,7 +5053,7 @@
               <div class="prot-weight-wrap">
                 <span class="prot-weight-label">Protein weight</span>
                 <div class="prot-weight-row">
-                  <input type="number" id="filterProteinWeight" class="prot-weight-input" value="150" min="50" max="3000" oninput="updateGlobalWeight(this.value)" />
+                  <input type="number" id="filterProteinWeight" class="prot-weight-input" value="150" min="0" max="3000" oninput="_filterProteinInput(this.value)" />
                   <span class="prot-weight-unit">g</span>
                 </div>
               </div>
@@ -5059,7 +5070,15 @@
                 <button class="filter-btn active" id="btnRice"   onclick="toggleCarbBtn('rice', this)">🍚 Rice</button>
                 <button class="filter-btn active" id="btnNoodle" onclick="toggleCarbBtn('noodle', this)">🍜 Noodles</button>
                 <button class="filter-btn active" id="btnBread"  onclick="toggleCarbBtn('bread', this)">🫓 Bread/Wrap</button>
-              </div></div>
+              </div>
+              <div class="prot-weight-wrap">
+                <span class="prot-weight-label">Carb weight</span>
+                <div class="prot-weight-row">
+                  <input type="number" id="filterCarbWeight" class="prot-weight-input" value="50" min="0" max="3000" oninput="_filterCarbInput(this.value)" />
+                  <span class="prot-weight-unit">g</span>
+                </div>
+              </div>
+              </div>
             </div>
             <div class="filter-section">
               <div class="filter-section-label" onclick="toggleFilterSection(this)"><span>📊 Macros</span><span class="filter-section-arrow">▼</span></div>
@@ -5982,6 +6001,8 @@
           (weights.rice = Math.round(e * CARB_RATIOS.rice)),
           (weights.noodle = Math.round(e * CARB_RATIOS.noodle)),
           (weights.bread = Math.round(e * CARB_RATIOS.bread)));
+        const fcw = document.getElementById("filterCarbWeight");
+        fcw && (fcw.value = weights.rice);
       }
       let eggSizeG = 58,
         eggCount = 2,
@@ -6342,6 +6363,35 @@
           currentModalRecipe && refreshRecipeTabIfOpen(R.find((e) => e.id === currentModalRecipe.id)),
           filterRecipes(),
           updateCalcDisplay());
+      }
+      function _filterProteinInput(v) {
+        const g = v === "" ? 0 : Math.max(0, Math.min(3000, parseInt(v) || 0));
+        weights.chicken = g;
+        autoCalcCarbs();
+        Object.keys(_sauceMacroCache).forEach((k) => delete _sauceMacroCache[k]);
+        const ci = document.getElementById("chickenInput");
+        ci && (ci.value = g);
+        document.querySelectorAll(".card-weight-input").forEach((e) => { e.value = g; });
+        const mwp = document.getElementById("mwProt");
+        mwp && (mwp.value = g);
+        updateCardMacros();
+        currentModalRecipe && refreshRecipeTabIfOpen(R.find((e) => e.id === currentModalRecipe.id));
+        filterRecipes();
+        updateCalcDisplay();
+      }
+      function _filterCarbInput(v) {
+        const g = v === "" ? 0 : Math.max(0, Math.min(3000, parseInt(v) || 0));
+        weights.potato = g;
+        weights.rice = g;
+        weights.noodle = g;
+        weights.bread = g;
+        Object.keys(_sauceMacroCache).forEach((k) => delete _sauceMacroCache[k]);
+        const mwc = document.getElementById("mwCarb");
+        mwc && (mwc.value = g);
+        updateCardMacros();
+        currentModalRecipe && refreshRecipeTabIfOpen(R.find((e) => e.id === currentModalRecipe.id));
+        filterRecipes();
+        updateCalcDisplay();
       }
       function toggleProteinFilter(e) {
         setTimeout(() => {
