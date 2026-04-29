@@ -381,7 +381,7 @@ const R = [
   id: "thai-basil-chicken-rice",
   sideEgg: true,
   protein: "chicken",
-  displayNum: 2,
+  displayNum: 6,
   carb: "rice",
   time: 25,
   title: "Thai Basil Chicken Rice",
@@ -393,7 +393,7 @@ const R = [
 {
   id: "shawarma-chicken-wrap",
   protein: "chicken",
-  displayNum: 3,
+  displayNum: 36,
   carb: "bread",
   time: 35,
   title: "Shawarma Chicken Wrap",
@@ -405,7 +405,7 @@ const R = [
 {
   id: "japanese-teriyaki-chicken",
   protein: "chicken",
-  displayNum: 4,
+  displayNum: 82,
   carb: "rice",
   time: 25,
   title: "Japanese Teriyaki Chicken",
@@ -417,7 +417,7 @@ const R = [
 {
   id: "chipotle-lime-chicken-bowl",
   protein: "chicken",
-  displayNum: 5,
+  displayNum: 83,
   carb: "rice",
   time: 30,
   title: "Chipotle Lime Chicken Bowl",
@@ -430,7 +430,7 @@ const R = [
   id: "honey-garlic-chicken-noodles",
   sideEgg: true,
   protein: "chicken",
-  displayNum: 6,
+  displayNum: 119,
   carb: "noodle",
   time: 25,
   title: "Honey Garlic Chicken Noodles",
@@ -442,7 +442,7 @@ const R = [
 {
   id: "mediterranean-chicken-potato",
   protein: "chicken",
-  displayNum: 7,
+  displayNum: 132,
   carb: "potato",
   time: 45,
   title: "Mediterranean Lemon Herb Chicken & Potatoes",
@@ -799,7 +799,7 @@ const R = [
 {
   id: "chicken-caesar-wrap",
   protein: "chicken",
-  displayNum: 36,
+  displayNum: 3,
   carb: "bread",
   time: 20,
   title: "Crispy Chicken Caesar Wrap",
@@ -1369,7 +1369,7 @@ const R = [
   id: "thai-basil-beef-rice",
   sideEgg: true,
   protein: "beef",
-  displayNum: 82,
+  displayNum: 4,
   carb: "rice",
   time: 20,
   title: "Thai Basil Beef Rice",
@@ -1382,7 +1382,7 @@ const R = [
 {
   id: "chocolate-chip-baked-oats",
   protein: "none",
-  displayNum: 83,
+  displayNum: 5,
   carb: "none",
   time: 25,
   title: "Chocolate Chip Baked Oats",
@@ -1857,7 +1857,7 @@ const R = [
 {
   id: "american-bigmac-burger-bowl",
   protein: "beef",
-  displayNum: 119,
+  displayNum: 6,
   carb: "potato",
   time: 35,
   title: "Big Mac Burger Bowl",
@@ -2017,7 +2017,7 @@ const R = [
 {
   id: "korean-bulgogi-beef-potato-bowl",
   protein: "beef",
-  displayNum: 132,
+  displayNum: 7,
   carb: "potato",
   time: 30,
   title: "Korean Bulgogi Beef Potato Bowl",
