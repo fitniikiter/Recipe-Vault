@@ -4539,6 +4539,11 @@
       .mf-slider-header > label, .mf-slider-header > div {
         font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.6px;
       }
+      .mf-slider-header > div {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
       .mf-slider-val {
         font-size:13px; font-weight:700; font-family:"Bebas Neue",sans-serif;
         color:var(--muted); min-width:48px; text-align:right; transition:color 0.15s;
@@ -7225,6 +7230,8 @@
         s && (s.value = weights.chicken);
         const fpw4 = document.getElementById("filterProteinWeight");
         fpw4 && (fpw4.value = weights.chicken);
+        const fcw5 = document.getElementById("filterCarbWeight");
+        fcw5 && (fcw5.value = weights.rice);
         const o = document.getElementById("mwProt");
         (o && (o.value = weights.chicken), Object.keys(_sauceMacroCache).forEach((e) => delete _sauceMacroCache[e]));
       }
