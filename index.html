@@ -1902,8 +1902,10 @@
       }
       .modal-overlay.open .modal {}
       .modal-header {
-        padding: 24px 28px 0;
+        padding: 20px 28px 12px;
         flex-shrink: 0;
+        background: #1a1a1a;
+        z-index: 5;
       }
       .modal-header-collapsible {
         transition:
@@ -4922,6 +4924,10 @@
         transform: translateY(0);
         pointer-events: auto;
       }
+      #recipeModal.open ~ #scrollTopBtn,
+      body:has(#recipeModal.open) #scrollTopBtn {
+        display: none !important;
+      }
       #scrollTopBtn:hover {
         filter: brightness(1.15);
       }
@@ -5753,6 +5759,8 @@
         <div class="modal-header">
           <div class="modal-meta"><span class="modal-num" id="modalNum"></span><span class="card-time" id="modalTime"></span></div>
           <div class="modal-title" id="modalTitle"></div>
+        </div>
+        <div class="modal-body">
           <div class="modal-header-collapsible" id="modalCollapsible">
             <div class="modal-desc" id="modalDesc"></div>
             <div id="modalHintBox" class="recipe-hint-box" style="display:none"><span class="hint-icon">📌</span><span id="modalHintText"></span></div>
@@ -5766,8 +5774,6 @@
             <div id="modalTagsRow" style="display: flex; flex-wrap: wrap; gap: 5px; padding: 10px 0 4px"></div>
           </div>
           <div class="modal-tabs" id="modalTabs"></div>
-        </div>
-        <div class="modal-body">
           <div class="modal-tab-content active" id="tab-ingredients"></div>
           <div class="modal-tab-content" id="tab-recipe"></div>
           <div class="modal-tab-content" id="tab-video"></div>
