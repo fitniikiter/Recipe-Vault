@@ -265,7 +265,8 @@
       html.light .step-btn:hover {
         background: #eee;
       }
-      html.light .step-ing-btn {
+      html.light .step-ing-btn,
+      html.light .ing-step-toggle {
         background: rgba(0, 0, 0, 0.04);
         border-color: #ddd;
       }
@@ -2181,7 +2182,6 @@
       .ing-expand-icon {
         font-size: 9px;
         color: var(--muted);
-        margin-left: 8px;
         transition: transform 0.2s;
         flex-shrink: 0;
       }
@@ -2443,11 +2443,25 @@
       .modal-weight-row.open .modal-weight-macro-panel {
         display: block;
       }
+      .serving-variant-row {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 8px;
+        align-items: stretch;
+      }
+      .serving-variant-row .modal-variant-row {
+        flex: 1;
+        margin-bottom: 0;
+      }
+      .serving-variant-row .serving-control {
+        flex: 1;
+        margin-bottom: 0;
+      }
       .serving-control {
         display: flex;
         align-items: center;
         gap: 10px;
-        margin-bottom: 20px;
+        margin-bottom: 8px;
         padding: 12px 16px;
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid #2a2a2a;
@@ -2597,6 +2611,68 @@
         color: var(--accent);
         font-family: "Bebas Neue", sans-serif;
         font-size: 13px;
+      }
+      .ing-step-group {
+        margin-bottom: 8px;
+      }
+      .ing-step-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 4px;
+        padding: 4px 10px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--muted);
+        cursor: pointer;
+        transition: all 0.15s;
+        user-select: none;
+      }
+      .ing-step-toggle:hover {
+        border-color: #555;
+        color: var(--text);
+      }
+      .ing-step-toggle.open {
+        border-color: var(--accent);
+        color: var(--accent);
+        background: rgba(255, 140, 0, 0.06);
+      }
+      .ing-step-toggle .sia-arrow {
+        font-size: 7px;
+        transition: transform 0.2s;
+      }
+      .ing-step-toggle.open .sia-arrow {
+        transform: rotate(180deg);
+      }
+      .ing-step-panel {
+        display: none;
+        margin-top: 6px;
+      }
+      .ing-step-panel.open {
+        display: block;
+      }
+      .ing-step-item {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        padding: 8px 12px;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        font-size: 12px;
+        color: var(--text);
+        margin-bottom: 4px;
+        line-height: 1.5;
+      }
+      .ing-step-num {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 14px;
+        color: var(--accent);
+        flex-shrink: 0;
+        min-width: 16px;
       }
       .hack-box {
         background: rgba(255, 140, 0, 0.06);
@@ -7738,7 +7814,7 @@
         const _sgC = Math.round((_sgNut.c * _sgPP) / 100 * 10) / 10;
         const _sgF = Math.round((_sgNut.f * _sgPP) / 100 * 10) / 10;
         const _sideEggBlock = _hasSideEgg ? buildSideEggBlock(e.id, _sgPP, _sgK, _sgP, _sgC, _sgF, _sgNut) : "";
-        let y = `\n  <div class="serving-control">\n    <label>🍽️ Servings</label>\n    <div class="serving-stepper">\n      <button class="step-btn" onclick="changeModalServings(-1, '${e.id}')">−</button>\n      <span class="serving-val" id="modalServingVal">${i}</span>\n      <button class="step-btn" onclick="changeModalServings(1, '${e.id}')">+</button>\n    </div>\n    <span class="modal-weight-hint">per portion</span>\n  </div>\n  ${g}\n  ${
+        let y = `\n  <div class="serving-variant-row">\n  <div class="serving-control">\n    <label>🍽️ Servings</label>\n    <div class="serving-stepper">\n      <button class="step-btn" onclick="changeModalServings(-1, '${e.id}')">−</button>\n      <span class="serving-val" id="modalServingVal">${i}</span>\n      <button class="step-btn" onclick="changeModalServings(1, '${e.id}')">+</button>\n    </div>\n    <span class="modal-weight-hint">per portion</span>\n  </div>\n  ${g}\n  </div>\n  ${
             (o || _isNoneProtein)
               ? k
               : (() => {
@@ -7763,7 +7839,7 @@
           w = 0,
           _ = !1;
         const _recipeStepsText = (t.steps || []).join(" ").toLowerCase();
-        t.ingredients.forEach((a) => {
+        t.ingredients.forEach((a, sectionIdx) => {
           ((y += `<div class="ing-section-title">${a.section}</div><ul class="ing-list">`),
             a.items.forEach((a) => {
               const t = (a.amt || "").includes("{{proteinG}}") || (a.amt || "").includes("{{carbG}}") || (a.amt || "").includes("{{eggCount}}"),
@@ -7815,11 +7891,30 @@
               if (g) {
                 ((_ = !0), (b += g.kcal), (f += g.p), (v += g.c), (w += g.f));
                 Math.random().toString(36).slice(2, 7);
-                y += `<li class="has-macros" onclick="toggleIngMacro(this)">\n          <div class="ing-main-row">\n            <span class="ing-item-name">${m}${_warnBadge}</span>\n            <div style="display:flex;align-items:center;gap:8px;">\n              <span class="ing-item-amt">${d}</span>\n              <span class="ing-expand-icon">▼</span>\n            </div>\n          </div>\n          <div class="ing-macro-panel">\n            <div class="ing-macro-grid">\n              <div class="ing-macro-cell mk"><span class="imc-val">${g.kcal}</span><span class="imc-lbl">kcal</span></div>\n              <div class="ing-macro-cell mp"><span class="imc-val">${g.p}g</span><span class="imc-lbl">protein</span></div>\n              <div class="ing-macro-cell mc"><span class="imc-val">${g.c}g</span><span class="imc-lbl">carbs</span></div>\n              <div class="ing-macro-cell mf"><span class="imc-val">${g.f}g</span><span class="imc-lbl">fat</span></div>\n              ${g.a > 0 ? `<div class="ing-macro-cell ma"><span class="imc-val">${g.a}g</span><span class="imc-lbl">alcohol</span></div>` : ""}\n            </div>\n            <div class="ing-macro-hint">${i > 1 ? `${i} servings` : "Per portion"} · based on ${g.grams}g</div>\n          </div>\n        </li>`;
+                y += `<li class="has-macros" onclick="toggleIngMacro(this)">\n          <div class="ing-main-row">\n            <div style="display:flex;align-items:center;gap:4px;">\n              <span class="ing-expand-icon">▼</span>\n              <span class="ing-item-name">${m}${_warnBadge}</span>\n            </div>\n            <span class="ing-item-amt">${d}</span>\n          </div>\n          <div class="ing-macro-panel">\n            <div class="ing-macro-grid">\n              <div class="ing-macro-cell mk"><span class="imc-val">${g.kcal}</span><span class="imc-lbl">kcal</span></div>\n              <div class="ing-macro-cell mp"><span class="imc-val">${g.p}g</span><span class="imc-lbl">protein</span></div>\n              <div class="ing-macro-cell mc"><span class="imc-val">${g.c}g</span><span class="imc-lbl">carbs</span></div>\n              <div class="ing-macro-cell mf"><span class="imc-val">${g.f}g</span><span class="imc-lbl">fat</span></div>\n              ${g.a > 0 ? `<div class="ing-macro-cell ma"><span class="imc-val">${g.a}g</span><span class="imc-lbl">alcohol</span></div>` : ""}\n            </div>\n            <div class="ing-macro-hint">${i > 1 ? `${i} servings` : "Per portion"} · based on ${g.grams}g</div>\n          </div>\n        </li>`;
               } else
                 y += `<li><div class="ing-main-row"><span class="ing-item-name">${m}${_warnBadge}</span><span class="ing-item-amt">${d}</span></div></li>`;
             }),
             (y += "</ul>"));
+          if (!t.placeholder) {
+            const sectionSteps = (t.steps || []).filter(function(step) {
+              const sl = step.toLowerCase();
+              const sn = (a.section || "").toLowerCase();
+              if (sn.length > 2 && sl.includes(sn)) return true;
+              return (a.items || []).some(function(item) {
+                const nl = (item.name || "").toLowerCase()
+                  .replace(/[(){}]/g, "")
+                  .replace(/\{\{proteing\}\}/g, "chicken")
+                  .replace(/\{\{carbg\}\}/g, e.carb || "potato")
+                  .trim();
+                return nl.split(/[\s,\/]+/).filter(function(w) { return w.length > 3; }).some(function(w) { return sl.includes(w); });
+              });
+            });
+            if (sectionSteps.length > 0) {
+              const gId = "isg-" + sectionIdx + "-" + e.id;
+              y += "<div class=\"ing-step-group\"><div class=\"ing-step-toggle\" onclick=\"toggleIngStepGroup(this,'" + gId + "')\">👨‍🍳 " + sectionSteps.length + " step" + (sectionSteps.length > 1 ? "s" : "") + " <span class=\"sia-arrow\">▼</span></div><div class=\"ing-step-panel\" id=\"" + gId + "\">" + sectionSteps.map(function(s, si) { return "<div class=\"ing-step-item\"><span class=\"ing-step-num\">" + (si + 1) + "</span>" + s + "</div>"; }).join("") + "</div></div>";
+            }
+          }
         });
         const _svBak = weights.servings;
         weights.servings = modalServings;
@@ -7867,6 +7962,11 @@
       function toggleStepIng(e, a) {
         const t = document.getElementById(a);
         t && (e.classList.toggle("open"), t.classList.toggle("open"));
+      }
+      function toggleIngStepGroup(el, id) {
+        el.classList.toggle("open");
+        const panel = document.getElementById(id);
+        if (panel) panel.classList.toggle("open");
       }
       function buildRecipeTab(e) {
         const a = getRecipeDetail(e);
