@@ -4780,13 +4780,35 @@
       }
       @media (max-width: 700px) {
         header {
-          padding: 28px 20px 20px;
+          padding: 14px 16px 12px;
         }
         .recipe-count {
           font-size: 48px;
         }
         .header-top {
           flex-wrap: wrap;
+          align-items: center;
+          gap: 10px;
+        }
+        .header-avatar-wrap {
+          width: 44px;
+          height: 44px;
+          box-shadow: none;
+          flex-shrink: 0;
+        }
+        .header-title {
+          flex: 1;
+          padding-bottom: 0;
+          min-width: 0;
+        }
+        .header-title h1 {
+          font-size: 15px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .header-title p {
+          display: none;
         }
         .header-social {
           display: flex;
@@ -4794,7 +4816,8 @@
           gap: 6px;
           width: 100%;
           margin-left: 0;
-          margin-top: 4px;
+          margin-top: 2px;
+          justify-content: center;
         }
         .social-btn {
           font-size: 11px;
@@ -10351,7 +10374,6 @@
       </div>
     </div>
     <button id="scrollTopBtn" title="Back to top">&#8679;</button>
-    <div class="admin-indicator" onclick="promptAdminPassword()">🔐 ADMIN MODE — Click to exit</div>
     <div class="admin-modal-overlay" id="adminModalOverlay" onclick="event.target === this && closeAdminEdit()">
       <div class="admin-modal">
         <h2 id="adminRecipeTitle">Edit Recipe</h2>
