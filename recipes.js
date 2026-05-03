@@ -1848,18 +1848,17 @@ const R = [
   hint: "",
 },
 {
-  id: "honey-garlic-chicken-noodles",
-  sideEgg: true,
-  protein: "chicken",
-  displayNum: 119,
-  carb: "noodle",
-  time: 25,
-  title: "Honey Garlic Chicken Noodles",
-  desc: "Caramelised honey garlic chicken tossed with udon noodles and a punchy soy-sesame sauce.",
-  tags: ["asian"],
-  flavor: "savory",
-  hint: "",
-},
+    id: "moroccan-chicken-tagine-potato",
+    protein: "chicken",
+    displayNum: 119,
+    carb: "potato",
+    time: 40,
+    title: "Moroccan Chicken Tagine & Potatoes",
+    desc: "Chicken thighs braised in ras el hanout with preserved lemon and olives — roasted potatoes and a bright harissa carrot salad on the side.",
+    tags: ["moroccan", "comfort"],
+    flavor: "savory",
+    hint: "",
+  },
 {
   id: "german-cucumber-salad-highprotein",
   protein: "none",
@@ -9515,4 +9514,67 @@ notes: "Leftovers keep 3 days in the fridge — reheat potatoes in a dry pan or 
   ],
   notes: "Chipotle paste is in the world foods aisle at REWE and Edeka. Reduce to 1 tbsp for less heat. Reheat the potatoes in a hot dry pan to re-crisp them — don't use the microwave.",
 },
+"moroccan-chicken-tagine-potato": {
+    image: null,
+    video: "",
+    ingredients: [
+      {
+        section: "Protein",
+        items: [
+          { name: "Boneless skinless chicken thighs", amt: "{{proteinG}}g raw" },
+        ],
+      },
+      {
+        section: "Carb Base",
+        items: [
+          { name: "Waxy potatoes", amt: "{{carbG}}g" },
+        ],
+      },
+      {
+        section: "Tagine Sauce",
+        items: [
+          { name: "Olive oil", amt: "1 tbsp" },
+          { name: "Onion (thinly sliced)", amt: "1 medium" },
+          { name: "Garlic (minced)", amt: "4 cloves" },
+          { name: "Ras el hanout", amt: "2 tsp" },
+          { name: "Ground cumin", amt: "1 tsp" },
+          { name: "Ground cinnamon", amt: "0.5 tsp" },
+          { name: "Canned crushed tomatoes", amt: "200g" },
+          { name: "Chicken broth (low sodium)", amt: "150ml" },
+          { name: "Preserved lemon (sliced)", amt: "1 piece" },
+          { name: "Green olives (pitted)", amt: "30g" },
+          { name: "Salt & pepper", amt: "to taste" },
+        ],
+      },
+      {
+        section: "Harissa Carrot Salad",
+        items: [
+          { name: "Carrots (coarsely grated)", amt: "200g" },
+          { name: "Harissa paste", amt: "1 tbsp" },
+          { name: "Lemon juice", amt: "1 tbsp" },
+          { name: "Olive oil", amt: "1 tsp" },
+          { name: "Honey", amt: "0.5 tsp" },
+          { name: "Ground cumin", amt: "0.5 tsp" },
+          { name: "Fresh parsley (chopped)", amt: "small handful" },
+          { name: "Salt", amt: "to taste" },
+        ],
+      },
+    ],
+    steps: [
+      "Preheat the oven to 200°C. Cut the potatoes into rough chunks, toss with a drizzle of olive oil, salt, and a pinch of cumin — spread on a baking tray and roast for 30–35 minutes until golden and crispy at the edges.",
+      "Pat the chicken thighs dry and season generously on both sides with ras el hanout, salt, and pepper. Heat oil in a wide, deep pan over high heat and sear the chicken smooth-side down for 4–5 minutes without moving until deep golden. Flip, cook 2 more minutes, then remove and set aside.",
+      "Reduce to medium heat. In the same pan, fry the sliced onion for 3–4 minutes until soft and starting to colour. Add garlic, a pinch more ras el hanout, and the cinnamon — stir and bloom 30 seconds until the spices are fragrant.",
+      "Pour in the crushed tomatoes and chicken broth, scraping up any caramelised bits from the base. Add the preserved lemon slices, then nestle the seared chicken back into the sauce.",
+      "Bring to a gentle simmer, cover, and cook on low heat for 20 minutes until the chicken is cooked through and the sauce has reduced slightly — stir in the olives for the last 5 minutes.",
+      "While the tagine simmers, make the carrot salad — toss the grated carrots with harissa, lemon juice, olive oil, honey, and cumin. Season with salt and scatter fresh parsley over the top.",
+      "Serve the chicken and sauce over the roasted potatoes with the carrot salad alongside.",
+    ],
+    hacks: [
+      { title: "Ras El Hanout: Just Buy It", text: "This one blend replaces 8 individual spices and is available at most REWE or Edeka stores in the spice aisle. If you genuinely can't find it, combine: 1 tsp cumin + 0.5 tsp coriander + 0.5 tsp cinnamon + 0.25 tsp ginger + 0.25 tsp turmeric + a pinch of cayenne. But buy the blend." },
+      { title: "Preserved Lemon vs Fresh", text: "Preserved lemon has a mellow, fermented citrus depth that fresh lemon simply can't replicate. Find it at Turkish or Middle Eastern grocery stores in Frankfurt. Substituting? Add the zest of half a lemon at the start, and fresh juice only at the very end." },
+    ],
+    notes: "Keeps 3 days in the fridge — the spices deepen overnight. Works equally well with chicken breast; reduce the simmer time to 15 minutes.",
+  },
+
+
 };
