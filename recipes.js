@@ -2451,6 +2451,19 @@ hint: "",
   flavor: "savory",
   hint: "",
 },
+{
+  id: "cucumber-magerquark-salad",
+  protein: "none",
+  displayNum: 169,
+  carb: "none",
+  time: 10,
+  title: "Creamy Cucumber & Magerquark Salad",
+  desc: "Thinly sliced cucumber folded into seasoned Magerquark with dill and garlic — creamy, refreshing, and almost zero calories.",
+  tags: ["dip", "german"],
+  flavor: "savory",
+  hint: "",
+},
+
 ];
 
 // --- RECIPE DETAILS (ingredients, steps, hacks) ---
@@ -9575,6 +9588,36 @@ notes: "Leftovers keep 3 days in the fridge — reheat potatoes in a dry pan or 
     ],
     notes: "Keeps 3 days in the fridge — the spices deepen overnight. Works equally well with chicken breast; reduce the simmer time to 15 minutes.",
   },
-
+"cucumber-magerquark-salad": {
+  image: null,
+  video: "",
+  ingredients: [
+    {
+      section: "Salad",
+      items: [
+        { name: "Cucumber", amt: "1 whole" },
+        { name: "Magerquark (0% fat)", amt: "150g" },
+        { name: "Light mayo", amt: "1 tbsp" },
+        { name: "White wine vinegar", amt: "1 tbsp" },
+        { name: "Garlic (minced)", amt: "1 clove" },
+        { name: "Fresh dill (chopped)", amt: "small handful" },
+        { name: "Salt", amt: "0.5 tsp" },
+        { name: "Black pepper", amt: "to taste" },
+      ],
+    },
+  ],
+  steps: [
+    "Slice the cucumber paper-thin — a mandoline is ideal but a sharp knife works fine. Toss with the salt and let sit 10 minutes to draw out the water.",
+    "Squeeze the cucumber firmly with your hands or press through a clean towel — remove as much water as possible. This step stops the salad from going watery within minutes.",
+    "Mix the Magerquark with the light mayo, white wine vinegar, garlic, and black pepper until smooth and creamy.",
+    "Fold the squeezed cucumber into the Magerquark mixture. Taste and adjust — more vinegar for brightness, more salt if needed.",
+    "Scatter fresh dill over the top and serve immediately or refrigerate for up to 30 minutes before serving.",
+  ],
+  hacks: [
+    { title: "1 tbsp Mayo is the 80/20", text: "Magerquark alone tastes chalky and thin as a salad dressing. 1 tbsp of light mayo transforms the mouthfeel completely — creamy, rich, restaurant-quality. Adds roughly 35 kcal to the whole salad. Non-negotiable." },
+    { title: "Squeeze Hard", text: "Cucumber is mostly water — skipping the squeeze step means a watery puddle on the plate within 5 minutes. The harder you squeeze, the longer the salad holds its texture. Press it until almost nothing comes out." },
+  ],
+  notes: "Per portion (half the recipe): roughly 60 kcal, 8g protein, 5g carbs, 1g fat. Works as a side salad for any chicken or beef dish in the vault.",
+},
 
 };
