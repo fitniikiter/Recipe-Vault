@@ -14,7 +14,7 @@
 //    - recipe titles and descriptions
 //
 //  Exception: brand names and untranslatable terms are allowed
-//  in parentheses as clarification (e.g. "Low-fat quark (Magerquark)").
+//  in parentheses as clarification (e.g. "Low-fat quark (Yoghurt)").
 // ============================================================
 
 // --- RECIPE CARDS (shown on main page) ---
@@ -2452,13 +2452,13 @@ hint: "",
   hint: "",
 },
 {
-  id: "cucumber-magerquark-salad",
+  id: "cucumber-Yoghurt-salad",
   protein: "none",
   displayNum: 169,
   carb: "none",
   time: 10,
-  title: "Creamy Cucumber & Magerquark Salad",
-  desc: "Thinly sliced cucumber folded into seasoned Magerquark with dill and garlic — creamy, refreshing, and almost zero calories.",
+  title: "Creamy Cucumber & Yoghurt Salad",
+  desc: "Thinly sliced cucumber folded into seasoned Yoghurt with dill and garlic — creamy, refreshing, and almost zero calories.",
   tags: ["dip", "german"],
   flavor: "savory",
   hint: "",
@@ -5699,14 +5699,14 @@ const RECIPE_DETAILS = {
     ]},
   ],
   steps: [
-    "Combine light mayo, low-fat quark (Magerquark) or Skyr, finely grated parmesan, dijon mustard, lemon juice, garlic powder, salt and pepper in a bowl.",
+    "Combine light mayo, low-fat quark (Yoghurt) or Skyr, finely grated parmesan, dijon mustard, lemon juice, garlic powder, salt and pepper in a bowl.",
     "Whisk everything together until smooth and creamy.",
     "Taste and adjust — more lemon for brightness, more mustard for tang.",
     "Refrigerate for at least 10 minutes before serving to let the flavours develop.",
     "Keeps in the fridge for up to 4 days in a sealed container.",
   ],
   hacks: [
-    { title: "Magerquark vs Skyr", text: "Both work — Magerquark is slightly thicker and tangier, Skyr is a touch creamier. Either way you get the protein kick without the calorie hit of full-fat mayo or cream." },
+    { title: "Yoghurt vs Skyr", text: "Both work — Yoghurt is slightly thicker and tangier, Skyr is a touch creamier. Either way you get the protein kick without the calorie hit of full-fat mayo or cream." },
     { title: "Parmesan is Non-Negotiable", text: "Finely grated parmesan adds the savoury, umami depth that makes this taste like a real Caesar dressing. Don't skip it — there's no substitute that comes close." },
   ],
   notes: "Makes roughly 90g of dressing — enough for 1–2 portions. Works great on salads, wraps, or as a dip for chicken and veg. Scale up easily.",
@@ -7102,7 +7102,7 @@ const RECIPE_DETAILS = {
     ]},
     { section: "Potato Schmear", items: [
       { name: "Floury potatoes (mehligkochend), peeled & cubed", amt: "200g" },
-      { name: "Low-fat quark (Magerquark)", amt: "120g" },
+      { name: "Low-fat quark (Yoghurt)", amt: "120g" },
       { name: "Butter", amt: "5g" },
       { name: "Milk", amt: "30ml" },
       { name: "Medium-hot mustard (Mittelscharf)", amt: "1 tbsp" },
@@ -7126,7 +7126,7 @@ const RECIPE_DETAILS = {
   ],
   steps: [
     "Start the onions first — heat 1 tsp rapeseed oil in a pan over medium heat. Add the sliced onions with a pinch of salt and 1 tsp sugar. Cook low and slow for 20–25 minutes, stirring occasionally, until deeply golden and jammy. Add the apple cider vinegar in the last 2 minutes, let it sizzle and cook off completely.",
-    "While the onions cook, boil the cubed potatoes in well-salted water for 15 minutes until fork-tender. Drain completely, then let them steam-dry off the heat for 1 minute. Mash until smooth, then stir in the low-fat quark (Magerquark), butter, milk, and mustard. Season generously with salt and a pinch of nutmeg — the texture should be smooth and spreadable, like thick hummus.",
+    "While the onions cook, boil the cubed potatoes in well-salted water for 15 minutes until fork-tender. Drain completely, then let them steam-dry off the heat for 1 minute. Mash until smooth, then stir in the low-fat quark (Yoghurt), butter, milk, and mustard. Season generously with salt and a pinch of nutmeg — the texture should be smooth and spreadable, like thick hummus.",
     "Make the gravy — combine broth, tomato paste, Worcestershire sauce, thyme, salt, and pepper in a small saucepan. Simmer gently for 5 minutes. Stir the cornstarch into 2 tbsp cold water until dissolved, then pour into the sauce and cook for another 2 minutes, stirring, until glossy and lightly thickened. Keep warm on the lowest heat.",
     "Sear the Nürnberger in a dry pan over medium-high heat for 6–8 minutes, turning regularly, until deeply golden and slightly crisp all over. Remove and set aside but do not wipe the pan.",
     "Reduce the same pan to low heat — the sausage fond left behind is pure flavour. Add 6g butter total, crack in the eggs, season with salt and pepper, and stir very slowly with a spatula. Pull off the heat while they're still slightly glossy — residual heat will finish them perfectly.",
@@ -7192,7 +7192,7 @@ const RECIPE_DETAILS = {
       { name: "Salt (to draw out water)", amt: "1 tsp" },
     ]},
     { section: "Dressing", items: [
-      { name: "Magerquark", amt: "150g" },
+      { name: "Yoghurt", amt: "150g" },
       { name: "Greek yogurt (0% fat)", amt: "100g" },
       { name: "Light mayo", amt: "15g" },
       { name: "Garlic (minced)", amt: "1 clove" },
@@ -7207,7 +7207,7 @@ const RECIPE_DETAILS = {
   ],
   steps: [
     "Slice the cucumber paper-thin with a mandoline or sharp knife. Toss slices with 1 tsp salt in a colander and let sit 10–15 minutes to draw out the excess water.",
-    "Whisk together Magerquark, Greek yogurt, light mayo, minced garlic, white wine vinegar, and sugar until smooth. Season generously with salt and white pepper.",
+    "Whisk together Yoghurt, Greek yogurt, light mayo, minced garlic, white wine vinegar, and sugar until smooth. Season generously with salt and white pepper.",
     "Fold most of the chopped dill into the dressing, reserving a small amount for garnish.",
     "Squeeze the cucumber firmly with both hands to remove as much water as possible, then fold into the dressing immediately.",
     "Taste and adjust — more vinegar for brightness, more sugar if too sharp, more salt if flat.",
@@ -8755,6 +8755,7 @@ notes: "Leftovers keep 3 days in the fridge — reheat potatoes in a dry pan or 
       section: "Light Garlic Aioli",
       items: [
         { name: "Light mayo", amt: "2 tbsp" },
+        { name: "Yoghurt (0% fat)", amt: "4 tbsp" },
         { name: "Garlic (minced)", amt: "1 clove" },
         { name: "Lemon juice", amt: "0.5 tsp" },
       ],
@@ -8772,8 +8773,8 @@ notes: "Leftovers keep 3 days in the fridge — reheat potatoes in a dry pan or 
     },
   ],
   steps: [
-    "Cut potatoes into 3cm cubes. Boil in salted water for 8 minutes until just tender but holding shape. Drain and steam-dry completely.",
-    "Spread the par-boiled potatoes on a baking tray, toss with a little olive oil and salt — roast at 220°C for 25 minutes, flipping halfway, until deeply golden and crispy.",
+    "Cut potatoes into 3cm cubes and put them into a Bowl.",
+    "Toss them with a little olive oil and salt — roast at 220°C for 20 minutes, until deeply golden and crispy.",
     "Season the chicken with smoked paprika, garlic powder, cayenne, salt, and pepper. Heat oil in a pan over high heat and sear the chicken for 5 minutes per side until golden and cooked through.",
     "Make the bravas sauce — fry the garlic in olive oil for 30 seconds, add crushed tomatoes, smoked paprika, and cayenne. Simmer 5 minutes until thickened. Season well.",
     "Mix the light mayo, garlic, and lemon juice together for the aioli.",
@@ -8781,10 +8782,10 @@ notes: "Leftovers keep 3 days in the fridge — reheat potatoes in a dry pan or 
     "Serve the crispy potatoes in bowls, spoon the bravas sauce over, add the sliced chicken on top, and drizzle with the aioli. Serve the cucumber salad alongside.",
   ],
   hacks: [
-    { title: "Light Mayo Aioli is the 80/20", text: "Traditional aioli is pure olive oil and egg yolk — extremely high calorie. Mixing 2 tbsp light mayo with fresh garlic and lemon makes a convincing aioli at a fraction of the calories. The key is real garlic, not garlic powder — the raw pungency is what sells it." },
+    { title: "Light Mayo Aioli is the 80/20", text: "Traditional aioli is pure olive oil and egg yolk — extremely high calorie. Mixing 2 tbsp light mayo with yoghurt, fresh garlic and lemon makes a convincing aioli at a fraction of the calories. The key is real garlic, not garlic powder — the raw pungency is what sells it." },
     { title: "Par-Boil Before Roasting", text: "Par-boiling the potatoes for 8 minutes before roasting creates a starchy, roughened exterior that crisps dramatically better than raw potato. It also ensures they cook through evenly — no raw centres, no uneven crunch." },
   ],
-  notes: "Sherry vinegar is the authentic Spanish choice and is available at Edeka and larger REWE stores. Red wine vinegar works as a substitute. The bravas sauce keeps 5 days in the fridge.",
+  notes: "Sherry vinegar is the authentic Spanish choice. Red wine vinegar works as a substitute. The bravas sauce keeps 5 days in the fridge.",
 },
 "mexican-mole-chicken-potato": {
   image: null,
@@ -9588,7 +9589,7 @@ notes: "Leftovers keep 3 days in the fridge — reheat potatoes in a dry pan or 
     ],
     notes: "Keeps 3 days in the fridge — the spices deepen overnight. Works equally well with chicken breast; reduce the simmer time to 15 minutes.",
   },
-"cucumber-magerquark-salad": {
+"cucumber-Yoghurt-salad": {
   image: null,
   video: "",
   ingredients: [
@@ -9596,7 +9597,7 @@ notes: "Leftovers keep 3 days in the fridge — reheat potatoes in a dry pan or 
       section: "Salad",
       items: [
         { name: "Cucumber", amt: "1 whole" },
-        { name: "Magerquark (0% fat)", amt: "150g" },
+        { name: "Yoghurt (0% fat)", amt: "150g" },
         { name: "Light mayo", amt: "1 tbsp" },
         { name: "White wine vinegar", amt: "1 tbsp" },
         { name: "Garlic (minced)", amt: "1 clove" },
@@ -9609,12 +9610,12 @@ notes: "Leftovers keep 3 days in the fridge — reheat potatoes in a dry pan or 
   steps: [
     "Slice the cucumber paper-thin — a mandoline is ideal but a sharp knife works fine. Toss with the salt and let sit 10 minutes to draw out the water.",
     "Squeeze the cucumber firmly with your hands or press through a clean towel — remove as much water as possible. This step stops the salad from going watery within minutes.",
-    "Mix the Magerquark with the light mayo, white wine vinegar, garlic, and black pepper until smooth and creamy.",
-    "Fold the squeezed cucumber into the Magerquark mixture. Taste and adjust — more vinegar for brightness, more salt if needed.",
+    "Mix the Yoghurt with the light mayo, white wine vinegar, garlic, and black pepper until smooth and creamy.",
+    "Fold the squeezed cucumber into the Yoghurt mixture. Taste and adjust — more vinegar for brightness, more salt if needed.",
     "Scatter fresh dill over the top and serve immediately or refrigerate for up to 30 minutes before serving.",
   ],
   hacks: [
-    { title: "1 tbsp Mayo is the 80/20", text: "Magerquark alone tastes chalky and thin as a salad dressing. 1 tbsp of light mayo transforms the mouthfeel completely — creamy, rich, restaurant-quality. Adds roughly 35 kcal to the whole salad. Non-negotiable." },
+    { title: "1 tbsp Mayo is the 80/20", text: "Yoghurt alone tastes chalky and thin as a salad dressing. 1 tbsp of light mayo transforms the mouthfeel completely — creamy, rich, restaurant-quality. Adds roughly 35 kcal to the whole salad. Non-negotiable." },
     { title: "Squeeze Hard", text: "Cucumber is mostly water — skipping the squeeze step means a watery puddle on the plate within 5 minutes. The harder you squeeze, the longer the salad holds its texture. Press it until almost nothing comes out." },
   ],
   notes: "Per portion (half the recipe): roughly 60 kcal, 8g protein, 5g carbs, 1g fat. Works as a side salad for any chicken or beef dish in the vault.",
