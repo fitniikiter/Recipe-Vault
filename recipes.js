@@ -9687,11 +9687,16 @@ ingredients: [
 { name: "Lemon juice", amt: "1 tbsp" },
 { name: "Salt", amt: "to taste" },
 ]},
-{ section: "To Serve", items: [
-{ name: "Cucumber (diced)", amt: "0.5 medium" },
-{ name: "Tomato (diced)", amt: "1 medium" },
-{ name: "Fresh parsley", amt: "small handful" },
-{ name: "Lemon wedge", amt: "1 piece" },
+{ section: "Fattoush Salad", items: [
+  { name: "Cucumber (diced)", amt: "0.5 medium" },
+  { name: "Tomato (diced)", amt: "1 medium" },
+  { name: "Red onion (finely diced)", amt: "0.25 medium" },
+  { name: "Fresh parsley (roughly chopped)", amt: "small handful" },
+  { name: "Fresh mint (roughly chopped)", amt: "small handful" },
+  { name: "Lemon juice", amt: "1 tbsp" },
+  { name: "Sumac", amt: "0.5 tsp" },
+  { name: "Olive oil", amt: "1 tsp" },
+  { name: "Salt", amt: "to taste" },
 ]},
 ],
 steps: [
@@ -9700,8 +9705,8 @@ steps: [
 "Heat a pan over high heat. Sear the chicken 5–6 minutes per side until deeply golden with a charred spice crust — internal temp 75°C.",
 "Rest the chicken 3 minutes, then slice into thick strips — big visible pieces, not shredded.",
 "Mix Greek yogurt, light mayo, garlic, lemon juice, and salt in a small bowl while the chicken rests.",
-"Build the bowl: fluffy basmati first, sliced chicken on top, cucumber-tomato on the side, a generous spoon of garlic yogurt sauce, fresh parsley, and a lemon wedge.",
-],
+"Toss all fattoush ingredients together — cucumber, tomato, red onion, parsley, mint, lemon juice, sumac, olive oil, and salt. Let sit 5 minutes before plating.",
+"Build the bowl: fluffy basmati first, sliced chicken on top, fattoush salad on the side, a generous spoon of garlic yogurt sauce.",],
 hacks: [
 { title: "Spice Paste, Not Dry Rub", text: "Mixing the spices with 1 tsp olive oil turns them into a paste that sticks to the chicken through the whole cook. A dry rub falls off in the pan — the paste stays and forms a proper crust." },
 { title: "Mayo in the Yogurt", text: "20g of light mayo in the garlic yogurt is what makes this taste like a real shawarma shop sauce instead of seasoned diet yogurt. Adds roughly 70 kcal to the whole batch — completely worth it." },
