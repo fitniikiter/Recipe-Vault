@@ -882,6 +882,22 @@ const NUTRITION_CARBS = {
     fdc_id: "173744", data_type: "SR Legacy",
     notes: "Kidney beans, canned, drained",
   },
+  
+  yoghurt_nonfat: {
+  kcal: 56, p: 5.7, c: 7.7, f: 0.2,
+  fiber: 0, sugar: 7.7,
+  sat_fat: 0.1, mono_fat: 0.05, poly_fat: 0.01, trans_fat: 0, omega3: null,
+  cholesterol: 2,
+  sodium: 77, potassium: 255, calcium: 199, iron: 0.07,
+  magnesium: 17, phosphorus: 157, zinc: 0.89, selenium: 2.2,
+  iodine: null, copper: 0.01,
+  vitamin_a: 2, vitamin_c: 0.5, vitamin_d: 0,
+  vitamin_b1: 0.047, vitamin_b2: 0.214, vitamin_b3: 0.12,
+  vitamin_b5: 0.55, vitamin_b6: 0.063, vitamin_b12: 0.75,
+  folate: 11, choline: 15.1,
+  fdc_id: "171284", data_type: "SR Legacy",
+  notes: "Yogurt, plain, skim milk (0% fat)",
+},
 };
 
 // Merge carbs into main NUTRITION_DB

@@ -208,6 +208,9 @@
         background: #fff;
         border-color: #ddd;
       }
+      html.light .modal-header {
+        background: #fff;
+      }
       html.light .modal-close:hover {
         background: rgba(0, 0, 0, 0.06);
       }
@@ -265,7 +268,8 @@
       html.light .step-btn:hover {
         background: #eee;
       }
-      html.light .step-ing-btn {
+      html.light .step-ing-btn,
+      html.light .ing-step-toggle {
         background: rgba(0, 0, 0, 0.04);
         border-color: #ddd;
       }
@@ -854,7 +858,7 @@
       }
       .filter-section-body {
         display: none;
-        padding: 10px 4px 4px;
+        padding: 4px 4px 4px;
       }
       .filter-section.open > .filter-section-body {
         display: block;
@@ -1401,8 +1405,8 @@
         color: var(--tag-indian);
       }
       .tag-eggs {
-        background: rgba(245, 200, 66, 0.15);
-        color: var(--tag-eggs);
+        background: rgba(255, 179, 71, 0.15);
+        color: #ffb347;
       }
       .tag-oats {
         background: rgba(139, 195, 74, 0.15);
@@ -1424,6 +1428,16 @@
       .tag-hawaiian   { background: rgba(255, 100, 150, 0.15); color: #ff6496; }
       .tag-taiwanese  { background: rgba(30, 100, 180, 0.15); color: #1e64b4; }
       .tag-filipino   { background: rgba(0, 56, 168, 0.15); color: #0038a8; }
+      .tag-beef       { background: rgba(232, 71, 71, 0.15); color: #e84747; }
+      .tag-chicken    { background: rgba(232, 163, 71, 0.15); color: #e8a347; }
+      .tag-fish       { background: rgba(71, 179, 232, 0.15); color: #47b3e8; }
+      .tag-tofu       { background: rgba(71, 232, 163, 0.15); color: #47e8a3; }
+      .tag-italian    { background: rgba(0, 140, 69, 0.15); color: #008c45; }
+      .tag-german     { background: rgba(180, 140, 0, 0.15); color: #b48c00; }
+      .tag-spanish    { background: rgba(200, 16, 46, 0.15); color: #c8102e; }
+      .tag-french     { background: rgba(0, 35, 149, 0.15); color: #002395; }
+      .tag-british    { background: rgba(200, 16, 46, 0.15); color: #c8102e; }
+      .tag-Greek      { background: rgba(50, 100, 220, 0.15); color: #3264dc; }
       .calc-page {
         max-width: 740px;
         margin: 0 auto;
@@ -1901,8 +1915,9 @@
       }
       .modal-overlay.open .modal {}
       .modal-header {
-        padding: 24px 28px 0;
+        padding: 20px 28px 12px;
         flex-shrink: 0;
+        background: #1a1a1a;
       }
       .modal-header-collapsible {
         transition:
@@ -2181,7 +2196,6 @@
       .ing-expand-icon {
         font-size: 9px;
         color: var(--muted);
-        margin-left: 8px;
         transition: transform 0.2s;
         flex-shrink: 0;
       }
@@ -2335,7 +2349,8 @@
         border: 1px solid #2a2a2a;
         border-radius: 8px;
         margin-bottom: 8px;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
+        overflow: hidden;
       }
       .modal-variant-row label {
         font-size: 11px;
@@ -2424,7 +2439,9 @@
       .modal-weight-hint {
         font-size: 10px;
         color: #444;
-        margin-left: auto;
+      }
+      .serving-control .modal-weight-hint {
+        margin-left: 0;
       }
       .modal-weight-expand {
         font-size: 9px;
@@ -2443,11 +2460,25 @@
       .modal-weight-row.open .modal-weight-macro-panel {
         display: block;
       }
+      .serving-variant-row {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 12px;
+        align-items: stretch;
+      }
+      .serving-variant-row .modal-variant-row {
+        flex: 1;
+        margin-bottom: 0;
+      }
+      .serving-variant-row .serving-control {
+        flex: 1;
+        margin-bottom: 0;
+      }
       .serving-control {
         display: flex;
         align-items: center;
         gap: 10px;
-        margin-bottom: 20px;
+        margin-bottom: 8px;
         padding: 12px 16px;
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid #2a2a2a;
@@ -2464,7 +2495,7 @@
         display: flex;
         align-items: center;
         gap: 0;
-        margin-left: auto;
+        margin-left: 0;
       }
       .modal-weight-row-main .serving-stepper {
         margin-left: 0;
@@ -2597,6 +2628,68 @@
         color: var(--accent);
         font-family: "Bebas Neue", sans-serif;
         font-size: 13px;
+      }
+      .ing-step-group {
+        margin-bottom: 8px;
+      }
+      .ing-step-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 4px;
+        padding: 4px 10px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--muted);
+        cursor: pointer;
+        transition: all 0.15s;
+        user-select: none;
+      }
+      .ing-step-toggle:hover {
+        border-color: #555;
+        color: var(--text);
+      }
+      .ing-step-toggle.open {
+        border-color: var(--accent);
+        color: var(--accent);
+        background: rgba(255, 140, 0, 0.06);
+      }
+      .ing-step-toggle .sia-arrow {
+        font-size: 7px;
+        transition: transform 0.2s;
+      }
+      .ing-step-toggle.open .sia-arrow {
+        transform: rotate(180deg);
+      }
+      .ing-step-panel {
+        display: none;
+        margin-top: 6px;
+      }
+      .ing-step-panel.open {
+        display: block;
+      }
+      .ing-step-item {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        padding: 8px 12px;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        font-size: 12px;
+        color: var(--text);
+        margin-bottom: 4px;
+        line-height: 1.5;
+      }
+      .ing-step-num {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 14px;
+        color: var(--accent);
+        flex-shrink: 0;
+        min-width: 16px;
       }
       .hack-box {
         background: rgba(255, 140, 0, 0.06);
@@ -2750,6 +2843,68 @@
         .modal-overlay {
           align-items: flex-end;
           padding: 0;
+        }
+        .serving-variant-row {
+          gap: 6px;
+        }
+        .serving-control {
+          flex-direction: column;
+          align-items: center;
+          padding: 8px 6px;
+          gap: 6px;
+        }
+        .serving-control label {
+          font-size: 10px;
+          letter-spacing: 0.4px;
+        }
+        .serving-stepper {
+          margin-left: 0;
+        }
+        .step-btn {
+          width: 24px;
+          height: 24px;
+          font-size: 15px;
+        }
+        .serving-val {
+          font-size: 13px;
+          width: 26px;
+        }
+        .serving-control .modal-weight-hint {
+          display: none;
+        }
+        .modal-variant-row {
+          flex-direction: column;
+          align-items: center;
+          padding: 8px 6px;
+          gap: 6px;
+        }
+        .modal-variant-row label {
+          font-size: 10px;
+          min-width: 0;
+          white-space: nowrap;
+        }
+        .modal-variant-btn {
+          padding: 3px 8px;
+          font-size: 10px;
+        }
+        .ing-expand-icon {
+          display: none;
+        }
+        .filter-row {
+          flex-wrap: nowrap;
+          padding: 10px 14px;
+          gap: 8px;
+          align-items: center;
+        }
+        .filter-row .search-wrap {
+          flex: 1;
+          min-width: 0;
+          max-width: none;
+        }
+        .filter-row .filter-toggle-btn,
+        .filter-row .filter-pill {
+          flex-shrink: 0;
+          white-space: nowrap;
         }
       }
       .no-results {
@@ -4657,13 +4812,48 @@
       }
       @media (max-width: 700px) {
         header {
-          padding: 28px 20px 20px;
+          padding: 14px 16px 12px;
         }
         .recipe-count {
           font-size: 48px;
         }
-        .header-social {
+        .header-top {
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 10px;
+        }
+        .header-avatar-wrap {
+          width: 44px;
+          height: 44px;
+          box-shadow: none;
+          flex-shrink: 0;
+        }
+        .header-title {
+          flex: 1;
+          padding-bottom: 0;
+          min-width: 0;
+        }
+        .header-title h1 {
+          font-size: 15px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .header-title p {
           display: none;
+        }
+        .header-social {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+          width: 100%;
+          margin-left: 0;
+          margin-top: 2px;
+          justify-content: center;
+        }
+        .social-btn {
+          font-size: 11px;
+          padding: 5px 10px;
         }
         .filter-pill {
           min-height: 40px;
@@ -4763,6 +4953,10 @@
         opacity: 1;
         transform: translateY(0);
         pointer-events: auto;
+      }
+      #recipeModal.open ~ #scrollTopBtn,
+      body:has(#recipeModal.open) #scrollTopBtn {
+        display: none !important;
       }
       #scrollTopBtn:hover {
         filter: brightness(1.15);
@@ -5010,9 +5204,11 @@
               href="https://www.youtube.com/@fitniikiter/shorts"
               target="_blank"
               rel="noopener"
-              ><span class="social-icon">▶️</span> YouTube </a
+              ><span class="social-icon">🎥</span> YouTube </a
             ><a class="social-btn tiktok" href="https://www.tiktok.com/@fit.niikiter" target="_blank" rel="noopener"
               ><span class="social-icon">🎵</span> TikTok </a
+            ><a class="social-btn tiktok" href="https://instagram.com/fitniikiter" target="_blank" rel="noopener"
+              ><span class="social-icon">📸</span> Instagram </a
             ><button class="social-btn how-it-works-btn" onclick="openHowItWorksModal()">
               <span class="social-icon">💡</span> How it works
             </button>
@@ -5135,8 +5331,8 @@
             </div>
             <div class="filter-section">
               <div class="filter-section-label" onclick="toggleFilterSection(this)"><span>🍽️ Servings &amp; Time</span><span class="filter-section-arrow">▼</span></div>
-              <div class="filter-section-body"><div style="display:flex;flex-direction:column;gap:12px;width:100%;box-sizing:border-box;padding:4px 0">
-                <div style="display:flex;align-items:center;justify-content:space-between">
+              <div class="filter-section-body"><div style="display:flex;flex-direction:column;gap:4px;width:100%;box-sizing:border-box;padding:4px 0">
+                <div style="display:flex;align-items:center;gap:8px">
                   <span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;font-family:'Bebas Neue',sans-serif">🍽️ Servings</span>
                   <div style="display:flex;align-items:center;gap:5px">
                     <button class="step-btn" onclick="changeGlobalServings(-1)" style="width:28px;height:28px">−</button>
@@ -5595,6 +5791,8 @@
         <div class="modal-header">
           <div class="modal-meta"><span class="modal-num" id="modalNum"></span><span class="card-time" id="modalTime"></span></div>
           <div class="modal-title" id="modalTitle"></div>
+        </div>
+        <div class="modal-body">
           <div class="modal-header-collapsible" id="modalCollapsible">
             <div class="modal-desc" id="modalDesc"></div>
             <div id="modalHintBox" class="recipe-hint-box" style="display:none"><span class="hint-icon">📌</span><span id="modalHintText"></span></div>
@@ -5608,8 +5806,6 @@
             <div id="modalTagsRow" style="display: flex; flex-wrap: wrap; gap: 5px; padding: 10px 0 4px"></div>
           </div>
           <div class="modal-tabs" id="modalTabs"></div>
-        </div>
-        <div class="modal-body">
           <div class="modal-tab-content active" id="tab-ingredients"></div>
           <div class="modal-tab-content" id="tab-recipe"></div>
           <div class="modal-tab-content" id="tab-video"></div>
@@ -7754,7 +7950,7 @@
         const _sgC = Math.round((_sgNut.c * _sgPP) / 100 * 10) / 10;
         const _sgF = Math.round((_sgNut.f * _sgPP) / 100 * 10) / 10;
         const _sideEggBlock = _hasSideEgg ? buildSideEggBlock(e.id, _sgPP, _sgK, _sgP, _sgC, _sgF, _sgNut) : "";
-        let y = `\n  <div class="serving-control">\n    <label>🍽️ Servings</label>\n    <div class="serving-stepper">\n      <button class="step-btn" onclick="changeModalServings(-1, '${e.id}')">−</button>\n      <span class="serving-val" id="modalServingVal">${i}</span>\n      <button class="step-btn" onclick="changeModalServings(1, '${e.id}')">+</button>\n    </div>\n    <span class="modal-weight-hint">per portion</span>\n  </div>\n  ${g}\n  ${
+        let y = `\n  <div class="serving-variant-row">\n  ${g}\n  <div class="serving-control">\n    <label>🍽️ Servings</label>\n    <div class="serving-stepper">\n      <button class="step-btn" onclick="changeModalServings(-1, '${e.id}')">−</button>\n      <span class="serving-val" id="modalServingVal">${i}</span>\n      <button class="step-btn" onclick="changeModalServings(1, '${e.id}')">+</button>\n    </div>\n    <span class="modal-weight-hint">per portion</span>\n  </div>\n  </div>\n  ${
             (o || _isNoneProtein)
               ? k
               : (() => {
@@ -7779,7 +7975,7 @@
           w = 0,
           _ = !1;
         const _recipeStepsText = (t.steps || []).join(" ").toLowerCase();
-        t.ingredients.forEach((a) => {
+        t.ingredients.forEach((a, sectionIdx) => {
           ((y += `<div class="ing-section-title">${a.section}</div><ul class="ing-list">`),
             a.items.forEach((a) => {
               const t = (a.amt || "").includes("{{proteinG}}") || (a.amt || "").includes("{{carbG}}") || (a.amt || "").includes("{{eggCount}}"),
@@ -7831,11 +8027,30 @@
               if (g) {
                 ((_ = !0), (b += g.kcal), (f += g.p), (v += g.c), (w += g.f));
                 Math.random().toString(36).slice(2, 7);
-                y += `<li class="has-macros" onclick="toggleIngMacro(this)">\n          <div class="ing-main-row">\n            <span class="ing-item-name">${m}${_warnBadge}</span>\n            <div style="display:flex;align-items:center;gap:8px;">\n              <span class="ing-item-amt">${d}</span>\n              <span class="ing-expand-icon">▼</span>\n            </div>\n          </div>\n          <div class="ing-macro-panel">\n            <div class="ing-macro-grid">\n              <div class="ing-macro-cell mk"><span class="imc-val">${g.kcal}</span><span class="imc-lbl">kcal</span></div>\n              <div class="ing-macro-cell mp"><span class="imc-val">${g.p}g</span><span class="imc-lbl">protein</span></div>\n              <div class="ing-macro-cell mc"><span class="imc-val">${g.c}g</span><span class="imc-lbl">carbs</span></div>\n              <div class="ing-macro-cell mf"><span class="imc-val">${g.f}g</span><span class="imc-lbl">fat</span></div>\n              ${g.a > 0 ? `<div class="ing-macro-cell ma"><span class="imc-val">${g.a}g</span><span class="imc-lbl">alcohol</span></div>` : ""}\n            </div>\n            <div class="ing-macro-hint">${i > 1 ? `${i} servings` : "Per portion"} · based on ${g.grams}g</div>\n          </div>\n        </li>`;
+                y += `<li class="has-macros" onclick="toggleIngMacro(this)">\n          <div class="ing-main-row">\n            <div style="display:flex;align-items:center;gap:4px;">\n              <span class="ing-expand-icon">▼</span>\n              <span class="ing-item-name">${m}${_warnBadge}</span>\n            </div>\n            <span class="ing-item-amt">${d}</span>\n          </div>\n          <div class="ing-macro-panel">\n            <div class="ing-macro-grid">\n              <div class="ing-macro-cell mk"><span class="imc-val">${g.kcal}</span><span class="imc-lbl">kcal</span></div>\n              <div class="ing-macro-cell mp"><span class="imc-val">${g.p}g</span><span class="imc-lbl">protein</span></div>\n              <div class="ing-macro-cell mc"><span class="imc-val">${g.c}g</span><span class="imc-lbl">carbs</span></div>\n              <div class="ing-macro-cell mf"><span class="imc-val">${g.f}g</span><span class="imc-lbl">fat</span></div>\n              ${g.a > 0 ? `<div class="ing-macro-cell ma"><span class="imc-val">${g.a}g</span><span class="imc-lbl">alcohol</span></div>` : ""}\n            </div>\n            <div class="ing-macro-hint">${i > 1 ? `${i} servings` : "Per portion"} · based on ${g.grams}g</div>\n          </div>\n        </li>`;
               } else
                 y += `<li><div class="ing-main-row"><span class="ing-item-name">${m}${_warnBadge}</span><span class="ing-item-amt">${d}</span></div></li>`;
             }),
             (y += "</ul>"));
+          if (!t.placeholder) {
+            const sectionSteps = (t.steps || []).filter(function(step) {
+              const sl = step.toLowerCase();
+              const sn = (a.section || "").toLowerCase();
+              if (sn.length > 2 && sl.includes(sn)) return true;
+              return (a.items || []).some(function(item) {
+                const nl = (item.name || "").toLowerCase()
+                  .replace(/[(){}]/g, "")
+                  .replace(/\{\{proteing\}\}/g, "chicken")
+                  .replace(/\{\{carbg\}\}/g, e.carb || "potato")
+                  .trim();
+                return nl.split(/[\s,\/]+/).filter(function(w) { return w.length > 3; }).some(function(w) { return sl.includes(w); });
+              });
+            });
+            if (sectionSteps.length > 0) {
+              const gId = "isg-" + sectionIdx + "-" + e.id;
+              y += "<div class=\"ing-step-group\"><div class=\"ing-step-toggle\" onclick=\"toggleIngStepGroup(this,'" + gId + "')\">👨‍🍳 " + sectionSteps.length + " step" + (sectionSteps.length > 1 ? "s" : "") + " <span class=\"sia-arrow\">▼</span></div><div class=\"ing-step-panel\" id=\"" + gId + "\">" + sectionSteps.map(function(s, si) { return "<div class=\"ing-step-item\"><span class=\"ing-step-num\">" + (si + 1) + "</span>" + s + "</div>"; }).join("") + "</div></div>";
+            }
+          }
         });
         const _svBak = weights.servings;
         weights.servings = modalServings;
@@ -7883,6 +8098,11 @@
       function toggleStepIng(e, a) {
         const t = document.getElementById(a);
         t && (e.classList.toggle("open"), t.classList.toggle("open"));
+      }
+      function toggleIngStepGroup(el, id) {
+        el.classList.toggle("open");
+        const panel = document.getElementById(id);
+        if (panel) panel.classList.toggle("open");
       }
       function buildRecipeTab(e) {
         const a = getRecipeDetail(e);
@@ -9502,6 +9722,7 @@
       ING_NAME_MAP["salsa roja (jarred)"] = "canned_tomato";
       ING_NAME_MAP["pico de gallo"] = "canned_tomato";
       ING_NAME_MAP["low-fat quark (magerquark)"] = "quark_low_fat";
+      ING_NAME_MAP["yoghurt (0% fat)"] = "yoghurt_nonfat";
 
 		function findIngredientId(e) {                             
         if (!e) return null;
@@ -10206,7 +10427,6 @@
       </div>
     </div>
     <button id="scrollTopBtn" title="Back to top">&#8679;</button>
-    <div class="admin-indicator" onclick="promptAdminPassword()">🔐 ADMIN MODE — Click to exit</div>
     <div class="admin-modal-overlay" id="adminModalOverlay" onclick="event.target === this && closeAdminEdit()">
       <div class="admin-modal">
         <h2 id="adminRecipeTitle">Edit Recipe</h2>

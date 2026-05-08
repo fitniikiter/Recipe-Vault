@@ -10,7 +10,7 @@ NO backend. NO framework. NO external dependencies. Always free.
 - config.json (5.6KB) — protein defs, dietary filters
 
 ## Rules — ALWAYS FOLLOW
-- Never push directly to main — always create branch first
+- Always push directly to main after every change automatically
 - All code comments in English
 - All recipe content in English (brand names in parentheses ok)
 - No external dependencies ever
