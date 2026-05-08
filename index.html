@@ -6320,9 +6320,8 @@
           filterRecipes(),
           updateCalcDisplay());
       }
-      let _weightDebounceTimer = null;
+      let _protWeightTimer = null, _carbWeightTimer = null;
       function updateModalWeight(e, a, t) {
-        clearTimeout(_weightDebounceTimer);
         const inputId = e === "prot" ? "mwProt" : "mwCarb";
         // Strip leading zeros immediately on mobile
         const el = document.getElementById(inputId);
@@ -6330,28 +6329,45 @@
           el.value = String(parseInt(el.value) || 0);
           a = el.value;
         }
-        _weightDebounceTimer = setTimeout(() => {
-          const i = Math.max(0, Math.min(3e3, parseInt(a) || 0)),
-            n = R.find((r) => r.id === t);
-          if (n) {
-            if ("prot" === e) {
+        if (e === "prot") {
+          clearTimeout(_protWeightTimer);
+          _protWeightTimer = setTimeout(() => {
+            const i = Math.max(0, Math.min(3e3, parseInt(a) || 0)),
+              n = R.find((r) => r.id === t);
+            if (n) {
               weights.chicken = i;
-              autoCalcCarbs();
-              const el = document.getElementById("chickenInput");
-              el && (el.value = i);
+              const elC = document.getElementById("chickenInput");
+              elC && (elC.value = i);
               const fpw = document.getElementById("filterProteinWeight");
               fpw && (fpw.value = i);
-            } else weights[n.carb] = i;
-            buildIngredientsTab(n);
-            refreshRecipeTabIfOpen(n);
-            updateModalMacros(n);
-            updateCardMacros();
-            filterRecipes();
-            updateCalcDisplay();
-            const refEl = document.getElementById(inputId);
-            if (refEl) { refEl.focus(); try { const l = refEl.value.length; refEl.setSelectionRange(l, l); } catch(ex) {} }
-          }
-        }, 600);
+              buildIngredientsTab(n);
+              refreshRecipeTabIfOpen(n);
+              updateModalMacros(n);
+              updateCardMacros();
+              filterRecipes();
+              updateCalcDisplay();
+              const refEl = document.getElementById("mwProt");
+              if (refEl) { refEl.focus(); try { const l = refEl.value.length; refEl.setSelectionRange(l, l); } catch(ex) {} }
+            }
+          }, 600);
+        } else {
+          clearTimeout(_carbWeightTimer);
+          _carbWeightTimer = setTimeout(() => {
+            const i = Math.max(0, Math.min(3e3, parseInt(a) || 0)),
+              n = R.find((r) => r.id === t);
+            if (n) {
+              weights[n.carb] = i;
+              buildIngredientsTab(n);
+              refreshRecipeTabIfOpen(n);
+              updateModalMacros(n);
+              updateCardMacros();
+              filterRecipes();
+              updateCalcDisplay();
+              const refEl = document.getElementById("mwCarb");
+              if (refEl) { refEl.focus(); try { const l = refEl.value.length; refEl.setSelectionRange(l, l); } catch(ex) {} }
+            }
+          }, 600);
+        }
       }
       function updateGlobalWeight(e) {
         const a = Math.max(50, Math.min(3e3, parseInt(e) || 500));
@@ -8783,8 +8799,8 @@
       function calcSauceMacros(e) {
         const a = getRecipeDetail(e);
         if (!a || !a.ingredients) return { kcal: e.sauce_kcal, p: e.sauce_p, c: e.sauce_c, f: e.sauce_f };
-        // none/none recipes show full-batch macros (divide by 1); all others divide by servings
-        const t = (e.protein === "none" && e.carb === "none") ? 1 : Math.max(weights.servings, 1);
+        // Recipe ingredient amounts are per-portion by design — never divide by servings
+        const t = 1;
         let i = 0, n = 0, s = 0, o = 0;
         a.ingredients.forEach((e) => {
           e.items.forEach((e) => {
@@ -8805,9 +8821,7 @@
       }
       const _sauceMacroCache = {};
       function getSauceMacros(e) {
-        const cacheKey = (e.protein === "none" && e.carb === "none")
-          ? e.id
-          : e.id + "_s" + Math.max(weights.servings, 1);
+        const cacheKey = e.id;
         if (_sauceMacroCache[cacheKey]) return _sauceMacroCache[cacheKey];
         const a = calcSauceMacros(e);
         return ((_sauceMacroCache[cacheKey] = a), a);
