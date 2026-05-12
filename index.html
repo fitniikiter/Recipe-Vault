@@ -6082,6 +6082,13 @@
         pine_nuts: { kcal: 673, p: 14, c: 13, f: 68, unit_g: { tbsp: 9, g: 1 }, typical_g: 15, emoji: "🌰" },
         pomegranate_mol: { kcal: 267, p: 1, c: 68, f: 0.3, unit_g: { tbsp: 20, tsp: 7 }, typical_g: 15, emoji: "🫙" },
         soy_milk: { kcal: 33, p: 3, c: 2, f: 2, unit_g: { ml: 1, cup: 240 }, typical_g: 100, emoji: "🥛" },
+        // === ID aliases — NUTRITION_DB-aligned keys ===
+        white_rice: { kcal: 365, p: 7.1, c: 80, f: 0.7, unit_g: { g: 1 }, typical_g: 80, emoji: "🍚" },
+        glass_noodle: { kcal: 351, p: 0, c: 86, f: 0.1, unit_g: { tbsp: 20 }, typical_g: 30, emoji: "🍜" },
+        tuna_water: { kcal: 128, p: 23.6, c: 0, f: 2.97, unit_g: { g: 1 }, typical_g: 130, emoji: "🐟" },
+        tortilla: { kcal: 312, p: 8, c: 51, f: 8, unit_g: { piece: 45, g: 1 }, typical_g: 45, emoji: "🌯" },
+        yoghurt_nonfat: { kcal: 56, p: 5.7, c: 7.7, f: 0.2, unit_g: { tbsp: 30, g: 1 }, typical_g: 150, emoji: "🥛" },
+        smoked_bacon: { kcal: 548, p: 37, c: 1.5, f: 42.3, unit_g: { g: 1, tbsp: 15 }, typical_g: 50, emoji: "🥓" },
 
       };
       function parseIngredientGrams(e, a) {
@@ -6312,7 +6319,7 @@
       let proteinEnabled = { chicken: !0, beef: !0, eggs: !0, fish: !0, tofu: !0 },
         videoFilterOnly = !1,
         flavorFilter = "all";
-      const FISH_PROTEIN_IDS = new Set(["salmon", "shrimp", "cod", "tuna_canned"]);
+      const FISH_PROTEIN_IDS = new Set(["salmon", "shrimp", "cod", "tuna_canned", "tuna_water"]);
       function getRecipeProtein(e) {
         const a = e.protein || "chicken";
         return FISH_PROTEIN_IDS.has(a) ? "fish" : a;
@@ -9166,8 +9173,8 @@
         "bok choy": "bok_choy",
         kimchi: "kimchi",
         butter: "butter",
-        egg: "eggs_dairy",
-        eggs: "eggs_dairy",
+        egg: "eggs",
+        eggs: "eggs",
         milk: "milk",
         "heavy cream": "heavy_cream",
         "sour cream": "sour_cream",
@@ -9209,7 +9216,7 @@
         "japanese curry": "japanese_curry_roux",
         "curry roux": "japanese_curry_roux",
         nori: "nori",
-        "glass noodles": "glass_noodles",
+        "glass noodles": "glass_noodle",
         "rice paper": "rice_paper",
         pickled: "pickled_veg",
         "dried chili": "dried_chili",
@@ -9260,12 +9267,12 @@
         "potato (raw, unpeeled)": "potato",
         "potato (raw)": "potato",
         "potato (diced": "potato",
-        "rice (dry)": "rice",
-        "jasmine rice": "rice",
-        "basmati rice": "rice",
-        "jasmine / basmati rice": "rice",
-        "short grain rice": "rice",
-        "day-old cooked rice": "rice",
+        "rice (dry)": "white_rice",
+        "jasmine rice": "white_rice",
+        "basmati rice": "white_rice",
+        "jasmine / basmati rice": "white_rice",
+        "short grain rice": "white_rice",
+        "day-old cooked rice": "rice_cooked",
         "noodles / pasta": "noodle",
         noodles: "noodle",
         pasta: "noodle",
@@ -9284,10 +9291,10 @@
         "french baguette": "bread",
         pita: "bread",
         tortilla: "bread",
-        "boneless skinless chicken thighs": "chicken",
-        "chicken thighs": "chicken",
-        "chicken breast": "chicken",
-        "chicken mince": "chicken",
+        "boneless skinless chicken thighs": "chicken_thigh",
+        "chicken thighs": "chicken_thigh",
+        "chicken breast": "chicken_breast",
+        "chicken mince": "chicken_breast",
         "ground beef (lean)": "beef_lean",
         "lean ground": "beef_lean",
         "beef sirloin": "beef",
@@ -9398,7 +9405,7 @@
         "bulgur wheat": "bulgur",
         "rice vermicelli": "rice_vermicelli",
         "rice vermicelli (dry)": "rice_vermicelli",
-        "glass noodles": "glass_noodles",
+        "glass noodles": "glass_noodle",
         "frozen peas": "frozen_peas",
         "peas": "frozen_peas",
         "green olives": "green_olives",
@@ -9425,9 +9432,9 @@
         oil: "neutral_oil",
         "unsalted butter": "butter",
         "salted butter": "butter",
-        "whole egg": "eggs_dairy",
-        "egg yolk": "eggs_dairy",
-        "egg white": "eggs_dairy",
+        "whole egg": "eggs",
+        "egg yolk": "eggs",
+        "egg white": "eggs",
         "light soy": "soy_sauce",
         "dark soy": "soy_sauce",
         tamari: "soy_sauce",
@@ -9446,11 +9453,11 @@
         hüttenkäse: "cottage_cheese",
         ricotta: "ricotta",
         "ricotta cheese": "ricotta",
-        tuna: "tuna_canned",
-        "canned tuna": "tuna_canned",
-        "tuna (canned)": "tuna_canned",
-        "tuna in water": "tuna_canned",
-        thunfisch: "tuna_canned",
+        tuna: "tuna_water",
+        "canned tuna": "tuna_water",
+        "tuna (canned)": "tuna_water",
+        "tuna in water": "tuna_water",
+        thunfisch: "tuna_water",
         shrimp: "shrimp",
         prawns: "shrimp",
         shrimps: "shrimp",
@@ -9486,7 +9493,7 @@
       ING_NAME_MAP["silken tofu"] = "tofu";
       ING_NAME_MAP["soft tofu"] = "tofu";
       ING_NAME_MAP["firm tofu"] = "tofu";
-      ING_NAME_MAP["greek yogurt (0%)"] = "greek_yogurt";
+      ING_NAME_MAP["greek yogurt (0%)"] = "yoghurt_nonfat";
       ING_NAME_MAP["crème fraîche or greek yogurt (10%)"] = "creme_fraiche";
       ING_NAME_MAP["soy milk (unsweetened)"] = "soy_milk";
       // === Vegetables ===
@@ -9663,18 +9670,18 @@
       ING_NAME_MAP["sourdough or crusty bread"] = "bread";
       ING_NAME_MAP["baguette or sandwich roll"] = "bread";
       ING_NAME_MAP["brioche burger buns"] = "bread";
-      ING_NAME_MAP["large wheat tortilla wraps"] = "tortilla_wheat";
-      ING_NAME_MAP["whole wheat tortilla wraps"] = "tortilla_wheat";
-      ING_NAME_MAP["small corn or wheat tortillas"] = "tortilla_wheat";
-      ING_NAME_MAP["large wheat tortilla"] = "tortilla_wheat";
+      ING_NAME_MAP["large wheat tortilla wraps"] = "tortilla";
+      ING_NAME_MAP["whole wheat tortilla wraps"] = "tortilla";
+      ING_NAME_MAP["small corn or wheat tortillas"] = "tortilla";
+      ING_NAME_MAP["large wheat tortilla"] = "tortilla";
       ING_NAME_MAP["plain flour"] = "flour";
       ING_NAME_MAP["panko breadcrumbs"] = "panko";
       ING_NAME_MAP["rigatoni or penne pasta (dry)"] = "pasta";
       ING_NAME_MAP["egg noodles (dry)"] = "noodle";
       ING_NAME_MAP["thick wheat noodles (dry)"] = "noodle";
-      ING_NAME_MAP["short-grain rice (uncooked)"] = "rice";
-      ING_NAME_MAP["short grain rice (dry)"] = "rice";
-      ING_NAME_MAP["short grain japanese rice (dry)"] = "rice";
+      ING_NAME_MAP["short-grain rice (uncooked)"] = "white_rice";
+      ING_NAME_MAP["short grain rice (dry)"] = "white_rice";
+      ING_NAME_MAP["short grain japanese rice (dry)"] = "white_rice";
       // === Other ===
       ING_NAME_MAP["brown sugar"] = "brown_sugar";
       ING_NAME_MAP["rice_cooked"] = "rice_cooked";
@@ -9723,6 +9730,11 @@
       ING_NAME_MAP["pico de gallo"] = "canned_tomato";
       ING_NAME_MAP["low-fat quark (magerquark)"] = "quark_low_fat";
       ING_NAME_MAP["yoghurt (0% fat)"] = "yoghurt_nonfat";
+      ING_NAME_MAP["yoghurt"] = "yoghurt_nonfat";
+      ING_NAME_MAP["baking potato"] = "potato";
+      ING_NAME_MAP["smoked bacon lardons"] = "smoked_bacon";
+      ING_NAME_MAP["bacon lardons"] = "smoked_bacon";
+      ING_NAME_MAP["smoked bacon"] = "smoked_bacon";
 
 		function findIngredientId(e) {                             
         if (!e) return null;
@@ -9767,7 +9779,7 @@
         const INGREDIENT_AUTO_TAGS = {
           "beef":   ["beef_lean", "beef_regular"],
           "eggs":   ["eggs"],
-          "fish":   ["salmon", "tuna_canned", "cod", "anchovy_paste"],
+          "fish":   ["salmon", "tuna_canned", "tuna_water", "cod", "anchovy_paste"],
           "shrimp": ["shrimp"],
           "tofu":   ["tofu"],
           "cheese": ["cheese_parm", "cheese_cheddar", "cheese_feta", "cheese_mozzarella", "cheese_gouda"],

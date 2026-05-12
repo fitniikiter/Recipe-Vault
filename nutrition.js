@@ -898,6 +898,166 @@ const NUTRITION_CARBS = {
   fdc_id: "171284", data_type: "SR Legacy",
   notes: "Yogurt, plain, skim milk (0% fat)",
 },
+
+  // ──────────────────────────────────────────────────────────
+  //  BREAD — ADDITIONAL
+  // ──────────────────────────────────────────────────────────
+
+  naan: {
+    kcal: 307, p: 10.0, c: 50.0, f: 7.4,
+    fiber: 2.0, sugar: 4.5,
+    sat_fat: 1.1, mono_fat: 2.8, poly_fat: 2.9, trans_fat: 0, omega3: null,
+    cholesterol: 14,
+    sodium: 530, potassium: 130, calcium: 72, iron: 2.6,
+    magnesium: 22, phosphorus: 95, zinc: 0.8, selenium: 20.0,
+    iodine: null, copper: 0.10,
+    vitamin_a: 0, vitamin_c: 0, vitamin_d: 0,
+    vitamin_b1: 0.43, vitamin_b2: 0.28, vitamin_b3: 4.0,
+    vitamin_b5: 0.32, vitamin_b6: 0.06, vitamin_b12: 0.05,
+    folate: 106, choline: null,
+    fdc_id: "172795", data_type: "SR Legacy",
+    notes: "Bread, naan, commercially prepared",
+  },
+
+  // ──────────────────────────────────────────────────────────
+  //  NOODLES — ADDITIONAL
+  // ──────────────────────────────────────────────────────────
+
+  rice_vermicelli: {
+    kcal: 364, p: 8.1, c: 80.2, f: 0.3,
+    fiber: 2.4, sugar: null,
+    sat_fat: 0.1, mono_fat: 0.1, poly_fat: 0.1, trans_fat: 0, omega3: null,
+    cholesterol: 0,
+    sodium: 10, potassium: 55, calcium: 12, iron: 0.7,
+    magnesium: 20, phosphorus: 60, zinc: 0.6, selenium: null,
+    iodine: null, copper: null,
+    vitamin_a: 0, vitamin_c: 0, vitamin_d: 0,
+    vitamin_b1: 0.04, vitamin_b2: 0.03, vitamin_b3: 1.6,
+    vitamin_b5: null, vitamin_b6: 0.06, vitamin_b12: 0,
+    folate: 4, choline: null,
+    fdc_id: "168907", data_type: "SR Legacy",
+    notes: "Rice noodles (vermicelli), dry weight",
+  },
+
+  // ──────────────────────────────────────────────────────────
+  //  PROTEINS — PORK (ADDITIONAL)
+  // ──────────────────────────────────────────────────────────
+
+  smoked_bacon: {
+    kcal: 548, p: 37.0, c: 1.5, f: 42.3,
+    fiber: 0, sugar: 0,
+    sat_fat: 14.0, mono_fat: 18.8, poly_fat: 5.5, trans_fat: 0.2, omega3: 0.29,
+    cholesterol: 121,
+    sodium: 1717, potassium: 565, calcium: 11, iron: 1.1,
+    magnesium: 27, phosphorus: 463, zinc: 2.3, selenium: 40.6,
+    iodine: null, copper: 0.065,
+    vitamin_a: 0, vitamin_c: 0, vitamin_d: 0.6,
+    vitamin_b1: 0.433, vitamin_b2: 0.192, vitamin_b3: 6.17,
+    vitamin_b5: 0.671, vitamin_b6: 0.397, vitamin_b12: 0.54,
+    folate: 1, choline: 94.7,
+    fdc_id: "168320", data_type: "SR Legacy",
+    notes: "Pork, cured, bacon, raw — smoked bacon lardons",
+  },
+
+  // ──────────────────────────────────────────────────────────
+  //  CONDIMENTS & MISC
+  // ──────────────────────────────────────────────────────────
+
+  brown_sugar: {
+    kcal: 377, p: 0, c: 97.3, f: 0,
+    fiber: 0, sugar: 96.4,
+    sat_fat: 0, mono_fat: 0, poly_fat: 0, trans_fat: 0, omega3: null,
+    cholesterol: 0,
+    sodium: 28, potassium: 346, calcium: 83, iron: 1.9,
+    magnesium: 29, phosphorus: 22, zinc: 0.18, selenium: 1.2,
+    iodine: null, copper: 0.298,
+    vitamin_a: 0, vitamin_c: 0, vitamin_d: 0,
+    vitamin_b1: 0.008, vitamin_b2: 0.007, vitamin_b3: 0.3,
+    vitamin_b5: 0.135, vitamin_b6: 0.026, vitamin_b12: 0,
+    folate: 1, choline: 2.3,
+    fdc_id: "168833", data_type: "SR Legacy",
+    notes: "Sugars, brown",
+  },
+
+  soy_milk: {
+    kcal: 43, p: 2.8, c: 3.6, f: 1.9,
+    fiber: 0.5, sugar: 2.5,
+    sat_fat: 0.3, mono_fat: 0.5, poly_fat: 1.1, trans_fat: 0, omega3: 0.15,
+    cholesterol: 0,
+    sodium: 39, potassium: 120, calcium: 123, iron: 0.6,
+    magnesium: 18, phosphorus: 52, zinc: 0.18, selenium: 2.0,
+    iodine: null, copper: 0.11,
+    vitamin_a: 64, vitamin_c: 0, vitamin_d: 1.2,
+    vitamin_b1: 0.04, vitamin_b2: 0.17, vitamin_b3: 0.5,
+    vitamin_b5: 0.19, vitamin_b6: 0.07, vitamin_b12: 0.73,
+    folate: 14, choline: 23.6,
+    fdc_id: "175215", data_type: "SR Legacy",
+    notes: "Soymilk, unfortified (unsweetened)",
+  },
+
+  tomatillo: {
+    kcal: 32, p: 1.0, c: 5.8, f: 1.0,
+    fiber: 1.9, sugar: 3.9,
+    sat_fat: 0.1, mono_fat: 0.2, poly_fat: 0.4, trans_fat: 0, omega3: null,
+    cholesterol: 0,
+    sodium: 1, potassium: 268, calcium: 7, iron: 0.6,
+    magnesium: 20, phosphorus: 39, zinc: 0.2, selenium: 0.5,
+    iodine: null, copper: 0.08,
+    vitamin_a: 6, vitamin_c: 11.7, vitamin_d: 0,
+    vitamin_b1: 0.04, vitamin_b2: 0.03, vitamin_b3: 1.8,
+    vitamin_b5: 0.18, vitamin_b6: 0.05, vitamin_b12: 0,
+    folate: 7, choline: 8.3,
+    fdc_id: "168550", data_type: "SR Legacy",
+    notes: "Tomatillos, raw",
+  },
+
+  gherkins: {
+    kcal: 11, p: 0.7, c: 2.3, f: 0.2,
+    fiber: 0.7, sugar: 1.2,
+    sat_fat: 0, mono_fat: 0, poly_fat: 0.1, trans_fat: 0, omega3: null,
+    cholesterol: 0,
+    sodium: 456, potassium: 116, calcium: 16, iron: 0.3,
+    magnesium: 9, phosphorus: 16, zinc: 0.1, selenium: 0.1,
+    iodine: null, copper: 0.02,
+    vitamin_a: 8, vitamin_c: 1.6, vitamin_d: 0,
+    vitamin_b1: 0.02, vitamin_b2: 0.02, vitamin_b3: 0.1,
+    vitamin_b5: 0.07, vitamin_b6: 0.02, vitamin_b12: 0,
+    folate: 4, choline: 6.4,
+    fdc_id: "169401", data_type: "SR Legacy",
+    notes: "Pickles, cucumber, dill (gherkins)",
+  },
+
+  white_pepper: {
+    kcal: 296, p: 10.4, c: 68.6, f: 2.1,
+    fiber: 26.2, sugar: null,
+    sat_fat: 0.6, mono_fat: 0.7, poly_fat: 0.6, trans_fat: 0, omega3: null,
+    cholesterol: 0,
+    sodium: 5, potassium: 73, calcium: 265, iron: 14.3,
+    magnesium: 90, phosphorus: 173, zinc: 1.0, selenium: null,
+    iodine: null, copper: 0.19,
+    vitamin_a: 0, vitamin_c: 0, vitamin_d: 0,
+    vitamin_b1: 0.0, vitamin_b2: 0.0, vitamin_b3: 0.0,
+    vitamin_b5: null, vitamin_b6: 0.1, vitamin_b12: 0,
+    folate: null, choline: null,
+    fdc_id: "170931", data_type: "SR Legacy",
+    notes: "Spices, pepper, white",
+  },
+
+  galangal: {
+    kcal: 63, p: 1.7, c: 15.3, f: 0.5,
+    fiber: 2.1, sugar: null,
+    sat_fat: null, mono_fat: null, poly_fat: null, trans_fat: 0, omega3: null,
+    cholesterol: 0,
+    sodium: 9, potassium: 194, calcium: 16, iron: 1.5,
+    magnesium: 33, phosphorus: 74, zinc: 0.3, selenium: null,
+    iodine: null, copper: 0.09,
+    vitamin_a: 0, vitamin_c: 5.0, vitamin_d: 0,
+    vitamin_b1: 0.006, vitamin_b2: 0.034, vitamin_b3: 5.0,
+    vitamin_b5: null, vitamin_b6: 0.16, vitamin_b12: 0,
+    folate: null, choline: null,
+    fdc_id: null, data_type: "Estimated",
+    notes: "Galangal root, raw — values estimated from similar rhizomes",
+  },
 };
 
 // Merge carbs into main NUTRITION_DB
