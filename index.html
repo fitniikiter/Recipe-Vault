@@ -6229,10 +6229,10 @@
           o = "eggs" === activeProtein ? 0 : weights.eggs * (eggSizeG / 100),
           r = NUT.eggs;
         return {
-          kcal: (n * t.kcal + s * i.kcal + o * r.kcal) / a,
-          p: (n * t.p + s * i.p + o * r.p) / a,
-          c: (n * t.c + s * i.c + o * r.c) / a,
-          f: (n * t.f + s * i.f + o * r.f) / a,
+          kcal: (n * t.kcal + s * i.kcal) / a + o * r.kcal,
+          p: (n * t.p + s * i.p) / a + o * r.p,
+          c: (n * t.c + s * i.c) / a + o * r.c,
+          f: (n * t.f + s * i.f) / a + o * r.f,
         };
       }
       const PROTEIN_DEFS = [
@@ -7679,7 +7679,7 @@
         weights.servings = modalServings;
         // For eggs-protein recipes: temporarily override so baseMacros uses egg values
         const _pAP = activeProtein, _pCh = weights.chicken;
-        if (e.protein === "eggs") { activeProtein = "eggs"; weights.chicken = eggCount * eggSizeG; }
+        if (e.protein === "eggs") { activeProtein = "eggs"; weights.chicken = eggCount * eggSizeG * modalServings; }
         const t = baseMacros(e.carb);
         activeProtein = _pAP; weights.chicken = _pCh;
         const i = getSauceMacros(e);
@@ -7687,7 +7687,7 @@
         let seKcal = 0, seP = 0, seC = 0, seF = 0;
         if (e.sideEgg) {
           const nut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
-          const gPP = Math.round((sideEggCount * sideEggSizeG) / Math.max(modalServings, 1));
+          const gPP = Math.round(sideEggCount * sideEggSizeG);
           seKcal = Math.round((nut.kcal * gPP) / 100);
           seP    = Math.round(((nut.p * gPP) / 100) * 10) / 10;
           seC    = Math.round(((nut.c * gPP) / 100) * 10) / 10;
@@ -7921,7 +7921,7 @@
             }[r] || "🍗",
           m = { potato: "🥔", rice: "🍚", noodle: "🍜", bread: "🫓" }[e.carb] || "🍽️",
           h = { potato: "Potato", rice: "Rice", noodle: "Noodles", bread: "Bread/Wrap" }[e.carb] || "Carb",
-          p = o ? Math.round((eggCount * eggSizeG) / i) : Math.round(weights.chicken / i),
+          p = o ? Math.round(eggCount * eggSizeG) : Math.round(weights.chicken / i),
           u = Math.round((weights[e.carb] || 0) / i);
         let g = "";
         if (!o && s && s.variants) {
@@ -7950,7 +7950,7 @@
         }
         // Side-egg stepper for sideEgg: true recipes
         const _hasSideEgg = !!e.sideEgg;
-        const _sgPP = Math.round((sideEggCount * sideEggSizeG) / Math.max(i, 1));
+        const _sgPP = Math.round(sideEggCount * sideEggSizeG);
         const _sgNut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
         const _sgK = Math.round((_sgNut.kcal * _sgPP) / 100);
         const _sgP = Math.round((_sgNut.p * _sgPP) / 100 * 10) / 10;
@@ -8019,7 +8019,7 @@
                   };
                 } else if (a.amt && a.amt.includes("{{eggCount}}")) {
                   const _eggNut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
-                  const _eggG = Math.round((eggCount * eggSizeG) / Math.max(i, 1));
+                  const _eggG = Math.round(eggCount * eggSizeG);
                   g = {
                     grams: _eggG,
                     kcal: Math.round((_eggNut.kcal * _eggG) / 100),
@@ -8062,14 +8062,14 @@
         const _svBak = weights.servings;
         weights.servings = modalServings;
         const _pAP2 = activeProtein, _pCh2 = weights.chicken;
-        if (e.protein === "eggs") { activeProtein = "eggs"; weights.chicken = eggCount * eggSizeG; }
+        if (e.protein === "eggs") { activeProtein = "eggs"; weights.chicken = eggCount * eggSizeG * modalServings; }
         const S = baseMacros(e.carb),
           C = getSauceMacros(e);
         activeProtein = _pAP2; weights.chicken = _pCh2;
         let _seKcal = 0, _seP = 0, _seC = 0, _seF = 0;
         if (e.sideEgg) {
           const _nut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
-          const _gPP = Math.round((sideEggCount * sideEggSizeG) / Math.max(modalServings, 1));
+          const _gPP = Math.round(sideEggCount * sideEggSizeG);
           _seKcal = Math.round((_nut.kcal * _gPP) / 100);
           _seP    = Math.round((_nut.p  * _gPP) / 100 * 10) / 10;
           _seC    = Math.round((_nut.c  * _gPP) / 100 * 10) / 10;
