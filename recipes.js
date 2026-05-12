@@ -2651,6 +2651,19 @@ hint: "",
   flavor: "savory",
   hint: "",
 },
+{
+id: "american-cinnamon-apple-porridge",
+sideEgg: false,
+protein: "eggs",
+displayNum: 185,
+carb: "none",
+time: 10,
+title: "Cinnamon Apple Egg Porridge",
+desc: "Creamy high-protein porridge with caramelised cinnamon apple — eggs stirred in off the heat for a silky, custardy texture.",
+tags: ["american", "comfort", "oats"],
+flavor: "sweet",
+hint: "",
+},
 ];
 
 // --- RECIPE DETAILS (ingredients, steps, hacks) ---
@@ -10442,6 +10455,46 @@ notes: "Schmelzkäse Scheiben from REWE or Aldi melt far better than block chedd
     { title: "Yogurt Extends the Sauce", text: "Adding 40g Greek yogurt to the honey mustard does three things: it stretches the sauce volume, adds creaminess without mayo calories, and prevents the honey from burning in the oven because protein absorbs heat gradually. Smart macro move that also protects the glaze." },
   ],
   notes: "Works equally well with chicken breast — reduce oven time to 8–10 min. The glaze also works thinned with a splash of water as a salad dressing for the green salad.",
+},
+"american-cinnamon-apple-porridge": {
+image: null,
+video: "",
+ingredients: [
+{ section: "Protein", items: [{ name: "Eggs (large)", amt: "{{eggCount}} pieces" }] },
+{ section: "Base", items: [
+{ name: "Rolled oats", amt: "40g" },
+{ name: "Semi-skimmed milk (1.5%)", amt: "125ml" },
+{ name: "Water", amt: "25ml" },
+]},
+{ section: "Cinnamon Apple", items: [
+{ name: "Apple (diced, no need to peel)", amt: "80g" },
+{ name: "Butter", amt: "2.5g" },
+{ name: "Ground cinnamon", amt: "1 tsp" },
+{ name: "Salt", amt: "to taste" },
+]},
+{ section: "To Finish", items: [
+{ name: "Ground cinnamon", amt: "0.5 tsp" },
+{ name: "Vanilla extract", amt: "0.25 tsp" },
+{ name: "Honey", amt: "1 tsp" },
+]},
+{ section: "To Serve", items: [
+{ name: "Magerquark (0% fat)", amt: "150g" },
+{ name: "Honey drizzle", amt: "to taste" },
+]},
+],
+steps: [
+"Dice the apple into small cubes — no need to peel. Melt butter in a small pan over medium-high heat, add apple, 1 tsp cinnamon, and a pinch of salt — cook 3–4 minutes until edges start to caramelise and apple is just tender.",
+"While the apple cooks, combine rolled oats, milk, water, and a pinch of salt in a small pot. Bring to medium heat and cook 3–4 minutes, stirring regularly, until thick and creamy — keep it slightly looser than you want, it thickens further off the heat.",
+"Take the oats off the heat. Crack in the eggs and stir vigorously for 60 seconds — residual heat cooks them gently into the oats, creating a silky, protein-rich texture with no visible egg pieces.",
+"Stir in the remaining cinnamon (0.5 tsp), vanilla extract, and honey. Taste and adjust sweetness.",
+"Divide between two bowls. Spoon Magerquark on top, then finish with the hot cinnamon apple compote — the heat partially melts the quark underneath.",
+"Drizzle with extra honey and a pinch of cinnamon before serving.",
+],
+hacks: [
+{ title: "Butter on the Apple", text: "Cooking the apple in butter instead of a dry pan is the 80/20 move — it caramelises the natural sugars and adds richness for just 37 kcal total across the whole recipe. Plain cooked apple without fat tastes flat and diet-y." },
+{ title: "Eggs Off the Heat", text: "Always take the pot off active heat before adding the eggs. If the oats are still boiling, you get scrambled egg chunks. Off the heat with 60 seconds of vigorous stirring gives you a silky, custardy texture — and an extra 12g protein per person that you cannot taste or see." },
+],
+notes: "Magerquark can be swapped for Greek yogurt (0% fat) with near-identical macros. Best eaten immediately — the texture is perfect fresh off the stove.",
 },
 
 };
