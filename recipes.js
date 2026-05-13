@@ -2677,7 +2677,7 @@ flavor: "savory",
 hint: "",
 },
 {
-id: "moroccan-harissa-chicken-potato",
+id: "moroccan-harissa-chicken-potatos",
 protein: "chicken",
 displayNum: 187,
 carb: "potato",
@@ -2741,7 +2741,7 @@ hint: "",
 {
 id: "korean-egg-toast-bread",
 protein: "eggs",
-displayNum: 114,
+displayNum: 192,
 carb: "bread",
 time: 10,
 title: "Korean Egg Toast",
@@ -2752,7 +2752,7 @@ hint: "",
 },{
 id: "asian-chicken-satay-rice",
 protein: "chicken",
-displayNum: 115,
+displayNum: 193,
 carb: "rice",
 time: 35,
 title: "Chicken Satay Skewers",
@@ -2763,7 +2763,7 @@ hint: "Marinate overnight for dramatically better char and flavour — next day 
 },{
 id: "indian-butter-chicken-light-rice",
 protein: "chicken",
-displayNum: 116,
+displayNum: 194,
 carb: "rice",
 time: 35,
 title: "Butter Chicken Light",
@@ -2774,7 +2774,7 @@ hint: "",
 },{
 id: "korean-gochujang-butter-pasta-noodle",
 protein: "chicken",
-displayNum: 117,
+displayNum: 195,
 carb: "noodle",
 time: 20,
 title: "Gochujang Butter Pasta",
@@ -2782,6 +2782,18 @@ desc: "Spaghetti tossed in gochujang toasted in butter, parmesan emulsified with
 tags: ["korean", "fusion", "spicy"],
 flavor: "savory",
 hint: "",
+},
+{
+  id: "north-african-harissa-chicken-potato",
+  protein: "chicken",
+  displayNum: 196,
+  carb: "potato",
+  time: 50,
+  title: "Harissa Yogurt Chicken & Potatoes",
+  desc: "Chicken thighs marinated in harissa and yogurt, oven-roasted until charred — served with crispy potatoes and tahini salad.",
+  tags: ["north-african", "spicy", "middle-eastern"],
+  flavor: "savory",
+  hint: "",
 },
 ];
 
@@ -10662,7 +10674,7 @@ hacks: [
 ],
 notes: "Store leftovers with sauce separate — potatoes go soggy if stored together. Chicken breast works as a swap but thighs hold up better to the high heat and take on more char.",
 },
-"moroccan-harissa-chicken-potato": {
+"moroccan-harissa-chicken-potatos": {
 image: null,
 video: "",
 ingredients: [
@@ -11023,5 +11035,60 @@ hacks: [
 { title: "Pasta Water = Emulsion", text: "The starchy pasta water is what transforms the sauce from a thin liquid into a glossy emulsion that clings to every strand. Add it while boiling hot and toss hard for at least 60 seconds — you'll see it visibly thicken. Without it you get a greasy, separated sauce instead of a cohesive gloss." },
 ],
 notes: "Leftovers reheat well — add a splash of water when reheating to loosen the sauce back up. Chicken thighs add extra richness if you prefer.",
+},
+
+"north-african-harissa-chicken-potato": {
+  image: null,
+  video: "",
+  ingredients: [
+    { section: "Protein", items: [{ name: "Boneless skinless chicken thighs", amt: "{{proteinG}}g raw" }] },
+    { section: "Carb Base", items: [{ name: "Waxy potatoes (baby/Drillinge)", amt: "{{carbG}}g" }] },
+    { section: "Marinade", items: [
+      { name: "Harissa paste", amt: "30g" },
+      { name: "Greek yogurt (0% fat)", amt: "50g" },
+      { name: "Garlic (minced)", amt: "2 cloves" },
+      { name: "Olive oil", amt: "1 tsp" },
+      { name: "Ground cumin", amt: "0.5 tsp" },
+      { name: "Smoked paprika", amt: "0.5 tsp" },
+      { name: "Salt & pepper", amt: "to taste" },
+    ]},
+    { section: "Roasted Potatoes", items: [
+      { name: "Olive oil", amt: "1 tsp" },
+      { name: "Smoked paprika", amt: "0.5 tsp" },
+      { name: "Salt", amt: "to taste" },
+    ]},
+    { section: "Tahini Dressing", items: [
+      { name: "Tahini", amt: "15g" },
+      { name: "Lemon juice", amt: "1 piece" },
+      { name: "Olive oil", amt: "1 tsp" },
+      { name: "Garlic (minced)", amt: "1 clove" },
+      { name: "Water", amt: "3 tbsp" },
+      { name: "Salt", amt: "to taste" },
+    ]},
+    { section: "Salad", items: [
+      { name: "Mixed greens or rocket", amt: "60g" },
+      { name: "Cherry tomatoes", amt: "100g" },
+      { name: "Cucumber", amt: "80g" },
+      { name: "Red onion", amt: "30g" },
+    ]},
+    { section: "To Serve", items: [
+      { name: "Fresh parsley or coriander", amt: "small handful" },
+      { name: "Pomegranate seeds (optional)", amt: "1 tbsp" },
+    ]},
+  ],
+  steps: [
+    "Combine harissa, Greek yogurt, minced garlic, cumin, smoked paprika, olive oil, salt and pepper — coat chicken thighs well and marinate at least 20 minutes, or overnight.",
+    "Preheat oven to 220°C fan. Halve baby potatoes, toss with olive oil, smoked paprika, and salt, spread cut-side down on a baking tray. Roast 30–35 minutes until crispy — don't disturb them for the first 25 minutes.",
+    "After potatoes have been in 15 minutes, place marinated chicken on a second tray or rack and roast 18–20 minutes at 220°C until deeply charred on top and cooked through (75°C internal).",
+    "Rest the chicken 3 minutes on a board before slicing.",
+    "Whisk tahini, lemon juice, olive oil, and garlic together — the mix will seize. Add water 1 tbsp at a time until smooth and pourable. Season with salt.",
+    "Toss greens, cherry tomatoes, cucumber, and red onion together. Dress just before serving.",
+    "Plate crispy potatoes as the base, sliced chicken on top, salad alongside. Scatter fresh herbs and optional pomegranate seeds.",
+  ],
+  hacks: [
+    { title: "Yogurt Crust = Key", text: "The yogurt in the marinade caramelizes in the oven heat, creating a charred, slightly creamy crust that plain harissa alone can't achieve. Don't skip it — it's the reason this chicken looks so good on camera too." },
+    { title: "Tahini Seizes First", text: "Tahini always tightens when you add lemon juice — don't panic. Keep whisking and add water slowly. The final dressing should be loose enough to drizzle but thick enough to coat. Too thick: add a drop more water. Too thin: add a little more tahini." },
+  ],
+  notes: "Harissa brands vary wildly in heat level — taste your paste before using. Leftovers keep 3 days in the fridge; store salad undressed separately.",
 },
 };
