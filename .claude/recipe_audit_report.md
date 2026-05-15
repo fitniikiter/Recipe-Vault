@@ -1,0 +1,1453 @@
+# Recipe Vault — Audit Report
+
+**Recipes in R[]:** 196  |  **RECIPE_DETAILS:** 197  |  **Total issues:** 709
+
+---
+
+## A. Duplicates
+
+_No issues found._
+
+
+## C. Non-English Ingredient Names
+
+**37 issue(s)**
+
+- `thai-peanut-chicken-rice` **Thai Peanut Chicken Bowl**
+  - German ['butter'] in: 'Peanut butter (natural)' / '2 tbsp'
+- `french-scrambled-eggs-toast` **French Soft Scrambled Eggs on Toast**
+  - German ['Butter'] in: 'Butter' / '10g'
+- `french-scrambled-eggs-toast` **French Soft Scrambled Eggs on Toast**
+  - German ['Butter'] in: 'Butter (for toast)' / '5g'
+- `caesar-dressing-light` **Caesar Dressing Light**
+  - German ['Quark'] in: 'Quark (low-fat)' / '50g'
+- `butter-chicken-murgh-makhani` **Butter Chicken (Murgh Makhani)**
+  - German ['Butter'] in: 'Butter' / '20g'
+- `american-classic-breakfast-burrito` **Classic American Breakfast Burrito**
+  - German ['Butter'] in: 'Butter' / '5g'
+- `french-poulet-moutarde` **French Poulet à la Moutarde**
+  - German ['Butter'] in: 'Butter' / '5g'
+- `italian-chicken-piccata-pasta` **Italian Chicken Piccata Pasta**
+  - German ['Butter'] in: 'Butter' / '8g'
+- `german-chicken-rahmsauce` **German Chicken in Cream Sauce**
+  - German ['Butter'] in: 'Butter' / '5g'
+- `french-hachis-parmentier` **French Hachis Parmentier**
+  - German ['Butter'] in: 'Butter' / '8g'
+- `british-cottage-pie-light` **British Cottage Pie Light**
+  - German ['Butter'] in: 'Butter' / '8g'
+- `mexican-chipotle-beef-breakfast-burrito` **Chipotle Beef Breakfast Burrito**
+  - German ['Butter'] in: 'Butter' / '5g'
+- `korean-bbq-chicken-breakfast-burrito` **Korean BBQ Chicken Breakfast Burrito**
+  - German ['Butter'] in: 'Butter' / '5g'
+- `american-smash-beef-breakfast-burrito` **Smash Patty Breakfast Burrito**
+  - German ['Butter'] in: 'Butter' / '5g'
+- `german-bavarian-street-wrap` **Bavarian Street Wrap**
+  - German ['quark'] in: 'Low-fat quark (Yoghurt)' / '120g'
+- `german-bavarian-street-wrap` **Bavarian Street Wrap**
+  - German ['Butter'] in: 'Butter' / '5g'
+- `korean-beef-jjigae-potato` **Korean Beef Doenjang Jjigae**
+  - German ['Zucchini'] in: 'Zucchini (sliced into half moons)' / '1 medium'
+- `turkish-manti-beef-potato-bowl` **Turkish Manti-Style Beef Bowl**
+  - German ['Butter'] in: 'Butter' / '5g'
+- `turkish-manti-beef-potato-bowl` **Turkish Manti-Style Beef Bowl**
+  - German ['Butter'] in: 'Butter' / '5g'
+- `mediterranean-smashed-potato-bowl` **Greek Smashed Potato Bowl**
+  - German ['Butter'] in: 'Butter' / '5g'
+- `korean-buldak-chicken-potato` **Korean Buldak Fire Chicken & Potatoes**
+  - German ['Butter'] in: 'Butter' / '5g'
+- `thai-massaman-chicken-potato` **Thai Massaman Chicken & Potato Curry**
+  - German ['butter'] in: 'Natural peanut butter' / '1 tbsp'
+- `japanese-nikujaga-chicken-potato` **Japanese Chicken & Potato Nikujaga**
+  - German ['Butter'] in: 'Butter' / '5g'
+- `american-garlic-parmesan-chicken-potato` **Garlic Parmesan Chicken + Roasted Potatoes**
+  - German ['Butter'] in: 'Butter' / '5g'
+- `american-garlic-butter-chicken-potato` **Garlic Butter Chicken + Smashed Potatoes**
+  - German ['Butter'] in: 'Butter' / '5g'
+- `japanese-beef-lettuce-wraps` **Japanese Beef Lettuce Wraps + Miso Salad**
+  - German ['Butter'] in: 'Butter lettuce leaves' / '8 pieces'
+- `japanese-shoyu-butter-chicken-potato` **Shoyu Butter Chicken + Crispy Potatoes**
+  - German ['Butter'] in: 'Butter' / '5g'
+- `american-buffalo-chicken-potato` **Buffalo Chicken + Potato Wedges + Celery Salad**
+  - German ['Butter'] in: 'Butter' / '8g'
+- `american-cinnamon-apple-porridge` **Cinnamon Apple Egg Porridge**
+  - German ['Butter'] in: 'Butter' / '2.5g'
+- `american-cinnamon-apple-porridge` **Cinnamon Apple Egg Porridge**
+  - German ['Magerquark'] in: 'Magerquark (0% fat)' / '150g'
+- `asian-satay-chicken-potato` **Peanut Satay Chicken + Crispy Potatoes**
+  - German ['butter'] in: 'Natural peanut butter (100% peanuts)' / '20g'
+- `korean-egg-toast-bread` **Korean Egg Toast**
+  - German ['Butter'] in: 'Butter' / '2 tsp'
+- `asian-chicken-satay-rice` **Chicken Satay Skewers**
+  - German ['butter'] in: 'Natural peanut butter (100%)' / '40g'
+- `indian-butter-chicken-light-rice` **Butter Chicken Light**
+  - German ['Magerquark'] in: 'Magerquark' / '150g'
+- `indian-butter-chicken-light-rice` **Butter Chicken Light**
+  - German ['Frischkäse'] in: 'Cream cheese (Frischkäse)' / '20g'
+- `indian-butter-chicken-light-rice` **Butter Chicken Light**
+  - German ['Butter'] in: 'Butter' / '1 tbsp'
+- `korean-gochujang-butter-pasta-noodle` **Gochujang Butter Pasta**
+  - German ['Butter'] in: 'Butter' / '15g'
+
+## D. Missing Units
+
+**480 issue(s)**
+
+- `korean-glazed-chicken-bowl` **Korean Glazed Chicken Bowl**
+  - No unit: amt='320ml' / 'Chicken broth (low-sodium)'
+- `korean-glazed-chicken-bowl` **Korean Glazed Chicken Bowl**
+  - No unit: amt='1 whole' / 'Cucumber'
+- `shawarma-chicken-wrap` **Shawarma Chicken Wrap**
+  - No unit: amt='100g' / 'Greek yogurt (0%)'
+- `shawarma-chicken-wrap` **Shawarma Chicken Wrap**
+  - No unit: amt='1 medium' / 'Tomato'
+- `japanese-teriyaki-chicken` **Japanese Teriyaki Chicken**
+  - No unit: amt='100g' / 'Steamed broccoli or edamame'
+- `chipotle-lime-chicken-bowl` **Chipotle Lime Chicken Bowl**
+  - No unit: amt='200g' / 'Canned black beans (drained)'
+- `chipotle-lime-chicken-bowl` **Chipotle Lime Chicken Bowl**
+  - No unit: amt='1 medium' / 'Tomato (diced)'
+- `chipotle-lime-chicken-bowl` **Chipotle Lime Chicken Bowl**
+  - No unit: amt='80g' / 'Greek yogurt (0%)'
+- `honey-garlic-chicken-noodles` **Honey Garlic Chicken Noodles**
+  - No unit: amt='175g' / 'Pak choi (halved)'
+- `mediterranean-chicken-potato` **Mediterranean Lemon Herb Chicken & Potatoes**
+  - No unit: amt='1 whole' / 'Lemon (zest + juice)'
+- `mediterranean-chicken-potato` **Mediterranean Lemon Herb Chicken & Potatoes**
+  - No unit: amt='150g' / 'Cherry tomatoes'
+- `mediterranean-chicken-potato` **Mediterranean Lemon Herb Chicken & Potatoes**
+  - No unit: amt='30g' / 'Kalamata olives (optional)'
+- `indian-tikka-chicken-rice` **Indian Tikka Masala Chicken**
+  - No unit: amt='80g' / 'Greek yogurt (0%)'
+- `indian-tikka-chicken-rice` **Indian Tikka Masala Chicken**
+  - No unit: amt='200g' / 'Canned crushed tomatoes'
+- `indian-tikka-chicken-rice` **Indian Tikka Masala Chicken**
+  - No unit: amt='60g' / 'Greek yogurt (0%)'
+- `chinese-five-spice-chicken-rice` **Chinese Five-Spice Crispy Chicken**
+  - No unit: amt='200g' / 'Bok choy'
+- `bbq-chicken-smashed-potato` **Smoky BBQ Chicken & Smashed Potatoes**
+  - No unit: amt='120g' / 'Greek yogurt (0%)'
+- `korean-bulgogi-beef-rice-bowl` **Korean Bulgogi Beef Rice Bowl**
+  - No unit: amt='80g' / 'Baby spinach'
+- `korean-bulgogi-beef-rice-bowl` **Korean Bulgogi Beef Rice Bowl**
+  - No unit: amt='60g' / 'Kimchi (store-bought)'
+- `smash-burger-brioche` **Smash Burger with Special Sauce**
+  - No unit: amt='60g' / 'Greek yogurt (0%)'
+- `smash-burger-brioche` **Smash Burger with Special Sauce**
+  - No unit: amt='2 leaves' / 'Iceberg lettuce'
+- `mexican-taco-beef-bowl` **Mexican Taco Beef Rice Bowl**
+  - No unit: amt='2 medium' / 'Tomatoes (diced)'
+- `mexican-taco-beef-bowl` **Mexican Taco Beef Rice Bowl**
+  - No unit: amt='80g' / 'Greek yogurt (0%)'
+- `chinese-mapo-tofu-beef-rice` **Spicy Mapo Tofu Beef Rice**
+  - No unit: amt='150ml' / 'Chicken stock'
+- `chinese-mapo-tofu-beef-rice` **Spicy Mapo Tofu Beef Rice**
+  - No unit: amt='300g' / 'Silken or soft tofu'
+- `middle-eastern-kofta-potato` **Middle Eastern Kofta & Roasted Potatoes**
+  - No unit: amt='100g' / 'Greek yogurt (0%)'
+- `japanese-beef-rice-bowl-gyudon` **Japanese Gyudon Beef Rice Bowl**
+  - No unit: amt='200ml' / 'Dashi stock or chicken stock'
+- `japanese-beef-rice-bowl-gyudon` **Japanese Gyudon Beef Rice Bowl**
+  - No unit: amt='1 medium' / 'Onion (thinly sliced)'
+- `beef-bolognese-protein-pasta` **High-Protein Beef Bolognese**
+  - No unit: amt='400g' / 'Canned crushed tomatoes'
+- `beef-bolognese-protein-pasta` **High-Protein Beef Bolognese**
+  - No unit: amt='1 medium' / 'Onion (finely diced)'
+- `beef-bolognese-protein-pasta` **High-Protein Beef Bolognese**
+  - No unit: amt='1 medium' / 'Carrot (finely diced)'
+- `beef-bolognese-protein-pasta` **High-Protein Beef Bolognese**
+  - No unit: amt='100ml' / 'Red wine or beef stock'
+- `beef-bolognese-protein-pasta` **High-Protein Beef Bolognese**
+  - No unit: amt='150g' / 'Cottage cheese (plain)'
+- `beef-bolognese-protein-pasta` **High-Protein Beef Bolognese**
+  - No unit: amt='20g' / 'Parmesan (grated)'
+- `beef-bibimbap-bowl` **Beef Bibimbap Bowl**
+  - No unit: amt='100g' / 'Spinach'
+- `beef-bibimbap-bowl` **Beef Bibimbap Bowl**
+  - No unit: amt='1 medium' / 'Carrot (julienned)'
+- `beef-bibimbap-bowl` **Beef Bibimbap Bowl**
+  - No unit: amt='80g' / 'Bean sprouts'
+- `beef-stuffed-potato-skins` **Loaded Beef & Cheese Stuffed Potato Skins**
+  - No unit: amt='50g' / 'Cheddar cheese (grated)'
+- `beef-stuffed-potato-skins` **Loaded Beef & Cheese Stuffed Potato Skins**
+  - No unit: amt='80g' / 'Greek yogurt (0%)'
+- `indian-beef-keema-curry-rice` **Indian Beef Keema Curry**
+  - No unit: amt='1 large' / 'Onion (finely diced)'
+- `indian-beef-keema-curry-rice` **Indian Beef Keema Curry**
+  - No unit: amt='200g' / 'Canned chopped tomatoes'
+- `indian-beef-keema-curry-rice` **Indian Beef Keema Curry**
+  - No unit: amt='100g' / 'Frozen peas'
+- `vietnamese-lemongrass-beef-noodles` **Vietnamese Lemongrass Beef Noodles**
+  - No unit: amt='1 lime' / 'Lime juice'
+- `turkish-beef-lahmacun-wrap` **Turkish Beef Lahmacun Wrap**
+  - No unit: amt='80g' / 'Greek yogurt (0%)'
+- `greek-beef-yuvarlakia-potato-bowl` **Greek Beef Yuvarlakia Bowl**
+  - No unit: amt='40g' / 'Short-grain rice (uncooked)'
+- `greek-beef-yuvarlakia-potato-bowl` **Greek Beef Yuvarlakia Bowl**
+  - No unit: amt='500ml' / 'Chicken stock (low sodium)'
+- `greek-beef-yuvarlakia-potato-bowl` **Greek Beef Yuvarlakia Bowl**
+  - No unit: amt='2 lemons' / 'Lemon juice'
+- `peruvian-lomo-saltado-bowl` **Peruvian Lomo Saltado Bowl**
+  - No unit: amt='1 large' / 'Red onion (cut into wedges)'
+- `mexican-beef-black-bean-burrito-bowl` **Beef & Black Bean Burrito Bowl**
+  - No unit: amt='120g' / 'Black beans (canned, drained)'
+- `mexican-beef-black-bean-burrito-bowl` **Beef & Black Bean Burrito Bowl**
+  - No unit: amt='1 lime' / 'Lime juice'
+- `mexican-beef-black-bean-burrito-bowl` **Beef & Black Bean Burrito Bowl**
+  - No unit: amt='80g' / 'Greek yogurt (0%)'
+- `japanese-beef-tantanmen-noodles` **Beef Tantanmen Ramen**
+  - No unit: amt='500ml' / 'Chicken stock (low sodium)'
+- `japanese-beef-tantanmen-noodles` **Beef Tantanmen Ramen**
+  - No unit: amt='150ml' / 'Soy milk (unsweetened)'
+- `north-african-harissa-beef-flatbread` **Harissa Beef Flatbread**
+  - No unit: amt='100g' / 'Greek yogurt (0%)'
+- `north-african-harissa-beef-flatbread` **Harissa Beef Flatbread**
+  - No unit: amt='0.5 lemon' / 'Lemon juice'
+- `indonesian-beef-rendang-bowl` **Indonesian Beef Rendang Bowl**
+  - No unit: amt='200ml' / 'Coconut milk (light)'
+- `ethiopian-beef-tibs-potato-bowl` **Ethiopian Beef Tibs Potato Bowl**
+  - No unit: amt='1 large' / 'Onion (diced)'
+- `vietnamese-beef-pho-noodle-bowl` **Beef Pho Noodle Bowl**
+  - No unit: amt='600ml' / 'Beef stock (low sodium)'
+- `vietnamese-beef-pho-noodle-bowl` **Beef Pho Noodle Bowl**
+  - No unit: amt='80g' / 'Bean sprouts'
+- `argentinian-chimichurri-beef-rice-bowl` **Argentinian Chimichurri Beef Bowl**
+  - No unit: amt='30g' / 'Fresh flat-leaf parsley'
+- `vietnamese-beef-banh-mi-wrap` **Beef Bánh Mì Wrap**
+  - No unit: amt='1 large' / 'Carrot (julienned)'
+- `vietnamese-beef-banh-mi-wrap` **Beef Bánh Mì Wrap**
+  - No unit: amt='100g' / 'Daikon / white radish (julienned)'
+- `korean-dakgalbi-chicken-noodle` **Korean Dakgalbi Chicken Noodles**
+  - No unit: amt='150g' / 'Cabbage (roughly chopped)'
+- `chicken-caesar-wrap` **Crispy Chicken Caesar Wrap**
+  - No unit: amt='80g' / 'Greek yogurt (0%)'
+- `chicken-caesar-wrap` **Crispy Chicken Caesar Wrap**
+  - No unit: amt='15g' / 'Parmesan (grated)'
+- `chicken-caesar-wrap` **Crispy Chicken Caesar Wrap**
+  - No unit: amt='100g' / 'Romaine lettuce (chopped)'
+- `chicken-caesar-wrap` **Crispy Chicken Caesar Wrap**
+  - No unit: amt='15g' / 'Parmesan (for serving)'
+- `thai-peanut-chicken-rice` **Thai Peanut Chicken Bowl**
+  - No unit: amt='1 medium' / 'Cucumber (thinly sliced)'
+- `thai-peanut-chicken-rice` **Thai Peanut Chicken Bowl**
+  - No unit: amt='15g' / 'Crushed roasted peanuts'
+- `lemon-herb-chicken-potato` **Lemon Herb Chicken & Roasted Potatoes**
+  - No unit: amt='1 whole' / 'Lemon (zest + juice)'
+- `lemon-herb-chicken-potato` **Lemon Herb Chicken & Roasted Potatoes**
+  - No unit: amt='80ml' / 'Chicken stock'
+- `chinese-kung-pao-chicken-rice` **Kung Pao Chicken**
+  - No unit: amt='30g' / 'Roasted peanuts'
+- `chinese-kung-pao-chicken-rice` **Kung Pao Chicken**
+  - No unit: amt='1 medium' / 'Bell pepper (diced)'
+- `chicken-tikka-naan` **Chicken Tikka Naan Wrap**
+  - No unit: amt='100g' / 'Greek yogurt (0%)'
+- `chicken-tikka-naan` **Chicken Tikka Naan Wrap**
+  - No unit: amt='30g' / 'Fresh mint leaves'
+- `chicken-tikka-naan` **Chicken Tikka Naan Wrap**
+  - No unit: amt='80g' / 'Greek yogurt (0%)'
+- `japanese-chicken-katsu-rice` **Baked Chicken Katsu Rice**
+  - No unit: amt='50g' / 'Panko breadcrumbs'
+- `japanese-chicken-katsu-rice` **Baked Chicken Katsu Rice**
+  - No unit: amt='30g' / 'Plain flour'
+- `japanese-chicken-katsu-rice` **Baked Chicken Katsu Rice**
+  - No unit: amt='100g' / 'White cabbage (finely shredded)'
+- `mexican-chicken-burrito-bowl` **Mexican Chicken Burrito Bowl**
+  - No unit: amt='80g' / 'Canned corn (drained)'
+- `mexican-chicken-burrito-bowl` **Mexican Chicken Burrito Bowl**
+  - No unit: amt='120g' / 'Canned black beans (drained)'
+- `mexican-chicken-burrito-bowl` **Mexican Chicken Burrito Bowl**
+  - No unit: amt='100g' / 'Cherry tomatoes (halved)'
+- `mexican-chicken-burrito-bowl` **Mexican Chicken Burrito Bowl**
+  - No unit: amt='100g' / 'Greek yogurt (0%)'
+- `chicken-stir-fry-noodles` **Lo Mein Chicken Stir Fry**
+  - No unit: amt='1 medium' / 'Carrot (julienned)'
+- `chicken-stir-fry-noodles` **Lo Mein Chicken Stir Fry**
+  - No unit: amt='100g' / 'Cabbage (thinly sliced)'
+- `chicken-stir-fry-noodles` **Lo Mein Chicken Stir Fry**
+  - No unit: amt='80g' / 'Bean sprouts'
+- `chicken-shawarma-potato` **Chicken Shawarma Bowl with Roasted Potatoes**
+  - No unit: amt='2 medium' / 'Tomatoes (diced)'
+- `korean-egg-fried-rice` **Korean Egg Fried Rice**
+  - No unit: amt='150g' / 'Day-old jasmine rice (cooked)'
+- `korean-egg-fried-rice` **Korean Egg Fried Rice**
+  - No unit: amt='60g' / 'Kimchi (optional)'
+- `shakshuka-middle-eastern-eggs` **Shakshuka with Feta**
+  - No unit: amt='400g' / 'Canned crushed tomatoes'
+- `shakshuka-middle-eastern-eggs` **Shakshuka with Feta**
+  - No unit: amt='1 large' / 'Red bell pepper (diced)'
+- `shakshuka-middle-eastern-eggs` **Shakshuka with Feta**
+  - No unit: amt='1 medium' / 'Onion (diced)'
+- `shakshuka-middle-eastern-eggs` **Shakshuka with Feta**
+  - No unit: amt='50g' / 'Feta cheese (crumbled)'
+- `mexican-huevos-rancheros` **Huevos Rancheros**
+  - No unit: amt='300g' / 'Canned crushed tomatoes'
+- `mexican-huevos-rancheros` **Huevos Rancheros**
+  - No unit: amt='0.5 medium' / 'Onion (diced)'
+- `mexican-huevos-rancheros` **Huevos Rancheros**
+  - No unit: amt='200g' / 'Canned black beans (drained)'
+- `chinese-tomato-egg-stir-fry-rice` **Chinese Tomato & Egg Stir Fry**
+  - No unit: amt='4 medium' / 'Ripe tomatoes (large)'
+- `high-protein-egg-potato-hash` **High-Protein Egg & Potato Hash**
+  - No unit: amt='1 medium' / 'Onion (diced)'
+- `high-protein-egg-potato-hash` **High-Protein Egg & Potato Hash**
+  - No unit: amt='1 medium' / 'Red bell pepper (diced)'
+- `mediterranean-egg-white-omelette-wrap` **Mediterranean Egg White Omelette Wrap**
+  - No unit: amt='40g' / 'Feta cheese (crumbled)'
+- `mediterranean-egg-white-omelette-wrap` **Mediterranean Egg White Omelette Wrap**
+  - No unit: amt='60g' / 'Baby spinach'
+- `mediterranean-egg-white-omelette-wrap` **Mediterranean Egg White Omelette Wrap**
+  - No unit: amt='30g' / 'Sun-dried tomatoes (drained)'
+- `mediterranean-egg-white-omelette-wrap` **Mediterranean Egg White Omelette Wrap**
+  - No unit: amt='60g' / 'Greek yogurt (0%)'
+- `french-scrambled-eggs-toast` **French Soft Scrambled Eggs on Toast**
+  - No unit: amt='10g' / 'Butter'
+- `french-scrambled-eggs-toast` **French Soft Scrambled Eggs on Toast**
+  - No unit: amt='5g' / 'Butter (for toast)'
+- `egg-fried-noodles-asian` **Wok Egg Fried Noodles**
+  - No unit: amt='100g' / 'Bean sprouts'
+- `egg-fried-noodles-asian` **Wok Egg Fried Noodles**
+  - No unit: amt='80g' / 'Cabbage (thinly sliced)'
+- `greek-lemon-herb-chicken-bowl` **Greek Lemon Herb Chicken Bowl**
+  - No unit: amt='¼ whole' / 'Cucumber (grated, squeezed dry)'
+- `harissa-chicken-couscous-bowl` **Harissa Chicken & Couscous Bowl**
+  - No unit: amt='1 whole' / 'Red bell pepper (sliced)'
+- `vietnamese-chicken-vermicelli-bowl` **Vietnamese Chicken Vermicelli Bowl**
+  - No unit: amt='½ whole' / 'Cucumber (julienned)'
+- `vietnamese-chicken-vermicelli-bowl` **Vietnamese Chicken Vermicelli Bowl**
+  - No unit: amt='1 small' / 'Shredded carrot'
+- `mexican-picadillo-rice-bowl` **Mexican Picadillo Rice Bowl**
+  - No unit: amt='½ whole' / 'Onion (diced)'
+- `mexican-picadillo-rice-bowl` **Mexican Picadillo Rice Bowl**
+  - No unit: amt='200g' / 'Canned chopped tomatoes'
+- `mexican-picadillo-rice-bowl` **Mexican Picadillo Rice Bowl**
+  - No unit: amt='1 whole' / 'Tomato (diced)'
+- `mexican-picadillo-rice-bowl` **Mexican Picadillo Rice Bowl**
+  - No unit: amt='¼ whole' / 'Red onion (finely diced)'
+- `vietnamese-lemongrass-beef-rice-bowl` **Vietnamese Lemongrass Beef Rice Bowl**
+  - No unit: amt='1 whole' / 'Shallot (minced)'
+- `vietnamese-lemongrass-beef-rice-bowl` **Vietnamese Lemongrass Beef Rice Bowl**
+  - No unit: amt='1 small' / 'Shredded carrot'
+- `vietnamese-lemongrass-beef-rice-bowl` **Vietnamese Lemongrass Beef Rice Bowl**
+  - No unit: amt='½ whole' / 'Cucumber (sliced)'
+- `turkish-spiced-beef-bulgur-bowl` **Turkish Spiced Beef & Bulgur Bowl**
+  - No unit: amt='½ whole' / 'Onion (grated)'
+- `greek-spinach-feta-frittata` **Greek Spinach & Feta Frittata**
+  - No unit: amt='100g' / 'Baby spinach'
+- `greek-spinach-feta-frittata` **Greek Spinach & Feta Frittata**
+  - No unit: amt='40g' / 'Feta cheese (crumbled)'
+- `turkish-menemen` **Turkish Menemen**
+  - No unit: amt='1 whole' / 'Green pepper (diced)'
+- `turkish-menemen` **Turkish Menemen**
+  - No unit: amt='½ whole' / 'Onion (diced)'
+- `turkish-menemen` **Turkish Menemen**
+  - No unit: amt='250g' / 'Canned chopped tomatoes'
+- `turkish-menemen` **Turkish Menemen**
+  - No unit: amt='20g' / 'Feta cheese (crumbled)'
+- `spicy-korean-steamed-eggs` **Spicy Korean Steamed Eggs (Gyeran Jjim)**
+  - No unit: amt='180ml' / 'Chicken or anchovy broth'
+- `shakshuka-verde-feta` **Shakshuka Verde with Feta**
+  - No unit: amt='300g' / 'Tomatillos (canned or fresh)'
+- `shakshuka-verde-feta` **Shakshuka Verde with Feta**
+  - No unit: amt='80g' / 'Baby spinach'
+- `shakshuka-verde-feta` **Shakshuka Verde with Feta**
+  - No unit: amt='1 whole' / 'Jalapeño (deseeded)'
+- `shakshuka-verde-feta` **Shakshuka Verde with Feta**
+  - No unit: amt='½ whole' / 'Onion (diced)'
+- `shakshuka-verde-feta` **Shakshuka Verde with Feta**
+  - No unit: amt='30g' / 'Feta cheese (crumbled)'
+- `teriyaki-salmon-rice-bowl` **Teriyaki Salmon Rice Bowl**
+  - No unit: amt='½ whole' / 'Cucumber (sliced)'
+- `miso-glazed-salmon-edamame-rice` **Miso Glazed Salmon & Edamame Rice**
+  - No unit: amt='80g' / 'Edamame (frozen, shelled)'
+- `tuna-poke-bowl` **Tuna Poke Bowl**
+  - No unit: amt='60g' / 'Edamame (frozen, shelled)'
+- `tuna-poke-bowl` **Tuna Poke Bowl**
+  - No unit: amt='½ whole' / 'Cucumber (diced)'
+- `tuna-poke-bowl` **Tuna Poke Bowl**
+  - No unit: amt='1 small' / 'Shredded carrot'
+- `tuna-poke-bowl` **Tuna Poke Bowl**
+  - No unit: amt='¼ whole' / 'Avocado (sliced)'
+- `thai-chili-lime-shrimp-rice-bowl` **Thai Chili Lime Shrimp Rice Bowl**
+  - No unit: amt='½ whole' / 'Cucumber (sliced)'
+- `crispy-tofu-bibimbap` **Crispy Tofu Bibimbap**
+  - No unit: amt='80g' / 'Baby spinach'
+- `crispy-tofu-bibimbap` **Crispy Tofu Bibimbap**
+  - No unit: amt='1 small' / 'Carrot (julienned)'
+- `crispy-tofu-bibimbap` **Crispy Tofu Bibimbap**
+  - No unit: amt='½ whole' / 'Cucumber (julienned)'
+- `crispy-tofu-bibimbap` **Crispy Tofu Bibimbap**
+  - No unit: amt='60g' / 'Edamame (frozen, shelled)'
+- `korean-dubu-jorim-rice-bowl` **Korean Dubu Jorim Rice Bowl**
+  - No unit: amt='½ whole' / 'Cucumber (sliced)'
+- `korean-dubu-jorim-rice-bowl` **Korean Dubu Jorim Rice Bowl**
+  - No unit: amt='60g' / 'Edamame'
+- `thai-basil-crispy-tofu-rice` **Thai Basil Crispy Tofu Rice**
+  - No unit: amt='60g' / 'Edamame (frozen, shelled)'
+- `thai-basil-crispy-tofu-rice` **Thai Basil Crispy Tofu Rice**
+  - No unit: amt='1 whole' / 'Egg (fried — optional)'
+- `miso-glazed-tofu-edamame-bowl` **Miso Glazed Tofu & Edamame Bowl**
+  - No unit: amt='80g' / 'Edamame (frozen, shelled)'
+- `miso-glazed-tofu-edamame-bowl` **Miso Glazed Tofu & Edamame Bowl**
+  - No unit: amt='1 small' / 'Shredded carrot'
+- `adobo-tofu-rice-bowl` **Filipino Adobo Tofu Rice Bowl**
+  - No unit: amt='60g' / 'Edamame (frozen, shelled)'
+- `caesar-dressing-light` **Caesar Dressing Light**
+  - No unit: amt='30g' / 'Light mayo'
+- `caesar-dressing-light` **Caesar Dressing Light**
+  - No unit: amt='50g' / 'Quark (low-fat)'
+- `caesar-dressing-light` **Caesar Dressing Light**
+  - No unit: amt='10g' / 'Cheese (parmesan)'
+- `butter-chicken-murgh-makhani` **Butter Chicken (Murgh Makhani)**
+  - No unit: amt='0.25 large' / 'Onion (diced)'
+- `butter-chicken-murgh-makhani` **Butter Chicken (Murgh Makhani)**
+  - No unit: amt='20g' / 'Butter'
+- `butter-chicken-murgh-makhani` **Butter Chicken (Murgh Makhani)**
+  - No unit: amt='15g' / 'Cashews (raw)'
+- `butter-chicken-murgh-makhani` **Butter Chicken (Murgh Makhani)**
+  - No unit: amt='125ml' / 'Canned crushed tomatoes'
+- `butter-chicken-murgh-makhani` **Butter Chicken (Murgh Makhani)**
+  - No unit: amt='50ml' / 'Heavy cream'
+- `chocolate-chip-baked-oats` **Chocolate Chip Baked Oats**
+  - No unit: amt='65g' / 'Banana (ripe)'
+- `chocolate-chip-baked-oats` **Chocolate Chip Baked Oats**
+  - No unit: amt='50ml' / 'Almond milk (unsweetened)'
+- `chocolate-chip-baked-oats` **Chocolate Chip Baked Oats**
+  - No unit: amt='10g' / 'Honey'
+- `chocolate-chip-baked-oats` **Chocolate Chip Baked Oats**
+  - No unit: amt='3g' / 'Vanilla extract (sugar-free)'
+- `chocolate-chip-baked-oats` **Chocolate Chip Baked Oats**
+  - No unit: amt='50g' / 'Rolled oats'
+- `chocolate-chip-baked-oats` **Chocolate Chip Baked Oats**
+  - No unit: amt='30g' / 'Whey protein (chocolate, e.g. MyVay)'
+- `chocolate-chip-baked-oats` **Chocolate Chip Baked Oats**
+  - No unit: amt='3g' / 'Baking powder'
+- `chocolate-chip-baked-oats` **Chocolate Chip Baked Oats**
+  - No unit: amt='20g' / 'Dark chocolate chips'
+- `spanish-tortilla-espanola` **Spanish Tortilla Española**
+  - No unit: amt='0.5 medium' / 'Onion (thinly sliced)'
+- `italian-potato-egg-frittata` **Italian Potato & Egg Frittata**
+  - No unit: amt='20g' / 'Parmesan (grated)'
+- `indian-masala-omelette-roti` **Indian Masala Omelette & Roti**
+  - No unit: amt='0.25 medium' / 'Onion (finely chopped)'
+- `indian-anda-curry` **Indian Anda Curry (Egg Curry)**
+  - No unit: amt='1 medium' / 'Onion (finely diced)'
+- `indian-anda-curry` **Indian Anda Curry (Egg Curry)**
+  - No unit: amt='200g' / 'Canned chopped tomatoes'
+- `american-classic-breakfast-burrito` **Classic American Breakfast Burrito**
+  - No unit: amt='100g' / 'Turkey bacon'
+- `american-classic-breakfast-burrito` **Classic American Breakfast Burrito**
+  - No unit: amt='200g' / 'Baby potatoes (or frozen hash brown)'
+- `american-classic-breakfast-burrito` **Classic American Breakfast Burrito**
+  - No unit: amt='40g' / 'Cheddar (grated)'
+- `american-classic-breakfast-burrito` **Classic American Breakfast Burrito**
+  - No unit: amt='5g' / 'Butter'
+- `italian-eggs-in-purgatory` **Italian Eggs in Purgatory**
+  - No unit: amt='400g' / 'Canned crushed tomatoes'
+- `italian-eggs-in-purgatory` **Italian Eggs in Purgatory**
+  - No unit: amt='15g' / 'Parmesan (grated)'
+- `mexican-sofritas-tofu-tacos` **Mexican Sofritas Tofu Tacos**
+  - No unit: amt='100g' / 'Canned chopped tomatoes'
+- `mexican-sofritas-tofu-tacos` **Mexican Sofritas Tofu Tacos**
+  - No unit: amt='60g' / 'Greek yogurt (0%)'
+- `indian-saag-tofu` **Indian Saag Tofu (Palak Tofu)**
+  - No unit: amt='200g' / 'Fresh spinach'
+- `indian-saag-tofu` **Indian Saag Tofu (Palak Tofu)**
+  - No unit: amt='0.5 medium' / 'Onion (diced)'
+- `indian-saag-tofu` **Indian Saag Tofu (Palak Tofu)**
+  - No unit: amt='50g' / 'Greek yogurt (0%)'
+- `indian-tofu-tikka-masala` **Indian Tofu Tikka Masala**
+  - No unit: amt='50g' / 'Greek yogurt (0%)'
+- `indian-tofu-tikka-masala` **Indian Tofu Tikka Masala**
+  - No unit: amt='0.5 medium' / 'Onion (diced)'
+- `indian-tofu-tikka-masala` **Indian Tofu Tikka Masala**
+  - No unit: amt='200g' / 'Canned crushed tomatoes'
+- `indian-tofu-tikka-masala` **Indian Tofu Tikka Masala**
+  - No unit: amt='60g' / 'Greek yogurt (0%)'
+- `american-bbq-tofu-potato-bowl` **Smoky BBQ Tofu Potato Bowl**
+  - No unit: amt='80g' / 'Greek yogurt (0%)'
+- `italian-tofu-bolognese` **Italian Tofu Bolognese**
+  - No unit: amt='400g' / 'Canned crushed tomatoes'
+- `italian-tofu-bolognese` **Italian Tofu Bolognese**
+  - No unit: amt='1 medium' / 'Onion (finely diced)'
+- `italian-tofu-bolognese` **Italian Tofu Bolognese**
+  - No unit: amt='1 medium' / 'Carrot (finely diced)'
+- `italian-tofu-bolognese` **Italian Tofu Bolognese**
+  - No unit: amt='80ml' / 'Red wine or vegetable stock'
+- `italian-tofu-bolognese` **Italian Tofu Bolognese**
+  - No unit: amt='20g' / 'Parmesan (grated)'
+- `french-poulet-moutarde` **French Poulet à la Moutarde**
+  - No unit: amt='80g' / 'Greek yogurt (0%)'
+- `french-poulet-moutarde` **French Poulet à la Moutarde**
+  - No unit: amt='80ml' / 'Chicken stock (low-sodium)'
+- `french-poulet-moutarde` **French Poulet à la Moutarde**
+  - No unit: amt='5g' / 'Butter'
+- `mexican-chicken-tinga-bowl` **Mexican Chicken Tinga Bowl**
+  - No unit: amt='200g' / 'Canned crushed tomatoes'
+- `mexican-chicken-tinga-bowl` **Mexican Chicken Tinga Bowl**
+  - No unit: amt='0.5 medium' / 'Onion (sliced)'
+- `mexican-chicken-tinga-bowl` **Mexican Chicken Tinga Bowl**
+  - No unit: amt='80ml' / 'Chicken stock'
+- `mexican-chicken-tinga-bowl` **Mexican Chicken Tinga Bowl**
+  - No unit: amt='60g' / 'Greek yogurt (0%)'
+- `indian-chicken-saag` **Indian Chicken Saag**
+  - No unit: amt='200g' / 'Fresh spinach'
+- `indian-chicken-saag` **Indian Chicken Saag**
+  - No unit: amt='0.5 medium' / 'Onion (diced)'
+- `indian-chicken-saag` **Indian Chicken Saag**
+  - No unit: amt='60g' / 'Greek yogurt (0%)'
+- `italian-chicken-piccata-pasta` **Italian Chicken Piccata Pasta**
+  - No unit: amt='1 large' / 'Lemon (juice + zest)'
+- `italian-chicken-piccata-pasta` **Italian Chicken Piccata Pasta**
+  - No unit: amt='100ml' / 'Chicken stock (low-sodium)'
+- `italian-chicken-piccata-pasta` **Italian Chicken Piccata Pasta**
+  - No unit: amt='8g' / 'Butter'
+- `italian-chicken-piccata-pasta` **Italian Chicken Piccata Pasta**
+  - No unit: amt='15g' / 'Parmesan (grated)'
+- `american-chicken-chili-potato` **American Chicken Chili Loaded Potato**
+  - No unit: amt='200g' / 'Canned white beans (cannellini)'
+- `american-chicken-chili-potato` **American Chicken Chili Loaded Potato**
+  - No unit: amt='150ml' / 'Chicken stock (low-sodium)'
+- `american-chicken-chili-potato` **American Chicken Chili Loaded Potato**
+  - No unit: amt='30g' / 'Cheddar cheese (grated)'
+- `american-chicken-chili-potato` **American Chicken Chili Loaded Potato**
+  - No unit: amt='60g' / 'Greek yogurt (0%)'
+- `greek-chicken-souvlaki-potato` **Greek Chicken Souvlaki Bowl**
+  - No unit: amt='100g' / 'Greek yogurt (0%)'
+- `greek-chicken-souvlaki-potato` **Greek Chicken Souvlaki Bowl**
+  - No unit: amt='60g' / 'Cucumber (grated, squeezed dry)'
+- `greek-chicken-souvlaki-potato` **Greek Chicken Souvlaki Bowl**
+  - No unit: amt='100g' / 'Cherry tomatoes, halved'
+- `spanish-chicken-pepitoria` **Spanish Chicken Pepitoria**
+  - No unit: amt='0.5 medium' / 'Onion (finely diced)'
+- `spanish-chicken-pepitoria` **Spanish Chicken Pepitoria**
+  - No unit: amt='20g' / 'Blanched almonds (ground or whole)'
+- `spanish-chicken-pepitoria` **Spanish Chicken Pepitoria**
+  - No unit: amt='150ml' / 'Chicken stock (low-sodium)'
+- `spanish-chicken-pepitoria` **Spanish Chicken Pepitoria**
+  - No unit: amt='60ml' / 'Dry white wine'
+- `german-chicken-rahmsauce` **German Chicken in Cream Sauce**
+  - No unit: amt='100g' / 'Greek yogurt (0%)'
+- `german-chicken-rahmsauce` **German Chicken in Cream Sauce**
+  - No unit: amt='100ml' / 'Chicken stock (low-sodium)'
+- `german-chicken-rahmsauce` **German Chicken in Cream Sauce**
+  - No unit: amt='5g' / 'Butter'
+- `american-chili-loaded-potato` **American Chili Loaded Potato**
+  - No unit: amt='200g' / 'Canned crushed tomatoes'
+- `american-chili-loaded-potato` **American Chili Loaded Potato**
+  - No unit: amt='100g drained' / 'Canned kidney beans'
+- `american-chili-loaded-potato` **American Chili Loaded Potato**
+  - No unit: amt='0.5 medium' / 'Onion (diced)'
+- `american-chili-loaded-potato` **American Chili Loaded Potato**
+  - No unit: amt='30g' / 'Cheddar cheese (grated)'
+- `american-chili-loaded-potato` **American Chili Loaded Potato**
+  - No unit: amt='60g' / 'Greek yogurt (0%)'
+- `german-beef-goulash` **German Beef Goulash**
+  - No unit: amt='1 large' / 'Onion (diced)'
+- `german-beef-goulash` **German Beef Goulash**
+  - No unit: amt='300ml' / 'Beef or chicken stock'
+- `german-beef-goulash` **German Beef Goulash**
+  - No unit: amt='60g' / 'Greek yogurt (0%)'
+- `french-hachis-parmentier` **French Hachis Parmentier**
+  - No unit: amt='0.5 medium' / 'Onion (finely diced)'
+- `french-hachis-parmentier` **French Hachis Parmentier**
+  - No unit: amt='80ml' / 'Beef stock'
+- `french-hachis-parmentier` **French Hachis Parmentier**
+  - No unit: amt='50ml' / 'Milk (low-fat)'
+- `french-hachis-parmentier` **French Hachis Parmentier**
+  - No unit: amt='8g' / 'Butter'
+- `french-hachis-parmentier` **French Hachis Parmentier**
+  - No unit: amt='20g' / 'Parmesan or gruyere (grated)'
+- `mexican-birria-tacos` **Mexican Birria Tacos**
+  - No unit: amt='200g' / 'Canned chopped tomatoes'
+- `mexican-birria-tacos` **Mexican Birria Tacos**
+  - No unit: amt='150ml' / 'Beef stock'
+- `mexican-birria-tacos` **Mexican Birria Tacos**
+  - No unit: amt='40g' / 'Cheddar or mozzarella (grated)'
+- `mexican-carne-asada-potato` **Mexican Carne Asada Potato Bowl**
+  - No unit: amt='1 medium' / 'Tomato (diced)'
+- `mexican-carne-asada-potato` **Mexican Carne Asada Potato Bowl**
+  - No unit: amt='60g' / 'Greek yogurt (0%)'
+- `indian-beef-rogan-josh` **Indian Beef Rogan Josh**
+  - No unit: amt='1 medium' / 'Onion (finely diced)'
+- `indian-beef-rogan-josh` **Indian Beef Rogan Josh**
+  - No unit: amt='200g' / 'Canned crushed tomatoes'
+- `indian-beef-rogan-josh` **Indian Beef Rogan Josh**
+  - No unit: amt='60g' / 'Greek yogurt (0%)'
+- `italian-beef-meatball-potato-soup` **Italian Beef Meatball Potato Soup**
+  - No unit: amt='15g' / 'Parmesan (grated)'
+- `italian-beef-meatball-potato-soup` **Italian Beef Meatball Potato Soup**
+  - No unit: amt='200g' / 'Canned crushed tomatoes'
+- `italian-beef-meatball-potato-soup` **Italian Beef Meatball Potato Soup**
+  - No unit: amt='400ml' / 'Chicken or beef stock'
+- `italian-beef-meatball-potato-soup` **Italian Beef Meatball Potato Soup**
+  - No unit: amt='0.5 medium' / 'Onion (diced)'
+- `italian-beef-meatball-potato-soup` **Italian Beef Meatball Potato Soup**
+  - No unit: amt='15g' / 'Parmesan (grated)'
+- `american-sloppy-joe-potato` **American Sloppy Joe Stuffed Potato**
+  - No unit: amt='150g' / 'Tomato passata or crushed tomatoes'
+- `american-sloppy-joe-potato` **American Sloppy Joe Stuffed Potato**
+  - No unit: amt='0.5 medium' / 'Onion (diced)'
+- `american-sloppy-joe-potato` **American Sloppy Joe Stuffed Potato**
+  - No unit: amt='25g' / 'Cheddar cheese (grated)'
+- `british-cottage-pie-light` **British Cottage Pie Light**
+  - No unit: amt='1 medium' / 'Onion (diced)'
+- `british-cottage-pie-light` **British Cottage Pie Light**
+  - No unit: amt='1 medium' / 'Carrot (diced)'
+- `british-cottage-pie-light` **British Cottage Pie Light**
+  - No unit: amt='200ml' / 'Beef stock (low-sodium)'
+- `british-cottage-pie-light` **British Cottage Pie Light**
+  - No unit: amt='80g' / 'Frozen peas'
+- `british-cottage-pie-light` **British Cottage Pie Light**
+  - No unit: amt='50ml' / 'Low-fat milk'
+- `british-cottage-pie-light` **British Cottage Pie Light**
+  - No unit: amt='8g' / 'Butter'
+- `mexican-chipotle-beef-breakfast-burrito` **Chipotle Beef Breakfast Burrito**
+  - No unit: amt='120g' / 'Canned black beans (drained & rinsed)'
+- `mexican-chipotle-beef-breakfast-burrito` **Chipotle Beef Breakfast Burrito**
+  - No unit: amt='40g' / 'Cheddar (grated)'
+- `mexican-chipotle-beef-breakfast-burrito` **Chipotle Beef Breakfast Burrito**
+  - No unit: amt='5g' / 'Butter'
+- `korean-bbq-chicken-breakfast-burrito` **Korean BBQ Chicken Breakfast Burrito**
+  - No unit: amt='5g' / 'Butter'
+- `korean-bbq-chicken-breakfast-burrito` **Korean BBQ Chicken Breakfast Burrito**
+  - No unit: amt='60g' / 'Kimchi (optional)'
+- `mediterranean-feta-egg-breakfast-burrito` **Mediterranean Feta & Egg Burrito**
+  - No unit: amt='60g' / 'Feta (crumbled)'
+- `mediterranean-feta-egg-breakfast-burrito` **Mediterranean Feta & Egg Burrito**
+  - No unit: amt='80g' / 'Baby spinach'
+- `mediterranean-feta-egg-breakfast-burrito` **Mediterranean Feta & Egg Burrito**
+  - No unit: amt='80g' / 'Roasted red peppers (jarred, drained)'
+- `american-smash-beef-breakfast-burrito` **Smash Patty Breakfast Burrito**
+  - No unit: amt='5g' / 'Butter'
+- `german-bavarian-street-wrap` **Bavarian Street Wrap**
+  - No unit: amt='200g' / 'Floury potatoes (mehligkochend), peeled & cubed'
+- `german-bavarian-street-wrap` **Bavarian Street Wrap**
+  - No unit: amt='120g' / 'Low-fat quark (Yoghurt)'
+- `german-bavarian-street-wrap` **Bavarian Street Wrap**
+  - No unit: amt='5g' / 'Butter'
+- `german-bavarian-street-wrap` **Bavarian Street Wrap**
+  - No unit: amt='30ml' / 'Milk'
+- `german-bavarian-street-wrap` **Bavarian Street Wrap**
+  - No unit: amt='2 medium' / 'Large onions, thinly sliced'
+- `german-bavarian-street-wrap` **Bavarian Street Wrap**
+  - No unit: amt='300ml' / 'Beef broth (Rinderbrühe, from cube)'
+- `american-bigmac-burger-bowl` **Big Mac Burger Bowl**
+  - No unit: amt='30g' / 'Light mayo'
+- `american-bigmac-burger-bowl` **Big Mac Burger Bowl**
+  - No unit: amt='80g' / 'Iceberg lettuce (shredded)'
+- `american-bigmac-burger-bowl` **Big Mac Burger Bowl**
+  - No unit: amt='100g' / 'Cherry tomatoes (halved)'
+- `american-bigmac-burger-bowl` **Big Mac Burger Bowl**
+  - No unit: amt='50g' / 'White onion (finely diced)'
+- `american-bigmac-burger-bowl` **Big Mac Burger Bowl**
+  - No unit: amt='40g' / 'Pickles (sliced)'
+- `american-bigmac-burger-bowl` **Big Mac Burger Bowl**
+  - No unit: amt='30g' / 'Cheddar (grated)'
+- `german-cucumber-salad-highprotein` **High-Protein Cucumber Salad**
+  - No unit: amt='400g' / 'Cucumber (thinly sliced)'
+- `german-cucumber-salad-highprotein` **High-Protein Cucumber Salad**
+  - No unit: amt='150g' / 'Yoghurt'
+- `german-cucumber-salad-highprotein` **High-Protein Cucumber Salad**
+  - No unit: amt='100g' / 'Greek yogurt (0% fat)'
+- `german-cucumber-salad-highprotein` **High-Protein Cucumber Salad**
+  - No unit: amt='15g' / 'Light mayo'
+- `american-cowboy-hash` **Cowboy Hash**
+  - No unit: amt='1 medium' / 'Red bell pepper (diced)'
+- `american-cowboy-hash` **Cowboy Hash**
+  - No unit: amt='1 medium' / 'Yellow onion (diced)'
+- `american-bbq-beef-stuffed-potato` **BBQ Beef Stuffed Potato**
+  - No unit: amt='80g' / 'Tomato passata'
+- `american-bbq-beef-stuffed-potato` **BBQ Beef Stuffed Potato**
+  - No unit: amt='80g' / 'White cabbage (shredded)'
+- `american-bbq-beef-stuffed-potato` **BBQ Beef Stuffed Potato**
+  - No unit: amt='20g' / 'Cheddar (grated)'
+- `american-beef-gravy-smashed-potato` **Beef & Gravy Smashed Potatoes**
+  - No unit: amt='1 medium' / 'Yellow onion (thinly sliced)'
+- `american-beef-gravy-smashed-potato` **Beef & Gravy Smashed Potatoes**
+  - No unit: amt='300ml' / 'Beef stock'
+- `american-bacon-beef-potato-skillet` **Bacon Beef Potato Skillet**
+  - No unit: amt='60g' / 'Smoked bacon lardons'
+- `american-bacon-beef-potato-skillet` **Bacon Beef Potato Skillet**
+  - No unit: amt='1 medium' / 'Yellow onion (diced)'
+- `american-philly-cheesesteak-hash` **Philly Cheesesteak Hash**
+  - No unit: amt='1 medium' / 'Green bell pepper (sliced)'
+- `american-philly-cheesesteak-hash` **Philly Cheesesteak Hash**
+  - No unit: amt='1 medium' / 'Yellow onion (thinly sliced)'
+- `american-philly-cheesesteak-hash` **Philly Cheesesteak Hash**
+  - No unit: amt='40g' / 'Provolone or mild cheddar (sliced)'
+- `american-crispy-beef-tater-bowl` **Crispy Beef Tater Bowl**
+  - No unit: amt='0.5 medium' / 'Red onion (thinly sliced)'
+- `mexican-beef-taco-potato-bowl` **Mexican Beef Taco Potato Bowl**
+  - No unit: amt='2 medium' / 'Tomatoes (diced)'
+- `mexican-beef-taco-potato-bowl` **Mexican Beef Taco Potato Bowl**
+  - No unit: amt='0.25 medium' / 'Red onion (finely diced)'
+- `mexican-birria-beef-potato-stew` **Birria-Style Beef Potato Stew**
+  - No unit: amt='200g' / 'Canned crushed tomatoes'
+- `mexican-birria-beef-potato-stew` **Birria-Style Beef Potato Stew**
+  - No unit: amt='400ml' / 'Beef stock'
+- `mexican-birria-beef-potato-stew` **Birria-Style Beef Potato Stew**
+  - No unit: amt='1 medium' / 'Yellow onion (finely diced)'
+- `mexican-picadillo-potato` **Mexican Picadillo Potato Bowl**
+  - No unit: amt='200g' / 'Canned crushed tomatoes'
+- `mexican-picadillo-potato` **Mexican Picadillo Potato Bowl**
+  - No unit: amt='1 medium' / 'Yellow onion (finely diced)'
+- `mexican-picadillo-potato` **Mexican Picadillo Potato Bowl**
+  - No unit: amt='30g' / 'Green olives (sliced)'
+- `mexican-picadillo-potato` **Mexican Picadillo Potato Bowl**
+  - No unit: amt='20g' / 'Raisins'
+- `mexican-chorizo-beef-potato-skillet` **Chorizo-Style Beef Potato Skillet**
+  - No unit: amt='1 medium' / 'Yellow onion (diced)'
+- `mexican-enchilada-stuffed-potato` **Enchilada Stuffed Potato**
+  - No unit: amt='150g' / 'Tomato passata'
+- `mexican-enchilada-stuffed-potato` **Enchilada Stuffed Potato**
+  - No unit: amt='50ml' / 'Beef stock'
+- `mexican-enchilada-stuffed-potato` **Enchilada Stuffed Potato**
+  - No unit: amt='1 medium' / 'Yellow onion (finely diced)'
+- `mexican-enchilada-stuffed-potato` **Enchilada Stuffed Potato**
+  - No unit: amt='30g' / 'Cheddar (grated)'
+- `korean-kimchi-beef-potato-hash` **Kimchi Beef Potato Hash**
+  - No unit: amt='100g' / 'Kimchi (roughly chopped)'
+- `korean-tteokbokki-beef-potato` **Tteokbokki-Style Beef Potato Bowl**
+  - No unit: amt='150ml' / 'Water'
+- `korean-beef-jjigae-potato` **Korean Beef Doenjang Jjigae**
+  - No unit: amt='1 medium' / 'Zucchini (sliced into half moons)'
+- `korean-beef-jjigae-potato` **Korean Beef Doenjang Jjigae**
+  - No unit: amt='100g' / 'Firm tofu (cubed)'
+- `korean-beef-jjigae-potato` **Korean Beef Doenjang Jjigae**
+  - No unit: amt='500ml' / 'Anchovy or vegetable stock'
+- `moroccan-spiced-beef-potato` **Moroccan Spiced Beef & Potato**
+  - No unit: amt='200g' / 'Canned crushed tomatoes'
+- `moroccan-spiced-beef-potato` **Moroccan Spiced Beef & Potato**
+  - No unit: amt='1 medium' / 'Yellow onion (finely diced)'
+- `moroccan-spiced-beef-potato` **Moroccan Spiced Beef & Potato**
+  - No unit: amt='150ml' / 'Beef stock'
+- `moroccan-spiced-beef-potato` **Moroccan Spiced Beef & Potato**
+  - No unit: amt='15g' / 'Flaked almonds (toasted)'
+- `turkish-manti-beef-potato-bowl` **Turkish Manti-Style Beef Bowl**
+  - No unit: amt='0.5 medium' / 'Yellow onion (finely grated)'
+- `turkish-manti-beef-potato-bowl` **Turkish Manti-Style Beef Bowl**
+  - No unit: amt='5g' / 'Butter'
+- `turkish-manti-beef-potato-bowl` **Turkish Manti-Style Beef Bowl**
+  - No unit: amt='5g' / 'Butter'
+- `japanese-curry-beef-potato` **Japanese Beef Curry**
+  - No unit: amt='40g' / 'Japanese curry roux block (S&B Golden Curry)'
+- `japanese-curry-beef-potato` **Japanese Beef Curry**
+  - No unit: amt='1 medium' / 'Yellow onion (thinly sliced)'
+- `japanese-curry-beef-potato` **Japanese Beef Curry**
+  - No unit: amt='1 medium' / 'Carrot (diced)'
+- `japanese-curry-beef-potato` **Japanese Beef Curry**
+  - No unit: amt='400ml' / 'Water or light stock'
+- `chinese-mapo-beef-potato-bowl` **Ma Po Style Beef Potato Bowl**
+  - No unit: amt='150ml' / 'Chicken or beef stock'
+- `spanish-beef-patatas-bravas-bowl` **Beef Patatas Bravas Bowl**
+  - No unit: amt='150g' / 'Canned crushed tomatoes'
+- `filipino-beef-adobo-potato-bowl` **Filipino Beef Adobo Potato Bowl**
+  - No unit: amt='100ml' / 'Water'
+- `filipino-beef-adobo-potato-bowl` **Filipino Beef Adobo Potato Bowl**
+  - No unit: amt='1 medium' / 'Yellow onion (sliced)'
+- `indian-keema-aloo` **Keema Aloo**
+  - No unit: amt='200g' / 'Canned crushed tomatoes'
+- `indian-keema-aloo` **Keema Aloo**
+  - No unit: amt='1 medium' / 'Yellow onion (finely diced)'
+- `mediterranean-smashed-potato-bowl` **Greek Smashed Potato Bowl**
+  - No unit: amt='100g' / 'Greek yogurt (0% fat)'
+- `mediterranean-smashed-potato-bowl` **Greek Smashed Potato Bowl**
+  - No unit: amt='250g' / 'Cucumber'
+- `mediterranean-smashed-potato-bowl` **Greek Smashed Potato Bowl**
+  - No unit: amt='5g' / 'Butter'
+- `argentinian-chimichurri-chicken-potato` **Chimichurri Smashed Potato Bowl**
+  - No unit: amt='30g' / 'Fresh flat-leaf parsley'
+- `argentinian-chimichurri-chicken-potato` **Chimichurri Smashed Potato Bowl**
+  - No unit: amt='30g' / 'Light mayo'
+- `argentinian-chimichurri-chicken-potato` **Chimichurri Smashed Potato Bowl**
+  - No unit: amt='40g' / 'Greek yogurt (0% fat)'
+- `argentinian-chimichurri-chicken-potato` **Chimichurri Smashed Potato Bowl**
+  - No unit: amt='2 medium' / 'Tomatoes (roughly chopped)'
+- `argentinian-chimichurri-chicken-potato` **Chimichurri Smashed Potato Bowl**
+  - No unit: amt='0.5 small' / 'Red onion (thinly sliced)'
+- `moroccan-harissa-chicken-potato` **Harissa Chicken & Smashed Potatoes**
+  - No unit: amt='2 medium' / 'Carrots (grated)'
+- `middle-eastern-shawarma-chicken-smashed-potato` **Chicken Shawarma & Smashed Potatoes**
+  - No unit: amt='150g' / 'Greek yogurt (0% fat)'
+- `middle-eastern-shawarma-chicken-smashed-potato` **Chicken Shawarma & Smashed Potatoes**
+  - No unit: amt='80g' / 'Romaine or iceberg lettuce'
+- `middle-eastern-shawarma-chicken-smashed-potato` **Chicken Shawarma & Smashed Potatoes**
+  - No unit: amt='2 medium' / 'Tomatoes (chopped)'
+- `middle-eastern-shawarma-chicken-smashed-potato` **Chicken Shawarma & Smashed Potatoes**
+  - No unit: amt='0.25 small' / 'Red onion (sliced)'
+- `korean-buldak-chicken-potato` **Korean Buldak Fire Chicken & Potatoes**
+  - No unit: amt='5g' / 'Butter'
+- `korean-buldak-chicken-potato` **Korean Buldak Fire Chicken & Potatoes**
+  - No unit: amt='1 whole' / 'Cucumber'
+- `taiwanese-popcorn-chicken-potato` **Taiwanese Popcorn Chicken & Potato Bites**
+  - No unit: amt='1 whole' / 'Cucumber'
+- `sri-lankan-chicken-curry-potato` **Sri Lankan Chicken Curry & Potatoes**
+  - No unit: amt='1 medium' / 'Onion (diced)'
+- `sri-lankan-chicken-curry-potato` **Sri Lankan Chicken Curry & Potatoes**
+  - No unit: amt='10 leaves' / 'Curry leaves (fresh or dried)'
+- `sri-lankan-chicken-curry-potato` **Sri Lankan Chicken Curry & Potatoes**
+  - No unit: amt='200g' / 'Canned crushed tomatoes'
+- `sri-lankan-chicken-curry-potato` **Sri Lankan Chicken Curry & Potatoes**
+  - No unit: amt='200ml' / 'Light coconut milk'
+- `sri-lankan-chicken-curry-potato` **Sri Lankan Chicken Curry & Potatoes**
+  - No unit: amt='100ml' / 'Chicken broth (low-sodium)'
+- `sri-lankan-chicken-curry-potato` **Sri Lankan Chicken Curry & Potatoes**
+  - No unit: amt='1 whole' / 'Cucumber'
+- `portuguese-piri-piri-chicken-potato` **Portuguese Piri Piri Chicken & Potatoes**
+  - No unit: amt='1 whole' / 'Cucumber'
+- `thai-massaman-chicken-potato` **Thai Massaman Chicken & Potato Curry**
+  - No unit: amt='300ml' / 'Light coconut milk'
+- `thai-massaman-chicken-potato` **Thai Massaman Chicken & Potato Curry**
+  - No unit: amt='100ml' / 'Chicken broth (low-sodium)'
+- `thai-massaman-chicken-potato` **Thai Massaman Chicken & Potato Curry**
+  - No unit: amt='1 whole' / 'Cucumber'
+- `japanese-nikujaga-chicken-potato` **Japanese Chicken & Potato Nikujaga**
+  - No unit: amt='300ml' / 'Dashi powder dissolved in water (or chicken broth)'
+- `japanese-nikujaga-chicken-potato` **Japanese Chicken & Potato Nikujaga**
+  - No unit: amt='1 large' / 'Onion (cut into wedges)'
+- `japanese-nikujaga-chicken-potato` **Japanese Chicken & Potato Nikujaga**
+  - No unit: amt='5g' / 'Butter'
+- `japanese-nikujaga-chicken-potato` **Japanese Chicken & Potato Nikujaga**
+  - No unit: amt='1 whole' / 'Cucumber'
+- `spanish-patatas-bravas-chicken` **Spanish Patatas Bravas Chicken Bowl**
+  - No unit: amt='150g' / 'Canned crushed tomatoes'
+- `spanish-patatas-bravas-chicken` **Spanish Patatas Bravas Chicken Bowl**
+  - No unit: amt='1 whole' / 'Cucumber'
+- `mexican-mole-chicken-potato` **Mexican Mole Chicken & Potatoes**
+  - No unit: amt='0.5 medium' / 'Onion (diced)'
+- `mexican-mole-chicken-potato` **Mexican Mole Chicken & Potatoes**
+  - No unit: amt='200ml' / 'Chicken broth (low-sodium)'
+- `mexican-mole-chicken-potato` **Mexican Mole Chicken & Potatoes**
+  - No unit: amt='10g' / 'Dark chocolate (70%+)'
+- `mexican-mole-chicken-potato` **Mexican Mole Chicken & Potatoes**
+  - No unit: amt='1 whole' / 'Cucumber'
+- `korean-dakbokkeumtang-chicken-potato` **Korean Dakbokkeumtang Braised Chicken**
+  - No unit: amt='200ml' / 'Chicken broth (low-sodium)'
+- `korean-dakbokkeumtang-chicken-potato` **Korean Dakbokkeumtang Braised Chicken**
+  - No unit: amt='1 medium' / 'Onion (cut into wedges)'
+- `korean-dakbokkeumtang-chicken-potato` **Korean Dakbokkeumtang Braised Chicken**
+  - No unit: amt='1 whole' / 'Cucumber'
+- `chinese-char-siu-chicken-potato` **Chinese Char Siu Chicken & Potatoes**
+  - No unit: amt='1 whole' / 'Cucumber'
+- `thai-green-curry-chicken-potato` **Thai Green Curry Chicken & Potatoes**
+  - No unit: amt='300ml' / 'Light coconut milk'
+- `thai-green-curry-chicken-potato` **Thai Green Curry Chicken & Potatoes**
+  - No unit: amt='100ml' / 'Chicken broth (low-sodium)'
+- `thai-green-curry-chicken-potato` **Thai Green Curry Chicken & Potatoes**
+  - No unit: amt='3 leaves' / 'Kaffir lime leaves (or lime zest)'
+- `thai-green-curry-chicken-potato` **Thai Green Curry Chicken & Potatoes**
+  - No unit: amt='1 whole' / 'Cucumber'
+- `thai-crying-tiger-chicken-potato` **Thai Crying Tiger Chicken & Potatoes**
+  - No unit: amt='1 whole' / 'Cucumber'
+- `japanese-katsu-chicken-potato` **Japanese Chicken Katsu & Potato Wedges**
+  - No unit: amt='80g' / 'Panko breadcrumbs'
+- `japanese-katsu-chicken-potato` **Japanese Chicken Katsu & Potato Wedges**
+  - No unit: amt='30g' / 'Plain flour'
+- `japanese-katsu-chicken-potato` **Japanese Chicken Katsu & Potato Wedges**
+  - No unit: amt='1 whole' / 'Cucumber'
+- `lebanese-chicken-roasted-potato` **Lebanese Za'atar Chicken & Potatoes**
+  - No unit: amt='1 whole' / 'Cucumber'
+- `lebanese-chicken-roasted-potato` **Lebanese Za'atar Chicken & Potatoes**
+  - No unit: amt='0.25 medium' / 'Red onion (thinly sliced)'
+- `greek-lemon-chicken-smashed-potato` **Greek Lemon Chicken & Smashed Potatoes**
+  - No unit: amt='100g' / 'Greek yogurt (0% fat)'
+- `greek-lemon-chicken-smashed-potato` **Greek Lemon Chicken & Smashed Potatoes**
+  - No unit: amt='1 whole' / 'Cucumber'
+- `greek-lemon-chicken-smashed-potato` **Greek Lemon Chicken & Smashed Potatoes**
+  - No unit: amt='0.25 medium' / 'Red onion (thinly sliced)'
+- `moroccan-chermoula-chicken-potato` **Moroccan Chermoula Chicken & Potatoes**
+  - No unit: amt='1 whole' / 'Cucumber'
+- `mexican-tinga-stuffed-potato` **Mexican Chicken Tinga Stuffed Potato**
+  - No unit: amt='200g' / 'Canned crushed tomatoes'
+- `mexican-tinga-stuffed-potato` **Mexican Chicken Tinga Stuffed Potato**
+  - No unit: amt='1 medium' / 'Onion (diced)'
+- `mexican-tinga-stuffed-potato` **Mexican Chicken Tinga Stuffed Potato**
+  - No unit: amt='100ml' / 'Chicken broth (low-sodium)'
+- `mexican-tinga-stuffed-potato` **Mexican Chicken Tinga Stuffed Potato**
+  - No unit: amt='30g' / 'Reduced-fat cheddar (grated)'
+- `mexican-tinga-stuffed-potato` **Mexican Chicken Tinga Stuffed Potato**
+  - No unit: amt='1 whole' / 'Cucumber'
+- `vietnamese-pho-spiced-chicken-potato` **Vietnamese Pho-Spiced Chicken & Potatoes**
+  - No unit: amt='400ml' / 'Chicken broth (low-sodium)'
+- `vietnamese-pho-spiced-chicken-potato` **Vietnamese Pho-Spiced Chicken & Potatoes**
+  - No unit: amt='80g' / 'Bean sprouts'
+- `vietnamese-pho-spiced-chicken-potato` **Vietnamese Pho-Spiced Chicken & Potatoes**
+  - No unit: amt='1 whole' / 'Cucumber'
+- `vietnamese-pho-spiced-chicken-potato` **Vietnamese Pho-Spiced Chicken & Potatoes**
+  - No unit: amt='40g' / 'Bean sprouts'
+- `mexican-chipotle-chicken-loaded-potato` **Mexican Chipotle Chicken Loaded Potato**
+  - No unit: amt='30g' / 'Reduced-fat cheddar (grated)'
+- `mexican-chipotle-chicken-loaded-potato` **Mexican Chipotle Chicken Loaded Potato**
+  - No unit: amt='1 whole' / 'Cucumber'
+- `moroccan-chicken-tagine-potato` **Moroccan Chicken Tagine & Potatoes**
+  - No unit: amt='1 medium' / 'Onion (thinly sliced)'
+- `moroccan-chicken-tagine-potato` **Moroccan Chicken Tagine & Potatoes**
+  - No unit: amt='200g' / 'Canned crushed tomatoes'
+- `moroccan-chicken-tagine-potato` **Moroccan Chicken Tagine & Potatoes**
+  - No unit: amt='150ml' / 'Chicken broth (low sodium)'
+- `moroccan-chicken-tagine-potato` **Moroccan Chicken Tagine & Potatoes**
+  - No unit: amt='30g' / 'Green olives (pitted)'
+- `moroccan-chicken-tagine-potato` **Moroccan Chicken Tagine & Potatoes**
+  - No unit: amt='200g' / 'Carrots (coarsely grated)'
+- `cucumber-Yoghurt-salad` **Creamy Cucumber & Yoghurt Salad**
+  - No unit: amt='1 whole' / 'Cucumber'
+- `cucumber-Yoghurt-salad` **Creamy Cucumber & Yoghurt Salad**
+  - No unit: amt='150g' / 'Yoghurt (0% fat)'
+- `middle-eastern-shawarma-chicken-rice` **Shawarma Chicken Rice Bowl**
+  - No unit: amt='80g' / 'Greek yogurt (0% fat)'
+- `middle-eastern-shawarma-chicken-rice` **Shawarma Chicken Rice Bowl**
+  - No unit: amt='20g' / 'Light mayo'
+- `middle-eastern-shawarma-chicken-rice` **Shawarma Chicken Rice Bowl**
+  - No unit: amt='0.5 medium' / 'Cucumber (diced)'
+- `middle-eastern-shawarma-chicken-rice` **Shawarma Chicken Rice Bowl**
+  - No unit: amt='1 medium' / 'Tomato (diced)'
+- `middle-eastern-shawarma-chicken-rice` **Shawarma Chicken Rice Bowl**
+  - No unit: amt='0.25 medium' / 'Red onion (finely diced)'
+- `mexican-chipotle-chicken-wrap` **Smoky Chipotle Chicken Wrap**
+  - No unit: amt='60g' / 'Greek yogurt (0% fat)'
+- `mexican-chipotle-chicken-wrap` **Smoky Chipotle Chicken Wrap**
+  - No unit: amt='15g' / 'Light mayo'
+- `mexican-chipotle-chicken-wrap` **Smoky Chipotle Chicken Wrap**
+  - No unit: amt='1 medium' / 'Tomato (diced)'
+- `mexican-chipotle-chicken-wrap` **Smoky Chipotle Chicken Wrap**
+  - No unit: amt='0.5 medium' / 'Red onion (thinly sliced)'
+- `american-smash-burger-wrap` **Smash Burger Wrap**
+  - No unit: amt='30g' / 'Light mayo'
+- `american-smash-burger-wrap` **Smash Burger Wrap**
+  - No unit: amt='0.5 medium' / 'White onion (finely diced)'
+- `american-garlic-parmesan-chicken-potato` **Garlic Parmesan Chicken + Roasted Potatoes**
+  - No unit: amt='30g' / 'Parmesan (finely grated)'
+- `american-garlic-parmesan-chicken-potato` **Garlic Parmesan Chicken + Roasted Potatoes**
+  - No unit: amt='80g' / 'Greek yogurt (0% fat)'
+- `american-garlic-parmesan-chicken-potato` **Garlic Parmesan Chicken + Roasted Potatoes**
+  - No unit: amt='100ml' / 'Chicken stock'
+- `american-garlic-parmesan-chicken-potato` **Garlic Parmesan Chicken + Roasted Potatoes**
+  - No unit: amt='5g' / 'Butter'
+- `american-garlic-butter-chicken-potato` **Garlic Butter Chicken + Smashed Potatoes**
+  - No unit: amt='5g' / 'Butter'
+- `american-garlic-butter-chicken-potato` **Garlic Butter Chicken + Smashed Potatoes**
+  - No unit: amt='80ml' / 'Chicken stock'
+- `american-garlic-butter-chicken-potato` **Garlic Butter Chicken + Smashed Potatoes**
+  - No unit: amt='150g' / 'Cherry tomatoes (halved)'
+- `indian-tandoori-chicken-potato` **Tandoori Chicken + Roasted Potatoes + Raita**
+  - No unit: amt='100g' / 'Greek yogurt (0% fat)'
+- `indian-tandoori-chicken-potato` **Tandoori Chicken + Roasted Potatoes + Raita**
+  - No unit: amt='150g' / 'Greek yogurt (0% fat)'
+- `indian-tandoori-chicken-potato` **Tandoori Chicken + Roasted Potatoes + Raita**
+  - No unit: amt='150g' / 'Cucumber (grated)'
+- `japanese-beef-lettuce-wraps` **Japanese Beef Lettuce Wraps + Miso Salad**
+  - No unit: amt='120g' / 'Mixed salad leaves or shredded cabbage'
+- `japanese-shoyu-butter-chicken-potato` **Shoyu Butter Chicken + Crispy Potatoes**
+  - No unit: amt='5g' / 'Butter'
+- `japanese-shoyu-butter-chicken-potato` **Shoyu Butter Chicken + Crispy Potatoes**
+  - No unit: amt='150g' / 'Cucumber (thinly sliced)'
+- `american-buffalo-chicken-potato` **Buffalo Chicken + Potato Wedges + Celery Salad**
+  - No unit: amt='8g' / 'Butter'
+- `american-buffalo-chicken-potato` **Buffalo Chicken + Potato Wedges + Celery Salad**
+  - No unit: amt='80g' / 'Greek yogurt (0% fat)'
+- `asian-honey-soy-chicken-potato` **Honey Soy Crispy Chicken + Roasted Potatoes**
+  - No unit: amt='200g' / 'Cucumber (thinly sliced)'
+- `korean-bbq-chicken-potato` **Korean BBQ Chicken + Potatoes + Pickled Radish**
+  - No unit: amt='30g' / 'Apple or pear (grated)'
+- `korean-bbq-chicken-potato` **Korean BBQ Chicken + Potatoes + Pickled Radish**
+  - No unit: amt='150g' / 'Daikon or radish (thinly sliced)'
+- `mexican-beef-tostada-bread` **Mexican Beef Tostada + Crispy Potato + Slaw**
+  - No unit: amt='200g' / 'Waxy potatoes (diced small)'
+- `mexican-beef-tostada-bread` **Mexican Beef Tostada + Crispy Potato + Slaw**
+  - No unit: amt='150g' / 'White cabbage (shredded)'
+- `mexican-beef-tostada-bread` **Mexican Beef Tostada + Crispy Potato + Slaw**
+  - No unit: amt='60g' / 'Greek yogurt (0% fat)'
+- `turkish-kofte-potato` **Turkish Köfte + Roasted Potatoes + Garlic Yogurt**
+  - No unit: amt='120g' / 'Greek yogurt (0% fat)'
+- `turkish-kofte-potato` **Turkish Köfte + Roasted Potatoes + Garlic Yogurt**
+  - No unit: amt='1 medium' / 'Cucumber (diced)'
+- `turkish-kofte-potato` **Turkish Köfte + Roasted Potatoes + Garlic Yogurt**
+  - No unit: amt='150g' / 'Cherry tomatoes (halved)'
+- `american-honey-mustard-chicken-potato` **Honey Mustard Chicken + Baby Potatoes**
+  - No unit: amt='40g' / 'Greek yogurt (0% fat)'
+- `american-honey-mustard-chicken-potato` **Honey Mustard Chicken + Baby Potatoes**
+  - No unit: amt='80g' / 'Mixed salad leaves'
+- `american-honey-mustard-chicken-potato` **Honey Mustard Chicken + Baby Potatoes**
+  - No unit: amt='100g' / 'Cherry tomatoes (halved)'
+- `american-honey-mustard-chicken-potato` **Honey Mustard Chicken + Baby Potatoes**
+  - No unit: amt='100g' / 'Cucumber (sliced)'
+- `american-cinnamon-apple-porridge` **Cinnamon Apple Egg Porridge**
+  - No unit: amt='40g' / 'Rolled oats'
+- `american-cinnamon-apple-porridge` **Cinnamon Apple Egg Porridge**
+  - No unit: amt='125ml' / 'Semi-skimmed milk (1.5%)'
+- `american-cinnamon-apple-porridge` **Cinnamon Apple Egg Porridge**
+  - No unit: amt='25ml' / 'Water'
+- `american-cinnamon-apple-porridge` **Cinnamon Apple Egg Porridge**
+  - No unit: amt='80g' / 'Apple (diced, no need to peel)'
+- `american-cinnamon-apple-porridge` **Cinnamon Apple Egg Porridge**
+  - No unit: amt='2.5g' / 'Butter'
+- `american-cinnamon-apple-porridge` **Cinnamon Apple Egg Porridge**
+  - No unit: amt='150g' / 'Magerquark (0% fat)'
+- `asian-satay-chicken-potato` **Peanut Satay Chicken + Crispy Potatoes**
+  - No unit: amt='20g' / 'Natural peanut butter (100% peanuts)'
+- `asian-satay-chicken-potato` **Peanut Satay Chicken + Crispy Potatoes**
+  - No unit: amt='20g' / 'Roasted peanuts (crushed)'
+- `asian-satay-chicken-potato` **Peanut Satay Chicken + Crispy Potatoes**
+  - No unit: amt='150g' / 'Cherry tomatoes (halved)'
+- `asian-satay-chicken-potato` **Peanut Satay Chicken + Crispy Potatoes**
+  - No unit: amt='100g' / 'Cucumber (diced)'
+- `moroccan-harissa-chicken-potatos` **Moroccan Harissa Chicken + Cumin Potatoes**
+  - No unit: amt='30g' / 'Harissa paste'
+- `moroccan-harissa-chicken-potatos` **Moroccan Harissa Chicken + Cumin Potatoes**
+  - No unit: amt='150g' / 'Cherry tomatoes (halved)'
+- `moroccan-harissa-chicken-potatos` **Moroccan Harissa Chicken + Cumin Potatoes**
+  - No unit: amt='100g' / 'Cucumber (diced)'
+- `asian-honey-sriracha-chicken-potato` **Honey Sriracha Chicken + Sweet Potato**
+  - No unit: amt='150g' / 'Cherry tomatoes (halved)'
+- `asian-honey-sriracha-chicken-potato` **Honey Sriracha Chicken + Sweet Potato**
+  - No unit: amt='100g' / 'Cucumber (diced)'
+- `japanese-beef-donburi-rice` **Japanese Beef Donburi**
+  - No unit: amt='100ml' / 'Beef broth (or dashi)'
+- `japanese-beef-donburi-rice` **Japanese Beef Donburi**
+  - No unit: amt='1 medium' / 'Onion (thinly sliced)'
+- `moroccan-beef-bowl-rice` **Moroccan Spiced Beef Bowl**
+  - No unit: amt='1 medium' / 'Onion (finely diced)'
+- `moroccan-beef-bowl-rice` **Moroccan Spiced Beef Bowl**
+  - No unit: amt='200g' / 'Canned crushed tomatoes'
+- `moroccan-beef-bowl-rice` **Moroccan Spiced Beef Bowl**
+  - No unit: amt='150g' / 'Greek yogurt (0% fat)'
+- `greek-beef-pita` **Greek Beef Pita**
+  - No unit: amt='150g' / 'Greek yogurt (0% fat)'
+- `greek-beef-pita` **Greek Beef Pita**
+  - No unit: amt='80g' / 'Cucumber (grated and squeezed dry)'
+- `greek-beef-pita` **Greek Beef Pita**
+  - No unit: amt='1 medium' / 'Tomato (sliced)'
+- `greek-beef-pita` **Greek Beef Pita**
+  - No unit: amt='0.5 medium' / 'Red onion (thinly sliced)'
+- `korean-egg-toast-bread` **Korean Egg Toast**
+  - No unit: amt='60g' / 'Deli turkey or ham (sliced)'
+- `korean-egg-toast-bread` **Korean Egg Toast**
+  - No unit: amt='40g' / 'Gouda or processed cheese (sliced)'
+- `asian-chicken-satay-rice` **Chicken Satay Skewers**
+  - No unit: amt='40g' / 'Natural peanut butter (100%)'
+- `asian-chicken-satay-rice` **Chicken Satay Skewers**
+  - No unit: amt='60ml' / 'Warm water'
+- `indian-butter-chicken-light-rice` **Butter Chicken Light**
+  - No unit: amt='200g' / 'Canned crushed tomatoes'
+- `indian-butter-chicken-light-rice` **Butter Chicken Light**
+  - No unit: amt='150g' / 'Magerquark'
+- `indian-butter-chicken-light-rice` **Butter Chicken Light**
+  - No unit: amt='20g' / 'Cream cheese (Frischkäse)'
+- `indian-butter-chicken-light-rice` **Butter Chicken Light**
+  - No unit: amt='1 medium' / 'Onion (finely diced)'
+- `korean-gochujang-butter-pasta-noodle` **Gochujang Butter Pasta**
+  - No unit: amt='15g' / 'Butter'
+- `korean-gochujang-butter-pasta-noodle` **Gochujang Butter Pasta**
+  - No unit: amt='30g' / 'Parmesan (finely grated)'
+- `north-african-harissa-chicken-potato` **Harissa Yogurt Chicken & Potatoes**
+  - No unit: amt='30g' / 'Harissa paste'
+- `north-african-harissa-chicken-potato` **Harissa Yogurt Chicken & Potatoes**
+  - No unit: amt='50g' / 'Greek yogurt (0% fat)'
+- `north-african-harissa-chicken-potato` **Harissa Yogurt Chicken & Potatoes**
+  - No unit: amt='15g' / 'Tahini'
+- `north-african-harissa-chicken-potato` **Harissa Yogurt Chicken & Potatoes**
+  - No unit: amt='60g' / 'Mixed greens or rocket'
+- `north-african-harissa-chicken-potato` **Harissa Yogurt Chicken & Potatoes**
+  - No unit: amt='100g' / 'Cherry tomatoes'
+- `north-african-harissa-chicken-potato` **Harissa Yogurt Chicken & Potatoes**
+  - No unit: amt='80g' / 'Cucumber'
+- `north-african-harissa-chicken-potato` **Harissa Yogurt Chicken & Potatoes**
+  - No unit: amt='30g' / 'Red onion'
+
+## E. Inconsistent Units Across Recipes
+
+**10 issue(s)** — same ingredient used with weight vs. volume in different recipes
+
+- `jasmine rice` **jasmine rice**
+  - Mixed unit categories {'weight', 'volume'}: korean-glazed-chicken-bowl: '{{carbG}}g' (weight); thai-larb-beef-rice: '1 tbsp' (volume)
+- `lemon juice` **lemon juice**
+  - Mixed unit categories {'count', 'volume'}: shawarma-chicken-wrap: '1 tbsp' (volume); north-african-harissa-chicken-potato: '1 piece' (count)
+- `ginger` **ginger**
+  - Mixed unit categories {'count', 'volume'}: japanese-teriyaki-chicken: '1 tsp' (volume); vietnamese-beef-pho-noodle-bowl: '4 slices' (count)
+- `rosemary` **rosemary**
+  - Mixed unit categories {'count', 'volume'}: mediterranean-chicken-potato: '0.5 tsp' (volume); italian-potato-egg-frittata: '1 sprig' (count)
+- `white onion` **white onion**
+  - Mixed unit categories {'count', 'volume'}: smash-burger-brioche: '0.5 pieces' (count); mexican-birria-beef-potato-stew: '2 tbsp' (volume)
+- `flatleaf parsley` **flatleaf parsley**
+  - Mixed unit categories {'count', 'volume'}: turkish-beef-lahmacun-wrap: '3 tbsp' (volume); chicken-tabbouleh-couscous-bowl: 'large bunch' (count); spanish-beef-patatas-bravas-bowl: 'small handful' (other)
+- `eggs` **eggs**
+  - Mixed unit categories {'count', 'weight'}: greek-beef-yuvarlakia-potato-bowl: '2 pieces' (count); korean-egg-fried-rice: '{{proteinG}}g raw' (weight)
+- `cloves` **cloves**
+  - Mixed unit categories {'count', 'volume'}: indonesian-beef-rendang-bowl: '0.125 tsp' (volume); vietnamese-pho-spiced-chicken-potato: '2 pieces' (count)
+- `lemon zest` **lemon zest**
+  - Mixed unit categories {'count', 'volume'}: greek-lemon-herb-chicken-bowl: '1 tsp' (volume); mediterranean-smashed-potato-bowl: '1 piece' (count)
+- `pickles` **pickles**
+  - Mixed unit categories {'count', 'volume'}: american-sloppy-joe-potato: '2 tbsp' (volume); american-smash-beef-breakfast-burrito: '6 slices' (count)
+
+## F. Macro Plausibility
+
+_No issues found._
+
+
+## G. Possible Missing Ingredients (Heuristic)
+
+**182 issue(s)** — mentioned in steps but not in ingredient list
+
+- `korean-glazed-chicken-bowl` **Korean Glazed Chicken Bowl**
+  - Mentioned in steps, not in ingredients: ['finely', 'flat', 'grain', 'onion', 'pickled', 'small', 'thinly']
+- `thai-basil-chicken-rice` **thai-basil-chicken-rice**
+  - Mentioned in steps, not in ingredients: ['small']
+- `shawarma-chicken-wrap` **Shawarma Chicken Wrap**
+  - Mentioned in steps, not in ingredients: ['pickled', 'sauce']
+- `japanese-teriyaki-chicken` **Japanese Teriyaki Chicken**
+  - Mentioned in steps, not in ingredients: ['broth', 'oil']
+- `chipotle-lime-chicken-bowl` **Chipotle Lime Chicken Bowl**
+  - Mentioned in steps, not in ingredients: ['bean', 'chopped', 'cilantro', 'sliced']
+- `honey-garlic-chicken-noodles` **Honey Garlic Chicken Noodles**
+  - Mentioned in steps, not in ingredients: ['egg', 'eggs', 'large', 'pepper', 'salt', 'small']
+- `mediterranean-chicken-potato` **Mediterranean Lemon Herb Chicken & Potatoes**
+  - Mentioned in steps, not in ingredients: ['baking']
+- `indian-tikka-chicken-rice` **Indian Tikka Masala Chicken**
+  - Mentioned in steps, not in ingredients: ['extra', 'sauce', 'tomato']
+- `chinese-five-spice-chicken-rice` **Chinese Five-Spice Crispy Chicken**
+  - Mentioned in steps, not in ingredients: ['broth']
+- `bbq-chicken-smashed-potato` **Smoky BBQ Chicken & Smashed Potatoes**
+  - Mentioned in steps, not in ingredients: ['baking', 'extra', 'flat', 'oil', 'olive']
+- `smash-burger-brioche` **Smash Burger with Special Sauce**
+  - Mentioned in steps, not in ingredients: ['baking', 'brown', 'cheese', 'firm', 'flat', 'pepper', 'salt', 'sauce']
+- `mexican-taco-beef-bowl` **Mexican Taco Beef Rice Bowl**
+  - Mentioned in steps, not in ingredients: ['chopped', 'cilantro', 'small']
+- `chinese-mapo-tofu-beef-rice` **Spicy Mapo Tofu Beef Rice**
+  - Mentioned in steps, not in ingredients: ['neutral', 'red']
+- `thai-larb-beef-rice` **Thai Larb Beef Bowl**
+  - Mentioned in steps, not in ingredients: ['oil', 'powder', 'salt']
+- `middle-eastern-kofta-potato` **Middle Eastern Kofta & Roasted Potatoes**
+  - Mentioned in steps, not in ingredients: ['firm', 'oil', 'olive', 'roasted', 'wedges']
+- `japanese-beef-rice-bowl-gyudon` **Japanese Gyudon Beef Rice Bowl**
+  - Mentioned in steps, not in ingredients: ['broth', 'egg', 'eggs', 'halved']
+- `beef-bolognese-protein-pasta` **High-Protein Beef Bolognese**
+  - Mentioned in steps, not in ingredients: ['large', 'sauce']
+- `beef-bibimbap-bowl` **Beef Bibimbap Bowl**
+  - Mentioned in steps, not in ingredients: ['egg', 'eggs']
+- `beef-stuffed-potato-skins` **Loaded Beef & Cheese Stuffed Potato Skins**
+  - Mentioned in steps, not in ingredients: ['extra', 'oil', 'sliced']
+- `turkish-beef-lahmacun-wrap` **Turkish Beef Lahmacun Wrap**
+  - Mentioned in steps, not in ingredients: ['sauce']
+- `greek-beef-yuvarlakia-potato-bowl` **Greek Beef Yuvarlakia Bowl**
+  - Mentioned in steps, not in ingredients: ['egg', 'sauce']
+- `taiwanese-beef-scallion-noodles` **Taiwanese Beef & Scallion Noodles**
+  - Mentioned in steps, not in ingredients: ['egg', 'green', 'onion']
+- `peruvian-lomo-saltado-bowl` **Peruvian Lomo Saltado Bowl**
+  - Mentioned in steps, not in ingredients: ['large', 'tomato']
+- `mexican-beef-black-bean-burrito-bowl` **Beef & Black Bean Burrito Bowl**
+  - Mentioned in steps, not in ingredients: ['cilantro', 'small']
+- `japanese-beef-tantanmen-noodles` **Beef Tantanmen Ramen**
+  - Mentioned in steps, not in ingredients: ['broth']
+- `indonesian-beef-rendang-bowl` **Indonesian Beef Rendang Bowl**
+  - Mentioned in steps, not in ingredients: ['paste']
+- `vietnamese-beef-pho-noodle-bowl` **Beef Pho Noodle Bowl**
+  - Mentioned in steps, not in ingredients: ['broth', 'salt', 'whole']
+- `argentinian-chimichurri-beef-rice-bowl` **Argentinian Chimichurri Beef Bowl**
+  - Mentioned in steps, not in ingredients: ['finely', 'paste']
+- `vietnamese-beef-banh-mi-wrap` **Beef Bánh Mì Wrap**
+  - Mentioned in steps, not in ingredients: ['mayo', 'pickled', 'pickles']
+- `korean-dakgalbi-chicken-noodle` **Korean Dakgalbi Chicken Noodles**
+  - Mentioned in steps, not in ingredients: ['drained', 'large']
+- `chicken-caesar-wrap` **Crispy Chicken Caesar Wrap**
+  - Mentioned in steps, not in ingredients: ['extra', 'oil', 'powder', 'sliced']
+- `thai-peanut-chicken-rice` **Thai Peanut Chicken Bowl**
+  - Mentioned in steps, not in ingredients: ['extra', 'pickled']
+- `lemon-herb-chicken-potato` **Lemon Herb Chicken & Roasted Potatoes**
+  - Mentioned in steps, not in ingredients: ['roasted', 'sauce']
+- `chinese-kung-pao-chicken-rice` **Kung Pao Chicken**
+  - Mentioned in steps, not in ingredients: ['salt']
+- `chicken-tikka-naan` **Chicken Tikka Naan Wrap**
+  - Mentioned in steps, not in ingredients: ['large', 'oil']
+- `japanese-chicken-katsu-rice` **Baked Chicken Katsu Rice**
+  - Mentioned in steps, not in ingredients: ['baking', 'vinegar']
+- `mexican-chicken-burrito-bowl` **Mexican Chicken Burrito Bowl**
+  - Mentioned in steps, not in ingredients: ['chopped', 'cilantro', 'extra', 'sliced']
+- `chicken-stir-fry-noodles` **Lo Mein Chicken Stir Fry**
+  - Mentioned in steps, not in ingredients: ['grain', 'salt']
+- `chicken-shawarma-potato` **Chicken Shawarma Bowl with Roasted Potatoes**
+  - Mentioned in steps, not in ingredients: ['roasted', 'sauce', 'sliced', 'spice', 'tomato', 'wedges']
+- `korean-egg-fried-rice` **Korean Egg Fried Rice**
+  - Mentioned in steps, not in ingredients: ['flat']
+- `shakshuka-middle-eastern-eggs` **Shakshuka with Feta**
+  - Mentioned in steps, not in ingredients: ['egg', 'sauce']
+- `japanese-tamago-gohan-bowl` **Japanese TKG — Tamago Kake Gohan**
+  - Mentioned in steps, not in ingredients: ['egg']
+- `mexican-huevos-rancheros` **Huevos Rancheros**
+  - Mentioned in steps, not in ingredients: ['egg', 'sauce', 'tortilla']
+- `chinese-tomato-egg-stir-fry-rice` **Chinese Tomato & Egg Stir Fry**
+  - Mentioned in steps, not in ingredients: ['juice', 'light', 'seeds', 'tomato']
+- `high-protein-egg-potato-hash` **High-Protein Egg & Potato Hash**
+  - Mentioned in steps, not in ingredients: ['egg', 'flat', 'large']
+- `thai-omelette-rice-kai-jeow` **Thai Crispy Omelette Rice (Kai Jeow)**
+  - Mentioned in steps, not in ingredients: ['egg', 'small']
+- `egg-fried-noodles-asian` **Wok Egg Fried Noodles**
+  - Mentioned in steps, not in ingredients: ['small']
+- `miso-glazed-chicken-rice-bowl` **Miso Glazed Chicken Rice Bowl**
+  - Mentioned in steps, not in ingredients: ['grain', 'oil', 'onion', 'pickled']
+- `harissa-chicken-couscous-bowl` **Harissa Chicken & Couscous Bowl**
+  - Mentioned in steps, not in ingredients: ['roasted']
+- `vietnamese-chicken-vermicelli-bowl` **Vietnamese Chicken Vermicelli Bowl**
+  - Mentioned in steps, not in ingredients: ['grain', 'noodles']
+- `moroccan-spiced-beef-couscous-bowl` **Moroccan Spiced Beef & Couscous Bowl**
+  - Mentioned in steps, not in ingredients: ['brown', 'oil', 'spice', 'tomato']
+- `japanese-beef-tataki-rice-bowl` **Japanese Beef Tataki Rice Bowl**
+  - Mentioned in steps, not in ingredients: ['oil', 'onion']
+- `mexican-picadillo-rice-bowl` **Mexican Picadillo Rice Bowl**
+  - Mentioned in steps, not in ingredients: ['brown', 'oil', 'sauce']
+- `vietnamese-lemongrass-beef-rice-bowl` **Vietnamese Lemongrass Beef Rice Bowl**
+  - Mentioned in steps, not in ingredients: ['brown', 'finely', 'oil']
+- `turkish-spiced-beef-bulgur-bowl` **Turkish Spiced Beef & Bulgur Bowl**
+  - Mentioned in steps, not in ingredients: ['brown', 'oil']
+- `greek-spinach-feta-frittata` **Greek Spinach & Feta Frittata**
+  - Mentioned in steps, not in ingredients: ['oil', 'potatoes']
+- `turkish-menemen` **Turkish Menemen**
+  - Mentioned in steps, not in ingredients: ['potatoes', 'sauce', 'small']
+- `japanese-tamagoyaki-rice-bowl` **Japanese Tamagoyaki Rice Bowl**
+  - Mentioned in steps, not in ingredients: ['egg', 'firm']
+- `spicy-korean-steamed-eggs` **Spicy Korean Steamed Eggs (Gyeran Jjim)**
+  - Mentioned in steps, not in ingredients: ['egg', 'extra', 'onion', 'optional']
+- `shakshuka-verde-feta` **Shakshuka Verde with Feta**
+  - Mentioned in steps, not in ingredients: ['cooking', 'optional', 'potatoes', 'sauce', 'spray']
+- `teriyaki-salmon-rice-bowl` **Teriyaki Salmon Rice Bowl**
+  - Mentioned in steps, not in ingredients: ['flat', 'oil', 'onion', 'small']
+- `miso-glazed-salmon-edamame-rice` **Miso Glazed Salmon & Edamame Rice**
+  - Mentioned in steps, not in ingredients: ['oil']
+- `tuna-poke-bowl` **Tuna Poke Bowl**
+  - Mentioned in steps, not in ingredients: ['onion']
+- `lemon-herb-baked-cod-potatoes` **Lemon Herb Baked Cod & Potatoes**
+  - Mentioned in steps, not in ingredients: ['fish', 'flakes', 'halved']
+- `thai-chili-lime-shrimp-rice-bowl` **Thai Chili Lime Shrimp Rice Bowl**
+  - Mentioned in steps, not in ingredients: ['oil', 'onion']
+- `crispy-tofu-bibimbap` **Crispy Tofu Bibimbap**
+  - Mentioned in steps, not in ingredients: ['onion']
+- `korean-dubu-jorim-rice-bowl` **Korean Dubu Jorim Rice Bowl**
+  - Mentioned in steps, not in ingredients: ['onion', 'pickled']
+- `thai-basil-crispy-tofu-rice` **Thai Basil Crispy Tofu Rice**
+  - Mentioned in steps, not in ingredients: ['small']
+- `miso-glazed-tofu-edamame-bowl` **Miso Glazed Tofu & Edamame Bowl**
+  - Mentioned in steps, not in ingredients: ['onion']
+- `adobo-tofu-rice-bowl` **Filipino Adobo Tofu Rice Bowl**
+  - Mentioned in steps, not in ingredients: ['large', 'oil', 'onion']
+- `caesar-dressing-light` **Caesar Dressing Light**
+  - Mentioned in steps, not in ingredients: ['finely', 'grated', 'mustard', 'salt']
+- `butter-chicken-murgh-makhani` **Butter Chicken (Murgh Makhani)**
+  - Mentioned in steps, not in ingredients: ['juice', 'optional', 'paste', 'salt', 'sauce']
+- `thai-basil-beef-rice` **Thai Basil Beef Rice**
+  - Mentioned in steps, not in ingredients: ['small']
+- `chocolate-chip-baked-oats` **Chocolate Chip Baked Oats**
+  - Mentioned in steps, not in ingredients: ['small']
+- `spanish-tortilla-espanola` **Spanish Tortilla Española**
+  - Mentioned in steps, not in ingredients: ['egg', 'flat', 'tortilla', 'wedges']
+- `italian-potato-egg-frittata` **Italian Potato & Egg Frittata**
+  - Mentioned in steps, not in ingredients: ['thinly', 'wedges']
+- `mexican-papas-con-huevo` **Mexican Papas con Huevo**
+  - Mentioned in steps, not in ingredients: ['flat']
+- `indian-masala-omelette-roti` **Indian Masala Omelette & Roti**
+  - Mentioned in steps, not in ingredients: ['brown', 'egg']
+- `indian-anda-curry` **Indian Anda Curry (Egg Curry)**
+  - Mentioned in steps, not in ingredients: ['sauce', 'whole']
+- `american-classic-breakfast-burrito` **Classic American Breakfast Burrito**
+  - Mentioned in steps, not in ingredients: ['flat', 'tortillas']
+- `italian-eggs-in-purgatory` **Italian Eggs in Purgatory**
+  - Mentioned in steps, not in ingredients: ['egg', 'sauce']
+- `mexican-sofritas-tofu-tacos` **Mexican Sofritas Tofu Tacos**
+  - Mentioned in steps, not in ingredients: ['pickled', 'salt']
+- `indian-saag-tofu` **Indian Saag Tofu (Palak Tofu)**
+  - Mentioned in steps, not in ingredients: ['sauce']
+- `american-bbq-tofu-potato-bowl` **Smoky BBQ Tofu Potato Bowl**
+  - Mentioned in steps, not in ingredients: ['baking', 'salt']
+- `italian-tofu-bolognese` **Italian Tofu Bolognese**
+  - Mentioned in steps, not in ingredients: ['large']
+- `french-poulet-moutarde` **French Poulet à la Moutarde**
+  - Mentioned in steps, not in ingredients: ['oil', 'sauce']
+- `mexican-chicken-tinga-bowl` **Mexican Chicken Tinga Bowl**
+  - Mentioned in steps, not in ingredients: ['salt', 'shredded', 'wedges']
+- `indian-chicken-saag` **Indian Chicken Saag**
+  - Mentioned in steps, not in ingredients: ['sauce']
+- `italian-chicken-piccata-pasta` **Italian Chicken Piccata Pasta**
+  - Mentioned in steps, not in ingredients: ['drained', 'sauce', 'sliced']
+- `american-chicken-chili-potato` **American Chicken Chili Loaded Potato**
+  - Mentioned in steps, not in ingredients: ['broth', 'whole']
+- `spanish-chicken-pepitoria` **Spanish Chicken Pepitoria**
+  - Mentioned in steps, not in ingredients: ['sauce']
+- `german-chicken-rahmsauce` **German Chicken in Cream Sauce**
+  - Mentioned in steps, not in ingredients: ['cream', 'oil', 'sauce']
+- `american-chili-loaded-potato` **American Chili Loaded Potato**
+  - Mentioned in steps, not in ingredients: ['brown', 'whole']
+- `german-beef-goulash` **German Beef Goulash**
+  - Mentioned in steps, not in ingredients: ['sauce']
+- `french-hachis-parmentier` **French Hachis Parmentier**
+  - Mentioned in steps, not in ingredients: ['baking', 'brown', 'cheese']
+- `mexican-birria-tacos` **Mexican Birria Tacos**
+  - Mentioned in steps, not in ingredients: ['brown', 'cheese', 'flat', 'sauce', 'tortilla']
+- `indian-beef-rogan-josh` **Indian Beef Rogan Josh**
+  - Mentioned in steps, not in ingredients: ['fat', 'sauce']
+- `italian-beef-meatball-potato-soup` **Italian Beef Meatball Potato Soup**
+  - Mentioned in steps, not in ingredients: ['broth', 'large', 'small']
+- `american-sloppy-joe-potato` **American Sloppy Joe Stuffed Potato**
+  - Mentioned in steps, not in ingredients: ['whole']
+- `british-cottage-pie-light` **British Cottage Pie Light**
+  - Mentioned in steps, not in ingredients: ['baking', 'brown']
+- `mexican-chipotle-beef-breakfast-burrito` **Chipotle Beef Breakfast Burrito**
+  - Mentioned in steps, not in ingredients: ['bean', 'brown', 'cooking', 'juice', 'small', 'tortillas']
+- `korean-bbq-chicken-breakfast-burrito` **Korean BBQ Chicken Breakfast Burrito**
+  - Mentioned in steps, not in ingredients: ['egg', 'salt', 'small', 'tortillas']
+- `mediterranean-feta-egg-breakfast-burrito` **Mediterranean Feta & Egg Burrito**
+  - Mentioned in steps, not in ingredients: ['tortillas']
+- `american-smash-beef-breakfast-burrito` **Smash Patty Breakfast Burrito**
+  - Mentioned in steps, not in ingredients: ['brown', 'egg', 'flat', 'oil', 'sauce', 'small', 'tortillas']
+- `german-bavarian-street-wrap` **Bavarian Street Wrap**
+  - Mentioned in steps, not in ingredients: ['light', 'small', 'tortilla']
+- `american-bigmac-burger-bowl` **Big Mac Burger Bowl**
+  - Mentioned in steps, not in ingredients: ['baking', 'flat', 'pepper', 'salt', 'sauce', 'small']
+- `german-cucumber-salad-highprotein` **High-Protein Cucumber Salad**
+  - Mentioned in steps, not in ingredients: ['black', 'flat', 'small']
+- `american-cowboy-hash` **Cowboy Hash**
+  - Mentioned in steps, not in ingredients: ['egg']
+- `american-bbq-beef-stuffed-potato` **BBQ Beef Stuffed Potato**
+  - Mentioned in steps, not in ingredients: ['brown', 'whole']
+- `american-beef-gravy-smashed-potato` **Beef & Gravy Smashed Potatoes**
+  - Mentioned in steps, not in ingredients: ['baking', 'flat', 'onions', 'spray']
+- `american-philly-cheesesteak-hash` **Philly Cheesesteak Hash**
+  - Mentioned in steps, not in ingredients: ['cheese', 'large']
+- `american-crispy-beef-tater-bowl` **Crispy Beef Tater Bowl**
+  - Mentioned in steps, not in ingredients: ['baking', 'brown', 'pickles', 'small']
+- `mexican-beef-taco-potato-bowl` **Mexican Beef Taco Potato Bowl**
+  - Mentioned in steps, not in ingredients: ['baking', 'brown', 'light', 'oil', 'spice']
+- `mexican-birria-beef-potato-stew` **Birria-Style Beef Potato Stew**
+  - Mentioned in steps, not in ingredients: ['broth', 'large']
+- `mexican-picadillo-potato` **Mexican Picadillo Potato Bowl**
+  - Mentioned in steps, not in ingredients: ['large', 'sauce']
+- `mexican-chorizo-beef-potato-skillet` **Chorizo-Style Beef Potato Skillet**
+  - Mentioned in steps, not in ingredients: ['egg', 'flat', 'spice']
+- `mexican-enchilada-stuffed-potato` **Enchilada Stuffed Potato**
+  - Mentioned in steps, not in ingredients: ['cheese', 'sauce', 'whole']
+- `korean-bulgogi-beef-potato-bowl` **Korean Bulgogi Beef Potato Bowl**
+  - Mentioned in steps, not in ingredients: ['brown', 'salt']
+- `korean-kimchi-beef-potato-hash` **Kimchi Beef Potato Hash**
+  - Mentioned in steps, not in ingredients: ['large']
+- `korean-tteokbokki-beef-potato` **Tteokbokki-Style Beef Potato Bowl**
+  - Mentioned in steps, not in ingredients: ['brown']
+- `korean-beef-jjigae-potato` **Korean Beef Doenjang Jjigae**
+  - Mentioned in steps, not in ingredients: ['broth']
+- `middle-eastern-shawarma-beef-potato` **Shawarma Beef Potato Bowl**
+  - Mentioned in steps, not in ingredients: ['baking', 'oil', 'spice', 'wedge']
+- `moroccan-spiced-beef-potato` **Moroccan Spiced Beef & Potato**
+  - Mentioned in steps, not in ingredients: ['large', 'sauce']
+- `turkish-manti-beef-potato-bowl` **Turkish Manti-Style Beef Bowl**
+  - Mentioned in steps, not in ingredients: ['chili', 'flat', 'red', 'small']
+- `japanese-curry-beef-potato` **Japanese Beef Curry**
+  - Mentioned in steps, not in ingredients: ['broth']
+- `chinese-mapo-beef-potato-bowl` **Ma Po Style Beef Potato Bowl**
+  - Mentioned in steps, not in ingredients: ['red', 'small', 'whole']
+- `thai-basil-beef-potato-hash` **Thai Basil Beef Potato Hash**
+  - Mentioned in steps, not in ingredients: ['flat', 'small']
+- `japanese-teriyaki-beef-potato-bowl` **Teriyaki Beef Potato Bowl**
+  - Mentioned in steps, not in ingredients: ['brown', 'oil', 'pepper', 'salt', 'small']
+- `spanish-beef-patatas-bravas-bowl` **Beef Patatas Bravas Bowl**
+  - Mentioned in steps, not in ingredients: ['sauce']
+- `filipino-beef-adobo-potato-bowl` **Filipino Beef Adobo Potato Bowl**
+  - Mentioned in steps, not in ingredients: ['large']
+- `indian-keema-aloo` **Keema Aloo**
+  - Mentioned in steps, not in ingredients: ['large']
+- `mediterranean-smashed-potato-bowl` **Greek Smashed Potato Bowl**
+  - Mentioned in steps, not in ingredients: ['baking', 'black', 'flat', 'sauce', 'sliced', 'small']
+- `argentinian-chimichurri-chicken-potato` **Chimichurri Smashed Potato Bowl**
+  - Mentioned in steps, not in ingredients: ['finely', 'green', 'paste', 'salt', 'tomato', 'whole']
+- `moroccan-harissa-chicken-potato` **Harissa Chicken & Smashed Potatoes**
+  - Mentioned in steps, not in ingredients: ['carrot', 'red', 'salt', 'whole']
+- `middle-eastern-shawarma-chicken-smashed-potato` **Chicken Shawarma & Smashed Potatoes**
+  - Mentioned in steps, not in ingredients: ['grain', 'salt', 'spice', 'whole', 'yellow']
+- `korean-buldak-chicken-potato` **Korean Buldak Fire Chicken & Potatoes**
+  - Mentioned in steps, not in ingredients: ['baking', 'flat', 'neutral', 'small']
+- `taiwanese-popcorn-chicken-potato` **Taiwanese Popcorn Chicken & Potato Bites**
+  - Mentioned in steps, not in ingredients: ['baking', 'light', 'small']
+- `sri-lankan-chicken-curry-potato` **Sri Lankan Chicken Curry & Potatoes**
+  - Mentioned in steps, not in ingredients: ['cooking', 'sauce', 'whole']
+- `portuguese-piri-piri-chicken-potato` **Portuguese Piri Piri Chicken & Potatoes**
+  - Mentioned in steps, not in ingredients: ['roasted', 'wedges']
+- `thai-massaman-chicken-potato` **Thai Massaman Chicken & Potato Curry**
+  - Mentioned in steps, not in ingredients: ['large', 'thai', 'whole']
+- `japanese-nikujaga-chicken-potato` **Japanese Chicken & Potato Nikujaga**
+  - Mentioned in steps, not in ingredients: ['large', 'thinly']
+- `spanish-patatas-bravas-chicken` **Spanish Patatas Bravas Chicken Bowl**
+  - Mentioned in steps, not in ingredients: ['sauce', 'sliced']
+- `mexican-mole-chicken-potato` **Mexican Mole Chicken & Potatoes**
+  - Mentioned in steps, not in ingredients: ['large', 'roasted', 'sauce', 'whole']
+- `korean-dakbokkeumtang-chicken-potato` **Korean Dakbokkeumtang Braised Chicken**
+  - Mentioned in steps, not in ingredients: ['large']
+- `chinese-char-siu-chicken-potato` **Chinese Char Siu Chicken & Potatoes**
+  - Mentioned in steps, not in ingredients: ['baking', 'large', 'roasted', 'wedges']
+- `thai-green-curry-chicken-potato` **Thai Green Curry Chicken & Potatoes**
+  - Mentioned in steps, not in ingredients: ['cooking', 'large']
+- `thai-crying-tiger-chicken-potato` **Thai Crying Tiger Chicken & Potatoes**
+  - Mentioned in steps, not in ingredients: ['baking', 'flat', 'jasmine', 'oil', 'small']
+- `japanese-katsu-chicken-potato` **Japanese Chicken Katsu & Potato Wedges**
+  - Mentioned in steps, not in ingredients: ['baking', 'flat', 'wedges']
+- `lebanese-chicken-roasted-potato` **Lebanese Za'atar Chicken & Potatoes**
+  - Mentioned in steps, not in ingredients: ['baking', 'large']
+- `greek-lemon-chicken-smashed-potato` **Greek Lemon Chicken & Smashed Potatoes**
+  - Mentioned in steps, not in ingredients: ['baking', 'extra', 'flat', 'sauce']
+- `moroccan-chermoula-chicken-potato` **Moroccan Chermoula Chicken & Potatoes**
+  - Mentioned in steps, not in ingredients: ['paste', 'roasted', 'sauce']
+- `mexican-tinga-stuffed-potato` **Mexican Chicken Tinga Stuffed Potato**
+  - Mentioned in steps, not in ingredients: ['cooking', 'sauce', 'shredded']
+- `vietnamese-pho-spiced-chicken-potato` **Vietnamese Pho-Spiced Chicken & Potatoes**
+  - Mentioned in steps, not in ingredients: ['whole']
+- `mexican-chipotle-chicken-loaded-potato` **Mexican Chipotle Chicken Loaded Potato**
+  - Mentioned in steps, not in ingredients: ['baking']
+- `moroccan-chicken-tagine-potato` **Moroccan Chicken Tagine & Potatoes**
+  - Mentioned in steps, not in ingredients: ['baking', 'carrot', 'roasted', 'sauce']
+- `middle-eastern-shawarma-chicken-rice` **Shawarma Chicken Rice Bowl**
+  - Mentioned in steps, not in ingredients: ['paste', 'sauce', 'shredded', 'sliced', 'small', 'spice']
+- `mexican-chipotle-chicken-wrap` **Smoky Chipotle Chicken Wrap**
+  - Mentioned in steps, not in ingredients: ['grain', 'sauce', 'small', 'tortilla']
+- `chinese-dan-dan-udon` **Spicy Dan Dan Udon Noodles**
+  - Mentioned in steps, not in ingredients: ['brown', 'small']
+- `american-smash-burger-wrap` **Smash Burger Wrap**
+  - Mentioned in steps, not in ingredients: ['cheese', 'flat', 'pepper', 'salt', 'sauce', 'small', 'tortilla']
+- `american-garlic-parmesan-chicken-potato` **Garlic Parmesan Chicken + Roasted Potatoes**
+  - Mentioned in steps, not in ingredients: ['roasted', 'sauce']
+- `american-garlic-butter-chicken-potato` **Garlic Butter Chicken + Smashed Potatoes**
+  - Mentioned in steps, not in ingredients: ['baking', 'flat', 'sauce', 'tomato', 'whole']
+- `indian-tandoori-chicken-potato` **Tandoori Chicken + Roasted Potatoes + Raita**
+  - Mentioned in steps, not in ingredients: ['baking', 'roasted']
+- `japanese-beef-lettuce-wraps` **Japanese Beef Lettuce Wraps + Miso Salad**
+  - Mentioned in steps, not in ingredients: ['small']
+- `japanese-shoyu-butter-chicken-potato` **Shoyu Butter Chicken + Crispy Potatoes**
+  - Mentioned in steps, not in ingredients: ['flat', 'small']
+- `american-buffalo-chicken-potato` **Buffalo Chicken + Potato Wedges + Celery Salad**
+  - Mentioned in steps, not in ingredients: ['oil', 'small', 'wedges']
+- `asian-honey-soy-chicken-potato` **Honey Soy Crispy Chicken + Roasted Potatoes**
+  - Mentioned in steps, not in ingredients: ['neutral', 'pepper', 'roasted', 'small']
+- `korean-bbq-chicken-potato` **Korean BBQ Chicken + Potatoes + Pickled Radish**
+  - Mentioned in steps, not in ingredients: ['grain', 'pickled', 'powder', 'roasted']
+- `mexican-beef-tostada-bread` **Mexican Beef Tostada + Crispy Potato + Slaw**
+  - Mentioned in steps, not in ingredients: ['baking', 'brown', 'flat']
+- `turkish-kofte-potato` **Turkish Köfte + Roasted Potatoes + Garlic Yogurt**
+  - Mentioned in steps, not in ingredients: ['roasted', 'tomato']
+- `american-honey-mustard-chicken-potato` **Honey Mustard Chicken + Baby Potatoes**
+  - Mentioned in steps, not in ingredients: ['green', 'sauce']
+- `american-cinnamon-apple-porridge` **Cinnamon Apple Egg Porridge**
+  - Mentioned in steps, not in ingredients: ['egg', 'extra', 'small']
+- `asian-satay-chicken-potato` **Peanut Satay Chicken + Crispy Potatoes**
+  - Mentioned in steps, not in ingredients: ['large', 'light', 'salt']
+- `moroccan-harissa-chicken-potatos` **Moroccan Harissa Chicken + Cumin Potatoes**
+  - Mentioned in steps, not in ingredients: ['cooking', 'flat', 'large', 'salt', 'small', 'tomato']
+- `asian-honey-sriracha-chicken-potato` **Honey Sriracha Chicken + Sweet Potato**
+  - Mentioned in steps, not in ingredients: ['flat', 'large', 'onion', 'salt', 'small']
+- `japanese-beef-donburi-rice` **Japanese Beef Donburi**
+  - Mentioned in steps, not in ingredients: ['onions', 'small']
+- `moroccan-beef-bowl-rice` **Moroccan Spiced Beef Bowl**
+  - Mentioned in steps, not in ingredients: ['large', 'sauce', 'small', 'whole']
+- `greek-beef-pita` **Greek Beef Pita**
+  - Mentioned in steps, not in ingredients: ['brown', 'flat']
+- `korean-egg-toast-bread` **Korean Egg Toast**
+  - Mentioned in steps, not in ingredients: ['egg', 'pepper', 'salt', 'small', 'whole']
+- `asian-chicken-satay-rice` **Chicken Satay Skewers**
+  - Mentioned in steps, not in ingredients: ['broth', 'cooking', 'small', 'wedge']
+- `indian-butter-chicken-light-rice` **Butter Chicken Light**
+  - Mentioned in steps, not in ingredients: ['sauce']
+- `korean-gochujang-butter-pasta-noodle` **Gochujang Butter Pasta**
+  - Mentioned in steps, not in ingredients: ['drained', 'pepper', 'salt']
+- `north-african-harissa-chicken-potato` **Harissa Yogurt Chicken & Potatoes**
+  - Mentioned in steps, not in ingredients: ['baking', 'sliced']
