@@ -5,9 +5,14 @@ Static single-page app. GitHub Pages + Cloudflare custom domain.
 NO backend. NO framework. NO external dependencies. Always free.
 
 ## Files
-- index.html (911KB) — all app logic, CSS, HTML
-- recipes.json (58KB) — all 148 recipes
-- config.json (5.6KB) — protein defs, dietary filters
+- index.html (~55KB) — HTML skeleton only (nav, modals, UI structure)
+- style.css (~132KB) — all CSS
+- app.js (~220KB) — all app logic + inline data (NUT, DIETARY_FILTERS, etc.)
+- recipes.js (~589KB) — recipe card data (R[]) + full recipe details (RECIPE_DETAILS)
+- nutrition.js (~46KB) — USDA nutrition DB per 100g
+- logo.png — header avatar image
+
+See .claude/map.md for full code map (functions, line numbers, data blocks).
 
 ## Rules — ALWAYS FOLLOW
 - Always push directly to main after every change automatically
@@ -16,7 +21,7 @@ NO backend. NO framework. NO external dependencies. Always free.
 - No external dependencies ever
 - Current recipe count: 148 — next displayNum is 149
 
-## Recipe Structure (recipes.json)
+## Recipe Structure (recipes.js → R[])
 { id, displayNum, carb, time, title, desc, tags[], flavor,
   proteinOpts{}, carbs{}, sauce{}, ing[], steps[], hacks[], notes }
 
