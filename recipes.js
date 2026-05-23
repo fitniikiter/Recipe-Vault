@@ -2795,6 +2795,19 @@ hint: "",
   flavor: "savory",
   hint: "",
 },
+{
+id: "korean-beef-lettuce-cups",
+sideEgg: false,
+protein: "beef",
+displayNum: 197,
+carb: "none",
+time: 25,
+title: "Korean Beef Lettuce Cups",
+desc: "Lean gochujang beef in crisp butter lettuce cups — with a creamy spicy sesame mayo that ties it all together.",
+tags: ["korean", "spicy"],
+flavor: "savory",
+hint: "",
+},
 ];
 
 // --- RECIPE DETAILS (ingredients, steps, hacks) ---
@@ -11090,5 +11103,52 @@ notes: "Leftovers reheat well — add a splash of water when reheating to loosen
     { title: "Tahini Seizes First", text: "Tahini always tightens when you add lemon juice — don't panic. Keep whisking and add water slowly. The final dressing should be loose enough to drizzle but thick enough to coat. Too thick: add a drop more water. Too thin: add a little more tahini." },
   ],
   notes: "Harissa brands vary wildly in heat level — taste your paste before using. Leftovers keep 3 days in the fridge; store salad undressed separately.",
+},
+"korean-beef-lettuce-cups": {
+image: null,
+video: "",
+ingredients: [
+{ section: "Protein", items: [{ name: "Lean ground beef (5% fat)", amt: "{{proteinG}}g raw" }] },
+{ section: "Gochujang Glaze", items: [
+{ name: "Gochujang", amt: "25g" },
+{ name: "Soy sauce (low sodium)", amt: "2 tbsp" },
+{ name: "Sesame oil", amt: "1 tsp" },
+{ name: "Honey", amt: "1 tsp" },
+{ name: "Rice vinegar", amt: "1 tsp" },
+]},
+{ section: "Spicy Sesame Mayo", items: [
+{ name: "Light mayo", amt: "40g" },
+{ name: "Greek yogurt (0%)", amt: "30g" },
+{ name: "Gochujang", amt: "1 tsp" },
+{ name: "Sesame oil", amt: "1 tsp" },
+{ name: "Rice vinegar", amt: "1 tsp" },
+{ name: "Soy sauce", amt: "0.5 tsp" },
+{ name: "Honey", amt: "0.5 tsp" },
+]},
+{ section: "Quick Cucumber Pickle", items: [
+{ name: "Cucumber", amt: "200g" },
+{ name: "Rice vinegar", amt: "1 tsp" },
+{ name: "Salt + sugar", amt: "pinch each" },
+]},
+{ section: "To Serve", items: [
+{ name: "Butter lettuce", amt: "1 head" },
+{ name: "Spring onions (sliced)", amt: "3 pieces" },
+{ name: "Sesame seeds", amt: "10g" },
+]},
+],
+steps: [
+"Slice cucumber into thin half-moons and toss with rice vinegar, a pinch of salt and sugar — set aside to quick-pickle while you cook.",
+"Mix all spicy sesame mayo ingredients in a small bowl until smooth, then refrigerate until serving.",
+"Combine gochujang, soy sauce, sesame oil, honey, and rice vinegar in a small bowl to make the glaze.",
+"Heat oil in a pan over high heat until shimmering — add beef and break it apart, cooking 4–5 minutes until you get proper caramelized edges, not grey steamed meat.",
+"Push beef to one side, add garlic and ginger directly to the pan and fry 60 seconds until fragrant, then mix into the beef.",
+"Pour the gochujang glaze over the beef and toss to coat — cook 1–2 minutes until glossy and slightly reduced, then pull off heat immediately.",
+"Separate lettuce into cups, fill with beef, top with pickled cucumber and spring onion, drizzle spicy sesame mayo generously, and finish with sesame seeds.",
+],
+hacks: [
+{ title: "High Heat or Nothing", text: "Lean 5% beef has almost no fat to carry flavour — high heat and caramelization do that job instead. A crowded or too-cool pan steams the meat grey. Cook in a wide pan, don't stir too early, and let the crust form." },
+{ title: "Mayo-Yogurt Ratio", text: "The 40g mayo + 30g yogurt split gives you the creaminess of full mayo at roughly half the calories. Go heavier on the yogurt if you want to cut further, but don't flip it — pure yogurt loses the richness that makes the sauce work." },
+],
+notes: "Beef filling keeps 3 days in the fridge — assemble lettuce cups fresh to order. Works equally well wrapped in a flour tortilla if you want more carbs.",
 },
 };
