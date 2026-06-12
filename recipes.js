@@ -2820,6 +2820,19 @@ tags: ["dip", "fusion"],
 flavor: "savory",
 hint: "",
 },
+{
+  id: "thai-basil-chicken-rice",
+  sideEgg: true,
+  protein: "chicken",
+  displayNum: 224,
+  carb: "rice",
+  time: 20,
+  title: "Thai Basil Chicken Rice",
+  desc: "Pad kra pao-style minced chicken thighs with fresh Thai basil, fish sauce, oyster sauce, and a runny crispy fried egg on top.",
+  tags: ["eggs", "thai", "spicy"],
+  flavor: "savory",
+  hint: "",
+},
 ];
 
 // --- RECIPE DETAILS (ingredients, steps, hacks) ---
@@ -10069,7 +10082,7 @@ notes: "Chipotle paste is available at larger REWE or international supermarkets
 },
 "chinese-dan-dan-udon": {
 image: null,
-video: "OlTOf0YZdMA",
+video: "",
 ingredients: [
 { section: "Protein", items: [{ name: "Ground beef (20% fat)", amt: "{{proteinG}}g raw" }] },
 { section: "Carb Base", items: [{ name: "Udon noodles (fresh or dried)", amt: "{{carbG}}g" }] },
