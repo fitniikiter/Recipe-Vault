@@ -2987,7 +2987,7 @@ const RECIPE_DETAILS = {
 
 "japanese-teriyaki-chicken": {
   image: null,
-  video: null,
+  video: "aBCKDv_y3wk",
   ingredients: [
     { section: "Protein", items: [{ name: "Boneless skinless chicken thighs", amt: "{{proteinG}}g raw" }] },
     { section: "Carb Base", items: [{ name: "Jasmine rice (dry)", amt: "{{carbG}}g" }] },
@@ -7735,7 +7735,7 @@ const RECIPE_DETAILS = {
 },
 "american-philly-cheesesteak-hash": {
   image: null,
-  video: "",
+  video: "H70YPUlXkJk",
   ingredients: [
     { section: "Protein", items: [{ name: "Ground beef (15% fat)", amt: "{{proteinG}}g raw" }] },
     { section: "Carb Base", items: [{ name: "Waxy potatoes (diced 1.5cm)", amt: "{{carbG}}g" }] },
@@ -7814,7 +7814,7 @@ const RECIPE_DETAILS = {
 },
 "mexican-beef-taco-potato-bowl": {
   image: null,
-  video: "",
+  video: "cL9Mk0dzncc",
   ingredients: [
     { section: "Protein", items: [{ name: "Ground beef (15% fat)", amt: "{{proteinG}}g raw" }] },
     { section: "Carb Base", items: [{ name: "Waxy potatoes (diced 2cm)", amt: "{{carbG}}g" }] },
@@ -8537,7 +8537,7 @@ const RECIPE_DETAILS = {
 
 "mediterranean-smashed-potato-bowl": {
 image: null,
-video: "",
+video: "wE3jIAp0nQ8",
 ingredients: [
 { section: "Protein", items: [{ name: "Boneless skinless chicken thighs", amt: "{{proteinG}}g raw" }] },
 { section: "Carb Base", items: [{ name: "Waxy potatoes (baby potatoes)", amt: "{{carbG}}g" }] },
@@ -9086,7 +9086,7 @@ notes: "Leftovers keep 3 days in the fridge — reheat potatoes in a dry pan or 
 },
 "spanish-patatas-bravas-chicken": {
   image: null,
-  video: "",
+  video: "1Kbflv4otVQ",
   ingredients: [
     {
       section: "Protein",
@@ -10082,7 +10082,7 @@ notes: "Chipotle paste is available at larger REWE or international supermarkets
 },
 "chinese-dan-dan-udon": {
 image: null,
-video: "",
+video: "Azz9a3VimP0",
 ingredients: [
 { section: "Protein", items: [{ name: "Ground beef (20% fat)", amt: "{{proteinG}}g raw" }] },
 { section: "Carb Base", items: [{ name: "Udon noodles (fresh or dried)", amt: "{{carbG}}g" }] },
@@ -10667,7 +10667,7 @@ notes: "Magerquark can be swapped for Greek yogurt (0% fat) with near-identical 
 },
 "asian-satay-chicken-potato": {
 image: null,
-video: "",
+video: "Ze-gNvJY5Ao",
 ingredients: [
 { section: "Protein", items: [{ name: "Boneless skinless chicken thighs", amt: "{{proteinG}}g raw" }] },
 { section: "Carb Base", items: [{ name: "Waxy potatoes", amt: "{{carbG}}g" }] },
@@ -11077,7 +11077,7 @@ notes: "Leftovers reheat well — add a splash of water when reheating to loosen
 
 "north-african-harissa-chicken-potato": {
   image: null,
-  video: "",
+  video: "Vk9k4Mn7JSg",
   ingredients: [
     { section: "Protein", items: [{ name: "Boneless skinless chicken thighs", amt: "{{proteinG}}g raw" }] },
     { section: "Carb Base", items: [{ name: "Waxy potatoes (baby/Drillinge)", amt: "{{carbG}}g" }] },
@@ -11131,7 +11131,7 @@ notes: "Leftovers reheat well — add a splash of water when reheating to loosen
 },
 "korean-beef-lettuce-cups": {
 image: null,
-video: "",
+video: "855zp4Weumg",
 ingredients: [
 { section: "Protein", items: [{ name: "Lean ground beef (5% fat)", amt: "{{proteinG}}g raw" }] },
 { section: "Gochujang Glaze", items: [
