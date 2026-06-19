@@ -2,28 +2,23 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fat Loss Guide — FIT NIIKITER</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { background: #080808; color: #fff; font-family: 'Bebas Neue', Impact, sans-serif; min-height: 100vh; }
-    #root { max-width: 500px; margin: 0 auto; min-height: 100vh; }
+    html, body { font-family: 'Bebas Neue', Impact, sans-serif; min-height: 100vh; transition: background 0.25s ease; }
+    #root { width: 100%; margin: 0 auto; min-height: 100vh; }
     .btn { transition: all 0.18s ease; cursor: pointer; border: none; outline: none; }
-    .btn:hover { filter: brightness(1.12); transform: translateY(-1px); }
+    .btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
     .btn:active { transform: translateY(0); filter: brightness(0.95); }
-    .card { transition: transform 0.18s ease; cursor: pointer; }
+    .card { transition: transform 0.18s ease, background 0.25s ease, border-color 0.25s ease; }
     .card:hover { transform: translateX(3px); }
-    /* Range slider styling to match the dark neon theme */
-    input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 4px; background: #1c1c1c; outline: none; }
-    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%; background: #E8FF47; cursor: pointer; border: 3px solid #080808; box-shadow: 0 0 0 1px #E8FF47; }
-    input[type=range]::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: #E8FF47; cursor: pointer; border: 3px solid #080808; }
-    input[type=number], input[type=text] { font-family: 'Bebas Neue', sans-serif; }
-    input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
     input[type=number] { -moz-appearance: textfield; }
-    @keyframes pop { 0% { transform: scale(0.96); opacity: 0.6; } 100% { transform: scale(1); opacity: 1; } }
+    input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    @keyframes pop { 0% { transform: scale(0.97); opacity: 0.6; } 100% { transform: scale(1); opacity: 1; } }
     .pop { animation: pop 0.25s ease; }
   </style>
 </head>
@@ -32,57 +27,177 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
   <script>
-const { useState, useMemo } = React;
+const { useState, useMemo, useEffect } = React;
 const e = React.createElement;
+const Fragment = React.Fragment;
 
-// ── Theme accents ────────────────────────────────────────────────
-const LIME = "#E8FF47";
-const ORANGE = "#FF6B35";
-const BLUE = "#47D4FF";
-const PURPLE = "#B847FF";
+// ── Theme palettes (dark / light) ───────────────────────────────
+const THEMES = {
+  dark: {
+    bg: "#080808", card: "#0d0d0d", cardAlt: "#0c0c0c", border: "#161616",
+    text: "#fff", sub: "#888", faint: "#3a3a3a", line: "#131313",
+    chipBg: "#0a0a0a", chipBorder: "#1a1a1a", chipText: "#aaa", onAccent: "#000",
+    accent: { lime: "#E8FF47", orange: "#FF6B35", blue: "#47D4FF", purple: "#B847FF" },
+  },
+  light: {
+    bg: "#eef0f2", card: "#ffffff", cardAlt: "#f7f8fa", border: "#e2e5ea",
+    text: "#15171c", sub: "#5b6068", faint: "#9aa0a8", line: "#e2e5ea",
+    chipBg: "#f2f4f7", chipBorder: "#e2e5ea", chipText: "#3a3f47", onAccent: "#fff",
+    accent: { lime: "#5e8a00", orange: "#e0540a", blue: "#0479c2", purple: "#7c2fd6" },
+  },
+};
 
-// ── Activity levels (TDEE multipliers, Mifflin-St Jeor) ──────────
-const ACTIVITY = [
-  { id: "sed",   label: "Wenig", sub: "Bürojob, kaum Bewegung", mult: 1.2 },
-  { id: "light", label: "Leicht", sub: "1–2× Sport / Woche", mult: 1.375 },
-  { id: "mod",   label: "Aktiv", sub: "3–4× Sport / Woche", mult: 1.55 },
-  { id: "high",  label: "Sehr aktiv", sub: "5–6× Sport / Woche", mult: 1.725 },
-];
+// ── Calculation constants (language independent) ─────────────────
+const ACT_MULT = { sed: 1.2, light: 1.375, mod: 1.55, high: 1.725 };
+const DEF_PCT = { soft: 0.15, std: 0.20, hard: 0.25 };
+const DEF_COLOR = { soft: "blue", std: "lime", hard: "orange" };
 
-// ── Deficit options ──────────────────────────────────────────────
-const DEFICITS = [
-  { id: "soft", label: "SANFT", pct: 0.15, color: BLUE, sub: "Muskelschutz max · langsam" },
-  { id: "std",  label: "STANDARD", pct: 0.20, color: LIME, sub: "Bester Kompromiss · empfohlen" },
-  { id: "hard", label: "AGGRESSIV", pct: 0.25, color: ORANGE, sub: "Schnell · nur kurzfristig" },
-];
+// ── Translations ─────────────────────────────────────────────────
+const T = {
+  de: {
+    htmlLang: "de",
+    eyebrow: "Fett verlieren · ohne Bullshit",
+    title: "FAT LOSS GUIDE",
+    subtitle: "Dein Schritt-für-Schritt Plan + Rechner — by FIT NIIKITER",
+    tabs: { start: "START", calc: "RECHNER", rules: "REGELN", food: "ESSEN", fail: "FEHLER" },
+    startHeading: "So gehst du vor — Schritt für Schritt",
+    steps: [
+      { num: "01", color: "lime", title: "Kalorien berechnen", body: "Öffne den Rechner und finde dein Kalorien-Ziel. Das ist dein Fundament — ohne diese Zahl machst du Blindflug.", cta: "ZUM RECHNER →" },
+      { num: "02", color: "orange", title: "Protein festlegen", body: "Nimm den Protein-Wert aus dem Rechner (~2g pro kg). Bau JEDE Mahlzeit um eine Proteinquelle herum." },
+      { num: "03", color: "purple", title: "Krafttraining starten", body: "3–4× pro Woche Eisen bewegen. Das sagt deinem Körper: Muskeln behalten, Fett verbrennen." },
+      { num: "04", color: "blue", title: "Schritte erhöhen", body: "Ziel: 8.000–10.000 Schritte am Tag. Der am meisten unterschätzte Fatloss-Booster." },
+      { num: "05", color: "lime", title: "Schlaf & Wasser", body: "7–8h Schlaf, 2–3 Liter Wasser. Regeneration, weniger Hunger, bessere Performance." },
+      { num: "06", color: "orange", title: "Tracken & anpassen", body: "Wiege dich morgens, schau den Wochen-Durchschnitt. Kein Fortschritt nach 2 Wochen? 150–200 kcal runter und weiter." },
+    ],
+    calc: {
+      dataLabel: "1 · Deine Daten", male: "♂ MANN", female: "♀ FRAU",
+      age: "Alter", ageUnit: "J", weight: "Gewicht", weightUnit: "kg", height: "Größe", heightUnit: "cm",
+      activityLabel: "2 · Aktivität", paceLabel: "3 · Tempo", resultLabel: "Dein Ergebnis",
+      targetTitle: "Kalorien-Ziel pro Tag",
+      under: (cut, kg) => `${cut} kcal unter Erhaltung · ca. ${kg} kg Fett / Woche`,
+      bmr: "Grundumsatz", tdee: "Erhaltung (TDEE)", macrosLabel: "Deine Makros · pro Tag",
+      protein: "Protein", carbs: "Kohlenhydrate", fat: "Fett",
+      note: "💡 Richtwert nach Mifflin-St-Jeor. Starte hier, wiege dich 1–2 Wochen und korrigiere: Gewicht steht still → 150–200 kcal runter. Verlierst du >1% Körpergewicht/Woche → etwas mehr essen.",
+    },
+    activity: [
+      { id: "sed", label: "Wenig", sub: "Bürojob, kaum Bewegung" },
+      { id: "light", label: "Leicht", sub: "1–2× Sport / Woche" },
+      { id: "mod", label: "Aktiv", sub: "3–4× Sport / Woche" },
+      { id: "high", label: "Sehr aktiv", sub: "5–6× Sport / Woche" },
+    ],
+    deficits: [
+      { id: "soft", label: "SANFT", sub: "Muskelschutz max · langsam" },
+      { id: "std", label: "STANDARD", sub: "Bester Kompromiss · empfohlen" },
+      { id: "hard", label: "AGGRESSIV", sub: "Schnell · nur kurzfristig" },
+    ],
+    rulesHeading: "Die 6 Regeln, die alles entscheiden",
+    rules: [
+      { num: "01", color: "lime", title: "Kaloriendefizit ist König", body: "Fett verlierst du NUR im Defizit — weniger Kalorien rein als raus. Keine Diät, kein Tee, kein Lebensmittel verbrennt Fett. Nur das Defizit zählt. Alles andere macht es nur leichter." },
+      { num: "02", color: "orange", title: "Protein ist nicht verhandelbar", body: "Ziel: ~2g pro kg Körpergewicht. Protein sättigt am stärksten, schützt deine Muskeln im Defizit und kostet beim Verdauen selbst Kalorien. Tracke Protein ZUERST — dann den Rest." },
+      { num: "03", color: "purple", title: "Krafttraining hält die Muskeln", body: "Im Defizit will der Körper Muskeln abbauen. Krafttraining ist das Signal: 'Behalte sie.' Ohne Training verlierst du Muskeln statt Fett — und siehst danach 'skinny fat' aus statt definiert." },
+      { num: "04", color: "blue", title: "Schritte schlagen Cardio", body: "8.000–10.000 Schritte täglich verbrennen über den Tag mehr als 30 Min auf dem Laufband — und machen dich nicht so hungrig. NEAT (Alltagsbewegung) ist dein heimlicher Fat-Loss-Motor." },
+      { num: "05", color: "lime", title: "Schlaf entscheidet mit", body: "7–8h Schlaf. Zu wenig Schlaf = mehr Hunger (Ghrelin hoch), weniger Sättigung (Leptin runter), schlechtere Regeneration. Schlechter Schlaf sabotiert das beste Defizit." },
+      { num: "06", color: "orange", title: "Konsistenz > Perfektion", body: "Ein 'schlechter' Tag macht dich nicht dick — eine schlechte Woche schon. 80% sauber, 20% flexibel. Die Diät, die du durchhältst, schlägt die 'perfekte', die du nach 2 Wochen abbrichst." },
+    ],
+    foodHeading: "Was auf den Teller kommt",
+    foods: [
+      { cat: "PROTEIN — die Basis", color: "orange", items: ["Magerquark / Skyr", "Hähnchen- & Putenbrust", "Eier / Eiklar", "Tilapia, Kabeljau, Thunfisch", "Mageres Rinderhack (5%)", "Whey Protein", "Magerer Harzer / Hüttenkäse"] },
+      { cat: "VOLUMEN — füllt den Magen", color: "blue", items: ["Gurke, Zucchini, Paprika", "Brokkoli, Blumenkohl", "Salat & Blattgemüse", "Tomaten", "Beeren (kalorienarm)", "Wassermelone", "Popcorn (luftgepoppt)"] },
+      { cat: "SLOW CARBS — Energie", color: "purple", items: ["Kartoffeln & Süßkartoffeln", "Reis & Vollkornreis", "Haferflocken", "Vollkornnudeln", "Hülsenfrüchte (Linsen, Bohnen)", "Vollkornbrot"] },
+      { cat: "SMART FATS — in Maßen", color: "lime", items: ["Olivenöl (abmessen!)", "Avocado (halbe)", "Nüsse (Handvoll)", "Leinsamen / Chia", "Fettiger Fisch (Lachs)"] },
+    ],
+    plateTitle: "DIE TELLER-FORMEL",
+    plateBody: "½ Teller Gemüse (Volumen) · ¼ Protein · ¼ Carbs · ein Daumen Fett. So wirst du satt, triffst die Makros und musst kaum rechnen.",
+    failHeading: "Die Fehler, die dein Defizit killen",
+    mistakes: [
+      { wrong: "Kalorien trinken", right: "Säfte, Softdrinks, Latte, Alkohol — flüssige Kalorien sättigen NICHT. Trink Wasser, schwarzen Kaffee, Tee. Größter versteckter Diät-Killer." },
+      { wrong: "Öl & Soßen nicht zählen", right: "1 EL Öl = ~100 kcal. Ein 'Spritzer' beim Anbraten + Dressing + Mayo = schnell 400 kcal unsichtbar. Öl IMMER abmessen, nicht schätzen." },
+      { wrong: "Wochenende ignorieren", right: "Mo–Fr perfekt, Sa+So alles egal? 2 Tage Überschuss können das 5-Tage-Defizit komplett auffressen. Die Woche zählt als Ganzes." },
+      { wrong: "Zu wenig essen / Crash-Diät", right: "1.000 kcal halten? Geht 2 Wochen, dann Heißhunger-Crash, Muskelverlust und Jojo. Lieber moderates Defizit, das du Monate durchhältst." },
+      { wrong: "Sich täglich wiegen & verzweifeln", right: "Wasser, Salz, Verdauung, Zyklus — dein Gewicht schwankt 1–2 kg am Tag. Schau den Wochen-DURCHSCHNITT an, nicht die Tageszahl." },
+      { wrong: "Nur Cardio, kein Kraftsport", right: "Stundenlang Laufband ohne Eisen = Muskelabbau. Der Körper wird kleiner, aber bleibt weich. Kraft + Defizit = der definierte Look." },
+    ],
+    disclaimer: "Kein medizinischer Rat. Bei Vorerkrankungen oder Essstörung: erst mit Arzt sprechen.",
+  },
+  en: {
+    htmlLang: "en",
+    eyebrow: "Lose fat · no bullshit",
+    title: "FAT LOSS GUIDE",
+    subtitle: "Your step-by-step plan + calculator — by FIT NIIKITER",
+    tabs: { start: "START", calc: "CALC", rules: "RULES", food: "FOOD", fail: "MISTAKES" },
+    startHeading: "Here's how to do it — step by step",
+    steps: [
+      { num: "01", color: "lime", title: "Calculate your calories", body: "Open the calculator and find your calorie target. This is your foundation — without this number you're flying blind.", cta: "GO TO CALCULATOR →" },
+      { num: "02", color: "orange", title: "Set your protein", body: "Take the protein value from the calculator (~2g per kg). Build EVERY meal around a protein source." },
+      { num: "03", color: "purple", title: "Start strength training", body: "Lift 3–4× per week. It tells your body: keep the muscle, burn the fat." },
+      { num: "04", color: "blue", title: "Increase your steps", body: "Aim for 8,000–10,000 steps a day. The most underrated fat-loss booster." },
+      { num: "05", color: "lime", title: "Sleep & water", body: "7–8h of sleep, 2–3 liters of water. Recovery, less hunger, better performance." },
+      { num: "06", color: "orange", title: "Track & adjust", body: "Weigh yourself in the morning, watch the weekly average. No progress after 2 weeks? Drop 150–200 kcal and keep going." },
+    ],
+    calc: {
+      dataLabel: "1 · Your data", male: "♂ MALE", female: "♀ FEMALE",
+      age: "Age", ageUnit: "y", weight: "Weight", weightUnit: "kg", height: "Height", heightUnit: "cm",
+      activityLabel: "2 · Activity", paceLabel: "3 · Pace", resultLabel: "Your result",
+      targetTitle: "Daily calorie target",
+      under: (cut, kg) => `${cut} kcal below maintenance · approx. ${kg} kg fat / week`,
+      bmr: "BMR (base)", tdee: "Maintenance (TDEE)", macrosLabel: "Your macros · per day",
+      protein: "Protein", carbs: "Carbs", fat: "Fat",
+      note: "💡 Estimate based on Mifflin-St Jeor. Start here, track your weight for 1–2 weeks and adjust: weight stalls → drop 150–200 kcal. Losing >1% bodyweight/week → eat a bit more.",
+    },
+    activity: [
+      { id: "sed", label: "Low", sub: "Desk job, barely moving" },
+      { id: "light", label: "Light", sub: "1–2× sport / week" },
+      { id: "mod", label: "Active", sub: "3–4× sport / week" },
+      { id: "high", label: "Very active", sub: "5–6× sport / week" },
+    ],
+    deficits: [
+      { id: "soft", label: "GENTLE", sub: "Max muscle retention · slow" },
+      { id: "std", label: "STANDARD", sub: "Best balance · recommended" },
+      { id: "hard", label: "AGGRESSIVE", sub: "Fast · short term only" },
+    ],
+    rulesHeading: "The 6 rules that decide everything",
+    rules: [
+      { num: "01", color: "lime", title: "A calorie deficit is king", body: "You only lose fat in a deficit — fewer calories in than out. No diet, tea or food burns fat. Only the deficit counts. Everything else just makes it easier." },
+      { num: "02", color: "orange", title: "Protein is non-negotiable", body: "Target: ~2g per kg of bodyweight. Protein keeps you full, protects your muscle in a deficit and burns calories just being digested. Track protein FIRST — then the rest." },
+      { num: "03", color: "purple", title: "Strength training keeps muscle", body: "In a deficit your body wants to burn muscle. Strength training is the signal: 'keep it.' Without training you lose muscle instead of fat — and end up 'skinny fat' instead of defined." },
+      { num: "04", color: "blue", title: "Steps beat cardio", body: "8,000–10,000 daily steps burn more over the day than 30 min on a treadmill — and won't make you as hungry. NEAT (daily movement) is your secret fat-loss engine." },
+      { num: "05", color: "lime", title: "Sleep decides too", body: "7–8h of sleep. Too little = more hunger (ghrelin up), less fullness (leptin down), worse recovery. Bad sleep sabotages the best deficit." },
+      { num: "06", color: "orange", title: "Consistency > perfection", body: "One 'bad' day won't make you fat — a bad week will. 80% clean, 20% flexible. The diet you stick to beats the 'perfect' one you quit after 2 weeks." },
+    ],
+    foodHeading: "What goes on the plate",
+    foods: [
+      { cat: "PROTEIN — the base", color: "orange", items: ["Low-fat quark / skyr", "Chicken & turkey breast", "Eggs / egg whites", "Tilapia, cod, tuna", "Lean beef (5%)", "Whey protein", "Low-fat cottage cheese"] },
+      { cat: "VOLUME — fills you up", color: "blue", items: ["Cucumber, zucchini, pepper", "Broccoli, cauliflower", "Salad & leafy greens", "Tomatoes", "Berries (low-cal)", "Watermelon", "Air-popped popcorn"] },
+      { cat: "SLOW CARBS — energy", color: "purple", items: ["Potatoes & sweet potatoes", "Rice & brown rice", "Oats", "Wholegrain pasta", "Legumes (lentils, beans)", "Wholegrain bread"] },
+      { cat: "SMART FATS — in moderation", color: "lime", items: ["Olive oil (measure it!)", "Avocado (half)", "Nuts (a handful)", "Flax / chia seeds", "Fatty fish (salmon)"] },
+    ],
+    plateTitle: "THE PLATE FORMULA",
+    plateBody: "½ plate veggies (volume) · ¼ protein · ¼ carbs · a thumb of fat. You get full, hit your macros and barely have to count.",
+    failHeading: "The mistakes that kill your deficit",
+    mistakes: [
+      { wrong: "Drinking your calories", right: "Juice, soda, lattes, alcohol — liquid calories don't fill you up. Drink water, black coffee, tea. The biggest hidden diet killer." },
+      { wrong: "Not counting oil & sauces", right: "1 tbsp of oil = ~100 kcal. A 'splash' for frying + dressing + mayo = 400 hidden kcal fast. ALWAYS measure oil, never guess." },
+      { wrong: "Ignoring the weekend", right: "Mon–Fri perfect, Sat+Sun anything goes? 2 surplus days can erase the whole 5-day deficit. The week counts as a whole." },
+      { wrong: "Eating too little / crash diets", right: "Holding 1,000 kcal? Lasts 2 weeks, then cravings, muscle loss and yo-yo. Better a moderate deficit you can hold for months." },
+      { wrong: "Weighing daily and despairing", right: "Water, salt, digestion, cycle — your weight swings 1–2 kg a day. Look at the weekly AVERAGE, not the daily number." },
+      { wrong: "Only cardio, no lifting", right: "Hours of treadmill without iron = muscle loss. The body gets smaller but stays soft. Strength + deficit = the defined look." },
+    ],
+    disclaimer: "Not medical advice. With pre-existing conditions or an eating disorder: talk to a doctor first.",
+  },
+};
 
-const RULES = [
-  { num: "01", color: LIME, title: "Kaloriendefizit ist König", body: "Fett verlierst du NUR im Defizit — weniger Kalorien rein als raus. Keine Diät, kein Tee, kein Lebensmittel verbrennt Fett. Nur das Defizit zählt. Alles andere macht es nur leichter." },
-  { num: "02", color: ORANGE, title: "Protein ist nicht verhandelbar", body: "Ziel: ~2g pro kg Körpergewicht. Protein sättigt am stärksten, schützt deine Muskeln im Defizit und kostet beim Verdauen selbst Kalorien. Tracke Protein ZUERST — dann den Rest." },
-  { num: "03", color: PURPLE, title: "Krafttraining hält die Muskeln", body: "Im Defizit will der Körper Muskeln abbauen. Krafttraining ist das Signal: 'Behalte sie.' Ohne Training verlierst du Muskeln statt Fett — und siehst danach 'skinny fat' aus statt definiert." },
-  { num: "04", color: BLUE, title: "Schritte schlagen Cardio", body: "8.000–10.000 Schritte täglich verbrennen über den Tag mehr als 30 Min auf dem Laufband — und machen dich nicht so hungrig. NEAT (Alltagsbewegung) ist dein heimlicher Fat-Loss-Motor." },
-  { num: "05", color: LIME, title: "Schlaf entscheidet mit", body: "7–8h Schlaf. Zu wenig Schlaf = mehr Hunger (Ghrelin hoch), weniger Sättigung (Leptin runter), schlechtere Regeneration. Schlechter Schlaf sabotiert das beste Defizit." },
-  { num: "06", color: ORANGE, title: "Konsistenz > Perfektion", body: "Ein 'schlechter' Tag macht dich nicht dick — eine schlechte Woche schon. 80% sauber, 20% flexibel. Die Diät, die du durchhältst, schlägt die 'perfekte', die du nach 2 Wochen abbrichst." },
-];
-
-const FOODS = [
-  { cat: "PROTEIN — die Basis", color: ORANGE, items: ["Magerquark / Skyr", "Hähnchen- & Putenbrust", "Eier / Eiklar", "Tilapia, Kabeljau, Thunfisch", "Mageres Rinderhack (5%)", "Whey Protein", "Magerer Harzer / Hüttenkäse"] },
-  { cat: "VOLUMEN — füllt den Magen", color: BLUE, items: ["Gurke, Zucchini, Paprika", "Brokkoli, Blumenkohl", "Salat & Blattgemüse", "Tomaten", "Beeren (kalorienarm)", "Wassermelone", "Popcorn (luftgepoppt)"] },
-  { cat: "SLOW CARBS — Energie", color: PURPLE, items: ["Kartoffeln & Süßkartoffeln", "Reis & Vollkornreis", "Haferflocken", "Vollkornnudeln", "Hülsenfrüchte (Linsen, Bohnen)", "Vollkornbrot"] },
-  { cat: "SMART FATS — in Maßen", color: LIME, items: ["Olivenöl (abmessen!)", "Avocado (halbe)", "Nüsse (Handvoll)", "Leinsamen / Chia", "Fettiger Fisch (Lachs)"] },
-];
-
-const MISTAKES = [
-  { wrong: "Kalorien trinken", right: "Säfte, Softdrinks, Latte, Alkohol — flüssige Kalorien sättigen NICHT. Trink Wasser, schwarzen Kaffee, Tee. Größter versteckter Diät-Killer.", color: ORANGE },
-  { wrong: "Öl & Soßen nicht zählen", right: "1 EL Öl = ~100 kcal. Ein 'Spritzer' beim Anbraten + Dressing + Mayo = schnell 400 kcal unsichtbar. Öl IMMER abmessen, nicht schätzen.", color: ORANGE },
-  { wrong: "Wochenende ignorieren", right: "Mo–Fr perfekt, Sa+So alles egal? 2 Tage Überschuss können das 5-Tage-Defizit komplett auffressen. Die Woche zählt als Ganzes.", color: ORANGE },
-  { wrong: "Zu wenig essen / Crash-Diät", right: "1.000 kcal halten? Geht 2 Wochen, dann Heißhunger-Crash, Muskelverlust und Jojo. Lieber moderates Defizit, das du Monate durchhältst.", color: ORANGE },
-  { wrong: "Sich täglich wiegen & verzweifeln", right: "Wasser, Salz, Verdauung, Zyklus — dein Gewicht schwankt 1–2 kg am Tag. Schau den Wochen-DURCHSCHNITT an, nicht die Tageszahl.", color: ORANGE },
-  { wrong: "Nur Cardio, kein Kraftsport", right: "Stundenlang Laufband ohne Eisen = Muskelabbau. Der Körper wird kleiner, aber bleibt weich. Kraft + Defizit = der definierte Look.", color: ORANGE },
-];
+// ── Persistence helpers ──────────────────────────────────────────
+const load = (key, fallback) => { try { return localStorage.getItem(key) || fallback; } catch (_) { return fallback; } };
+const save = (key, val) => { try { localStorage.setItem(key, val); } catch (_) {} };
 
 function App() {
-  const [tab, setTab] = useState("calc");
+  const initLang = load("flg-lang", (navigator.language || "en").toLowerCase().startsWith("de") ? "de" : "en");
+  const initTheme = load("flg-theme", (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) ? "light" : "dark");
+
+  const [lang, setLang] = useState(initLang);
+  const [themeId, setThemeId] = useState(initTheme);
+  const [tab, setTab] = useState("start");
+  const [isDesktop, setIsDesktop] = useState(typeof window !== "undefined" && window.innerWidth >= 760);
 
   // Calculator state
   const [sex, setSex] = useState("m");
@@ -92,160 +207,185 @@ function App() {
   const [act, setAct] = useState("mod");
   const [deficit, setDeficit] = useState("std");
 
+  const t = T[lang];
+  const theme = THEMES[themeId];
+  const A = theme.accent;
+  const isLight = themeId === "light";
+
+  // Apply body background + persist on change
+  useEffect(() => { document.body.style.background = theme.bg; document.documentElement.lang = t.htmlLang; }, [theme.bg, t.htmlLang]);
+  useEffect(() => { save("flg-lang", lang); }, [lang]);
+  useEffect(() => { save("flg-theme", themeId); }, [themeId]);
+
+  // Responsive listener
+  useEffect(() => {
+    const onResize = () => setIsDesktop(window.innerWidth >= 760);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   const result = useMemo(() => {
-    const w = Number(weight) || 0;
-    const h = Number(height) || 0;
-    const a = Number(age) || 0;
+    const w = Number(weight) || 0, h = Number(height) || 0, a = Number(age) || 0;
     if (!w || !h || !a) return null;
-    // Mifflin-St Jeor BMR
-    const bmr = sex === "m"
-      ? 10 * w + 6.25 * h - 5 * a + 5
-      : 10 * w + 6.25 * h - 5 * a - 161;
-    const mult = ACTIVITY.find(x => x.id === act).mult;
-    const tdee = Math.round(bmr * mult);
-    const def = DEFICITS.find(x => x.id === deficit);
-    const target = Math.round(tdee * (1 - def.pct));
+    const bmr = sex === "m" ? 10 * w + 6.25 * h - 5 * a + 5 : 10 * w + 6.25 * h - 5 * a - 161;
+    const tdee = Math.round(bmr * ACT_MULT[act]);
+    const target = Math.round(tdee * (1 - DEF_PCT[deficit]));
     const kcalCut = tdee - target;
-    const weekLoss = (kcalCut * 7 / 7700); // ~7700 kcal per kg fat
-    // Macros: protein 2g/kg, fat 0.9g/kg, rest carbs
+    const weekLoss = (kcalCut * 7 / 7700); // ~7700 kcal per kg of fat
     const protein = Math.round(w * 2);
     const fat = Math.round(w * 0.9);
     const carbs = Math.max(0, Math.round((target - protein * 4 - fat * 9) / 4));
-    return { bmr: Math.round(bmr), tdee, target, kcalCut, weekLoss, protein, fat, carbs, defColor: def.color };
+    return { bmr: Math.round(bmr), tdee, target, kcalCut, weekLoss, protein, fat, carbs, colorKey: DEF_COLOR[deficit] };
   }, [sex, age, weight, height, act, deficit]);
 
-  // ── Reusable label ──
-  const eyebrow = (txt, mb = 10) => e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#383838", fontSize: 9, letterSpacing: 3, textTransform: "uppercase", marginBottom: mb } }, txt);
+  const maxW = isDesktop ? 960 : 500;
+  const cols2 = isDesktop ? "1fr 1fr" : "1fr";
 
-  const numberField = (label, val, set, unit) => e('div', { style: { background: "#0d0d0d", border: "1px solid #181818", borderRadius: 10, padding: "10px 14px", flex: 1 } },
-    e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#383838", fontSize: 9, letterSpacing: 2, textTransform: "uppercase" } }, label),
+  const eyebrow = (txt, mb = 10) => e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.faint, fontSize: 9, letterSpacing: 3, textTransform: "uppercase", marginBottom: mb } }, txt);
+
+  const numberField = (label, val, set, unit) => e('div', { style: { background: theme.card, border: `1px solid ${theme.border}`, borderRadius: 10, padding: "10px 14px", flex: 1 } },
+    e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.faint, fontSize: 9, letterSpacing: 2, textTransform: "uppercase" } }, label),
     e('div', { style: { display: "flex", alignItems: "baseline", gap: 5 } },
-      e('input', {
-        type: "number", value: val,
-        onChange: ev => set(ev.target.value),
-        style: { width: "100%", background: "transparent", border: "none", color: "#fff", fontSize: 30, outline: "none", letterSpacing: 1 }
-      }),
-      e('span', { style: { fontFamily: "'DM Sans', sans-serif", color: "#333", fontSize: 13 } }, unit)
+      e('input', { type: "number", inputMode: "numeric", value: val, onChange: ev => set(ev.target.value), style: { width: "100%", background: "transparent", border: "none", color: theme.text, fontSize: 30, outline: "none", letterSpacing: 1, fontFamily: "'Bebas Neue', sans-serif" } }),
+      e('span', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.faint, fontSize: 13 } }, unit)
     )
   );
 
-  return e('div', { style: { fontFamily: "'Bebas Neue', Impact, sans-serif", background: "#080808", minHeight: "100vh", color: "#fff", maxWidth: 500, margin: "0 auto" } },
+  // ── Top-right controls: theme toggle + language flags ──
+  const ctrlBtn = (content, onClick, active, title) => e('button', {
+    className: "btn", onClick, title,
+    style: { width: 34, height: 34, borderRadius: 9, fontSize: 16, lineHeight: 1, display: "flex", alignItems: "center", justifyContent: "center", background: theme.card, border: `1px solid ${active ? A.lime : theme.border}`, color: theme.text, fontFamily: "'DM Sans', sans-serif" }
+  }, content);
+
+  const controls = e('div', { style: { position: "absolute", top: 14, right: 14, display: "flex", gap: 6, alignItems: "center", zIndex: 5 } },
+    ctrlBtn(isLight ? "🌙" : "☀️", () => setThemeId(isLight ? "dark" : "light"), false, isLight ? "Dark mode" : "Light mode"),
+    ctrlBtn("🇩🇪", () => setLang("de"), lang === "de", "Deutsch"),
+    ctrlBtn("🇬🇧", () => setLang("en"), lang === "en", "English")
+  );
+
+  // ── Reusable building blocks ──
+  const stepCard = (s) => e('div', { key: s.num, style: { background: theme.cardAlt, border: `1px solid ${theme.border}`, borderRadius: 12, padding: "16px", display: "flex", gap: 14, position: "relative", overflow: "hidden", alignItems: "flex-start" } },
+    e('div', { style: { position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: A[s.color] } }),
+    e('div', { style: { fontSize: 34, color: A[s.color], lineHeight: 0.9, flexShrink: 0, minWidth: 34 } }, s.num),
+    e('div', null,
+      e('div', { style: { fontSize: 21, letterSpacing: 0.3, lineHeight: 1.05, color: theme.text } }, s.title),
+      e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.sub, fontSize: 13, marginTop: 6, lineHeight: 1.6 } }, s.body),
+      s.cta && e('button', { className: "btn", onClick: () => { setTab("calc"); window.scrollTo({ top: 0, behavior: "smooth" }); }, style: { marginTop: 12, background: A.lime, color: theme.onAccent, fontFamily: "'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 1, padding: "9px 16px", borderRadius: 8 } }, s.cta)
+    )
+  );
+
+  // ── CALC sections ──
+  const dataSection = e('div', null,
+    eyebrow(t.calc.dataLabel),
+    e('div', { style: { display: "flex", background: theme.cardAlt, borderRadius: 10, padding: 4, border: `1px solid ${theme.border}`, marginBottom: 10 } },
+      [{ id: "m", l: t.calc.male }, { id: "w", l: t.calc.female }].map(o =>
+        e('button', { key: o.id, className: "btn", onClick: () => setSex(o.id), style: { flex: 1, padding: "10px", borderRadius: 7, fontSize: 17, letterSpacing: 1, background: sex === o.id ? A.lime : "transparent", color: sex === o.id ? theme.onAccent : theme.faint, fontFamily: "'Bebas Neue', sans-serif" } }, o.l)
+      )
+    ),
+    e('div', { style: { display: "flex", gap: 8 } },
+      numberField(t.calc.age, age, setAge, t.calc.ageUnit),
+      numberField(t.calc.weight, weight, setWeight, t.calc.weightUnit),
+      numberField(t.calc.height, height, setHeight, t.calc.heightUnit)
+    )
+  );
+
+  const activitySection = e('div', { style: { marginTop: 16 } },
+    eyebrow(t.calc.activityLabel),
+    e('div', { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 } },
+      t.activity.map(o =>
+        e('button', { key: o.id, className: "btn", onClick: () => setAct(o.id), style: { textAlign: "left", padding: "11px 13px", borderRadius: 10, background: act === o.id ? (isLight ? "#f3f7e3" : "#11140a") : theme.cardAlt, border: `1px solid ${act === o.id ? A.lime + "99" : theme.border}`, fontFamily: "'Bebas Neue', sans-serif" } },
+          e('div', { style: { fontSize: 18, color: act === o.id ? A.lime : theme.sub, letterSpacing: 0.5 } }, o.label),
+          e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.faint, fontSize: 10, marginTop: 2 } }, o.sub)
+        )
+      )
+    )
+  );
+
+  const tempoSection = e('div', { style: { marginTop: 16 } },
+    eyebrow(t.calc.paceLabel),
+    e('div', { style: { display: "flex", gap: 7 } },
+      t.deficits.map(o => {
+        const c = A[DEF_COLOR[o.id]];
+        return e('button', { key: o.id, className: "btn", onClick: () => setDeficit(o.id), style: { flex: 1, padding: "12px 6px", borderRadius: 10, textAlign: "center", background: deficit === o.id ? c : theme.cardAlt, color: deficit === o.id ? theme.onAccent : theme.faint, border: `1px solid ${deficit === o.id ? c : theme.border}`, fontFamily: "'Bebas Neue', sans-serif" } },
+          e('div', { style: { fontSize: 17, letterSpacing: 0.5 } }, o.label),
+          e('div', { style: { fontFamily: "'DM Sans', sans-serif", fontSize: 9, marginTop: 3, opacity: 0.85 } }, `-${DEF_PCT[o.id] * 100}%`)
+        );
+      })
+    ),
+    e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.faint, fontSize: 10, marginTop: 8, textAlign: "center" } }, t.deficits.find(x => x.id === deficit).sub)
+  );
+
+  const resultSection = result && e('div', { className: "pop", key: result.target + themeId + lang },
+    eyebrow(t.calc.resultLabel),
+    e('div', { style: { background: theme.card, border: `1px solid ${A[result.colorKey]}55`, borderRadius: 14, padding: "18px", textAlign: "center", position: "relative", overflow: "hidden" } },
+      e('div', { style: { position: "absolute", top: -40, right: -40, width: 160, height: 160, background: `radial-gradient(circle, ${A[result.colorKey]}22 0%, transparent 65%)`, pointerEvents: "none" } }),
+      e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.faint, fontSize: 9, letterSpacing: 2, textTransform: "uppercase" } }, t.calc.targetTitle),
+      e('div', { style: { fontSize: 68, color: A[result.colorKey], lineHeight: 1, margin: "4px 0" } }, result.target),
+      e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.sub, fontSize: 12 } }, t.calc.under(result.kcalCut, result.weekLoss.toFixed(2)))
+    ),
+    e('div', { style: { display: "flex", gap: 7, marginTop: 7 } },
+      [{ l: t.calc.bmr, v: result.bmr }, { l: t.calc.tdee, v: result.tdee }].map((x, i) =>
+        e('div', { key: i, style: { flex: 1, background: theme.cardAlt, border: `1px solid ${theme.border}`, borderRadius: 10, padding: "11px 13px" } },
+          e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.faint, fontSize: 9, letterSpacing: 1.5, textTransform: "uppercase" } }, x.l),
+          e('div', { style: { fontSize: 26, color: theme.sub, lineHeight: 1.1, marginTop: 2 } }, `${x.v}`, e('span', { style: { fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: theme.faint } }, " kcal"))
+        )
+      )
+    ),
+    e('div', { style: { marginTop: 14 } },
+      eyebrow(t.calc.macrosLabel),
+      e('div', { style: { display: "flex", gap: 7 } },
+        [{ l: t.calc.protein, v: result.protein, c: A.orange }, { l: t.calc.carbs, v: result.carbs, c: A.blue }, { l: t.calc.fat, v: result.fat, c: A.purple }].map((m, i) =>
+          e('div', { key: i, style: { flex: 1, background: theme.card, border: `1px solid ${theme.border}`, borderRadius: 10, padding: "12px 10px", textAlign: "center" } },
+            e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.faint, fontSize: 9, letterSpacing: 1, textTransform: "uppercase" } }, m.l),
+            e('div', { style: { fontSize: 30, color: m.c, lineHeight: 1.1, marginTop: 3 } }, `${m.v}`, e('span', { style: { fontSize: 14, color: theme.faint } }, "g"))
+          )
+        )
+      )
+    ),
+    e('div', { style: { marginTop: 12, background: isLight ? "#fbfbef" : "#0a0a00", border: `1px solid ${A.lime}30`, borderRadius: 10, padding: "12px 14px", fontFamily: "'DM Sans', sans-serif", color: theme.sub, fontSize: 12, lineHeight: 1.65 } }, t.calc.note)
+  );
+
+  return e('div', { style: { fontFamily: "'Bebas Neue', Impact, sans-serif", background: theme.bg, minHeight: "100vh", color: theme.text, maxWidth: maxW, margin: "0 auto", transition: "background 0.25s ease, color 0.25s ease" } },
 
     // ── HEADER ──
-    e('div', { style: { padding: "28px 20px 20px", borderBottom: "1px solid #131313", position: "relative", overflow: "hidden" } },
-      e('div', { style: { position: "absolute", top: -50, right: -50, width: 200, height: 200, background: `radial-gradient(circle, ${LIME}14 0%, transparent 65%)`, pointerEvents: "none" } }),
-      eyebrow("Fett verlieren · ohne Bullshit", 6),
-      e('div', { style: { fontSize: "clamp(30px, 9vw, 52px)", lineHeight: 0.95, letterSpacing: 2 } }, "FAT LOSS GUIDE"),
-      e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#444", fontSize: 12, marginTop: 10 } }, "Dein Rechner + die Regeln, die wirklich zählen — by FIT NIIKITER")
+    e('div', { style: { padding: isDesktop ? "34px 28px 24px" : "28px 20px 20px", borderBottom: `1px solid ${theme.line}`, position: "relative", overflow: "hidden" } },
+      e('div', { style: { position: "absolute", top: -50, right: -50, width: 220, height: 220, background: `radial-gradient(circle, ${A.lime}1f 0%, transparent 65%)`, pointerEvents: "none" } }),
+      controls,
+      eyebrow(t.eyebrow, 6),
+      e('div', { style: { fontSize: isDesktop ? 64 : "clamp(30px, 9vw, 52px)", lineHeight: 0.95, letterSpacing: 2 } }, t.title),
+      e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.sub, fontSize: isDesktop ? 14 : 12, marginTop: 10 } }, t.subtitle)
     ),
 
     // ── TABS ──
-    e('div', { style: { display: "flex", background: "#0c0c0c", borderBottom: "1px solid #151515", position: "sticky", top: 0, zIndex: 10 } },
-      [{ id: "calc", label: "RECHNER" }, { id: "rules", label: "REGELN" }, { id: "food", label: "ESSEN" }, { id: "fail", label: "FEHLER" }].map(t =>
-        e('button', {
-          key: t.id, className: "btn", onClick: () => setTab(t.id),
-          style: { flex: 1, padding: "13px 2px", fontSize: 13, letterSpacing: 0.5, background: "transparent", color: tab === t.id ? LIME : "#333", borderBottom: `2px solid ${tab === t.id ? LIME : "transparent"}`, fontFamily: "'Bebas Neue', sans-serif" }
-        }, t.label)
+    e('div', { style: { display: "flex", background: theme.cardAlt, borderBottom: `1px solid ${theme.line}`, position: "sticky", top: 0, zIndex: 10 } },
+      Object.keys(t.tabs).map(id =>
+        e('button', { key: id, className: "btn", onClick: () => setTab(id), style: { flex: 1, padding: "13px 2px", fontSize: 13, letterSpacing: 0.5, background: "transparent", color: tab === id ? A.lime : theme.faint, borderBottom: `2px solid ${tab === id ? A.lime : "transparent"}`, fontFamily: "'Bebas Neue', sans-serif" } }, t.tabs[id])
       )
+    ),
+
+    // ════════ TAB: START ════════
+    tab === "start" && e('div', { style: { padding: isDesktop ? "20px 28px 36px" : "16px 20px 32px" } },
+      eyebrow(t.startHeading, 14),
+      e('div', { style: { display: "grid", gridTemplateColumns: cols2, gap: 8 } }, t.steps.map(stepCard))
     ),
 
     // ════════ TAB: RECHNER ════════
-    tab === "calc" && e(React.Fragment, null,
-      e('div', { style: { padding: "16px 20px 0" } },
-        eyebrow("1 · Deine Daten"),
-        // Sex toggle
-        e('div', { style: { display: "flex", background: "#0c0c0c", borderRadius: 10, padding: 4, border: "1px solid #181818", marginBottom: 10 } },
-          [{ id: "m", l: "♂ MANN" }, { id: "w", l: "♀ FRAU" }].map(o =>
-            e('button', { key: o.id, className: "btn", onClick: () => setSex(o.id),
-              style: { flex: 1, padding: "10px", borderRadius: 7, fontSize: 17, letterSpacing: 1, background: sex === o.id ? LIME : "transparent", color: sex === o.id ? "#000" : "#383838", fontFamily: "'Bebas Neue', sans-serif" } }, o.l)
-          )
-        ),
-        e('div', { style: { display: "flex", gap: 8, marginBottom: 8 } },
-          numberField("Alter", age, setAge, "J"),
-          numberField("Gewicht", weight, setWeight, "kg"),
-          numberField("Größe", height, setHeight, "cm")
-        )
-      ),
-
-      // Activity
-      e('div', { style: { padding: "8px 20px 0" } },
-        eyebrow("2 · Aktivität"),
-        e('div', { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 } },
-          ACTIVITY.map(o =>
-            e('button', { key: o.id, className: "btn", onClick: () => setAct(o.id),
-              style: { textAlign: "left", padding: "11px 13px", borderRadius: 10, background: act === o.id ? "#11140a" : "#0c0c0c", border: `1px solid ${act === o.id ? LIME + "55" : "#161616"}`, fontFamily: "'Bebas Neue', sans-serif" } },
-              e('div', { style: { fontSize: 18, color: act === o.id ? LIME : "#888", letterSpacing: 0.5 } }, o.label),
-              e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#3c3c3c", fontSize: 10, marginTop: 2 } }, o.sub)
-            )
-          )
-        )
-      ),
-
-      // Deficit
-      e('div', { style: { padding: "16px 20px 0" } },
-        eyebrow("3 · Tempo"),
-        e('div', { style: { display: "flex", gap: 7 } },
-          DEFICITS.map(o =>
-            e('button', { key: o.id, className: "btn", onClick: () => setDeficit(o.id),
-              style: { flex: 1, padding: "12px 6px", borderRadius: 10, textAlign: "center", background: deficit === o.id ? o.color : "#0c0c0c", color: deficit === o.id ? "#000" : "#444", border: `1px solid ${deficit === o.id ? o.color : "#161616"}`, fontFamily: "'Bebas Neue', sans-serif" } },
-              e('div', { style: { fontSize: 17, letterSpacing: 0.5 } }, o.label),
-              e('div', { style: { fontFamily: "'DM Sans', sans-serif", fontSize: 9, marginTop: 3, opacity: 0.8 } }, `-${o.pct * 100}%`)
-            )
-          )
-        ),
-        e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#3a3a3a", fontSize: 10, marginTop: 8, textAlign: "center" } }, DEFICITS.find(x => x.id === deficit).sub)
-      ),
-
-      // ── RESULT ──
-      result && e('div', { className: "pop", style: { padding: "20px 20px 0" }, key: result.target },
-        eyebrow("Dein Ergebnis"),
-        // Main target calories
-        e('div', { style: { background: "#0d0d0d", border: `1px solid ${result.defColor}40`, borderRadius: 14, padding: "18px", textAlign: "center", position: "relative", overflow: "hidden" } },
-          e('div', { style: { position: "absolute", top: -40, right: -40, width: 160, height: 160, background: `radial-gradient(circle, ${result.defColor}18 0%, transparent 65%)`, pointerEvents: "none" } }),
-          e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#383838", fontSize: 9, letterSpacing: 2, textTransform: "uppercase" } }, "Kalorien-Ziel pro Tag"),
-          e('div', { style: { fontSize: 68, color: result.defColor, lineHeight: 1, margin: "4px 0" } }, result.target),
-          e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#555", fontSize: 12 } }, `${result.kcalCut} kcal unter Erhaltung · ca. ${result.weekLoss.toFixed(2)} kg Fett / Woche`)
-        ),
-        // TDEE / BMR small
-        e('div', { style: { display: "flex", gap: 7, marginTop: 7 } },
-          [{ l: "Grundumsatz", v: result.bmr }, { l: "Erhaltung (TDEE)", v: result.tdee }].map((x, i) =>
-            e('div', { key: i, style: { flex: 1, background: "#0b0b0b", border: "1px solid #161616", borderRadius: 10, padding: "11px 13px" } },
-              e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#383838", fontSize: 9, letterSpacing: 1.5, textTransform: "uppercase" } }, x.l),
-              e('div', { style: { fontSize: 26, color: "#888", lineHeight: 1.1, marginTop: 2 } }, `${x.v}`, e('span', { style: { fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: "#333" } }, " kcal"))
-            )
-          )
-        ),
-        // Macros
-        e('div', { style: { marginTop: 14 } },
-          eyebrow("Deine Makros · pro Tag"),
-          e('div', { style: { display: "flex", gap: 7 } },
-            [{ l: "Protein", v: result.protein, c: ORANGE }, { l: "Kohlenhydrate", v: result.carbs, c: BLUE }, { l: "Fett", v: result.fat, c: PURPLE }].map((m, i) =>
-              e('div', { key: i, style: { flex: 1, background: "#0d0d0d", border: "1px solid #161616", borderRadius: 10, padding: "12px 10px", textAlign: "center" } },
-                e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#383838", fontSize: 9, letterSpacing: 1, textTransform: "uppercase" } }, m.l),
-                e('div', { style: { fontSize: 30, color: m.c, lineHeight: 1.1, marginTop: 3 } }, `${m.v}`, e('span', { style: { fontSize: 14, color: "#333" } }, "g"))
-              )
-            )
-          )
-        ),
-        e('div', { style: { marginTop: 12, background: "#0a0a00", border: `1px solid ${LIME}15`, borderRadius: 10, padding: "12px 14px", fontFamily: "'DM Sans', sans-serif", color: "#888", fontSize: 12, lineHeight: 1.65 } },
-          "💡 Richtwert nach Mifflin-St-Jeor. Starte hier, wiege dich 1–2 Wochen und korrigiere: ", e('br'),
-          "Gewicht steht still → 150–200 kcal runter. Verlierst du >1% Körpergewicht/Woche → etwas mehr essen."
-        ),
-        e('div', { style: { height: 28 } })
-      )
+    tab === "calc" && e('div', { style: { padding: isDesktop ? "20px 28px 36px" : "16px 20px 32px", display: "flex", flexDirection: isDesktop ? "row" : "column", gap: isDesktop ? 22 : 16, alignItems: "flex-start" } },
+      e('div', { style: { flex: 1, width: "100%" } }, dataSection, activitySection, tempoSection),
+      e('div', { style: { flex: 1, width: "100%", position: isDesktop ? "sticky" : "static", top: 60 } }, resultSection)
     ),
 
     // ════════ TAB: REGELN ════════
-    tab === "rules" && e('div', { style: { padding: "16px 20px 32px" } },
-      eyebrow("Die 6 Regeln, die alles entscheiden", 14),
-      e('div', { style: { display: "flex", flexDirection: "column", gap: 8 } },
-        RULES.map((r, i) =>
-          e('div', { key: i, style: { background: "#0c0c0c", border: "1px solid #161616", borderRadius: 12, padding: "16px", display: "flex", gap: 14, position: "relative", overflow: "hidden" } },
-            e('div', { style: { position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: r.color } }),
-            e('div', { style: { fontSize: 30, color: r.color, lineHeight: 1, flexShrink: 0, minWidth: 30 } }, r.num),
+    tab === "rules" && e('div', { style: { padding: isDesktop ? "20px 28px 36px" : "16px 20px 32px" } },
+      eyebrow(t.rulesHeading, 14),
+      e('div', { style: { display: "grid", gridTemplateColumns: cols2, gap: 8 } },
+        t.rules.map((r, i) =>
+          e('div', { key: i, className: "card", style: { background: theme.cardAlt, border: `1px solid ${theme.border}`, borderRadius: 12, padding: "16px", display: "flex", gap: 14, position: "relative", overflow: "hidden" } },
+            e('div', { style: { position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: A[r.color] } }),
+            e('div', { style: { fontSize: 30, color: A[r.color], lineHeight: 1, flexShrink: 0, minWidth: 30 } }, r.num),
             e('div', null,
               e('div', { style: { fontSize: 20, letterSpacing: 0.3, lineHeight: 1.05 } }, r.title),
-              e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#888", fontSize: 13, marginTop: 6, lineHeight: 1.6 } }, r.body)
+              e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.sub, fontSize: 13, marginTop: 6, lineHeight: 1.6 } }, r.body)
             )
           )
         )
@@ -253,46 +393,46 @@ function App() {
     ),
 
     // ════════ TAB: ESSEN ════════
-    tab === "food" && e('div', { style: { padding: "16px 20px 32px" } },
-      eyebrow("Was auf den Teller kommt", 14),
-      e('div', { style: { display: "flex", flexDirection: "column", gap: 10 } },
-        FOODS.map((f, i) =>
-          e('div', { key: i, style: { background: "#0d0d0d", border: `1px solid ${f.color}22`, borderRadius: 12, padding: "14px 16px" } },
+    tab === "food" && e('div', { style: { padding: isDesktop ? "20px 28px 36px" : "16px 20px 32px" } },
+      eyebrow(t.foodHeading, 14),
+      e('div', { style: { display: "grid", gridTemplateColumns: cols2, gap: 10 } },
+        t.foods.map((f, i) =>
+          e('div', { key: i, style: { background: theme.card, border: `1px solid ${A[f.color]}33`, borderRadius: 12, padding: "14px 16px" } },
             e('div', { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 10 } },
-              e('div', { style: { width: 8, height: 8, borderRadius: "50%", background: f.color } }),
-              e('div', { style: { fontSize: 17, letterSpacing: 0.5, color: f.color } }, f.cat)
+              e('div', { style: { width: 8, height: 8, borderRadius: "50%", background: A[f.color] } }),
+              e('div', { style: { fontSize: 17, letterSpacing: 0.5, color: A[f.color] } }, f.cat)
             ),
             e('div', { style: { display: "flex", flexWrap: "wrap", gap: 6 } },
               f.items.map((it, j) =>
-                e('span', { key: j, style: { fontFamily: "'DM Sans', sans-serif", background: "#0a0a0a", border: "1px solid #1a1a1a", color: "#aaa", fontSize: 12, padding: "6px 10px", borderRadius: 7 } }, it)
+                e('span', { key: j, style: { fontFamily: "'DM Sans', sans-serif", background: theme.chipBg, border: `1px solid ${theme.chipBorder}`, color: theme.chipText, fontSize: 12, padding: "6px 10px", borderRadius: 7 } }, it)
               )
             )
           )
         )
       ),
-      e('div', { style: { marginTop: 14, background: "#0a0a00", border: `1px solid ${LIME}15`, borderRadius: 10, padding: "14px 16px", fontFamily: "'DM Sans', sans-serif", color: "#888", fontSize: 12, lineHeight: 1.7 } },
-        e('div', { style: { fontFamily: "'Bebas Neue', sans-serif", color: LIME, fontSize: 16, marginBottom: 6, letterSpacing: 0.5 } }, "DIE TELLER-FORMEL"),
-        "½ Teller Gemüse (Volumen) · ¼ Protein · ¼ Carbs · ein Daumen Fett. So wirst du satt, triffst die Makros und musst kaum rechnen."
+      e('div', { style: { marginTop: 14, background: isLight ? "#fbfbef" : "#0a0a00", border: `1px solid ${A.lime}30`, borderRadius: 10, padding: "14px 16px", fontFamily: "'DM Sans', sans-serif", color: theme.sub, fontSize: 12, lineHeight: 1.7 } },
+        e('div', { style: { fontFamily: "'Bebas Neue', sans-serif", color: A.lime, fontSize: 16, marginBottom: 6, letterSpacing: 0.5 } }, t.plateTitle),
+        t.plateBody
       )
     ),
 
     // ════════ TAB: FEHLER ════════
-    tab === "fail" && e('div', { style: { padding: "16px 20px 32px" } },
-      eyebrow("Die Fehler, die dein Defizit killen", 14),
-      e('div', { style: { display: "flex", flexDirection: "column", gap: 8 } },
-        MISTAKES.map((m, i) =>
-          e('div', { key: i, style: { background: "#0c0c0c", border: "1px solid #161616", borderRadius: 12, padding: "14px 16px" } },
+    tab === "fail" && e('div', { style: { padding: isDesktop ? "20px 28px 36px" : "16px 20px 32px" } },
+      eyebrow(t.failHeading, 14),
+      e('div', { style: { display: "grid", gridTemplateColumns: cols2, gap: 8 } },
+        t.mistakes.map((m, i) =>
+          e('div', { key: i, style: { background: theme.cardAlt, border: `1px solid ${theme.border}`, borderRadius: 12, padding: "14px 16px" } },
             e('div', { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 6 } },
               e('span', { style: { fontSize: 16 } }, "❌"),
-              e('div', { style: { fontSize: 19, letterSpacing: 0.3, color: "#fff" } }, m.wrong)
+              e('div', { style: { fontSize: 19, letterSpacing: 0.3, color: theme.text } }, m.wrong)
             ),
-            e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: "#888", fontSize: 13, lineHeight: 1.6, paddingLeft: 24 } }, m.right)
+            e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.sub, fontSize: 13, lineHeight: 1.6, paddingLeft: 24 } }, m.right)
           )
         )
       ),
-      e('div', { style: { marginTop: 16, textAlign: "center", fontFamily: "'DM Sans', sans-serif", color: "#333", fontSize: 11, lineHeight: 1.7 } },
-        "Kein medizinischer Rat. Bei Vorerkrankungen oder Essstörung: erst mit Arzt sprechen.", e('br'),
-        e('span', { style: { color: "#555" } }, "FIT NIIKITER · fitniikiter.com")
+      e('div', { style: { marginTop: 16, textAlign: "center", fontFamily: "'DM Sans', sans-serif", color: theme.faint, fontSize: 11, lineHeight: 1.7 } },
+        t.disclaimer, e('br'),
+        e('span', { style: { color: theme.sub } }, "FIT NIIKITER · fitniikiter.com")
       )
     )
   );
