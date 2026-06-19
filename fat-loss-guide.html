@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fat Loss Guide — FIT NIIKITER</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍🍳</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -125,6 +126,7 @@ const T = {
       { wrong: "Nur Cardio, kein Kraftsport", right: "Stundenlang Laufband ohne Eisen = Muskelabbau. Der Körper wird kleiner, aber bleibt weich. Kraft + Defizit = der definierte Look." },
     ],
     disclaimer: "Kein medizinischer Rat. Bei Vorerkrankungen oder Essstörung: erst mit Arzt sprechen.",
+    recipesCta: "👨‍🍳 Passende Rezepte ansehen",
   },
   en: {
     htmlLang: "en",
@@ -190,6 +192,7 @@ const T = {
       { wrong: "Only cardio, no lifting", right: "Hours of treadmill without iron = muscle loss. The body gets smaller but stays soft. Strength + deficit = the defined look." },
     ],
     disclaimer: "Not medical advice. With pre-existing conditions or an eating disorder: talk to a doctor first.",
+    recipesCta: "👨‍🍳 Browse matching recipes",
   },
   hi: {
     htmlLang: "hi",
@@ -255,6 +258,7 @@ const T = {
       { wrong: "सिर्फ कार्डियो, वेट नहीं", right: "घंटों ट्रेडमिल बिना वेट = मसल लॉस। शरीर छोटा होता है पर सॉफ्ट रहता है। स्ट्रेंथ + डेफिसिट = टोंड लुक।" },
     ],
     disclaimer: "यह मेडिकल सलाह नहीं है। किसी बीमारी या ईटिंग डिसऑर्डर में: पहले डॉक्टर से बात करें।",
+    recipesCta: "👨‍🍳 मैचिंग रेसिपी देखें",
   },
 };
 
@@ -368,6 +372,9 @@ function App() {
     )
   );
 
+  // ── Button linking to the main Recipe Vault page ──
+  const recipeBtn = (mt = 12) => e('a', { href: "index.html", className: "btn", style: { display: "flex", alignItems: "center", justifyContent: "center", gap: 8, textDecoration: "none", marginTop: mt, background: A.lime, color: theme.onAccent, fontFamily: "'Bebas Neue', sans-serif", fontSize: 19, letterSpacing: 1, padding: "15px", borderRadius: 11 } }, t.recipesCta);
+
   // ── CALC sections ──
   const dataSection = e('div', null,
     eyebrow(t.calc.dataLabel),
@@ -461,7 +468,8 @@ function App() {
     // ════════ TAB: START ════════
     tab === "start" && e('div', { style: { padding: isDesktop ? "20px 28px 36px" : "16px 20px 32px" } },
       eyebrow(t.startHeading, 14),
-      e('div', { style: { display: "grid", gridTemplateColumns: cols2, gap: 8 } }, t.steps.map(stepCard))
+      e('div', { style: { display: "grid", gridTemplateColumns: cols2, gap: 8 } }, t.steps.map(stepCard)),
+      recipeBtn(14)
     ),
 
     // ════════ TAB: RECHNER ════════
@@ -508,7 +516,8 @@ function App() {
       e('div', { style: { marginTop: 14, background: isLight ? "#fbfbef" : "#0a0a00", border: `1px solid ${A.lime}30`, borderRadius: 10, padding: "14px 16px", fontFamily: "'DM Sans', sans-serif", color: theme.sub, fontSize: 12, lineHeight: 1.7 } },
         e('div', { style: { fontFamily: "'Bebas Neue', sans-serif", color: A.lime, fontSize: 16, marginBottom: 6, letterSpacing: 0.5 } }, t.plateTitle),
         t.plateBody
-      )
+      ),
+      recipeBtn(12)
     ),
 
     // ════════ TAB: FEHLER ════════
