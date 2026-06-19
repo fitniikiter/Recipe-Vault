@@ -47,6 +47,13 @@ const THEMES = {
   },
 };
 
+// ── Available languages (flag + English name) ────────────────────
+const LANGS = [
+  { id: "en", flag: "🇬🇧", name: "English" },
+  { id: "de", flag: "🇩🇪", name: "German" },
+  { id: "hi", flag: "🇮🇳", name: "Hindi" },
+];
+
 // ── Calculation constants (language independent) ─────────────────
 const ACT_MULT = { sed: 1.2, light: 1.375, mod: 1.55, high: 1.725 };
 const DEF_PCT = { soft: 0.15, std: 0.20, hard: 0.25 };
@@ -184,6 +191,71 @@ const T = {
     ],
     disclaimer: "Not medical advice. With pre-existing conditions or an eating disorder: talk to a doctor first.",
   },
+  hi: {
+    htmlLang: "hi",
+    eyebrow: "फैट घटाएं · बिना बकवास",
+    title: "FAT LOSS GUIDE",
+    subtitle: "आपका स्टेप-बाय-स्टेप प्लान + कैलकुलेटर — by FIT NIIKITER",
+    tabs: { start: "शुरू", calc: "कैलकुलेटर", rules: "नियम", food: "खाना", fail: "गलतियां" },
+    startHeading: "ऐसे करें — स्टेप बाय स्टेप",
+    steps: [
+      { num: "01", color: "lime", title: "कैलोरी कैलकुलेट करें", body: "कैलकुलेटर खोलें और अपना कैलोरी लक्ष्य पता करें। यही आपकी नींव है — इस नंबर के बिना आप अंधेरे में हैं।", cta: "कैलकुलेटर पर जाएं →" },
+      { num: "02", color: "orange", title: "प्रोटीन तय करें", body: "कैलकुलेटर से प्रोटीन वैल्यू लें (~2g प्रति kg)। हर मील को एक प्रोटीन सोर्स के आसपास बनाएं।" },
+      { num: "03", color: "purple", title: "स्ट्रेंथ ट्रेनिंग शुरू करें", body: "हफ्ते में 3–4× वेट उठाएं। यह शरीर को कहता है: मसल रखो, फैट जलाओ।" },
+      { num: "04", color: "blue", title: "कदम बढ़ाएं", body: "लक्ष्य: रोज़ 8,000–10,000 कदम। सबसे कम आंका गया फैट-लॉस बूस्टर।" },
+      { num: "05", color: "lime", title: "नींद और पानी", body: "7–8 घंटे नींद, 2–3 लीटर पानी। रिकवरी, कम भूख, बेहतर परफॉर्मेंस।" },
+      { num: "06", color: "orange", title: "ट्रैक करें और एडजस्ट करें", body: "सुबह वजन करें, हफ्ते का औसत देखें। 2 हफ्ते में कोई प्रगति नहीं? 150–200 kcal कम करें और जारी रखें।" },
+    ],
+    calc: {
+      dataLabel: "1 · आपका डेटा", male: "♂ पुरुष", female: "♀ महिला",
+      age: "उम्र", ageUnit: "साल", weight: "वजन", weightUnit: "kg", height: "लंबाई", heightUnit: "cm",
+      activityLabel: "2 · एक्टिविटी", paceLabel: "3 · रफ्तार", resultLabel: "आपका रिज़ल्ट",
+      targetTitle: "रोज़ का कैलोरी लक्ष्य",
+      under: (cut, kg) => `${cut} kcal मेंटेनेंस से कम · लगभग ${kg} kg फैट / हफ्ता`,
+      bmr: "बेसल मेटाबॉलिज्म", tdee: "मेंटेनेंस (TDEE)", macrosLabel: "आपके मैक्रो · रोज़",
+      protein: "प्रोटीन", carbs: "कार्ब्स", fat: "फैट",
+      note: "💡 Mifflin-St Jeor आधारित अनुमान। यहां से शुरू करें, 1–2 हफ्ते वजन ट्रैक करें और एडजस्ट करें: वजन रुक जाए → 150–200 kcal कम करें। हफ्ते में >1% वजन घट रहा है → थोड़ा ज्यादा खाएं।",
+    },
+    activity: [
+      { id: "sed", label: "कम", sub: "ऑफिस जॉब, बहुत कम मूवमेंट" },
+      { id: "light", label: "हल्का", sub: "हफ्ते में 1–2× वर्कआउट" },
+      { id: "mod", label: "एक्टिव", sub: "हफ्ते में 3–4× वर्कआउट" },
+      { id: "high", label: "बहुत एक्टिव", sub: "हफ्ते में 5–6× वर्कआउट" },
+    ],
+    deficits: [
+      { id: "soft", label: "धीमा", sub: "मसल सुरक्षा अधिकतम · धीरे" },
+      { id: "std", label: "स्टैंडर्ड", sub: "बेस्ट बैलेंस · सुझाया गया" },
+      { id: "hard", label: "तेज़", sub: "तेज़ · सिर्फ कम समय के लिए" },
+    ],
+    rulesHeading: "6 नियम जो सब तय करते हैं",
+    rules: [
+      { num: "01", color: "lime", title: "कैलोरी डेफिसिट ही राजा है", body: "फैट सिर्फ डेफिसिट में घटता है — जितनी कैलोरी अंदर, उससे ज्यादा बाहर। कोई डाइट, चाय या खाना फैट नहीं जलाता। सिर्फ डेफिसिट मायने रखता है। बाकी सब बस आसान बनाता है।" },
+      { num: "02", color: "orange", title: "प्रोटीन पर समझौता नहीं", body: "लक्ष्य: ~2g प्रति kg शरीर भार। प्रोटीन सबसे ज्यादा पेट भरता है, डेफिसिट में मसल बचाता है और पचने में ही कैलोरी जलाता है। पहले प्रोटीन ट्रैक करें — फिर बाकी।" },
+      { num: "03", color: "purple", title: "स्ट्रेंथ ट्रेनिंग मसल बचाती है", body: "डेफिसिट में शरीर मसल जलाना चाहता है। स्ट्रेंथ ट्रेनिंग संकेत है: 'इसे रखो।' ट्रेनिंग के बिना आप फैट नहीं, मसल खोते हैं — और 'स्किनी फैट' दिखते हैं, टोंड नहीं।" },
+      { num: "04", color: "blue", title: "कदम कार्डियो से बेहतर", body: "रोज़ 8,000–10,000 कदम पूरे दिन में 30 मिनट ट्रेडमिल से ज्यादा जलाते हैं — और इतनी भूख नहीं लगाते। NEAT (रोज़मर्रा की मूवमेंट) आपका छुपा फैट-लॉस इंजन है।" },
+      { num: "05", color: "lime", title: "नींद भी तय करती है", body: "7–8 घंटे नींद। कम नींद = ज्यादा भूख (घ्रेलिन ऊपर), कम तृप्ति (लेप्टिन नीचे), खराब रिकवरी। खराब नींद बेहतरीन डेफिसिट भी बिगाड़ देती है।" },
+      { num: "06", color: "orange", title: "निरंतरता > परफेक्शन", body: "एक 'खराब' दिन मोटा नहीं करता — एक खराब हफ्ता करता है। 80% साफ, 20% फ्लेक्सिबल। जो डाइट आप निभा सकें वो उस 'परफेक्ट' से बेहतर है जिसे 2 हफ्ते में छोड़ दें।" },
+    ],
+    foodHeading: "थाली में क्या आए",
+    foods: [
+      { cat: "प्रोटीन — बेस", color: "orange", items: ["लो-फैट क्वार्क / स्काईर", "चिकन और टर्की ब्रेस्ट", "अंडे / एग वाइट", "तिलापिया, कॉड, टूना", "लीन बीफ (5%)", "व्हे प्रोटीन", "लो-फैट कॉटेज चीज़"] },
+      { cat: "वॉल्यूम — पेट भरे", color: "blue", items: ["खीरा, ज़ुकिनी, शिमला मिर्च", "ब्रोकली, फूलगोभी", "सलाद और हरी पत्तियां", "टमाटर", "बेरीज़ (कम कैलोरी)", "तरबूज़", "पॉपकॉर्न (एयर-पॉप्ड)"] },
+      { cat: "स्लो कार्ब्स — एनर्जी", color: "purple", items: ["आलू और शकरकंद", "चावल और ब्राउन राइस", "ओट्स", "होलग्रेन पास्ता", "दालें (मसूर, राजमा)", "होलग्रेन ब्रेड"] },
+      { cat: "स्मार्ट फैट्स — सीमित", color: "lime", items: ["ऑलिव ऑयल (नापें!)", "एवोकाडो (आधा)", "नट्स (मुट्ठी भर)", "अलसी / चिया", "फैटी फिश (सैल्मन)"] },
+    ],
+    plateTitle: "थाली फॉर्मूला",
+    plateBody: "½ थाली सब्ज़ी (वॉल्यूम) · ¼ प्रोटीन · ¼ कार्ब्स · एक अंगूठा फैट। पेट भरता है, मैक्रो पूरे होते हैं और गिनती कम।",
+    failHeading: "गलतियां जो आपका डेफिसिट खत्म करती हैं",
+    mistakes: [
+      { wrong: "कैलोरी पीना", right: "जूस, सॉफ्ट ड्रिंक, लाटे, शराब — लिक्विड कैलोरी पेट नहीं भरती। पानी, ब्लैक कॉफी, चाय पिएं। सबसे बड़ा छुपा डाइट-किलर।" },
+      { wrong: "तेल और सॉस न गिनना", right: "1 चम्मच तेल = ~100 kcal। तलने का 'छींटा' + ड्रेसिंग + मेयो = झट से 400 छुपी kcal। तेल हमेशा नापें, अंदाज़ा नहीं।" },
+      { wrong: "वीकेंड को नज़रअंदाज़ करना", right: "सोम–शुक्र परफेक्ट, शनि+रवि सब चलता है? 2 दिन का सरप्लस पूरे 5 दिन का डेफिसिट मिटा सकता है। पूरा हफ्ता मायने रखता है।" },
+      { wrong: "बहुत कम खाना / क्रैश डाइट", right: "1,000 kcal? 2 हफ्ते चलेगा, फिर क्रेविंग, मसल लॉस और यो-यो। बेहतर है मॉडरेट डेफिसिट जो महीनों चले।" },
+      { wrong: "रोज़ वजन कर निराश होना", right: "पानी, नमक, पाचन, साइकिल — वजन दिन में 1–2 kg ऊपर-नीचे होता है। हफ्ते का औसत देखें, रोज़ का नंबर नहीं।" },
+      { wrong: "सिर्फ कार्डियो, वेट नहीं", right: "घंटों ट्रेडमिल बिना वेट = मसल लॉस। शरीर छोटा होता है पर सॉफ्ट रहता है। स्ट्रेंथ + डेफिसिट = टोंड लुक।" },
+    ],
+    disclaimer: "यह मेडिकल सलाह नहीं है। किसी बीमारी या ईटिंग डिसऑर्डर में: पहले डॉक्टर से बात करें।",
+  },
 };
 
 // ── Persistence helpers ──────────────────────────────────────────
@@ -191,10 +263,10 @@ const load = (key, fallback) => { try { return localStorage.getItem(key) || fall
 const save = (key, val) => { try { localStorage.setItem(key, val); } catch (_) {} };
 
 function App() {
-  const initLang = load("flg-lang", (navigator.language || "en").toLowerCase().startsWith("de") ? "de" : "en");
   const initTheme = load("flg-theme", (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) ? "light" : "dark");
 
-  const [lang, setLang] = useState(initLang);
+  const [lang, setLang] = useState("en"); // start language is always English
+  const [langOpen, setLangOpen] = useState(false);
   const [themeId, setThemeId] = useState(initTheme);
   const [tab, setTab] = useState("start");
   const [isDesktop, setIsDesktop] = useState(typeof window !== "undefined" && window.innerWidth >= 760);
@@ -257,10 +329,32 @@ function App() {
     style: { width: 34, height: 34, borderRadius: 9, fontSize: 16, lineHeight: 1, display: "flex", alignItems: "center", justifyContent: "center", background: theme.card, border: `1px solid ${active ? A.lime : theme.border}`, color: theme.text, fontFamily: "'DM Sans', sans-serif" }
   }, content);
 
-  const controls = e('div', { style: { position: "absolute", top: 14, right: 14, display: "flex", gap: 6, alignItems: "center", zIndex: 5 } },
+  const currentLang = LANGS.find(l => l.id === lang) || LANGS[0];
+
+  const controls = e('div', { style: { position: "absolute", top: 14, right: 14, display: "flex", gap: 6, alignItems: "center", zIndex: 30 } },
     ctrlBtn(isLight ? "🌙" : "☀️", () => setThemeId(isLight ? "dark" : "light"), false, isLight ? "Dark mode" : "Light mode"),
-    ctrlBtn("🇩🇪", () => setLang("de"), lang === "de", "Deutsch"),
-    ctrlBtn("🇬🇧", () => setLang("en"), lang === "en", "English")
+    // Language dropdown: tap the flag to expand the list
+    e('div', { style: { position: "relative" } },
+      e('button', { className: "btn", onClick: () => setLangOpen(o => !o), title: "Language",
+        style: { height: 34, borderRadius: 9, padding: "0 9px", display: "flex", alignItems: "center", gap: 5, background: theme.card, border: `1px solid ${langOpen ? A.lime : theme.border}`, color: theme.text, fontFamily: "'DM Sans', sans-serif" } },
+        e('span', { style: { fontSize: 16, lineHeight: 1 } }, currentLang.flag),
+        e('span', { style: { fontSize: 8, color: theme.faint, transform: langOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s" } }, "▼")
+      ),
+      langOpen && e(Fragment, null,
+        // Invisible backdrop to close on outside tap
+        e('div', { onClick: () => setLangOpen(false), style: { position: "fixed", inset: 0, zIndex: 28 } }),
+        e('div', { style: { position: "absolute", top: 41, right: 0, zIndex: 29, background: theme.card, border: `1px solid ${theme.border}`, borderRadius: 11, padding: 5, minWidth: 156, boxShadow: "0 10px 30px rgba(0,0,0,0.35)" } },
+          LANGS.map(l =>
+            e('button', { key: l.id, className: "btn", onClick: () => { setLang(l.id); setLangOpen(false); },
+              style: { display: "flex", alignItems: "center", gap: 10, width: "100%", textAlign: "left", padding: "9px 11px", borderRadius: 8, background: lang === l.id ? (isLight ? "#eef1f5" : "#181818") : "transparent", color: theme.text, fontFamily: "'DM Sans', sans-serif", fontSize: 14 } },
+              e('span', { style: { fontSize: 18, lineHeight: 1 } }, l.flag),
+              e('span', null, l.name),
+              lang === l.id && e('span', { style: { marginLeft: "auto", color: A.lime, fontSize: 13 } }, "✓")
+            )
+          )
+        )
+      )
+    )
   );
 
   // ── Reusable building blocks ──
@@ -345,12 +439,13 @@ function App() {
     e('div', { style: { marginTop: 12, background: isLight ? "#fbfbef" : "#0a0a00", border: `1px solid ${A.lime}30`, borderRadius: 10, padding: "12px 14px", fontFamily: "'DM Sans', sans-serif", color: theme.sub, fontSize: 12, lineHeight: 1.65 } }, t.calc.note)
   );
 
-  return e('div', { style: { fontFamily: "'Bebas Neue', Impact, sans-serif", background: theme.bg, minHeight: "100vh", color: theme.text, maxWidth: maxW, margin: "0 auto", transition: "background 0.25s ease, color 0.25s ease" } },
+  return e('div', { style: { fontFamily: "'Bebas Neue', Impact, sans-serif", background: theme.bg, minHeight: "100vh", color: theme.text, maxWidth: maxW, margin: "0 auto", position: "relative", transition: "background 0.25s ease, color 0.25s ease" } },
+
+    controls,
 
     // ── HEADER ──
     e('div', { style: { padding: isDesktop ? "34px 28px 24px" : "28px 20px 20px", borderBottom: `1px solid ${theme.line}`, position: "relative", overflow: "hidden" } },
       e('div', { style: { position: "absolute", top: -50, right: -50, width: 220, height: 220, background: `radial-gradient(circle, ${A.lime}1f 0%, transparent 65%)`, pointerEvents: "none" } }),
-      controls,
       eyebrow(t.eyebrow, 6),
       e('div', { style: { fontSize: isDesktop ? 64 : "clamp(30px, 9vw, 52px)", lineHeight: 0.95, letterSpacing: 2 } }, t.title),
       e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.sub, fontSize: isDesktop ? 14 : 12, marginTop: 10 } }, t.subtitle)
