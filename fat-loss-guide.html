@@ -38,15 +38,19 @@ const THEMES = {
     bg: "#080808", card: "#0d0d0d", cardAlt: "#0c0c0c", border: "#161616",
     text: "#fff", sub: "#888", faint: "#3a3a3a", line: "#131313",
     chipBg: "#0a0a0a", chipBorder: "#1a1a1a", chipText: "#aaa", onAccent: "#000",
-    accent: { lime: "#E8FF47", orange: "#FF6B35", blue: "#47D4FF", purple: "#B847FF" },
+    // Brand primary is orange. "lime" is kept as an alias mapped to orange so all chrome turns orange.
+    accent: { lime: "#FF6B35", orange: "#FF6B35", blue: "#47D4FF", purple: "#B847FF", green: "#47FF6B" },
   },
   light: {
     bg: "#eef0f2", card: "#ffffff", cardAlt: "#f7f8fa", border: "#e2e5ea",
     text: "#15171c", sub: "#5b6068", faint: "#9aa0a8", line: "#e2e5ea",
     chipBg: "#f2f4f7", chipBorder: "#e2e5ea", chipText: "#3a3f47", onAccent: "#fff",
-    accent: { lime: "#5e8a00", orange: "#e0540a", blue: "#0479c2", purple: "#7c2fd6" },
+    accent: { lime: "#e0540a", orange: "#e0540a", blue: "#0479c2", purple: "#7c2fd6", green: "#2f9e44" },
   },
 };
+
+// Colors assigned to the 7 rules (orange-forward, with blue/purple for variety)
+const RULE_COLORS = ["orange", "orange", "blue", "purple", "blue", "purple", "orange"];
 
 // ── Available languages (flag + English name) ────────────────────
 const LANGS = [
@@ -59,7 +63,7 @@ const LANGS = [
 // ── Calculation constants (language independent) ─────────────────
 const ACT_MULT = { sed: 1.2, light: 1.375, mod: 1.55, high: 1.725 };
 const DEF_PCT = { soft: 0.15, std: 0.20, hard: 0.25 };
-const DEF_COLOR = { soft: "blue", std: "lime", hard: "orange" };
+const DEF_COLOR = { soft: "blue", std: "orange", hard: "purple" };
 
 // ── Translations ─────────────────────────────────────────────────
 const T = {
@@ -99,15 +103,18 @@ const T = {
       { id: "std", label: "STANDARD", sub: "Bester Kompromiss · empfohlen" },
       { id: "hard", label: "AGGRESSIV", sub: "Schnell · nur kurzfristig" },
     ],
-    rulesHeading: "Die 6 Regeln, die alles entscheiden",
+    rulesHeading: "Die 7 Regeln · tipp eine an zum Aufklappen",
+    rulesLabels: { why: "Warum", todo: "Mach das" },
     rules: [
-      { num: "01", color: "lime", title: "Kaloriendefizit ist König", body: "Fett verlierst du NUR im Defizit — weniger Kalorien rein als raus. Keine Diät, kein Tee, kein Lebensmittel verbrennt Fett. Nur das Defizit zählt. Alles andere macht es nur leichter." },
-      { num: "02", color: "orange", title: "Protein ist nicht verhandelbar", body: "Ziel: ~2g pro kg Körpergewicht. Protein sättigt am stärksten, schützt deine Muskeln im Defizit und kostet beim Verdauen selbst Kalorien. Tracke Protein ZUERST — dann den Rest." },
-      { num: "03", color: "purple", title: "Krafttraining hält die Muskeln", body: "Im Defizit will der Körper Muskeln abbauen. Krafttraining ist das Signal: 'Behalte sie.' Ohne Training verlierst du Muskeln statt Fett — und siehst danach 'skinny fat' aus statt definiert." },
-      { num: "04", color: "blue", title: "Schritte schlagen Cardio", body: "8.000–10.000 Schritte täglich verbrennen über den Tag mehr als 30 Min auf dem Laufband — und machen dich nicht so hungrig. NEAT (Alltagsbewegung) ist dein heimlicher Fat-Loss-Motor." },
-      { num: "05", color: "lime", title: "Schlaf entscheidet mit", body: "7–8h Schlaf. Zu wenig Schlaf = mehr Hunger (Ghrelin hoch), weniger Sättigung (Leptin runter), schlechtere Regeneration. Schlechter Schlaf sabotiert das beste Defizit." },
-      { num: "06", color: "orange", title: "Konsistenz > Perfektion", body: "Ein 'schlechter' Tag macht dich nicht dick — eine schlechte Woche schon. 80% sauber, 20% flexibel. Die Diät, die du durchhältst, schlägt die 'perfekte', die du nach 2 Wochen abbrichst." },
+      { tag: "Das Wichtigste", title: "ISS WENIGER ALS DU VERBRAUCHST", line: "Nur das Minus lässt Fett schmelzen.", why: "Fett geht nur weg, wenn du weniger isst, als dein Körper braucht. Kein Tee, kein Essen und kein Trick verbrennt Fett. Nur das Minus zählt.", todo: "Iss jeden Tag etwas weniger, als du verbrauchst.", helper: { label: "Helfer · Wasser", text: "Trink ein großes Glas vor dem Essen — dann isst du automatisch weniger." } },
+      { tag: "Schützt Muskeln", title: "ISS VIEL EIWEISS", line: "Eiweiß macht satt und rettet deine Muskeln.", why: "Eiweiß macht satt und schützt deine Muskeln, während du abnimmst. Ohne genug Eiweiß verlierst du Muskeln statt Fett.", todo: "Zähl zuerst dein Eiweiß, dann den Rest. Ziel: 2g pro Kilo Körpergewicht.", helper: { label: "Helfer · Proteinshake", text: "Nimm einen Shake nur, wenn du dein Eiweiß sonst nicht schaffst. Echtes Essen sättigt mehr pro Kalorie." } },
+      { tag: "Hält Muskeln", title: "GEH TRAINIEREN", line: "Training sagt deinem Körper: Finger weg von den Muskeln.", why: "Wenn du abnimmst, will dein Körper Muskeln abbauen. Training ist das Signal: behalte sie. Ohne Training wirst du dünn, aber schlapp — nicht definiert.", todo: "Heb regelmäßig Gewichte.", helper: { label: "Helfer · Creatin", text: "Hilft Muskeln zu halten, verbrennt aber kein Fett. Es zieht Wasser in den Muskel — deshalb zeigt die Waage manchmal mehr. Schau auf den Wochenschnitt, nicht auf einen Tag." } },
+      { tag: "NEAT", title: "BEWEG DICH DEN GANZEN TAG", line: "Viele kleine Bewegungen verbrennen mehr als du denkst.", why: "Schritte, Treppen, Stehen über den Tag verbrennen mehr, als du glaubst — und machen weniger hungrig als hartes Cardio. Cardio ist nicht schlecht, nur hungriger pro Kalorie.", todo: "8.000–10.000 Schritte am Tag. Cardio obendrauf, nicht statt.", helper: null },
+      { tag: "Erholung", title: "SCHLAF GENUG", line: "Schlechter Schlaf sabotiert das beste Defizit.", why: "Zu wenig Schlaf macht dich hungriger und du baust schlechter ab. Dein Körper arbeitet dann gegen dich.", todo: "Schlaf so gut du kannst — Schlaf ist Teil der Diät, nicht extra.", helper: null },
+      { tag: "Sattmacher", title: "GROSSE PORTIONEN, WENIG KALORIEN", line: "Voller Bauch, wenig Kalorien — der wichtigste Hebel.", why: "Gemüse, Kartoffeln und mageres Fleisch füllen deinen Bauch, kosten aber wenig Kalorien. Genau deshalb fühlt sich eine Diät leicht oder schwer an — nicht wegen Disziplin.", todo: "Bau deinen Teller aus sättigenden Sachen, dann hältst du locker durch.", helper: null },
+      { tag: "Konsistenz", title: "BLEIB DRAN, SEI NICHT PERFEKT", line: "Ein schlechter Tag zählt nicht. Eine schlechte Woche schon.", why: "Ein schlechter Tag macht dich nicht dick. Eine schlechte Woche schon. Der Plan, den du durchziehst, schlägt den perfekten, den du aufgibst.", todo: "Mach es zu 80% sauber, lass 20% locker.", helper: null },
     ],
+    merksatz: { label: "In einem Satz", text: "Iss weniger, iss viel Eiweiß, heb Gewichte — und bleib dran." },
     foodHeading: "Was auf den Teller kommt",
     foods: [
       { cat: "PROTEIN — die Basis", color: "orange", items: ["Magerquark / Skyr", "Hähnchen- & Putenbrust", "Eier / Eiklar", "Tilapia, Kabeljau, Thunfisch", "Mageres Rinderhack (5%)", "Whey Protein", "Magerer Harzer / Hüttenkäse"] },
@@ -165,15 +172,18 @@ const T = {
       { id: "std", label: "STANDARD", sub: "Best balance · recommended" },
       { id: "hard", label: "AGGRESSIVE", sub: "Fast · short term only" },
     ],
-    rulesHeading: "The 6 rules that decide everything",
+    rulesHeading: "The 7 rules · tap one to expand",
+    rulesLabels: { why: "Why", todo: "Do this" },
     rules: [
-      { num: "01", color: "lime", title: "A calorie deficit is king", body: "You only lose fat in a deficit — fewer calories in than out. No diet, tea or food burns fat. Only the deficit counts. Everything else just makes it easier." },
-      { num: "02", color: "orange", title: "Protein is non-negotiable", body: "Target: ~2g per kg of bodyweight. Protein keeps you full, protects your muscle in a deficit and burns calories just being digested. Track protein FIRST — then the rest." },
-      { num: "03", color: "purple", title: "Strength training keeps muscle", body: "In a deficit your body wants to burn muscle. Strength training is the signal: 'keep it.' Without training you lose muscle instead of fat — and end up 'skinny fat' instead of defined." },
-      { num: "04", color: "blue", title: "Steps beat cardio", body: "8,000–10,000 daily steps burn more over the day than 30 min on a treadmill — and won't make you as hungry. NEAT (daily movement) is your secret fat-loss engine." },
-      { num: "05", color: "lime", title: "Sleep decides too", body: "7–8h of sleep. Too little = more hunger (ghrelin up), less fullness (leptin down), worse recovery. Bad sleep sabotages the best deficit." },
-      { num: "06", color: "orange", title: "Consistency > perfection", body: "One 'bad' day won't make you fat — a bad week will. 80% clean, 20% flexible. The diet you stick to beats the 'perfect' one you quit after 2 weeks." },
+      { tag: "The main thing", title: "EAT LESS THAN YOU BURN", line: "Only the deficit melts fat.", why: "Fat only goes away when you eat less than your body needs. No tea, no food and no trick burns fat. Only the deficit counts.", todo: "Eat slightly less than you burn, every day.", helper: { label: "Helper · Water", text: "Drink a big glass before eating — you'll automatically eat less." } },
+      { tag: "Protects muscle", title: "EAT PLENTY OF PROTEIN", line: "Protein fills you up and saves your muscle.", why: "Protein keeps you full and protects your muscle while you lose weight. Without enough protein you lose muscle instead of fat.", todo: "Count your protein first, then the rest. Target: 2g per kilo of bodyweight.", helper: { label: "Helper · Protein shake", text: "Only use a shake if you can't hit your protein otherwise. Real food fills you up more per calorie." } },
+      { tag: "Keeps muscle", title: "GO TRAIN", line: "Training tells your body: hands off the muscle.", why: "When you lose weight, your body wants to burn muscle. Training is the signal: keep it. Without training you get skinny but soft — not defined.", todo: "Lift weights regularly.", helper: { label: "Helper · Creatine", text: "Helps keep muscle but burns no fat. It pulls water into the muscle — so the scale sometimes shows more. Look at the weekly average, not a single day." } },
+      { tag: "NEAT", title: "MOVE ALL DAY LONG", line: "Lots of small movements burn more than you think.", why: "Steps, stairs and standing throughout the day burn more than you think — and make you less hungry than hard cardio. Cardio isn't bad, just hungrier per calorie.", todo: "8,000–10,000 steps a day. Cardio on top, not instead.", helper: null },
+      { tag: "Recovery", title: "SLEEP ENOUGH", line: "Bad sleep sabotages the best deficit.", why: "Too little sleep makes you hungrier and you lose fat worse. Your body then works against you.", todo: "Sleep as well as you can — sleep is part of the diet, not extra.", helper: null },
+      { tag: "Keeps you full", title: "BIG PORTIONS, FEW CALORIES", line: "Full belly, few calories — the biggest lever.", why: "Veggies, potatoes and lean meat fill your belly but cost few calories. That's exactly why a diet feels easy or hard — not because of discipline.", todo: "Build your plate from filling foods, then you'll easily stick to it.", helper: null },
+      { tag: "Consistency", title: "STAY CONSISTENT, NOT PERFECT", line: "One bad day doesn't count. A bad week does.", why: "One bad day won't make you fat. A bad week will. The plan you stick to beats the perfect one you quit.", todo: "Do it 80% clean, leave 20% loose.", helper: null },
     ],
+    merksatz: { label: "In one sentence", text: "Eat less, eat lots of protein, lift weights — and stay consistent." },
     foodHeading: "What goes on the plate",
     foods: [
       { cat: "PROTEIN — the base", color: "orange", items: ["Low-fat quark / skyr", "Chicken & turkey breast", "Eggs / egg whites", "Tilapia, cod, tuna", "Lean beef (5%)", "Whey protein", "Low-fat cottage cheese"] },
@@ -231,15 +241,18 @@ const T = {
       { id: "std", label: "स्टैंडर्ड", sub: "बेस्ट बैलेंस · सुझाया गया" },
       { id: "hard", label: "तेज़", sub: "तेज़ · सिर्फ कम समय के लिए" },
     ],
-    rulesHeading: "6 नियम जो सब तय करते हैं",
+    rulesHeading: "7 नियम · खोलने के लिए किसी पर टैप करें",
+    rulesLabels: { why: "क्यों", todo: "यह करें" },
     rules: [
-      { num: "01", color: "lime", title: "कैलोरी डेफिसिट ही राजा है", body: "फैट सिर्फ डेफिसिट में घटता है — जितनी कैलोरी अंदर, उससे ज्यादा बाहर। कोई डाइट, चाय या खाना फैट नहीं जलाता। सिर्फ डेफिसिट मायने रखता है। बाकी सब बस आसान बनाता है।" },
-      { num: "02", color: "orange", title: "प्रोटीन पर समझौता नहीं", body: "लक्ष्य: ~2g प्रति kg शरीर भार। प्रोटीन सबसे ज्यादा पेट भरता है, डेफिसिट में मसल बचाता है और पचने में ही कैलोरी जलाता है। पहले प्रोटीन ट्रैक करें — फिर बाकी।" },
-      { num: "03", color: "purple", title: "स्ट्रेंथ ट्रेनिंग मसल बचाती है", body: "डेफिसिट में शरीर मसल जलाना चाहता है। स्ट्रेंथ ट्रेनिंग संकेत है: 'इसे रखो।' ट्रेनिंग के बिना आप फैट नहीं, मसल खोते हैं — और 'स्किनी फैट' दिखते हैं, टोंड नहीं।" },
-      { num: "04", color: "blue", title: "कदम कार्डियो से बेहतर", body: "रोज़ 8,000–10,000 कदम पूरे दिन में 30 मिनट ट्रेडमिल से ज्यादा जलाते हैं — और इतनी भूख नहीं लगाते। NEAT (रोज़मर्रा की मूवमेंट) आपका छुपा फैट-लॉस इंजन है।" },
-      { num: "05", color: "lime", title: "नींद भी तय करती है", body: "7–8 घंटे नींद। कम नींद = ज्यादा भूख (घ्रेलिन ऊपर), कम तृप्ति (लेप्टिन नीचे), खराब रिकवरी। खराब नींद बेहतरीन डेफिसिट भी बिगाड़ देती है।" },
-      { num: "06", color: "orange", title: "निरंतरता > परफेक्शन", body: "एक 'खराब' दिन मोटा नहीं करता — एक खराब हफ्ता करता है। 80% साफ, 20% फ्लेक्सिबल। जो डाइट आप निभा सकें वो उस 'परफेक्ट' से बेहतर है जिसे 2 हफ्ते में छोड़ दें।" },
+      { tag: "सबसे ज़रूरी", title: "जितना जलाओ उससे कम खाओ", line: "सिर्फ कमी ही फैट पिघलाती है।", why: "फैट सिर्फ तब घटता है जब आप शरीर की ज़रूरत से कम खाते हैं। कोई चाय, खाना या ट्रिक फैट नहीं जलाती। सिर्फ कमी मायने रखती है।", todo: "हर दिन जितना जलाते हैं उससे थोड़ा कम खाएं।", helper: { label: "मददगार · पानी", text: "खाने से पहले एक बड़ा गिलास पानी पिएं — फिर आप अपने आप कम खाएंगे।" } },
+      { tag: "मसल बचाता है", title: "खूब प्रोटीन खाओ", line: "प्रोटीन पेट भरता है और मसल बचाता है।", why: "प्रोटीन पेट भरता है और वजन घटाते समय आपकी मसल बचाता है। पर्याप्त प्रोटीन बिना आप फैट नहीं, मसल खोते हैं।", todo: "पहले प्रोटीन गिनें, फिर बाकी। लक्ष्य: 2g प्रति किलो शरीर भार।", helper: { label: "मददगार · प्रोटीन शेक", text: "शेक तभी लें जब आप वरना प्रोटीन पूरा न कर पाएं। असली खाना प्रति कैलोरी ज्यादा पेट भरता है।" } },
+      { tag: "मसल रखता है", title: "ट्रेनिंग करो", line: "ट्रेनिंग शरीर से कहती है: मसल को मत छूना।", why: "वजन घटाते समय शरीर मसल जलाना चाहता है। ट्रेनिंग संकेत है: इसे रखो। ट्रेनिंग बिना आप पतले पर ढीले हो जाते हैं — टोंड नहीं।", todo: "नियमित रूप से वेट उठाएं।", helper: { label: "मददगार · क्रिएटिन", text: "मसल रखने में मदद करता है पर फैट नहीं जलाता। यह मसल में पानी खींचता है — इसलिए कभी-कभी वजन ज्यादा दिखता है। हफ्ते का औसत देखें, एक दिन नहीं।" } },
+      { tag: "NEAT", title: "पूरे दिन हिलते-डुलते रहो", line: "कई छोटी हरकतें सोच से ज्यादा जलाती हैं।", why: "कदम, सीढ़ियां, दिनभर खड़े रहना सोच से ज्यादा जलाते हैं — और कठिन कार्डियो से कम भूख लगाते हैं। कार्डियो बुरा नहीं, बस प्रति कैलोरी ज्यादा भूख।", todo: "रोज़ 8,000–10,000 कदम। कार्डियो ऊपर से, बदले में नहीं।", helper: null },
+      { tag: "रिकवरी", title: "पर्याप्त नींद लो", line: "खराब नींद बेहतरीन डेफिसिट बिगाड़ देती है।", why: "कम नींद आपको ज्यादा भूखा बनाती है और फैट कम घटता है। तब शरीर आपके खिलाफ काम करता है।", todo: "जितना अच्छा हो सके सोएं — नींद डाइट का हिस्सा है, अलग नहीं।", helper: null },
+      { tag: "पेट भरने वाला", title: "बड़ी पोर्शन, कम कैलोरी", line: "भरा पेट, कम कैलोरी — सबसे बड़ा लीवर।", why: "सब्ज़ियां, आलू और लीन मीट पेट भरते हैं पर कैलोरी कम। इसीलिए डाइट आसान या मुश्किल लगती है — अनुशासन के कारण नहीं।", todo: "अपनी थाली पेट भरने वाली चीज़ों से बनाएं, फिर आसानी से टिके रहेंगे।", helper: null },
+      { tag: "निरंतरता", title: "टिके रहो, परफेक्ट नहीं", line: "एक खराब दिन नहीं गिनता। एक खराब हफ्ता गिनता है।", why: "एक खराब दिन मोटा नहीं करता। एक खराब हफ्ता करता है। जो प्लान आप निभाते हैं वो उस परफेक्ट से बेहतर है जिसे आप छोड़ देते हैं।", todo: "इसे 80% साफ करें, 20% ढीला छोड़ें।", helper: null },
     ],
+    merksatz: { label: "एक वाक्य में", text: "कम खाओ, खूब प्रोटीन खाओ, वेट उठाओ — और टिके रहो।" },
     foodHeading: "थाली में क्या आए",
     foods: [
       { cat: "प्रोटीन — बेस", color: "orange", items: ["लो-फैट क्वार्क / स्काईर", "चिकन और टर्की ब्रेस्ट", "अंडे / एग वाइट", "तिलापिया, कॉड, टूना", "लीन बीफ (5%)", "व्हे प्रोटीन", "लो-फैट कॉटेज चीज़"] },
@@ -297,15 +310,18 @@ const T = {
       { id: "std", label: "قياسي", sub: "أفضل توازن · موصى به" },
       { id: "hard", label: "قوي", sub: "سريع · لفترة قصيرة فقط" },
     ],
-    rulesHeading: "القواعد الست التي تحسم كل شيء",
+    rulesHeading: "القواعد السبع · انقر على واحدة للتوسيع",
+    rulesLabels: { why: "لماذا", todo: "افعل هذا" },
     rules: [
-      { num: "01", color: "lime", title: "عجز السعرات هو الملك", body: "تخسر الدهون فقط في العجز — سعرات داخلة أقل من الخارجة. لا حمية ولا شاي ولا طعام يحرق الدهون. فقط العجز يهم. الباقي يسهّل الأمر فقط." },
-      { num: "02", color: "orange", title: "البروتين غير قابل للتفاوض", body: "الهدف: ~2غ لكل كغ من وزن الجسم. البروتين يشبع أكثر، يحمي عضلاتك في العجز، ويحرق سعرات أثناء هضمه. تابع البروتين أولاً — ثم الباقي." },
-      { num: "03", color: "purple", title: "تمارين القوة تحفظ العضلات", body: "في العجز يريد الجسم حرق العضلات. تمارين القوة هي الإشارة: 'احتفظ بها.' بدون تدريب تخسر عضلاً بدل الدهون — وتبدو 'نحيفاً مترهلاً' بدل المشدود." },
-      { num: "04", color: "blue", title: "الخطوات تتفوق على الكارديو", body: "8000–10000 خطوة يومياً تحرق على مدار اليوم أكثر من 30 دقيقة على المشاية — ولا تجعلك جائعاً كثيراً. NEAT (حركة اليوم) هو محرك خسارة الدهون الخفي." },
-      { num: "05", color: "lime", title: "النوم يحسم أيضاً", body: "7–8 ساعات نوم. القليل = جوع أكثر (غريلين يرتفع)، شبع أقل (لبتين ينخفض)، تعافٍ أسوأ. النوم السيئ يفسد أفضل عجز." },
-      { num: "06", color: "orange", title: "الاستمرارية > الكمال", body: "يوم 'سيئ' واحد لا يُسمّنك — أسبوع سيئ يفعل. 80% نظيف، 20% مرن. الحمية التي تلتزم بها تتفوق على 'المثالية' التي تتركها بعد أسبوعين." },
+      { tag: "الأهم", title: "كُل أقل مما تحرق", line: "العجز وحده يُذيب الدهون.", why: "الدهون تذهب فقط حين تأكل أقل مما يحتاجه جسمك. لا شاي ولا طعام ولا حيلة تحرق الدهون. فقط العجز يهم.", todo: "كُل كل يوم أقل قليلاً مما تحرق.", helper: { label: "مساعد · الماء", text: "اشرب كوباً كبيراً قبل الأكل — عندها تأكل أقل تلقائياً." } },
+      { tag: "يحمي العضلات", title: "كُل الكثير من البروتين", line: "البروتين يُشبع ويُنقذ عضلاتك.", why: "البروتين يُشبع ويحمي عضلاتك أثناء خسارة الوزن. بدون بروتين كافٍ تخسر عضلاً بدل الدهون.", todo: "احسب البروتين أولاً ثم الباقي. الهدف: 2غ لكل كيلو من وزن الجسم.", helper: { label: "مساعد · مشروب البروتين", text: "استخدم المشروب فقط إن لم تستطع بلوغ البروتين بغيره. الطعام الحقيقي يُشبع أكثر لكل سعرة." } },
+      { tag: "يحفظ العضلات", title: "اذهب للتدريب", line: "التدريب يقول لجسمك: ابتعد عن العضلات.", why: "حين تخسر الوزن يريد جسمك حرق العضلات. التدريب هو الإشارة: احتفظ بها. بدون تدريب تصبح نحيفاً لكن مترهلاً — لا مشدوداً.", todo: "ارفع الأثقال بانتظام.", helper: { label: "مساعد · الكرياتين", text: "يساعد على حفظ العضلات لكنه لا يحرق الدهون. يسحب الماء إلى العضلة — لذلك يُظهر الميزان أحياناً أكثر. انظر لمعدل الأسبوع لا ليوم واحد." } },
+      { tag: "NEAT", title: "تحرّك طوال اليوم", line: "حركات صغيرة كثيرة تحرق أكثر مما تظن.", why: "الخطوات والدرج والوقوف خلال اليوم تحرق أكثر مما تظن — وتجعلك أقل جوعاً من الكارديو الشاق. الكارديو ليس سيئاً، فقط أكثر إجاعاً لكل سعرة.", todo: "8000–10000 خطوة يومياً. الكارديو إضافة، لا بديل.", helper: null },
+      { tag: "التعافي", title: "نَم بما يكفي", line: "النوم السيئ يُفسد أفضل عجز.", why: "قلة النوم تجعلك أكثر جوعاً وتخسر الدهون أسوأ. عندها يعمل جسمك ضدك.", todo: "نَم بأفضل ما تستطيع — النوم جزء من الحمية، لا إضافة.", helper: null },
+      { tag: "مُشبع", title: "حصص كبيرة، سعرات قليلة", line: "بطن ممتلئ، سعرات قليلة — أهم رافعة.", why: "الخضار والبطاطا واللحم قليل الدهن تملأ بطنك لكن بسعرات قليلة. لهذا تشعر أن الحمية سهلة أو صعبة — لا بسبب الانضباط.", todo: "ابنِ طبقك من أشياء مُشبعة، عندها تستمر بسهولة.", helper: null },
+      { tag: "الاستمرارية", title: "استمر، لا تكن مثالياً", line: "يوم سيئ لا يُحسب. أسبوع سيئ يُحسب.", why: "يوم سيئ لا يُسمّنك. أسبوع سيئ يفعل. الخطة التي تلتزم بها تتفوق على المثالية التي تتركها.", todo: "افعلها 80% نظيفة، اترك 20% مرنة.", helper: null },
     ],
+    merksatz: { label: "في جملة واحدة", text: "كُل أقل، كُل الكثير من البروتين، ارفع الأثقال — واستمر." },
     foodHeading: "ما الذي يوضع في الطبق",
     foods: [
       { cat: "بروتين — الأساس", color: "orange", items: ["كوارك / سكير قليل الدسم", "صدر دجاج وديك رومي", "بيض / بياض البيض", "تيلابيا، قد، تونة", "لحم بقري قليل الدهن (5%)", "واي بروتين", "جبن قريش قليل الدسم"] },
@@ -340,6 +356,7 @@ function App() {
   const [langOpen, setLangOpen] = useState(false);
   const [themeId, setThemeId] = useState(initTheme);
   const [tab, setTab] = useState("start");
+  const [rulesExpanded, setRulesExpanded] = useState(0); // which rule card is open
   const [isDesktop, setIsDesktop] = useState(typeof window !== "undefined" && window.innerWidth >= 760);
 
   // Calculator state
@@ -465,7 +482,7 @@ function App() {
     eyebrow(t.calc.activityLabel),
     e('div', { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 } },
       t.activity.map(o =>
-        e('button', { key: o.id, className: "btn", onClick: () => setAct(o.id), style: { textAlign: "left", padding: "11px 13px", borderRadius: 10, background: act === o.id ? (isLight ? "#f3f7e3" : "#11140a") : theme.cardAlt, border: `1px solid ${act === o.id ? A.lime + "99" : theme.border}`, fontFamily: "'Bebas Neue', sans-serif" } },
+        e('button', { key: o.id, className: "btn", onClick: () => setAct(o.id), style: { textAlign: "left", padding: "11px 13px", borderRadius: 10, background: act === o.id ? (isLight ? "#fbf1ea" : "#19120b") : theme.cardAlt, border: `1px solid ${act === o.id ? A.lime + "99" : theme.border}`, fontFamily: "'Bebas Neue', sans-serif" } },
           e('div', { style: { fontSize: 18, color: act === o.id ? A.lime : theme.sub, letterSpacing: 0.5 } }, o.label),
           e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.faint, fontSize: 10, marginTop: 2 } }, o.sub)
         )
@@ -514,7 +531,7 @@ function App() {
         )
       )
     ),
-    e('div', { style: { marginTop: 12, background: isLight ? "#fbfbef" : "#0a0a00", border: `1px solid ${A.lime}30`, borderRadius: 10, padding: "12px 14px", fontFamily: "'DM Sans', sans-serif", color: theme.sub, fontSize: 12, lineHeight: 1.65 } }, t.calc.note)
+    e('div', { style: { marginTop: 12, background: isLight ? "#fdf6f0" : "#100a05", border: `1px solid ${A.lime}30`, borderRadius: 10, padding: "12px 14px", fontFamily: "'DM Sans', sans-serif", color: theme.sub, fontSize: 12, lineHeight: 1.65 } }, t.calc.note)
   );
 
   return e('div', { style: { fontFamily: "'Bebas Neue', Impact, sans-serif", background: theme.bg, minHeight: "100vh", color: theme.text, maxWidth: maxW, margin: "0 auto", position: "relative", transition: "background 0.25s ease, color 0.25s ease" } },
@@ -552,17 +569,40 @@ function App() {
     // ════════ TAB: REGELN ════════
     tab === "rules" && e('div', { style: { padding: isDesktop ? "20px 28px 36px" : "16px 20px 32px" } },
       eyebrow(t.rulesHeading, 14),
-      e('div', { style: { display: "grid", gridTemplateColumns: cols2, gap: 8 } },
-        t.rules.map((r, i) =>
-          e('div', { key: i, className: "card", style: { background: theme.cardAlt, border: `1px solid ${theme.border}`, borderRadius: 12, padding: "16px", display: "flex", gap: 14, position: "relative", overflow: "hidden" } },
-            e('div', { style: { position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: A[r.color] } }),
-            e('div', { style: { fontSize: 30, color: A[r.color], lineHeight: 1, flexShrink: 0, minWidth: 30 } }, r.num),
-            e('div', null,
-              e('div', { style: { fontSize: 20, letterSpacing: 0.3, lineHeight: 1.05 } }, r.title),
-              e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.sub, fontSize: 13, marginTop: 6, lineHeight: 1.6 } }, r.body)
+      e('div', { style: { display: "grid", gridTemplateColumns: cols2, gap: 8, alignItems: "start" } },
+        t.rules.map((r, i) => {
+          const open = rulesExpanded === i;
+          const c = A[RULE_COLORS[i]];
+          return e('div', { key: i, className: "card", onClick: () => setRulesExpanded(open ? null : i),
+            style: { background: open ? theme.card : theme.cardAlt, border: `1px solid ${open ? c + "66" : theme.border}`, borderRadius: 12, padding: "14px", position: "relative", overflow: "hidden", cursor: "pointer" } },
+            open && e('div', { style: { position: "absolute", insetInlineStart: 0, top: 0, bottom: 0, width: 3, background: c } }),
+            e('div', { style: { display: "flex", alignItems: "flex-start", gap: 12 } },
+              e('div', { style: { fontSize: 30, color: c, lineHeight: 1, flexShrink: 0, minWidth: 34 } }, String(i + 1).padStart(2, "0")),
+              e('div', { style: { flex: 1 } },
+                e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.faint, fontSize: 10, marginBottom: 4, textTransform: "uppercase", letterSpacing: 1 } }, r.tag),
+                e('div', { style: { fontSize: 19, letterSpacing: 0.3, lineHeight: 1.05 } }, r.title),
+                e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.sub, fontSize: 12, marginTop: 5, lineHeight: 1.4 } }, r.line)
+              ),
+              e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.faint, fontSize: 9, marginInlineStart: 6, flexShrink: 0 } }, open ? "▲" : "▼")
+            ),
+            open && e('div', { style: { marginTop: 14, paddingTop: 14, borderTop: `1px solid ${theme.border}` } },
+              e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.faint, fontSize: 9, letterSpacing: 2, textTransform: "uppercase", marginBottom: 6 } }, t.rulesLabels.why),
+              e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.sub, fontSize: 13, lineHeight: 1.65, marginBottom: 14 } }, r.why),
+              e('div', { style: { background: c + "16", border: `1px solid ${c}40`, borderRadius: 8, padding: "11px 13px", marginBottom: r.helper ? 10 : 0 } },
+                e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: c, fontSize: 9, letterSpacing: 2, textTransform: "uppercase", marginBottom: 4, fontWeight: 600 } }, t.rulesLabels.todo),
+                e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.text, fontSize: 14, lineHeight: 1.5 } }, r.todo)
+              ),
+              r.helper && e('div', { style: { background: theme.cardAlt, border: `1px dashed ${theme.border}`, borderRadius: 8, padding: "11px 13px" } },
+                e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.faint, fontSize: 9, letterSpacing: 2, textTransform: "uppercase", marginBottom: 4 } }, r.helper.label),
+                e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.sub, fontSize: 12.5, lineHeight: 1.55 } }, r.helper.text)
+              )
             )
-          )
-        )
+          );
+        })
+      ),
+      e('div', { style: { marginTop: 8, background: isLight ? "#fdf6f0" : "#100a05", border: `1px solid ${A.orange}30`, borderRadius: 12, padding: "16px" } },
+        e('div', { style: { fontFamily: "'DM Sans', sans-serif", color: theme.faint, fontSize: 9, letterSpacing: 3, textTransform: "uppercase", marginBottom: 8 } }, t.merksatz.label),
+        e('div', { style: { fontSize: 20, lineHeight: 1.2, color: A.orange } }, t.merksatz.text)
       )
     ),
 
@@ -584,7 +624,7 @@ function App() {
           )
         )
       ),
-      e('div', { style: { marginTop: 14, background: isLight ? "#fbfbef" : "#0a0a00", border: `1px solid ${A.lime}30`, borderRadius: 10, padding: "14px 16px", fontFamily: "'DM Sans', sans-serif", color: theme.sub, fontSize: 12, lineHeight: 1.7 } },
+      e('div', { style: { marginTop: 14, background: isLight ? "#fdf6f0" : "#100a05", border: `1px solid ${A.lime}30`, borderRadius: 10, padding: "14px 16px", fontFamily: "'DM Sans', sans-serif", color: theme.sub, fontSize: 12, lineHeight: 1.7 } },
         e('div', { style: { fontFamily: "'Bebas Neue', sans-serif", color: A.lime, fontSize: 16, marginBottom: 6, letterSpacing: 0.5 } }, t.plateTitle),
         t.plateBody
       ),
