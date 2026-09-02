@@ -1,24 +1,39 @@
 # Recipe Vault — FIT NIIKITER Agent Brain
 
 ## Project
-Static single-page app. GitHub Pages + Cloudflare custom domain.
-NO backend. NO framework. NO external dependencies. Always free.
+Static single-page app. GitHub Pages + Cloudflare custom domain (fitniikiter.com).
+NO backend. NO framework. NO external code dependencies. Always free.
 
 ## Files
-- index.html (911KB) — all app logic, CSS, HTML
-- recipes.json (58KB) — all 148 recipes
-- config.json (5.6KB) — protein defs, dietary filters
+- index.html (~840KB) — CSS, HTML shell, all app logic, and inline reference
+  data (NUT, INGREDIENT_DB, CARB_RATIOS, DIETARY_FILTERS, PANTRY_ITEMS,
+  CARB_COMPARE, PROTEIN_COMPARE). See the FILE MAP comment at the top of the file.
+- recipes.js (~590KB) — ALL recipe content: `const R` (recipe cards) and
+  `const RECIPE_DETAILS` (full details). This is where recipes live.
+- nutrition.js (~46KB) — nutrition lookup DB (NUTRITION_DB, NUTRITION_DISPLAY,
+  NUTRITION_CARBS) used by the calculator / nutrition checks.
+- manifest.json + icon-192.png + icon-512.png + og-image.png — PWA + social assets.
+- Standalone pages (not part of the SPA): fat-loss-guide.html, trainingsplan.html,
+  model.html.
 
 ## Rules — ALWAYS FOLLOW
 - Always push directly to main after every change automatically
 - All code comments in English
 - All recipe content in English (brand names in parentheses ok)
-- No external dependencies ever
-- Current recipe count: 148 — next displayNum is 149
+- No external code dependencies ever (fonts/images are hosted content, not code deps)
+- Current recipe count: 222 — highest displayNum is 223, next new one is 224
 
-## Recipe Structure (recipes.json)
-{ id, displayNum, carb, time, title, desc, tags[], flavor,
-  proteinOpts{}, carbs{}, sauce{}, ing[], steps[], hacks[], notes }
+## Recipe Structure
+Split across two objects in recipes.js, both keyed/matched by the same `id`:
+
+R (card, in `const R = [...]`):
+{ id, protein, displayNum, carb, time, title, desc, tags[], flavor, hint,
+  sideEgg? }
+
+RECIPE_DETAILS (detail, in `const RECIPE_DETAILS = { <id>: {...} }`):
+{ image, video, ingredients[{section, items[{name, amt}]}], steps[], hacks[], notes }
+
+⚠ To add/edit a recipe, update BOTH R and RECIPE_DETAILS in recipes.js.
 
 ## Creator
 FIT NIIKITER — TikTok + YouTube food content creator

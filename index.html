@@ -2,53 +2,41 @@
 <!--
 ================================================================================
   FIT NIIKITER'S RECIPE VAULT — FILE MAP
-  (Single-file app. Use this map to jump directly to what you need.)
+  (Grep the anchors below instead of trusting line numbers — the file is
+   huge and line numbers drift with every edit.)
 ================================================================================
 
-  STRUCTURE OVERVIEW:
-  ┌─ <head>
-  │   ├── Line    15 : <style>  — ALL CSS starts here
-  │   └── Line  4353 : </style> — CSS ends here
-  │
-  ├─ <body>  — Static HTML shell (nav, modals, calculator UI)
-  │
-  └─ <script>  — All JavaScript
-      │
-      ├── DATA BLOCKS (read-only reference data)
-      │   ├── Line  5098 : NUT              — Protein macro values per 100g
-      │   │                                   (chicken_thigh, beef, eggs, salmon, tofu...)
-      │   ├── Line  5112 : INGREDIENT_DB    — Sauce/ingredient macro database
-      │   │                                   (soy_sauce, oyster_sauce, gochujang...)
-      │   ├── Line  5376 : R[]              — Recipe CARD data (all recipes)
-      │   │                                   id, title, desc, tags, carb, time,
-      │   │                                   sauce_kcal/p/c/f, displayNum
-      │   │                                   ⚠ To add/edit a recipe card → edit here
-      │   ├── Line  7452 : CARB_RATIOS      — Raw→cooked conversion factors
-      │   ├── Line  7749 : DIETARY_FILTERS  — Lactose-free, gluten-free, no-pork etc.
-      │   ├── Line  8585 : RECIPE_DETAILS   — Full recipe data (LARGE BLOCK ~230KB)
-      │   │                                   ingredients, steps, hacks, notes, video
-      │   │                                   ⚠ To add/edit recipe details → edit here
-      │   ├── Line 15565 : PANTRY_ITEMS     — All pantry ingredient categories
-      │   ├── Line 16324 : CARB_COMPARE     — Carb comparison table data
-      │   └── Line 16822 : PROTEIN_COMPARE  — Protein comparison table data
-      │
-      └── APP LOGIC (functions)
-          ├── Line  8130 : buildIngredientRecipeMap();
-        buildAllCards()      — Renders the recipe card grid
-          ├── Line  8211 : filterRecipes()      — Search + filter logic
-          ├── Line 15140 : getRecipeDetail()    — Fetches recipe detail object
-          ├── Line 15187 : openModal()          — Opens recipe detail popup
-          ├── Line 15292 : buildIngredientsTab()
-          ├── Line 15457 : buildRecipeTab()
-          └── Line 16324 : runCalc()            — Macro/calorie calculator
+  THREE FILES make up the app (all loaded by this index.html):
 
-================================================================================
-  HOW TO USE THIS MAP:
-  - Adding a recipe?     → Line 5376 (R[]) + Line 8585 (RECIPE_DETAILS)
-  - Editing a recipe?    → Same as above, find by recipe id string
-  - Changing styles?     → Line 15–4353
-  - Fixing filter bugs?  → Line 8211
-  - Pantry changes?      → Line 15565
+  1. index.html  — CSS, HTML shell, app logic, and the reference data below.
+       CSS:            grep "<style>"  ...  "</style>"
+       DATA (inline)   grep for these declarations:
+         const NUT              — protein macro values per 100g
+         const INGREDIENT_DB    — sauce/ingredient macro database
+         const CARB_RATIOS      — raw→cooked conversion factors
+         const DIETARY_FILTERS  — lactose-free, gluten-free, no-pork, etc.
+         const PANTRY_ITEMS     — pantry ingredient categories
+         const CARB_COMPARE     — carb comparison table data
+         PROTEIN_COMPARE        — protein comparison table data
+       KEY FUNCTIONS   grep for the name:
+         buildAllCards()        — renders the recipe card grid
+         filterRecipes()        — search + filter logic
+         getRecipeDetail()      — fetches a recipe detail object
+         openModal()            — opens the recipe detail popup
+         buildIngredientsTab(), buildRecipeTab()
+         runCalc()              — macro/calorie calculator
+         anime()                — tiny WAAPI shim (replaces the old CDN dep)
+
+  2. recipes.js  — ALL recipe content (this is where recipes live now):
+         const R                — recipe CARD data (id, title, desc, tags,
+                                  carb, time, sauce macros, displayNum)
+         const RECIPE_DETAILS   — full detail (ingredients, steps, hacks, notes)
+       ⚠ To add/edit a recipe → edit BOTH R and RECIPE_DETAILS here.
+
+  3. nutrition.js — nutrition lookup DB used by the calculator/checks:
+         const NUTRITION_DB, NUTRITION_DISPLAY, NUTRITION_CARBS
+
+  COUNT: 222 recipes. Highest displayNum is 223 → next new one is 224.
 ================================================================================
 -->
 
