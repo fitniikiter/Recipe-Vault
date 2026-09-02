@@ -5871,7 +5871,86 @@
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="nutrition.js?v=202604031347"></script>
   <script src="recipes.js?v=202604031347"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script>
+      // Dependency-free stand-in for the small subset of anime.js this app
+      // uses (targets, from/to keyframes for opacity/height/transform, easing,
+      // duration, delay incl. stagger, begin/complete). Backed by the native
+      // Web Animations API so the app stays self-contained — no CDN at runtime.
+      (function () {
+        const EASINGS = {
+          easeInQuad: "cubic-bezier(0.55,0.085,0.68,0.53)",
+          easeOutQuad: "cubic-bezier(0.25,0.46,0.45,0.94)",
+          easeOutBack: "cubic-bezier(0.34,1.56,0.64,1)",
+          linear: "linear",
+        };
+        // Split anime-style props into a [from, to] pair of CSS declarations,
+        // compositing transform sub-properties (scale/translate/rotate).
+        function frames(props) {
+          const from = {}, to = {}, tFrom = [], tTo = [];
+          for (const key in props) {
+            const v = props[key];
+            if (!Array.isArray(v)) continue; // only [from, to] tuples animate
+            const [a, b] = v;
+            if (key === "translateX" || key === "translateY") {
+              tFrom.push(`${key}(${a}px)`);
+              tTo.push(`${key}(${b}px)`);
+            } else if (key === "scale") {
+              tFrom.push(`scale(${a})`);
+              tTo.push(`scale(${b})`);
+            } else if (key === "rotate") {
+              tFrom.push(`rotate(${a}deg)`);
+              tTo.push(`rotate(${b}deg)`);
+            } else if (key === "height" || key === "width") {
+              from[key] = `${a}px`;
+              to[key] = `${b}px`;
+            } else {
+              from[key] = a; // opacity and other unitless props
+              to[key] = b;
+            }
+          }
+          if (tFrom.length) {
+            from.transform = tFrom.join(" ");
+            to.transform = tTo.join(" ");
+          }
+          return [from, to];
+        }
+        function anime(opts) {
+          let targets = opts.targets;
+          if (typeof targets === "string") targets = document.querySelectorAll(targets);
+          const els = targets == null ? [] : targets.nodeType ? [targets] : Array.from(targets);
+          const easing = EASINGS[opts.easing] || opts.easing || "ease";
+          const duration = opts.duration || 400;
+          if (!els.length) {
+            opts.complete && opts.complete();
+            return;
+          }
+          opts.begin && opts.begin();
+          let remaining = els.length, done = false;
+          els.forEach((el, i) => {
+            const [from, to] = frames(opts);
+            let delay = opts.delay || 0;
+            if (typeof delay === "function") delay = delay(el, i);
+            const anim = el.animate([from, to], { duration, delay, easing, fill: "forwards" });
+            anim.onfinish = () => {
+              // Bake final values into inline styles (like anime did), then
+              // release the WAAPI hold so complete() callbacks can override.
+              try { anim.commitStyles(); } catch (e) {}
+              anim.cancel();
+              if (--remaining <= 0 && !done) {
+                done = true;
+                opts.complete && opts.complete();
+              }
+            };
+          });
+        }
+        // Per-element increasing delay: stagger(step, { start }) -> (el, i) => start + i*step
+        anime.stagger = function (value, o) {
+          const start = (o && o.start) || 0;
+          return (el, i) => start + i * value;
+        };
+        window.anime = anime;
+      })();
+    </script>
     <script>
       const NUT = {
         chicken_thigh: { kcal: 149, p: 18.6, c: 0, f: 7.92 },
