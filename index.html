@@ -5353,6 +5353,10 @@
                   </div>
                   <input type="range" class="mf-slider off" id="mfScoreMin" min="1" max="10" step="1" value="1" data-nofilter="1" oninput="_mfSliderInput(this,'mfScoreMinD','{v}/10')">
                 </div>
+                <label class="mf-round-row" style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);cursor:pointer;margin-top:2px;">
+                  <input type="checkbox" id="chkRound5" onchange="toggleRound5()" style="accent-color:var(--accent);width:16px;height:16px;cursor:pointer;">
+                  Round auto weights to 5g
+                </label>
                 <button class="mf-reset-btn" onclick="resetMacroFilter()" style="align-self:flex-end">✕ Reset</button>
               </div></div>
             </div>
@@ -6341,6 +6345,153 @@
           f: (n * t.f + s * i.f) / a + o * r.f,
         };
       }
+
+      // ─── Auto-weight (per-recipe) ────────────────────────────────────────
+      // Macros are linear in the protein/carb grams, so we can solve each
+      // recipe exactly for grams that satisfy the active macro constraints.
+      const AUTO_W = { pgMin: 20, pgMax: 400, cgMin: 0, cgMax: 500 };
+      let _autoW = {}; // { recipeId: { pg, cg, feasible } } — grams PER SERVING
+
+      function autoWeightActive() {
+        return !!(
+          document.getElementById("chkAutoProtein")?.checked ||
+          document.getElementById("chkAutoCarb")?.checked
+        );
+      }
+      function _autoProteinOn() { return !!document.getElementById("chkAutoProtein")?.checked; }
+      function _autoCarbOn() { return !!document.getElementById("chkAutoCarb")?.checked; }
+      function _autoRound5() { return !!document.getElementById("chkRound5")?.checked; }
+
+      // Like baseMacros but takes explicit total grams and always counts the
+      // protein term (baseMacros zeroes everything when carb === "none").
+      function macrosWith(recipe, pgTot, cgTot) {
+        const a = Math.max(weights.servings, 1),
+          t = NUT[activeProtein] || NUT.chicken_thigh,
+          carbValid = recipe.carb && recipe.carb !== "none" && NUT[recipe.carb],
+          i = carbValid ? NUT[recipe.carb] : { kcal: 0, p: 0, c: 0, f: 0 },
+          n = pgTot / 100,
+          s = carbValid && cgTot ? cgTot / 100 : 0,
+          o = "eggs" === activeProtein ? 0 : weights.eggs * (eggSizeG / 100),
+          r = NUT.eggs;
+        return {
+          kcal: (n * t.kcal + s * i.kcal) / a + o * r.kcal,
+          p: (n * t.p + s * i.p) / a + o * r.p,
+          c: (n * t.c + s * i.c) / a + o * r.c,
+          f: (n * t.f + s * i.f) / a + o * r.f,
+        };
+      }
+
+      // Fixed macros per serving that do NOT depend on the protein/carb grams:
+      // the whole-egg term, the sauce, and any side-egg. Used by the solver.
+      function _autoFixed(recipe) {
+        const eggOnly = macrosWith(recipe, 0, 0); // isolates the weights.eggs term
+        const sm = getSauceMacros(recipe);
+        let sk = 0, sp = 0, sc = 0, sf = 0;
+        if (recipe.sideEgg) {
+          const nut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
+          const gPP = (sideEggCount * sideEggSizeG) / Math.max(weights.servings, 1);
+          sk = (nut.kcal * gPP) / 100; sp = (nut.p * gPP) / 100;
+          sc = (nut.c * gPP) / 100; sf = (nut.f * gPP) / 100;
+        }
+        return {
+          k: eggOnly.kcal + sm.kcal + sk,
+          p: eggOnly.p + sm.p + sp,
+          c: eggOnly.c + sm.c + sc,
+          f: eggOnly.f + sm.f + sf,
+        };
+      }
+
+      // Solve one recipe for per-serving protein (pg) and carb (cg) grams.
+      // Policy: meet the protein floor with the fewest calories, then spend the
+      // remaining calorie/carb budget on carbs. Returns feasible=false when the
+      // active constraints cannot all be met.
+      function solveAutoWeight(recipe) {
+        const t = NUT[activeProtein] || NUT.chicken_thigh,
+          carbValid = recipe.carb && recipe.carb !== "none" && NUT[recipe.carb],
+          i = carbValid ? NUT[recipe.carb] : { kcal: 0, p: 0, c: 0, f: 0 },
+          hasProtein = recipe.protein && recipe.protein !== "none" && t.p > 0,
+          fx = _autoFixed(recipe),
+          sv = Math.max(weights.servings, 1),
+          apOn = _autoProteinOn(),
+          acOn = _autoCarbOn(),
+          protMin = macroFilter.protMin || 0,
+          kcalMax = macroFilter.kcalMax,   // 9999 => inactive
+          carbMax = macroFilter.carbMax,   // 999  => inactive
+          fatMax = macroFilter.fatMax;     // 999  => inactive
+
+        // Protein grams (per serving): minimum needed to clear the floor.
+        let pg;
+        if (apOn && hasProtein && protMin > 0) {
+          pg = ((protMin - fx.p) * 100) / t.p; // carb's tiny protein ignored
+        } else {
+          pg = hasProtein ? weights.chicken / sv : 0;
+        }
+        pg = Math.max(hasProtein ? AUTO_W.pgMin : 0, Math.min(AUTO_W.pgMax, pg));
+
+        // Carb grams (per serving): fill up to the tightest active ceiling.
+        let cg = 0;
+        if (carbValid && i.c > 0) {
+          const carbBudget = ((carbMax - fx.c - (pg * t.c) / 100) * 100) / i.c;
+          const kcalBudget = ((kcalMax - fx.k - (pg * t.kcal) / 100) * 100) / i.kcal;
+          if (acOn && (carbMax < 999 || kcalMax < 9999)) {
+            const bounds = [AUTO_W.cgMax];
+            if (carbMax < 999) bounds.push(carbBudget);
+            if (kcalMax < 9999) bounds.push(kcalBudget);
+            cg = Math.min.apply(null, bounds);
+          } else {
+            cg = weights[recipe.carb] / sv;
+            if (carbMax < 999) cg = Math.min(cg, carbBudget);
+            if (kcalMax < 9999) cg = Math.min(cg, kcalBudget);
+          }
+          cg = Math.max(0, Math.min(AUTO_W.cgMax, cg));
+        }
+
+        // Optional kitchen-friendly rounding (protein up, carbs down so the
+        // constraints stay satisfied where possible).
+        if (_autoRound5()) {
+          if (hasProtein) pg = Math.min(AUTO_W.pgMax, Math.ceil(pg / 5) * 5);
+          if (carbValid) cg = Math.max(0, Math.floor(cg / 5) * 5);
+        }
+
+        // Feasibility: recompute and check the active constraints.
+        const P = (pg * t.p) / 100 + (cg * i.p) / 100 + fx.p,
+          K = (pg * t.kcal) / 100 + (cg * i.kcal) / 100 + fx.k,
+          C = (pg * t.c) / 100 + (cg * i.c) / 100 + fx.c,
+          F = (pg * t.f) / 100 + (cg * i.f) / 100 + fx.f;
+        let feasible = true;
+        if (apOn && protMin > 0 && P < protMin - 0.5) feasible = false;
+        if (kcalMax < 9999 && K > kcalMax + 0.5) feasible = false;
+        if (carbMax < 999 && C > carbMax + 0.5) feasible = false;
+        if (fatMax < 999 && F > fatMax + 0.5) feasible = false;
+
+        return { pg: Math.round(pg), cg: Math.round(cg), feasible };
+      }
+
+      // Recompute the per-recipe weight map. Cheap (linear arithmetic per
+      // recipe); called whenever constraints or the auto toggles change.
+      function computeAllAutoWeights() {
+        _autoW = {};
+        if (!autoWeightActive()) return;
+        R.forEach((r) => { _autoW[r.id] = solveAutoWeight(r); });
+      }
+
+      // Per-serving grams to render for a recipe: auto when active, else global.
+      function autoGramsPerServing(recipe) {
+        const sv = Math.max(weights.servings, 1);
+        if (autoWeightActive() && _autoW[recipe.id]) return _autoW[recipe.id];
+        const carbValid = recipe.carb && recipe.carb !== "none";
+        return {
+          pg: recipe.protein && recipe.protein !== "none" ? Math.round(weights.chicken / sv) : 0,
+          cg: carbValid ? Math.round((weights[recipe.carb] || 0) / sv) : 0,
+          feasible: true,
+        };
+      }
+      function toggleRound5() {
+        updateCardMacros();
+        filterRecipes();
+      }
+      // ─────────────────────────────────────────────────────────────────────
+
       const PROTEIN_DEFS = [
         {
           key: "chicken",
@@ -7237,10 +7388,13 @@
           e.appendChild(t));
       }
       function updateCardMacros() {
+        computeAllAutoWeights();
+        const _sv = Math.max(weights.servings, 1);
         (R.forEach((e) => {
           const a = document.querySelector(`.card[data-id="${e.id}"]`);
           if (!a) return;
-          const t = baseMacros(e.carb),
+          const _aw = autoWeightActive() ? _autoW[e.id] : null,
+            t = _aw ? macrosWith(e, _aw.pg * _sv, _aw.cg * _sv) : baseMacros(e.carb),
             i = getSauceMacros(e);
           let seKcal = 0, seP = 0, seC = 0, seF = 0;
           if (e.sideEgg) {
@@ -7303,6 +7457,8 @@
         });
       }
       function filterRecipes() {
+        computeAllAutoWeights();
+        const _sv = Math.max(weights.servings, 1);
         const e = document.getElementById("searchInput").value.toLowerCase();
         let a = 0;
         const t = document.getElementById("noResults");
@@ -7346,7 +7502,9 @@
               const searchText = t.title.toLowerCase() + " " + t.desc.toLowerCase() + " " + t.tags.join(" ").toLowerCase() + " " + _badges.join(" ");
               return words.every(w => searchText.includes(w));
             })(),
-            r = baseMacros(t.carb),
+            r = (autoWeightActive() && _autoW[t.id])
+              ? macrosWith(t, _autoW[t.id].pg * _sv, _autoW[t.id].cg * _sv)
+              : baseMacros(t.carb),
             c = getSauceMacros(t),
             l = Math.round(r.kcal + c.kcal),
             d = Math.round(r.p + c.p),
@@ -7543,60 +7701,17 @@
           e && (e.checked && applyAutoProteinWeight(), updateCardMacros(), filterRecipes(), updateCalcDisplay());
         }, 0);
       }
-      function applyAutoProteinWeight() {
-        const e = document.getElementById("chkAutoProtein");
-        if (!e || !e.checked) return;
-        const a = _mfSliderVal("mfProtMin");
-        if (isNaN(a) || a <= 0) return;
-        const t = Math.max(weights.servings, 1),
-          i = NUT[activeProtein] || NUT.chicken_thigh;
-        if (!i || !i.p) return;
-        const n = Math.round((a * t * 100) / i.p);
-        ((weights.chicken = Math.max(50, Math.min(3e3, n))), autoCalcCarbs());
-        const s = document.getElementById("chickenInput");
-        s && (s.value = weights.chicken);
-        const fpw4 = document.getElementById("filterProteinWeight");
-        fpw4 && (fpw4.value = weights.chicken);
-        const fcw5 = document.getElementById("filterCarbWeight");
-        fcw5 && (fcw5.value = weights.rice);
-        const o = document.getElementById("mwProt");
-        (o && (o.value = weights.chicken), Object.keys(_sauceMacroCache).forEach((e) => delete _sauceMacroCache[e]));
-      }
+      // Superseded by the per-recipe solver (computeAllAutoWeights, run inside
+      // updateCardMacros/filterRecipes). Kept as no-ops so existing call sites
+      // stay harmless; per-recipe weights no longer mutate the global weights.
+      function applyAutoProteinWeight() {}
       function toggleAutoCarb() {
         setTimeout(() => {
           const e = document.getElementById("chkAutoCarb");
-          e && (e.checked && applyAutoCarbWeight(), updateCardMacros(), filterRecipes(), updateCalcDisplay());
+          e && (updateCardMacros(), filterRecipes(), updateCalcDisplay());
         }, 0);
       }
-      function applyAutoCarbWeight() {
-        const e = document.getElementById("chkAutoCarb");
-        if (!e || !e.checked) return;
-        const a = _mfSliderVal("mfCarbMax");
-        if (isNaN(a) || a <= 0) return;
-        const t = Math.max(weights.servings, 1);
-        // clear cache so getSauceMacros returns fresh values
-        Object.keys(_sauceMacroCache).forEach((k) => delete _sauceMacroCache[k]);
-        (["potato", "rice", "noodle", "bread"].forEach((carbType) => {
-          const i = NUT[carbType];
-          if (!i || !i.c) return;
-          // find the highest sauce-carb contribution across all recipes of this carb type
-          let maxSauceCarbs = 0;
-          R.forEach((recipe) => {
-            if (recipe.carb === carbType) {
-              const sm = getSauceMacros(recipe);
-              if (sm.c > maxSauceCarbs) maxSauceCarbs = sm.c;
-            }
-          });
-          // ingredient weight needed so that ingredient_carbs + max_sauce_carbs <= target
-          const targetIngredientCarbs = Math.max(0, a - maxSauceCarbs);
-          const n = Math.round((targetIngredientCarbs * t * 100) / i.c);
-          weights[carbType] = Math.max(10, Math.min(2e3, n));
-          const s = document.getElementById(carbType + "Input");
-          s && (s.value = weights[carbType]);
-          const o = document.getElementById("mw" + carbType.charAt(0).toUpperCase() + carbType.slice(1));
-          o && (o.value = weights[carbType]);
-        }));
-      }
+      function applyAutoCarbWeight() {}
       function resetMacroFilter() {
         macroFilter = { kcalMax: 9999, protMin: 0, carbMax: 999, fatMax: 999, scoreMin: 1, timeMax: 999 };
         const e = document.getElementById("chkAutoProtein");
