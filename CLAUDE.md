@@ -21,7 +21,7 @@ NO backend. NO framework. NO external code dependencies. Always free.
 - All code comments in English
 - All recipe content in English (brand names in parentheses ok)
 - No external code dependencies ever (fonts/images are hosted content, not code deps)
-- Current recipe count: 222 — highest displayNum is 223, next new one is 224
+- Current recipe count: 198 — displayNum runs 1–198 with no gaps, next new one is 199
 
 ## Recipe Structure
 Split across two objects in recipes.js, both keyed/matched by the same `id`:
