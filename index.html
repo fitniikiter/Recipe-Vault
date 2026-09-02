@@ -56,6 +56,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <!-- Tints the mobile browser UI (address bar) to match the theme.
+         Kept in sync with the light/dark toggle by syncThemeColor(). -->
+    <meta name="theme-color" id="themeColorMeta" content="#0e0e0e" />
     <title>FIT NIIKITER'S RECIPE VAULT</title>
 
     <!-- SEO -->
@@ -10342,11 +10345,17 @@
       function closeHowItWorksModal() {
         (document.getElementById("hiwOverlay").classList.remove("open"), (document.body.style.overflow = ""));
       }
+      // Keep the mobile browser UI tint in sync with the active theme.
+      function syncThemeColor() {
+        const m = document.getElementById("themeColorMeta");
+        if (m) m.content = document.documentElement.classList.contains("light") ? "#f4f4ef" : "#0e0e0e";
+      }
       function toggleTheme() {
         const e = document.documentElement.classList.toggle("light");
         ((document.getElementById("themeIcon").textContent = e ? "🌙" : "☀️"),
           (document.getElementById("themeLabel").textContent = e ? "Dark" : "Light"),
           localStorage.setItem("fitniikiter_theme", e ? "light" : "dark"));
+        syncThemeColor();
       }
       (!(function () {
         const e = new URLSearchParams(window.location.search).get("recipe");
@@ -10372,6 +10381,7 @@
             n = document.getElementById("themeLabel");
           (i && (i.textContent = t ? "🌙" : "☀️"),
             n && (n.textContent = t ? "Dark" : "Light"),
+            syncThemeColor(),
             window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
               if (localStorage.getItem("fitniikiter_theme")) return;
               const a = !e.matches;
@@ -10379,6 +10389,7 @@
               const t = document.getElementById("themeIcon"),
                 i = document.getElementById("themeLabel");
               (t && (t.textContent = a ? "🌙" : "☀️"), i && (i.textContent = a ? "Dark" : "Light"));
+              syncThemeColor();
             }));
         })(),
         autoCalcCarbs(),
