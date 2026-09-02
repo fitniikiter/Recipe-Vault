@@ -10621,5 +10621,14 @@
         });
       })();
     </script>
+    <script>
+      // Register the service worker for offline support (after load so it
+      // never competes with the first render).
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("/sw.js").catch(function () {});
+        });
+      }
+    </script>
   </body>
 </html>
