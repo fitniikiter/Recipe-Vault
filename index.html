@@ -6490,6 +6490,23 @@
         updateCardMacros();
         filterRecipes();
       }
+      // Manually editing a weight means "I'm taking control" — turn auto off so
+      // the typed value sticks instead of being overwritten by the solver.
+      function _disableAutoWeightIfOn() {
+        let changed = false;
+        ["chkAutoProtein", "chkAutoCarb"].forEach((id) => {
+          const c = document.getElementById(id);
+          if (c && c.checked) { c.checked = false; changed = true; }
+        });
+        if (changed) {
+          if (typeof _syncFilterBtn === "function") {
+            _syncFilterBtn("btnAutoProtein", false);
+            _syncFilterBtn("btnAutoCarb", false);
+          }
+          computeAllAutoWeights();
+        }
+        return changed;
+      }
       // ─────────────────────────────────────────────────────────────────────
 
       const PROTEIN_DEFS = [
@@ -6782,6 +6799,7 @@
       }
       let _protWeightTimer = null, _carbWeightTimer = null;
       function updateModalWeight(e, a, t) {
+        _disableAutoWeightIfOn();
         const inputId = e === "prot" ? "mwProt" : "mwCarb";
         // Strip leading zeros immediately on mobile
         const el = document.getElementById(inputId);
@@ -7434,8 +7452,9 @@
           const i = R.find((e) => e.id === a);
           if (!i) return;
           const n = Math.max(weights.servings, 1),
-            s = Math.round(weights.chicken / n),
-            o = i ? Math.round(weights[i.carb] / n) : 0;
+            _awS = (autoWeightActive() && i && _autoW[i.id]) ? _autoW[i.id] : null,
+            s = _awS ? _awS.pg : Math.round(weights.chicken / n),
+            o = i ? (_awS ? _awS.cg : Math.round(weights[i.carb] / n)) : 0;
           let r = "<ul>";
           (t.ingredients.forEach((e) => {
             ((r += `<li class="card-sauce-section" style="list-style:none;">${e.section}</li>`),
@@ -7795,6 +7814,7 @@
           updateCalcDisplay());
       }
       function updateCalc() {
+        _disableAutoWeightIfOn();
         ((weights.chicken = parseFloat(document.getElementById("chickenInput").value) || 0),
           (weights.servings = parseInt(document.getElementById("servingsInput").textContent) || 1),
           autoCalcCarbs(),
@@ -7898,10 +7918,12 @@
         if (!e) return;
         const a = weights.servings;
         weights.servings = modalServings;
+        // Per-recipe auto grams (not for eggs-protein recipes, which use the egg override below)
+        const _awM = (autoWeightActive() && e.protein !== "eggs" && _autoW[e.id]) ? _autoW[e.id] : null;
         // For eggs-protein recipes: temporarily override so baseMacros uses egg values
         const _pAP = activeProtein, _pCh = weights.chicken;
         if (e.protein === "eggs") { activeProtein = "eggs"; weights.chicken = eggCount * eggSizeG * modalServings; }
-        const t = baseMacros(e.carb);
+        const t = _awM ? macrosWith(e, _awM.pg * modalServings, _awM.cg * modalServings) : baseMacros(e.carb);
         activeProtein = _pAP; weights.chicken = _pCh;
         const i = getSauceMacros(e);
         weights.servings = a;
@@ -8142,8 +8164,9 @@
             }[r] || "🍗",
           m = { potato: "🥔", rice: "🍚", noodle: "🍜", bread: "🫓" }[e.carb] || "🍽️",
           h = { potato: "Potato", rice: "Rice", noodle: "Noodles", bread: "Bread/Wrap" }[e.carb] || "Carb",
-          p = o ? Math.round(eggCount * eggSizeG) : Math.round(weights.chicken / i),
-          u = Math.round((weights[e.carb] || 0) / i);
+          _awI = (autoWeightActive() && !o && _autoW[e.id]) ? _autoW[e.id] : null,
+          p = o ? Math.round(eggCount * eggSizeG) : (_awI ? _awI.pg : Math.round(weights.chicken / i)),
+          u = _awI ? _awI.cg : Math.round((weights[e.carb] || 0) / i);
         let g = "";
         if (!o && s && s.variants) {
           const a = s.variants
@@ -8187,7 +8210,7 @@
                     i = Math.round(((a.p * p) / 100) * 10) / 10,
                     n = Math.round(((a.c * p) / 100) * 10) / 10,
                     s = Math.round(((a.f * p) / 100) * 10) / 10;
-                  return `\n  <div class="modal-weight-row" id="protWeightRow">\n    <div class="modal-weight-row-main" onclick="toggleWeightRow('protWeightRow')">\n      <label>${d} ${l.short}</label>\n      <input type="number" class="modal-weight-input" id="mwProt" value="${weights.chicken}"\n        min="50" max="3000"\n        onclick="event.stopPropagation()"\n        oninput="updateModalWeight('prot', this.value, '${e.id}')">\n      <span class="modal-weight-unit">g batch total</span>\n      <span class="modal-weight-hint">${p}g per portion</span>\n      <span class="modal-weight-expand">▼</span>\n    </div>\n    <div class="modal-weight-macro-panel">\n      <div class="ing-macro-grid" style="margin-top:8px;">\n        <div class="ing-macro-cell mk"><span class="imc-val">${t}</span><span class="imc-lbl">kcal</span></div>\n        <div class="ing-macro-cell mp"><span class="imc-val">${i}g</span><span class="imc-lbl">protein</span></div>\n        <div class="ing-macro-cell mc"><span class="imc-val">${n}g</span><span class="imc-lbl">carbs</span></div>\n        <div class="ing-macro-cell mf"><span class="imc-val">${s}g</span><span class="imc-lbl">fat</span></div>\n      </div>\n      <div class="ing-macro-hint">Per portion · ${p}g · per 100g: ${a.kcal}kcal ${a.p}g P ${a.c}g C ${a.f}g F</div>\n    </div>\n  </div>`;
+                  return `\n  <div class="modal-weight-row" id="protWeightRow">\n    <div class="modal-weight-row-main" onclick="toggleWeightRow('protWeightRow')">\n      <label>${d} ${l.short}</label>\n      <input type="number" class="modal-weight-input" id="mwProt" value="${_awI ? _awI.pg * modalServings : weights.chicken}"\n        min="50" max="3000"\n        onclick="event.stopPropagation()"\n        oninput="updateModalWeight('prot', this.value, '${e.id}')">\n      <span class="modal-weight-unit">g batch total</span>\n      <span class="modal-weight-hint">${p}g per portion</span>\n      <span class="modal-weight-expand">▼</span>\n    </div>\n    <div class="modal-weight-macro-panel">\n      <div class="ing-macro-grid" style="margin-top:8px;">\n        <div class="ing-macro-cell mk"><span class="imc-val">${t}</span><span class="imc-lbl">kcal</span></div>\n        <div class="ing-macro-cell mp"><span class="imc-val">${i}g</span><span class="imc-lbl">protein</span></div>\n        <div class="ing-macro-cell mc"><span class="imc-val">${n}g</span><span class="imc-lbl">carbs</span></div>\n        <div class="ing-macro-cell mf"><span class="imc-val">${s}g</span><span class="imc-lbl">fat</span></div>\n      </div>\n      <div class="ing-macro-hint">Per portion · ${p}g · per 100g: ${a.kcal}kcal ${a.p}g P ${a.c}g C ${a.f}g F</div>\n    </div>\n  </div>`;
                 })()
           }\n  <div class="modal-weight-row" id="carbWeightRow">\n    ${(() => {
             const a = NUT[e.carb] || {},
@@ -8195,7 +8218,7 @@
               i = Math.round((((a.p || 0) * u) / 100) * 10) / 10,
               n = Math.round((((a.c || 0) * u) / 100) * 10) / 10,
               s = Math.round((((a.f || 0) * u) / 100) * 10) / 10;
-            return `\n    <div class="modal-weight-row-main" onclick="toggleWeightRow('carbWeightRow')">\n      <label>${m} ${h}</label>\n      <input type="number" class="modal-weight-input" id="mwCarb" value="${weights[e.carb] || 0}"\n        min="0" max="3000"\n        onclick="event.stopPropagation()"\n        oninput="updateModalWeight('carb', this.value, '${e.id}')">\n      <span class="modal-weight-unit">g batch total</span>\n      <span class="modal-weight-hint">${u}g per portion</span>\n      <span class="modal-weight-expand">▼</span>\n    </div>\n    <div class="modal-weight-macro-panel">\n      <div class="ing-macro-grid" style="margin-top:8px;">\n        <div class="ing-macro-cell mk"><span class="imc-val">${t}</span><span class="imc-lbl">kcal</span></div>\n        <div class="ing-macro-cell mp"><span class="imc-val">${i}g</span><span class="imc-lbl">protein</span></div>\n        <div class="ing-macro-cell mc"><span class="imc-val">${n}g</span><span class="imc-lbl">carbs</span></div>\n        <div class="ing-macro-cell mf"><span class="imc-val">${s}g</span><span class="imc-lbl">fat</span></div>\n      </div>\n      <div class="ing-macro-hint">Per portion · ${u}g · per 100g: ${a.kcal || 0}kcal ${a.p || 0}g P ${a.c || 0}g C ${a.f || 0}g F</div>\n    </div>`;
+            return `\n    <div class="modal-weight-row-main" onclick="toggleWeightRow('carbWeightRow')">\n      <label>${m} ${h}</label>\n      <input type="number" class="modal-weight-input" id="mwCarb" value="${_awI ? _awI.cg * modalServings : (weights[e.carb] || 0)}"\n        min="0" max="3000"\n        onclick="event.stopPropagation()"\n        oninput="updateModalWeight('carb', this.value, '${e.id}')">\n      <span class="modal-weight-unit">g batch total</span>\n      <span class="modal-weight-hint">${u}g per portion</span>\n      <span class="modal-weight-expand">▼</span>\n    </div>\n    <div class="modal-weight-macro-panel">\n      <div class="ing-macro-grid" style="margin-top:8px;">\n        <div class="ing-macro-cell mk"><span class="imc-val">${t}</span><span class="imc-lbl">kcal</span></div>\n        <div class="ing-macro-cell mp"><span class="imc-val">${i}g</span><span class="imc-lbl">protein</span></div>\n        <div class="ing-macro-cell mc"><span class="imc-val">${n}g</span><span class="imc-lbl">carbs</span></div>\n        <div class="ing-macro-cell mf"><span class="imc-val">${s}g</span><span class="imc-lbl">fat</span></div>\n      </div>\n      <div class="ing-macro-hint">Per portion · ${u}g · per 100g: ${a.kcal || 0}kcal ${a.p || 0}g P ${a.c || 0}g C ${a.f || 0}g F</div>\n    </div>`;
           })()}\n  </div>${_hasSideEgg ? _sideEggBlock : ""}`,
           b = 0,
           f = 0,
@@ -8342,8 +8365,9 @@
           });
         });
         const n = Math.max(weights.servings, 1),
-          s = Math.round(weights.chicken),
-          o = e ? Math.round(weights[e.carb]) : 0,
+          _awR = (autoWeightActive() && e && _autoW[e.id]) ? _autoW[e.id] : null,
+          s = _awR ? Math.round(_awR.pg * n) : Math.round(weights.chicken),
+          o = e ? (_awR ? Math.round(_awR.cg * n) : Math.round(weights[e.carb])) : 0,
           _proteinNames = {
             chicken_thigh: "Chicken thigh (boneless, skinless, raw)",
             chicken_breast: "Chicken breast (boneless, skinless, raw)",
