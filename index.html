@@ -281,6 +281,16 @@
         border-color: #aaa;
         color: var(--text);
       }
+      /* Light-mode active state — the base html.light rule above outranks
+         .modal-variant-btn.active on specificity, so the selected variant lost
+         its accent fill (didn't "light up"). Restore it here for both light and
+         the grid/calc variant buttons. */
+      html.light .modal-variant-btn.active,
+      html.light .variant-btn.active {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #000;
+      }
       html.light .modal-weight-row {
         background: rgba(0, 0, 0, 0.03);
         border-color: #ddd;
