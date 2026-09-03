@@ -6507,6 +6507,19 @@
         }
         return changed;
       }
+      // The protein NUT key to show a recipe with by default — its own protein,
+      // keeping the current variant if it already belongs to that family.
+      function _nativeVariant(recipe) {
+        const fam = {
+          chicken: ["chicken_thigh", "chicken_breast"],
+          beef: ["beef_regular", "beef_lean"],
+          eggs: ["eggs"],
+          fish: ["salmon"],
+          tofu: ["tofu"],
+        }[recipe && recipe.protein];
+        if (!fam) return activeProtein; // "none"/unknown: leave global as-is
+        return fam.includes(activeProtein) ? activeProtein : fam[0];
+      }
       // ─────────────────────────────────────────────────────────────────────
 
       const PROTEIN_DEFS = [
@@ -6768,6 +6781,7 @@
       }
       function selectModalVariant(e, a) {
         activeProtein = e;
+        computeAllAutoWeights(); // refresh auto-weights BEFORE the modal re-renders (was one step behind)
         const t =
             { chicken_thigh: "chicken", chicken_breast: "chicken", beef_regular: "beef", beef_lean: "beef" }[e] || e,
           i = PROTEIN_DEFS.find((e) => e.key === t);
@@ -7949,6 +7963,11 @@
       function openModal(e) {
         const a = R.find((a) => a.id === e);
         if (!a) return;
+        // Open the recipe with its OWN protein (beef for a beef recipe), not the
+        // globally selected one, so ingredients and macros match. Recompute the
+        // auto-weights so they reflect this protein.
+        activeProtein = _nativeVariant(a);
+        computeAllAutoWeights();
         ((currentModalRecipe = a),
           (document.getElementById("modalNum").textContent = "#" + String(a.displayNum).padStart(3, "0")),
           (function(){ const sl=document.getElementById("modalServingLabel"); if(sl) sl.textContent="1 serving"; })(),
