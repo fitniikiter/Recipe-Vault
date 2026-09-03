@@ -4585,9 +4585,9 @@ const NUT = {
       }
       function shareRecipe() {
         if (!currentModalRecipe) return;
-        const e = new URL(window.location.href);
-        e.searchParams.set("recipe", currentModalRecipe.id);
-        const url = e.toString();
+        // Share the static /r/<id> page (correct per-recipe social preview),
+        // not the ?recipe= app link (crawlers can't run JS to see it).
+        const url = new URL("/r/" + currentModalRecipe.id, window.location.origin).toString();
         const btn = document.getElementById("modalShareBtn");
         function markCopied() {
           btn.classList.add("copied");
