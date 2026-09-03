@@ -5374,10 +5374,10 @@
               <div class="filter-section-body"><div style="display:flex;flex-direction:column;gap:4px;width:100%;box-sizing:border-box;padding:4px 0">
                 <div style="display:flex;flex-direction:row;align-items:center;gap:8px">
                   <span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;font-family:'Bebas Neue',sans-serif">🍽️ Servings</span>
-                  <div style="display:flex;align-items:center;gap:5px">
-                    <button class="step-btn" onclick="changeGlobalServings(-1)" style="width:28px;height:28px">−</button>
-                    <span class="serving-val" id="globalServingVal" style="width:30px;height:28px;line-height:28px;font-size:17px;text-align:center">1</span>
-                    <button class="step-btn" onclick="changeGlobalServings(1)" style="width:28px;height:28px">+</button>
+                  <div class="serving-stepper">
+                    <button class="step-btn" onclick="changeGlobalServings(-1)">−</button>
+                    <span class="serving-val" id="globalServingVal">1</span>
+                    <button class="step-btn" onclick="changeGlobalServings(1)">+</button>
                   </div>
                 </div>
                 <div class="mf-slider-wrap">
