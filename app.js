@@ -1538,7 +1538,7 @@ const NUT = {
             ? (c = `<div class="card-thumb-wrap"><img class="card-thumb" src="${r.image}" loading="lazy" alt="${e.title}"></div>`)
             : r &&
               r.video &&
-              (c = `<div class="card-thumb-wrap"><img class="card-thumb" src="https://img.youtube.com/vi/${r.video}/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/${r.video}/hqdefault.jpg'" loading="lazy" alt="${e.title}"><div class="play-overlay"><span>▶️</span></div></div>`),
+              (c = `<div class="card-thumb-wrap"><img class="card-thumb" src="https://img.youtube.com/vi/${r.video}/hqdefault.jpg" loading="lazy" alt="${e.title}"><div class="play-overlay"><span>▶️</span></div></div>`),
             (i.innerHTML = `${c}\n      <div class="card-top">\n        <div class="card-num">#${String(e.displayNum).padStart(3, "0")}</div>\n        <div class="card-time"><span class="time-icon">${clockEmoji(e.time)}</span>${e.time} min</div>\n      </div>\n      <div class="card-title">${e.title}</div>\n      <div class="card-desc">${e.desc}</div>\n      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin-bottom:10px;">\n        ${e.carb !== "none" ? '<span class="carb-badge ' + e.carb + '" style="margin-bottom:0;vertical-align:middle;">' + a[e.carb] + '</span>' : ""}\n        ${s !== "none" ? `<span class="protein-badge ${s}" style="margin-bottom:0;vertical-align:middle;">${o}</span>` : ""}\n        <span class="flavor-badge ${e.flavor || "savory"}" style="margin-bottom:0;">${"sweet" === e.flavor ? "🍯 Sweet" : "🧂 Savory"}</span>\n        ${ALCOHOL_RECIPE_IDS.has(e.id) ? '<span class="flavor-badge alcohol" style="margin-bottom:0;">🍶 Alcohol</span>' : ""}\n        ${SPICY_RECIPE_IDS.has(e.id) ? '<span class="flavor-badge spicy" style="margin-bottom:0;">🌶️ Spicy</span>' : ""}\n        ${DIP_RECIPE_IDS.has(e.id) ? '<span class="flavor-badge dip" style="margin-bottom:0;">🥣 Dip</span>' : ""}\n      </div>\n      <div class="macro-row">\n        <div class="macro-box kcal-box">    <span class="val" data-macro="kcal">—</span>  <span class="lbl">kcal</span></div>\n        <div class="macro-box protein-box"> <span class="val" data-macro="prot">—</span> <span class="lbl">protein</span></div>\n        <div class="macro-box carbs-box">   <span class="val" data-macro="carbs">—</span><span class="lbl">carbs</span></div>\n        <div class="macro-box fat-box">     <span class="val" data-macro="fat">—</span>  <span class="lbl">fat</span></div>\n      </div>\n      <div style="font-size:9px;color:#555;text-align:right;margin-top:-8px;margin-bottom:6px;" data-macro-context>per portion · <span data-serving-label>1 serving</span></div>\n      <div class="score-row">\n        <span class="score-badge" data-score></span>\n        <div class="score-bar-bg"><div class="score-bar-fill" data-fill></div></div>\n        <span class="score-label" data-scorelabel></span>\n      </div>\n      <div class="card-bottom"><div class="tags">${n}</div></div>\n      <div class="card-click-hint">tap to open recipe →</div>`),
             t.appendChild(i));
         }),
@@ -3279,9 +3279,7 @@ const NUT = {
               (t =
                 '<div class="card-thumb-wrap"><img class="card-thumb" src="https://img.youtube.com/vi/' +
                 i.video +
-                '/maxresdefault.jpg" onerror="this.src=\'https://img.youtube.com/vi/' +
-                i.video +
-                '/hqdefault.jpg\'" loading="lazy" alt="' +
+                '/hqdefault.jpg" loading="lazy" alt="' +
                 e.title +
                 '"><div class="play-overlay"><span>▶️</span></div></div>'),
             t ? (a ? (a.outerHTML = t) : n.insertAdjacentHTML("afterbegin", t)) : a && a.remove());
