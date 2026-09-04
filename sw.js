@@ -10,7 +10,7 @@
  *
  * Bump CACHE_VERSION only if you ever need to hard-invalidate everything.
  */
-const CACHE_VERSION = "v2";
+const CACHE_VERSION = "v3";
 const CACHE = "recipe-vault-" + CACHE_VERSION;
 
 // Stable, query-string-free URLs that make the app usable offline after the
@@ -21,7 +21,6 @@ const PRECACHE = [
   "./index.html",
   "./style.css",
   "./app.js",
-  "./avatar.jpg",
   "./fonts.css",
   "./manifest.json",
   "./icon-192.png",
