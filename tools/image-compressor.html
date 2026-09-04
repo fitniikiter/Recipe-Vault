@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Recipe Vault — Image Compressor</title>
+<style>
+  :root {
+    --bg: #0e0e0e; --surface: #161616; --card: #1c1c1c; --border: #2a2a2a;
+    --accent: #ff8c00; --accent2: #ff6b35; --text: #f0f0f0; --muted: #888;
+    --good: #47e8a3;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    padding: 40px 20px 80px; min-height: 100vh;
+  }
+  .wrap { max-width: 780px; margin: 0 auto; }
+  h1 { font-size: 26px; margin-bottom: 4px; }
+  h1 span { color: var(--accent); }
+  .sub { color: var(--muted); margin-bottom: 28px; font-size: 14px; line-height: 1.5; }
+  .controls {
+    display: flex; gap: 20px; flex-wrap: wrap; align-items: center;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px 20px; margin-bottom: 20px; font-size: 13px;
+  }
+  .controls label { display: flex; align-items: center; gap: 8px; color: var(--muted); }
+  .controls input[type="number"] { width: 70px; background: var(--card); border: 1px solid var(--border); color: var(--text); border-radius: 6px; padding: 6px 8px; }
+  .controls input[type="range"] { accent-color: var(--accent); }
+  .controls select { background: var(--card); border: 1px solid var(--border); color: var(--text); border-radius: 6px; padding: 6px 8px; }
+  #drop {
+    border: 2px dashed var(--border); border-radius: 14px; padding: 50px 20px;
+    text-align: center; cursor: pointer; transition: all .15s; margin-bottom: 24px;
+  }
+  #drop.over { border-color: var(--accent); background: rgba(255,140,0,0.06); }
+  #drop .big { font-size: 40px; margin-bottom: 10px; }
+  #drop .hint { color: var(--muted); font-size: 13px; margin-top: 6px; }
+  #fileInput { display: none; }
+  .results { display: flex; flex-direction: column; gap: 12px; }
+  .row {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px;
+  }
+  .row img { width: 56px; height: 56px; object-fit: cover; border-radius: 8px; flex-shrink: 0; background: #000; }
+  .row .info { flex: 1; min-width: 0; }
+  .row .name { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row .sizes { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .row .sizes b { color: var(--good); }
+  .row .dl {
+    background: var(--accent); color: #000; font-weight: 700; font-size: 13px;
+    padding: 8px 16px; border-radius: 8px; text-decoration: none; flex-shrink: 0;
+  }
+  .row .dl:hover { background: var(--accent2); }
+  .row.processing .sizes { color: var(--accent); }
+  footer { margin-top: 40px; font-size: 12px; color: var(--muted); text-align: center; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Recipe Vault — <span>Image Compressor</span></h1>
+  <p class="sub">Resizes and recompresses recipe photos entirely in your browser (nothing is uploaded anywhere). Drop the original photo(s) in, download the result, then upload that to R2 in place of the original.</p>
+
+  <div class="controls">
+    <label>Max width <input type="number" id="maxW" value="900" min="200" max="4000" step="50"> px</label>
+    <label>Quality <input type="range" id="quality" min="0.5" max="0.95" step="0.01" value="0.82"><span id="qVal">82%</span></label>
+    <label>Format
+      <select id="format">
+        <option value="image/jpeg" selected>JPEG (safe default)</option>
+        <option value="image/webp">WebP (smaller, all modern browsers support it)</option>
+      </select>
+    </label>
+  </div>
+
+  <div id="drop">
+    <div class="big">📷</div>
+    <div>Drop recipe photo(s) here, or click to choose</div>
+    <div class="hint">JPEG/PNG/WebP in → resized + recompressed out. Batch supported.</div>
+    <input type="file" id="fileInput" accept="image/*" multiple>
+  </div>
+
+  <div class="results" id="results"></div>
+
+  <footer>
+    Runs 100% locally in this browser tab — no server, no upload, no dependency.<br>
+    Rule of thumb: recipe cards display at ~300–400px wide, so 900px max-width leaves plenty of headroom for retina screens.
+  </footer>
+</div>
+
+<script>
+  const drop = document.getElementById('drop');
+  const fileInput = document.getElementById('fileInput');
+  const results = document.getElementById('results');
+  const maxWInput = document.getElementById('maxW');
+  const qualityInput = document.getElementById('quality');
+  const qVal = document.getElementById('qVal');
+  const formatSelect = document.getElementById('format');
+
+  qualityInput.addEventListener('input', () => {
+    qVal.textContent = Math.round(qualityInput.value * 100) + '%';
+  });
+
+  drop.addEventListener('click', () => fileInput.click());
+  drop.addEventListener('dragover', (e) => { e.preventDefault(); drop.classList.add('over'); });
+  drop.addEventListener('dragleave', () => drop.classList.remove('over'));
+  drop.addEventListener('drop', (e) => {
+    e.preventDefault();
+    drop.classList.remove('over');
+    handleFiles(e.dataTransfer.files);
+  });
+  fileInput.addEventListener('change', () => handleFiles(fileInput.files));
+
+  function fmtBytes(n) {
+    if (n < 1024) return n + ' B';
+    if (n < 1024 * 1024) return (n / 1024).toFixed(0) + ' KB';
+    return (n / (1024 * 1024)).toFixed(2) + ' MB';
+  }
+
+  function handleFiles(fileList) {
+    [...fileList].forEach(processFile);
+  }
+
+  function processFile(file) {
+    if (!file.type.startsWith('image/')) return;
+    const row = document.createElement('div');
+    row.className = 'row processing';
+    row.innerHTML = `
+      <img src="" alt="">
+      <div class="info">
+        <div class="name">${file.name}</div>
+        <div class="sizes">Processing…</div>
+      </div>
+    `;
+    results.prepend(row);
+
+    const img = new Image();
+    const reader = new FileReader();
+    reader.onload = (e) => { img.src = e.target.result; };
+    reader.onerror = () => { row.querySelector('.sizes').textContent = 'Could not read file.'; };
+    reader.readAsDataURL(file);
+
+    img.onload = () => {
+      const maxW = parseInt(maxWInput.value, 10) || 900;
+      const scale = Math.min(1, maxW / img.naturalWidth);
+      const w = Math.round(img.naturalWidth * scale);
+      const h = Math.round(img.naturalHeight * scale);
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+
+      const format = formatSelect.value;
+      const quality = parseFloat(qualityInput.value);
+      canvas.toBlob((blob) => {
+        if (!blob) { row.querySelector('.sizes').textContent = 'Encoding failed.'; return; }
+        const url = URL.createObjectURL(blob);
+        const ext = format === 'image/webp' ? 'webp' : 'jpg';
+        const base = file.name.replace(/\.[^.]+$/, '');
+        const outName = base + '.' + ext;
+        const pct = Math.round((1 - blob.size / file.size) * 100);
+
+        row.classList.remove('processing');
+        row.querySelector('img').src = url;
+        row.querySelector('.name').textContent = outName;
+        row.querySelector('.sizes').innerHTML =
+          `${fmtBytes(file.size)} → <b>${fmtBytes(blob.size)}</b> (${w}×${h}, ${pct > 0 ? '-' + pct + '%' : 'no reduction'})`;
+
+        const dl = document.createElement('a');
+        dl.className = 'dl';
+        dl.href = url;
+        dl.download = outName;
+        dl.textContent = 'Download';
+        row.appendChild(dl);
+      }, format, quality);
+    };
+  }
+</script>
+</body>
+</html>
