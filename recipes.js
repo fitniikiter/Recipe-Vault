@@ -2825,7 +2825,6 @@ hint: "",
 // --- RECIPE DETAILS (ingredients, steps, hacks) ---
 const RECIPE_DETAILS = {
   "korean-glazed-chicken-bowl": {
-    image: "https://pub-bc6707297a024aa19ff31c3e4a36c1a9.r2.dev/Recipes/Korean%20Glazed%20Chicken%20Rice.png",
     video: "I5BZybb9bpM",
     ingredients: [
       {
@@ -3054,7 +3053,6 @@ const RECIPE_DETAILS = {
 },
 
 "honey-garlic-chicken-noodles": {
-  image: "https://pub-bc6707297a024aa19ff31c3e4a36c1a9.r2.dev/Recipes/Honey%20Garlic%20Chicken.png",
   video: "EdLBJEr__7c",
   ingredients: [
     { section: "Protein", items: [{ name: "Boneless skinless chicken thighs", amt: "{{proteinG}}g raw" }] },
@@ -4235,7 +4233,6 @@ const RECIPE_DETAILS = {
 },
 
 "chicken-caesar-wrap": {
-  image: "https://pub-bc6707297a024aa19ff31c3e4a36c1a9.r2.dev/Recipes/Crispy%20Chicken%20Ceasar%20Wrap.png",
   video: "YokX-zEMNwA",
   ingredients: [
     { section: "Protein", items: [{ name: "Boneless skinless chicken breast", amt: "{{proteinG}}g raw" }] },
@@ -6134,7 +6131,6 @@ const RECIPE_DETAILS = {
 },
 
 "thai-basil-beef-rice": {
-  image: "https://pub-bc6707297a024aa19ff31c3e4a36c1a9.r2.dev/Recipes/Thi%20Basil%20Beef%20Bowl.png",
   video: "TuW135xKh5w",
   ingredients: [
     { section: "Protein", items: [{ name: "Lean ground beef", amt: "{{proteinG}}g raw" }] },
@@ -6173,7 +6169,6 @@ const RECIPE_DETAILS = {
 },
 
 "chocolate-chip-baked-oats": {
-  image: "https://pub-bc6707297a024aa19ff31c3e4a36c1a9.r2.dev/Recipes/Baked%20Oats.png",
   video: "XOnkR7hP1u0",
   ingredients: [
     { section: "Wet", items: [
@@ -7498,7 +7493,6 @@ const RECIPE_DETAILS = {
 },
 
 "american-bigmac-burger-bowl": {
-  image: "https://pub-bc6707297a024aa19ff31c3e4a36c1a9.r2.dev/Recipes/Bigmac%20bowl.png",
   video: "umFC6fef6_Q",
   ingredients: [
     { section: "Protein", items: [{ name: "Lean ground beef (5% fat)", amt: "{{proteinG}}g raw" }] },
