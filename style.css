@@ -38,7 +38,9 @@
         --card: #ffffff;
         --border: #ddd;
         --text: #1a1a1a;
-        --muted: #777;
+        /* #777 measured 4.05-4.47:1 against white/off-white (WCAG AA needs
+           4.5:1) — darkened to #666 for a safe margin (~5.7:1). */
+        --muted: #666;
       }
       html.light body {
         background: var(--bg);
@@ -1080,6 +1082,11 @@
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 12px;
         padding: 12px;
+        /* Reserve roughly a viewport's worth of height before buildAllCards()
+           inserts the 198 cards, so the footer doesn't jump far down the page
+           the moment JS finishes — this was the single biggest layout shift
+           (measured CLS 0.79 on mobile, mostly this one jump). */
+        min-height: 70vh;
       }
       .card {
         background: var(--card);
