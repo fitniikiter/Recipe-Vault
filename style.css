@@ -41,7 +41,68 @@
         /* #777 measured 4.05-4.47:1 against white/off-white (WCAG AA needs
            4.5:1) — darkened to #666 for a safe margin (~5.7:1). */
         --muted: #666;
+        /* The dark-mode accent/tag/carb/macro colors below were tuned to pop
+           against a near-black background (#0e0e0e) and were never given a
+           light-mode-safe counterpart, so every badge/tag/macro-value using
+           them measured 1.3-3.9:1 against the light theme's pale card/tint
+           backgrounds (WCAG AA needs 4.5:1) — this is what PageSpeed's
+           color-contrast audit was flagging site-wide. Each value below is
+           darkened (same hue, reduced lightness) to clear ~4.5:1 against
+           #f4f4ef with a small safety margin. */
+        --accent: #a65b00;
+        --accent2: #cd3700;
+        --accent3: #0d7f4e;
+        --tag-asian: #1175a7;
+        --tag-american: #db1616;
+        --tag-korean: #b516dd;
+        --tag-mexican: #9d6110;
+        --tag-middle-eastern: #0d7f4e;
+        --tag-mediterranean: #1769e0;
+        --tag-comfort: #d51664;
+        --tag-fusion: #72720c;
+        --tag-japanese: #dd0034;
+        --tag-chinese: #cd3700;
+        --tag-thai: #137f3b;
+        --tag-indian: #a15f00;
+        --tag-eggs: #8b6904;
+        --tag-oats: #537926;
+        --tag-protein-powder: #9541e2;
+        --carb-potato: #9d6110;
+        --carb-rice: #1175a7;
+        --carb-noodle: #b516dd;
+        --carb-bread: #db1616;
+        --macro-kcal: #a65b00;
+        --macro-protein: #0d7f4e;
+        --macro-carbs: #1175a7;
+        --macro-fat: #9d6110;
       }
+      /* Hardcoded (non-variable) badge/tag colors, darkened the same way for light mode. */
+      html.light .flavor-badge.sweet,
+      html.light .protein-badge.eggs { color: #a15f00; }
+      html.light .flavor-badge.savory { color: #1175a7; }
+      html.light .flavor-badge.alcohol { color: #8f36ff; }
+      html.light .flavor-badge.spicy { color: #d52800; }
+      html.light .flavor-badge.dip { color: #0d7f4e; }
+      html.light .protein-badge.beef,
+      html.light .tag-beef { color: #db1616; }
+      html.light .tag-chicken { color: #9d6110; }
+      html.light .tag-fish { color: #1175a7; }
+      html.light .tag-tofu { color: #0d7f4e; }
+      html.light .sc-3, html.light .sc-4 { color: #b05410; }
+      html.light .sc-5, html.light .sc-6 { color: #767112; }
+      html.light .sc-9, html.light .sc-10 { color: #237f38; }
+      html.light .tag-vietnamese { color: #d52626; }
+      html.light .tag-turkish { color: #db1515; }
+      html.light .tag-greek, html.light .tag-Greek { color: #2e62e0; }
+      html.light .tag-moroccan, html.light .tag-north-african { color: #a15f14; }
+      html.light .tag-peruvian { color: #d62424; }
+      html.light .tag-ethiopian { color: #906710; }
+      html.light .tag-argentinian { color: #286fc1; }
+      html.light .tag-indonesian { color: #d32929; }
+      html.light .tag-hawaiian { color: #dc0047; }
+      html.light .tag-italian { color: #00803f; }
+      html.light .tag-german { color: #896a00; }
+      html.light .tag-spanish, html.light .tag-british { color: #cd0b2b; }
       html.light body {
         background: var(--bg);
         color: var(--text);
