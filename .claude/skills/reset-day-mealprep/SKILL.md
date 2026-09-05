@@ -42,8 +42,14 @@ grep -n "marinat" recipes.js | grep -i chicken
 Pick 6 marinades that are **maximally different in flavor family** (e.g. one
 Korean gochujang, one Greek lemon-oregano, one Mexican chipotle, one
 Middle-Eastern harissa or za'atar, one Japanese teriyaki, one Indian
-tikka-style) — variety across the week is the entire value proposition, so
-never repeat a flavor family within one week's 6 days.
+tikka-style — this is an example spread, not a fixed checklist) — variety
+across the week is the entire value proposition, so never repeat a flavor
+family within one week's 6 days.
+
+A marinade doesn't have to be a soak — a baste/glaze paste counts too, it
+just gets reframed as "coat raw, sear later" instead of "brush on near the
+end." And marinades are cut-agnostic: reuse a thigh recipe's marinade for
+breast (or vice versa) freely, don't limit the reusable pool by cut.
 
 ## Step 2 — The Reset Day prep sheet (this is the core deliverable)
 
@@ -113,6 +119,8 @@ For each day, produce both objects:
 
 // RECIPE_DETAILS entry
 "gochujang-chicken-rice-bowl-reset": {
+  image: null,   // every real entry sets image + video, even if null/"" — don't drop these
+  video: "",
   ingredients: [
     { section: "From Reset Day", items: [
       { name: "Gochujang-marinated chicken breast (thawed)", amt: "{{proteinG}}g" },
@@ -134,10 +142,15 @@ For each day, produce both objects:
 }
 ```
 
-Check the current highest `displayNum` in `recipes.js` before assigning new
-numbers (CLAUDE.md tracks the count and next free number) — never reuse or
-skip a number, and update the CLAUDE.md count if you actually add these to
-the file rather than just proposing them.
+Check the current highest `displayNum` in `recipes.js` yourself
+(`grep -o "displayNum: [0-9]*" recipes.js | sort -n | tail -1`) before
+assigning new numbers — CLAUDE.md's stated count/next-number can drift out of
+sync with the file (recipes get added without the doc being updated), so
+treat the grep result as truth, not the CLAUDE.md text. Never reuse or skip a
+number, and update the CLAUDE.md count if you actually add these to the file
+rather than just proposing them. A recipe can also optionally set `sideEgg`
+on the R entry (see CLAUDE.md Recipe Structure) — use it if a day's dish
+calls for a fried egg side, otherwise omit it.
 
 Follow every existing Recipe Vault content rule while writing these: English
 only, metric units, ingredients available at REWE/Edeka/Aldi/Lidl/Kaufland,
