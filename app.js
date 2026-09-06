@@ -2864,20 +2864,42 @@
         // a fixed per-portion amount, not scaled by weight). So instead of
         // scoring fat alone, score by how close the recipe's TOTAL solved
         // kcal lands to this slot's kcal share — that catches overshoot from
-        // ANY source (fat, hidden carbs, both) in one number. Keep the ones
-        // close to budget and randomize among those (not always literally
-        // the single closest one, so rerolling still gives real variety).
+        // ANY source (fat, hidden carbs, both) in one number.
         const shareTarget = randShareTargetFor(slotIndex);
         const scored = pool.map((r) => ({ r, kcal: randSolveRecipeAtShare(r, shareTarget).kcal }));
-        const KCAL_TOLERANCE = 1.15; // allow 15% over this slot's kcal share before treating a candidate as "too much"
-        let candidates = scored.filter((s) => s.kcal <= shareTarget.kcal * KCAL_TOLERANCE);
-        if (!candidates.length) {
-          // Every candidate runs over (a tight target, or a cuisine filter
-          // that only has rich dishes) — fall back to the leanest fifth of
-          // the pool rather than returning nothing.
-          scored.sort((a, b) => a.kcal - b.kcal);
-          candidates = scored.slice(0, Math.max(3, Math.ceil(scored.length * 0.2)));
+
+        // The goal decides which side of the share is acceptable: cutting
+        // means the share is a ceiling (landing over it defeats the point of
+        // a target at all), bulking means it's a floor (a surplus is the
+        // goal), maintaining wants either direction as long as it's close.
+        const goal = randGoal();
+        let candidates;
+        if (goal === "cut") {
+          candidates = scored.filter((s) => s.kcal <= shareTarget.kcal);
+          if (!candidates.length) {
+            // Nothing fits under budget at all — closest-from-above beats
+            // silently picking something even further over.
+            scored.sort((a, b) => a.kcal - b.kcal);
+            candidates = scored.slice(0, Math.max(3, Math.ceil(scored.length * 0.2)));
+          }
+        } else if (goal === "bulk") {
+          candidates = scored.filter((s) => s.kcal >= shareTarget.kcal && s.kcal <= shareTarget.kcal * 1.3);
+          if (!candidates.length) {
+            // Nothing reaches the floor (a lean cuisine filter, say) —
+            // closest-from-below beats a surplus goal landing short.
+            scored.sort((a, b) => b.kcal - a.kcal);
+            candidates = scored.slice(0, Math.max(3, Math.ceil(scored.length * 0.2)));
+          }
+        } else {
+          const KCAL_TOLERANCE = 1.15; // allow 15% over this slot's kcal share before treating a candidate as "too much"
+          candidates = scored.filter((s) => s.kcal <= shareTarget.kcal * KCAL_TOLERANCE);
+          if (!candidates.length) {
+            scored.sort((a, b) => a.kcal - b.kcal);
+            candidates = scored.slice(0, Math.max(3, Math.ceil(scored.length * 0.2)));
+          }
         }
+        // Randomize among the qualifying candidates (not always literally
+        // the single closest one) so rerolling still gives real variety.
         return candidates[Math.floor(Math.random() * candidates.length)].r;
       }
 
@@ -2963,6 +2985,32 @@
         } catch (e) {
           return RAND_TARGET_DEFAULT;
         }
+      }
+
+      // The goal changes which side of the target a candidate is allowed to
+      // land on: cutting means the target is a ceiling (at or under —
+      // finishing over it defeats the point of counting at all), bulking
+      // means it's a floor (at or over is fine, that's the surplus), and
+      // maintaining just wants to land close either way.
+      function randGoal() {
+        try {
+          return localStorage.getItem("randGoal") || "maintain";
+        } catch (e) {
+          return "maintain";
+        }
+      }
+      function randSetGoal(goal) {
+        try { localStorage.setItem("randGoal", goal); } catch (e) {}
+        randSyncGoalButtons();
+        randRerollAll(); // re-pick unlocked slots now, under the new goal — otherwise switching goal does nothing until the next manual reroll
+      }
+      function randSyncGoalButtons() {
+        const goal = randGoal();
+        const map = { cut: "randGoalBtnCut", maintain: "randGoalBtnMaintain", bulk: "randGoalBtnBulk" };
+        Object.entries(map).forEach(([g, id]) => {
+          const btn = document.getElementById(id);
+          btn && btn.classList.toggle("active", g === goal);
+        });
       }
       function randUpdateTarget() {
         const t = {
@@ -3093,6 +3141,7 @@
 
       function renderRandomizer() {
         randBuildFilterChips();
+        randSyncGoalButtons();
         const grid = document.getElementById("randGrid");
         if (grid && !grid.dataset.built) {
           grid.innerHTML = [0, 1, 2, 3].map((i) => `<div class="rand-card" id="randSlot${i}"></div>`).join("");

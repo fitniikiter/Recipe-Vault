@@ -580,6 +580,12 @@
             <label>Carbs <input type="number" id="randTargetC" class="rand-target-input" value="190" min="0" oninput="randUpdateTarget()">g</label>
             <label>Fat <input type="number" id="randTargetF" class="rand-target-input" value="60" min="0" oninput="randUpdateTarget()">g</label>
           </div>
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:12px;">
+            <span style="font-size:11px; color:var(--muted);">Goal:</span>
+            <button class="filter-btn" id="randGoalBtnCut" onclick="randSetGoal('cut')">📉 Abnehmen — at or under target</button>
+            <button class="filter-btn" id="randGoalBtnMaintain" onclick="randSetGoal('maintain')">⚖️ Halten — close to target</button>
+            <button class="filter-btn" id="randGoalBtnBulk" onclick="randSetGoal('bulk')">📈 Zunehmen — at or over target</button>
+          </div>
         </div>
 
         <div class="rand-filter-row">
@@ -821,7 +827,7 @@
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="nutrition.js?v=202609061" defer></script>
   <script src="recipes.js?v=202604031347" defer></script>
-    <script src="app.js?v=202609063" defer></script>
+    <script src="app.js?v=202609064" defer></script>
     <div class="hiw-overlay" id="hiwOverlay" onclick="event.target === this && closeHowItWorksModal()">
       <div class="hiw-modal">
         <button class="hiw-modal-close" onclick="closeHowItWorksModal()">✕</button>
