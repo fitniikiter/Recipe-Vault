@@ -2816,22 +2816,39 @@
       // instead of maintaining a second, divergent copy of that logic.
       const RAND_CUISINES = ["mediterranean", "american", "mexican", "korean", "japanese", "middle-eastern", "indian", "thai", "chinese", "greek"];
       let randActiveCuisines = new Set();
+      // No recipe carries a manual meal-type field (yet — that's real curation
+      // work for another day). This derives one from data already there:
+      // protein "eggs" and a handful of title keywords are strong breakfast
+      // signals in this catalog, dip-tagged recipes are condiments/sauces (not
+      // a standalone meal), and everything else with a carb base is a
+      // lunch-or-dinner "main" — this recipe pool doesn't meaningfully
+      // distinguish lunch from dinner, so it isn't a separate slot.
+      const MEAL_TYPE_KEYWORDS = ["breakfast", "porridge", "pancake", "waffle", "omelette", "omelet", "scramble", "hash", "tamagoyaki", "menemen", "huevos", "bauernfr", "tortilla españ", "tortilla espan"];
+      function classifyMealType(r) {
+        if (r.tags.includes("dip")) return "excluded";
+        const text = (r.title + " " + r.id + " " + r.desc).toLowerCase();
+        if (r.protein === "eggs" || r.tags.includes("oats") || MEAL_TYPE_KEYWORDS.some((k) => text.includes(k))) return "breakfast";
+        if (r.carb === "none") return "snack";
+        return "main";
+      }
+      const RAND_SLOT_TYPES = ["breakfast", "main", "main", "main"];
+      const RAND_SLOT_LABELS = { breakfast: "🍳 Breakfast", main: "🍽️ Main", snack: "🥗 Snack" };
       let randSlots = [null, null, null, null];
       let randLocked = [false, false, false, false];
       let randUsedIds = new Set();
 
-      function randCandidatePool() {
+      function randCandidatePool(mealType) {
         return R.filter((r) => {
           if (HIDDEN_RECIPE_IDS.has(r.id)) return false;
-          if (r.protein === "none" && r.carb === "none") return false;
+          if (classifyMealType(r) !== mealType) return false;
           if (randActiveCuisines.size && !r.tags.some((t) => randActiveCuisines.has(t))) return false;
           const excluded = Object.entries(INGREDIENT_RECIPE_MAP).some(([ing, ids]) => disabledIngredients.has(ing) && ids.includes(r.id));
           return !excluded;
         });
       }
 
-      function randPickOne(exclude) {
-        const pool = randCandidatePool().filter((r) => !exclude.has(r.id));
+      function randPickOne(mealType, exclude) {
+        const pool = randCandidatePool(mealType).filter((r) => !exclude.has(r.id));
         if (!pool.length) return null;
         return pool[Math.floor(Math.random() * pool.length)];
       }
@@ -2925,10 +2942,11 @@
         if (!el) return;
         const r = randSlots[i];
         const locked = randLocked[i];
+        const slotLabel = RAND_SLOT_LABELS[RAND_SLOT_TYPES[i]];
         if (!r) {
           el.style.borderColor = "";
           el.style.background = "";
-          el.innerHTML = `<div class="rand-empty">No recipe matches your filters</div>`;
+          el.innerHTML = `<div class="rand-card-top"><span class="rand-card-num">${slotLabel}</span></div><div class="rand-empty">No ${RAND_SLOT_TYPES[i]} recipe matches your filters</div>`;
           return;
         }
         const m = randRecipeMacros(r);
@@ -2936,7 +2954,7 @@
         el.style.background = locked ? "rgba(71,232,163,0.06)" : "";
         el.innerHTML = `
         <div class="rand-card-top">
-          <span class="rand-card-num">#${r.displayNum}</span>
+          <span class="rand-card-num">${slotLabel} · #${r.displayNum}</span>
           <span class="rand-card-btns">
             <button onclick="randReroll(${i})" ${locked ? "disabled style='opacity:.3'" : ""} title="Reroll">🎲</button>
             <button onclick="randToggleLock(${i})" title="Lock">${locked ? "🔒" : "🔓"}</button>
@@ -2950,7 +2968,7 @@
       function randReroll(i) {
         if (randLocked[i]) return;
         if (randSlots[i]) randUsedIds.delete(randSlots[i].id);
-        const next = randPickOne(randUsedIds);
+        const next = randPickOne(RAND_SLOT_TYPES[i], randUsedIds);
         randSlots[i] = next;
         if (next) randUsedIds.add(next.id);
         randRenderCard(i);
@@ -2988,7 +3006,7 @@
         randUsedIds.clear();
         for (let i = 0; i < 4; i++) {
           if (!randSlots[i]) {
-            const next = randPickOne(randUsedIds);
+            const next = randPickOne(RAND_SLOT_TYPES[i], randUsedIds);
             randSlots[i] = next;
             if (next) randUsedIds.add(next.id);
           } else {
