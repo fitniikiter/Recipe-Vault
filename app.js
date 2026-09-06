@@ -2854,7 +2854,15 @@
       }
 
       function randRecipeMacros(recipe) {
+        // baseMacros() reads the module-global activeProtein, not anything
+        // tied to the recipe — without swapping it to this recipe's own
+        // family first, a beef/fish/tofu/egg recipe silently got costed as
+        // whatever protein was last selected on the main Recipes page
+        // (e.g. every card priced as chicken thigh, including beef ones).
+        const savedProtein = activeProtein;
+        activeProtein = _nativeVariant(recipe);
         const base = baseMacros(recipe.carb);
+        activeProtein = savedProtein;
         const sauce = getSauceMacros(recipe);
         return {
           kcal: Math.round(base.kcal + sauce.kcal),
