@@ -2851,10 +2851,34 @@
         });
       }
 
-      function randPickOne(mealType, exclude) {
+      function randPickOne(mealType, exclude, slotIndex) {
         const pool = randCandidatePool(mealType).filter((r) => !exclude.has(r.id));
         if (!pool.length) return null;
-        return pool[Math.floor(Math.random() * pool.length)];
+        if (slotIndex == null) return pool[Math.floor(Math.random() * pool.length)];
+
+        // Portion-scaling solves protein/carb GRAMS to hit their share, but
+        // fat — and, in dishes like burrito bowls where beans/rice/tortilla
+        // ride along as "extras" rather than the templated carb base, a good
+        // chunk of carbs too — is baked into the recipe's fixed ingredients
+        // and can't be dialed down after the fact (see calcSauceMacros: it's
+        // a fixed per-portion amount, not scaled by weight). So instead of
+        // scoring fat alone, score by how close the recipe's TOTAL solved
+        // kcal lands to this slot's kcal share — that catches overshoot from
+        // ANY source (fat, hidden carbs, both) in one number. Keep the ones
+        // close to budget and randomize among those (not always literally
+        // the single closest one, so rerolling still gives real variety).
+        const shareTarget = randShareTargetFor(slotIndex);
+        const scored = pool.map((r) => ({ r, kcal: randSolveRecipeAtShare(r, shareTarget).kcal }));
+        const KCAL_TOLERANCE = 1.15; // allow 15% over this slot's kcal share before treating a candidate as "too much"
+        let candidates = scored.filter((s) => s.kcal <= shareTarget.kcal * KCAL_TOLERANCE);
+        if (!candidates.length) {
+          // Every candidate runs over (a tight target, or a cuisine filter
+          // that only has rich dishes) — fall back to the leanest fifth of
+          // the pool rather than returning nothing.
+          scored.sort((a, b) => a.kcal - b.kcal);
+          candidates = scored.slice(0, Math.max(3, Math.ceil(scored.length * 0.2)));
+        }
+        return candidates[Math.floor(Math.random() * candidates.length)].r;
       }
 
       // Each slot gets a share of the daily target (default: split evenly),
@@ -2873,14 +2897,12 @@
         randRenderMacros();
       }
 
-      function randRecipeMacrosForSlot(i) {
-        const recipe = randSlots[i];
-        if (!recipe) return { kcal: 0, p: 0, c: 0, f: 0, pg: 0, cg: 0 };
-
-        const target = randTarget();
-        const share = (randShares[i] || 0) / 100;
-        const shareTarget = { kcal: target.kcal * share, p: target.p * share, c: target.c * share, f: target.f * share };
-
+      // Solves ANY recipe's protein/carb grams against an arbitrary share
+      // target — split out from randRecipeMacrosForSlot() so randPickOne()
+      // can also use it to evaluate candidates BEFORE one lands in a slot
+      // (see below: picking now weighs each candidate's resulting fat,
+      // since fat is the one macro portioning can't fix after the fact).
+      function randSolveRecipeAtShare(recipe, shareTarget) {
         const nativeProtein = NUTRITION_DB[_nativeVariant(recipe)] || NUTRITION_DB.chicken_thigh;
         const carbInfo = recipe.carb !== "none" ? NUTRITION_DB[recipe.carb] || { kcal: 0, p: 0, c: 0, f: 0 } : { kcal: 0, p: 0, c: 0, f: 0 };
         const sauce = getSauceMacros(recipe);
@@ -2920,6 +2942,18 @@
           pg: Math.round(pg),
           cg: Math.round(cg),
         };
+      }
+
+      function randShareTargetFor(i) {
+        const target = randTarget();
+        const share = (randShares[i] || 0) / 100;
+        return { kcal: target.kcal * share, p: target.p * share, c: target.c * share, f: target.f * share };
+      }
+
+      function randRecipeMacrosForSlot(i) {
+        const recipe = randSlots[i];
+        if (!recipe) return { kcal: 0, p: 0, c: 0, f: 0, pg: 0, cg: 0 };
+        return randSolveRecipeAtShare(recipe, randShareTargetFor(i));
       }
 
       const RAND_TARGET_DEFAULT = { kcal: 2000, p: 160, c: 190, f: 60 };
@@ -3034,7 +3068,7 @@
       function randReroll(i) {
         if (randLocked[i]) return;
         if (randSlots[i]) randUsedIds.delete(randSlots[i].id);
-        const next = randPickOne(RAND_SLOT_TYPES[i], randUsedIds);
+        const next = randPickOne(RAND_SLOT_TYPES[i], randUsedIds, i);
         randSlots[i] = next;
         if (next) randUsedIds.add(next.id);
         randRenderCard(i);
@@ -3072,7 +3106,7 @@
         randUsedIds.clear();
         for (let i = 0; i < 4; i++) {
           if (!randSlots[i]) {
-            const next = randPickOne(RAND_SLOT_TYPES[i], randUsedIds);
+            const next = randPickOne(RAND_SLOT_TYPES[i], randUsedIds, i);
             randSlots[i] = next;
             if (next) randUsedIds.add(next.id);
           } else {
