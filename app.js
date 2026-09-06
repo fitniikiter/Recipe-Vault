@@ -2730,7 +2730,8 @@
           document.getElementById("page-" + e).classList.add("active"),
           "pantry" === e && (renderPantry(), buildDietaryGrid()),
           "compare" === e && buildCompareTable(),
-          "nutrition" === e && renderNutritionDB());
+          "nutrition" === e && renderNutritionDB(),
+          "randomizer" === e && renderRandomizer());
       }
 
       let _nutdbData = null;
@@ -2807,6 +2808,197 @@
           .join("");
         document.getElementById("nutdbCount").textContent = rows.length + " ingredients";
       }
+
+      // ─── Meal Randomizer ────────────────────────────────────────────────
+      // Reuses the site's real filtering state (disabledIngredients /
+      // INGREDIENT_RECIPE_MAP / activeDietary via toggleDietary) so a recipe
+      // excluded by Pantry or Dietary Filters elsewhere is excluded here too,
+      // instead of maintaining a second, divergent copy of that logic.
+      const RAND_CUISINES = ["mediterranean", "american", "mexican", "korean", "japanese", "middle-eastern", "indian", "thai", "chinese", "greek"];
+      let randActiveCuisines = new Set();
+      let randSlots = [null, null, null, null];
+      let randLocked = [false, false, false, false];
+      let randUsedIds = new Set();
+
+      function randCandidatePool() {
+        return R.filter((r) => {
+          if (HIDDEN_RECIPE_IDS.has(r.id)) return false;
+          if (r.protein === "none" && r.carb === "none") return false;
+          if (randActiveCuisines.size && !r.tags.some((t) => randActiveCuisines.has(t))) return false;
+          const excluded = Object.entries(INGREDIENT_RECIPE_MAP).some(([ing, ids]) => disabledIngredients.has(ing) && ids.includes(r.id));
+          return !excluded;
+        });
+      }
+
+      function randPickOne(exclude) {
+        const pool = randCandidatePool().filter((r) => !exclude.has(r.id));
+        if (!pool.length) return null;
+        return pool[Math.floor(Math.random() * pool.length)];
+      }
+
+      function randRecipeMacros(recipe) {
+        const base = baseMacros(recipe.carb);
+        const sauce = getSauceMacros(recipe);
+        return {
+          kcal: Math.round(base.kcal + sauce.kcal),
+          p: Math.round((base.p + sauce.p) * 10) / 10,
+          c: Math.round((base.c + sauce.c) * 10) / 10,
+          f: Math.round((base.f + sauce.f) * 10) / 10,
+        };
+      }
+
+      const RAND_TARGET_DEFAULT = { kcal: 2000, p: 160, c: 190, f: 60 };
+      function randTarget() {
+        try {
+          return JSON.parse(localStorage.getItem("randTarget")) || RAND_TARGET_DEFAULT;
+        } catch (e) {
+          return RAND_TARGET_DEFAULT;
+        }
+      }
+      function randUpdateTarget() {
+        const t = {
+          kcal: parseInt(document.getElementById("randTargetKcal").value) || 0,
+          p: parseInt(document.getElementById("randTargetP").value) || 0,
+          c: parseInt(document.getElementById("randTargetC").value) || 0,
+          f: parseInt(document.getElementById("randTargetF").value) || 0,
+        };
+        try { localStorage.setItem("randTarget", JSON.stringify(t)); } catch (e) {}
+        randRenderMacros();
+      }
+
+      function randRenderMacros() {
+        const target = randTarget();
+        const sums = { kcal: 0, p: 0, c: 0, f: 0 };
+        randSlots.forEach((r, i) => {
+          if (r && randLocked[i]) {
+            const m = randRecipeMacros(r);
+            sums.kcal += m.kcal; sums.p += m.p; sums.c += m.c; sums.f += m.f;
+          }
+        });
+        const pct = (v, t) => (t > 0 ? Math.min(100, Math.round((v / t) * 100)) : 0);
+        const grid = document.getElementById("randMacroGrid");
+        if (!grid) return;
+        const rows = [
+          ["kcal", "Kcal", Math.round(sums.kcal), target.kcal, "var(--accent2)", ""],
+          ["protein", "Protein", Math.round(sums.p * 10) / 10, target.p, "var(--accent3)", "g"],
+          ["carbs", "Carbs", Math.round(sums.c * 10) / 10, target.c, "#47b3e8", "g"],
+          ["fat", "Fat", Math.round(sums.f * 10) / 10, target.f, "#e8a347", "g"],
+        ];
+        grid.innerHTML = rows
+          .map(
+            ([key, label, val, tgt, color, unit]) => `
+          <div class="result-card ${key}">
+            <span class="r-val">${val}</span><span class="r-unit">/ ${tgt}${unit}</span><span class="r-lbl">${label}</span>
+            <div class="macro-bar" style="margin-top:8px;"><div style="height:100%; width:${pct(val, tgt)}%; background:${color}; border-radius:4px;"></div></div>
+          </div>`
+          )
+          .join("");
+      }
+
+      function randCuisineToggle(id, btn) {
+        (randActiveCuisines.has(id) ? randActiveCuisines.delete(id) : randActiveCuisines.add(id));
+        btn.classList.toggle("active", randActiveCuisines.has(id));
+      }
+
+      function randBuildFilterChips() {
+        const cEl = document.getElementById("randCuisineChips");
+        if (cEl) {
+          cEl.innerHTML = RAND_CUISINES.map(
+            (c) => `<button class="filter-btn ${randActiveCuisines.has(c) ? "active" : ""}" onclick="randCuisineToggle('${c}', this)">${tagLabel(c)}</button>`
+          ).join("");
+        }
+        const dEl = document.getElementById("randDietChips");
+        if (dEl) {
+          dEl.innerHTML = DIETARY_FILTERS.map(
+            (d) => `<button class="filter-btn ${activeDietary.has(d.id) ? "active" : ""}" onclick="toggleDietary('${d.id}'); randBuildFilterChips();">${d.icon} ${d.label}</button>`
+          ).join("");
+        }
+        const note = document.getElementById("randPantryNote");
+        if (note) {
+          const n = disabledIngredients.size;
+          note.textContent = n ? `🧺 Respecting ${n} unavailable pantry item${n === 1 ? "" : "s"}` : "";
+        }
+      }
+
+      function randRenderCard(i) {
+        const el = document.getElementById("randSlot" + i);
+        if (!el) return;
+        const r = randSlots[i];
+        const locked = randLocked[i];
+        if (!r) {
+          el.style.borderColor = "";
+          el.style.background = "";
+          el.innerHTML = `<div class="rand-empty">No recipe matches your filters</div>`;
+          return;
+        }
+        const m = randRecipeMacros(r);
+        el.style.borderColor = locked ? "#47e8a3" : "";
+        el.style.background = locked ? "rgba(71,232,163,0.06)" : "";
+        el.innerHTML = `
+        <div class="rand-card-top">
+          <span class="rand-card-num">#${r.displayNum}</span>
+          <span class="rand-card-btns">
+            <button onclick="randReroll(${i})" ${locked ? "disabled style='opacity:.3'" : ""} title="Reroll">🎲</button>
+            <button onclick="randToggleLock(${i})" title="Lock">${locked ? "🔒" : "🔓"}</button>
+          </span>
+        </div>
+        <div class="card-title" style="cursor:pointer" onclick="openModal('${r.id}')">${r.title}</div>
+        <div class="tags">${r.tags.slice(0, 2).map((t) => `<span class="tag tag-${t}">${tagLabel(t)}</span>`).join("")}</div>
+        <div class="rand-card-macros">${m.kcal} kcal · ${m.p}g P · ${m.c}g C · ${m.f}g F</div>`;
+      }
+
+      function randReroll(i) {
+        if (randLocked[i]) return;
+        if (randSlots[i]) randUsedIds.delete(randSlots[i].id);
+        const next = randPickOne(randUsedIds);
+        randSlots[i] = next;
+        if (next) randUsedIds.add(next.id);
+        randRenderCard(i);
+        randRenderMacros();
+      }
+
+      function randToggleLock(i) {
+        randLocked[i] = !randLocked[i];
+        randRenderCard(i);
+        randRenderMacros();
+      }
+
+      function randRerollAll() {
+        for (let i = 0; i < randSlots.length; i++) if (!randLocked[i]) randReroll(i);
+      }
+
+      function randResetLocks() {
+        randLocked = randLocked.map(() => false);
+        randSlots.forEach((_, i) => randRenderCard(i));
+        randRenderMacros();
+      }
+
+      function renderRandomizer() {
+        randBuildFilterChips();
+        const grid = document.getElementById("randGrid");
+        if (grid && !grid.dataset.built) {
+          grid.innerHTML = [0, 1, 2, 3].map((i) => `<div class="rand-card" id="randSlot${i}"></div>`).join("");
+          grid.dataset.built = "1";
+        }
+        const t = randTarget();
+        document.getElementById("randTargetKcal").value = t.kcal;
+        document.getElementById("randTargetP").value = t.p;
+        document.getElementById("randTargetC").value = t.c;
+        document.getElementById("randTargetF").value = t.f;
+        randUsedIds.clear();
+        for (let i = 0; i < 4; i++) {
+          if (!randSlots[i]) {
+            const next = randPickOne(randUsedIds);
+            randSlots[i] = next;
+            if (next) randUsedIds.add(next.id);
+          } else {
+            randUsedIds.add(randSlots[i].id);
+          }
+          randRenderCard(i);
+        }
+        randRenderMacros();
+      }
+
       const ADMIN_HASH = "4fdb10503bb511548ce67d426a58d23f2863c3e4bf16c517dccb2196405fdec7";
       let adminMode = !1,
         adminClickCount = 0,
