@@ -5042,6 +5042,12 @@
         display: flex;
         align-items: center;
         gap: 12px;
+        margin-bottom: 12px;
+      }
+      .nutdb-cat-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
         margin-bottom: 20px;
       }
       .nutdb-controls input {

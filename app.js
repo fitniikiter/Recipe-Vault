@@ -76,259 +76,13 @@
         };
         window.anime = anime;
       })();
-const NUT = {
-        chicken_thigh: { kcal: 149, p: 18.6, c: 0, f: 7.92 },
-        chicken_breast: { kcal: 112, p: 22.5, c: 0, f: 1.93 },
-        beef_regular: { kcal: 248, p: 17.5, c: 0, f: 19.4 },
-        beef_lean: { kcal: 137, p: 21.4, c: 0, f: 5 },
-        eggs: { kcal: 147, p: 12.4, c: 0.96, f: 9.96 },
-        salmon: { kcal: 203, p: 20.3, c: 0, f: 13.1 },
-        tofu: { kcal: 144, p: 17.3, c: 2.78, f: 8.72 },
-        potato: { kcal: 77, p: 2, c: 17.5, f: 0.1 },
-        rice: { kcal: 365, p: 7.1, c: 80, f: 0.7 },
-        noodle: { kcal: 357, p: 13, c: 71, f: 1.5 },
-        bread: { kcal: 265, p: 9, c: 51, f: 3.2 },
-      };
-      ((NUT.chicken = NUT.chicken_thigh), (NUT.egg = NUT.eggs));
-      const INGREDIENT_DB = {
-        soy_sauce: { kcal: 60, p: 8, c: 8, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 30, emoji: "🫙" },
-        oyster_sauce: { kcal: 87, p: 3, c: 18, f: 0.3, unit_g: { tbsp: 18, tsp: 6 }, typical_g: 25, emoji: "🫙" },
-        fish_sauce: { kcal: 25, p: 4, c: 3, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 15, emoji: "🫙" },
-        hoisin: { kcal: 220, p: 4, c: 43, f: 4, unit_g: { tbsp: 16, tsp: 5 }, typical_g: 20, emoji: "🫙" },
-        gochujang: { kcal: 190, p: 5, c: 37, f: 2, unit_g: { tbsp: 18, tsp: 6 }, typical_g: 25, emoji: "🌶️" },
-        miso: { kcal: 199, p: 12, c: 27, f: 6, unit_g: { tbsp: 18, tsp: 6 }, typical_g: 20, emoji: "🫙" },
-        doenjang: { kcal: 180, p: 11, c: 22, f: 5, unit_g: { tbsp: 18, tsp: 6 }, typical_g: 20, emoji: "🫙" },
-        teriyaki: { kcal: 89, p: 5, c: 15, f: 1, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 30, emoji: "🫙" },
-        sesame_oil: { kcal: 884, p: 0, c: 0, f: 100, unit_g: { tbsp: 14, tsp: 4 }, typical_g: 7, emoji: "🫙" },
-        sriracha: { kcal: 100, p: 1, c: 20, f: 1, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 10, emoji: "🌶️" },
-        tahini: { kcal: 592, p: 17, c: 21, f: 53, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 20, emoji: "🫙" },
-        harissa: { kcal: 152, p: 3, c: 12, f: 10, unit_g: { tbsp: 16, tsp: 5 }, typical_g: 15, emoji: "🌶️" },
-        worcestershire: { kcal: 78, p: 1, c: 19, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 10, emoji: "🫙" },
-        ketchup: { kcal: 101, p: 1, c: 25, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 20, emoji: "🫙" },
-        mayo: { kcal: 680, p: 1, c: 2, f: 75, unit_g: { tbsp: 14, tsp: 5 }, typical_g: 15, emoji: "🫙" },
-        mayo_light: { kcal: 330, p: 0.5, c: 6, f: 33, unit_g: { tbsp: 14, tsp: 5 }, typical_g: 15, emoji: "🫙" },
-        hot_sauce: { kcal: 30, p: 1, c: 5, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 10, emoji: "🌶️" },
-        peanut_butter: { kcal: 593, p: 25, c: 20, f: 51, unit_g: { tbsp: 16, tsp: 5 }, typical_g: 20, emoji: "🥜" },
-        coconut_milk: { kcal: 197, p: 2, c: 6, f: 21, unit_g: { tbsp: 15, ml: 1 }, typical_g: 60, emoji: "🥥" },
-        rice_vinegar: { kcal: 18, p: 0, c: 4, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 15, emoji: "🫙" },
-        apple_cider_vinegar: { kcal: 21, p: 0, c: 0.9, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 10, emoji: "🫙" },
-        mirin: { kcal: 233, p: 0.5, c: 55, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 15, emoji: "🫙" },
-        sake: { kcal: 134, p: 0.5, c: 5, f: 0, a: 14, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 15, emoji: "🫙" },
-        toum: { kcal: 650, p: 2, c: 6, f: 70, unit_g: { tbsp: 14, tsp: 5 }, typical_g: 15, emoji: "🧄" },
-        dijon: { kcal: 66, p: 4, c: 5, f: 4, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 10, emoji: "🫙" },
-        bbq_sauce: { kcal: 172, p: 1, c: 40, f: 1, unit_g: { tbsp: 16, tsp: 5 }, typical_g: 30, emoji: "🫙" },
-        chipotle_adobo: { kcal: 120, p: 2, c: 18, f: 5, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 15, emoji: "🌶️" },
-        sweet_soy: { kcal: 260, p: 6, c: 57, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 20, emoji: "🫙" },
-        ponzu: { kcal: 51, p: 3, c: 9, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 15, emoji: "🫙" },
-        shio_koji: { kcal: 80, p: 3, c: 16, f: 0, unit_g: { tbsp: 18, tsp: 6 }, typical_g: 20, emoji: "🫙" },
-        yuzu_kosho: { kcal: 62, p: 2, c: 8, f: 2, unit_g: { tsp: 5 }, typical_g: 5, emoji: "🫙" },
-        tamarind: { kcal: 239, p: 3, c: 57, f: 0.6, unit_g: { tbsp: 16, tsp: 5 }, typical_g: 15, emoji: "🫙" },
-        balsamic_glaze: { kcal: 160, p: 1, c: 38, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 15, emoji: "🫙" },
-        chili_oil: { kcal: 500, p: 2, c: 5, f: 52, unit_g: { tbsp: 14, tsp: 5 }, typical_g: 10, emoji: "🌶️" },
-        gochugaru: { kcal: 282, p: 14, c: 48, f: 5, unit_g: { tbsp: 9, tsp: 3 }, typical_g: 5, emoji: "🌶️" },
-        cumin: { kcal: 375, p: 18, c: 44, f: 22, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 3, emoji: "🌿" },
-        coriander: { kcal: 298, p: 12, c: 55, f: 18, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 3, emoji: "🌿" },
-        turmeric: { kcal: 354, p: 8, c: 65, f: 10, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 3, emoji: "🌿" },
-        smoked_paprika: { kcal: 282, p: 14, c: 54, f: 13, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 4, emoji: "🌿" },
-        paprika: { kcal: 282, p: 14, c: 54, f: 13, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 4, emoji: "🌿" },
-        chili_flakes: { kcal: 318, p: 12, c: 56, f: 17, unit_g: { tbsp: 6, tsp: 2 }, typical_g: 2, emoji: "🌶️" },
-        five_spice: { kcal: 300, p: 10, c: 55, f: 10, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 3, emoji: "🌿" },
-        zaatar: { kcal: 270, p: 10, c: 35, f: 12, unit_g: { tbsp: 8, tsp: 3 }, typical_g: 5, emoji: "🌿" },
-        sumac: { kcal: 260, p: 5, c: 45, f: 10, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 4, emoji: "🌿" },
-        baharat: { kcal: 290, p: 10, c: 50, f: 10, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 4, emoji: "🌿" },
-        ras_el_hanout: { kcal: 285, p: 10, c: 48, f: 12, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 4, emoji: "🌿" },
-        curry_powder: { kcal: 325, p: 13, c: 55, f: 14, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 5, emoji: "🌿" },
-        garam_masala: { kcal: 350, p: 14, c: 52, f: 15, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 4, emoji: "🌿" },
-        tandoori_masala: { kcal: 300, p: 12, c: 50, f: 12, unit_g: { tbsp: 8, tsp: 3 }, typical_g: 5, emoji: "🌿" },
-        tikka_paste: { kcal: 150, p: 5, c: 12, f: 10, unit_g: { tbsp: 18, tsp: 6 }, typical_g: 25, emoji: "🌿" },
-        kasuri_methi: { kcal: 280, p: 23, c: 44, f: 6, unit_g: { tbsp: 4, tsp: 1.5 }, typical_g: 3, emoji: "🌿" },
-        oregano: { kcal: 265, p: 9, c: 64, f: 4, unit_g: { tbsp: 4, tsp: 1.5 }, typical_g: 2, emoji: "🌿" },
-        thyme: { kcal: 276, p: 9, c: 64, f: 7, unit_g: { tbsp: 4, tsp: 1.5 }, typical_g: 2, emoji: "🌿" },
-        dill_dried: { kcal: 253, p: 20, c: 56, f: 4, unit_g: { tbsp: 4, tsp: 1.5 }, typical_g: 2, emoji: "🌿" },
-        bay_leaf: { kcal: 313, p: 8, c: 75, f: 8, unit_g: { tbsp: 2, tsp: 1 }, typical_g: 1, emoji: "🌿" },
-        cinnamon: { kcal: 247, p: 4, c: 81, f: 1, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 2, emoji: "🌿" },
-        cardamom: { kcal: 311, p: 11, c: 68, f: 7, unit_g: { tbsp: 6, tsp: 2 }, typical_g: 2, emoji: "🌿" },
-        star_anise: { kcal: 337, p: 18, c: 50, f: 16, unit_g: { tbsp: 6, tsp: 2 }, typical_g: 2, emoji: "🌿" },
-        allspice: { kcal: 263, p: 6, c: 72, f: 9, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 2, emoji: "🌿" },
-        garlic_powder: { kcal: 331, p: 17, c: 73, f: 1, unit_g: { tbsp: 8, tsp: 3 }, typical_g: 3, emoji: "🧄" },
-        onion_powder: { kcal: 341, p: 10, c: 80, f: 1, unit_g: { tbsp: 8, tsp: 3 }, typical_g: 3, emoji: "🧅" },
-        cayenne: { kcal: 318, p: 12, c: 57, f: 17, unit_g: { tbsp: 6, tsp: 2 }, typical_g: 2, emoji: "🌶️" },
-        black_pepper: { kcal: 251, p: 10, c: 64, f: 3, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 2, emoji: "🌿" },
-        msg: { kcal: 0, p: 0, c: 0, f: 0, unit_g: { tsp: 4 }, typical_g: 2, emoji: "🌿" },
-        saffron: { kcal: 310, p: 11, c: 65, f: 6, unit_g: { tsp: 0.5 }, typical_g: 0.2, emoji: "🌿" },
-        jerk_seasoning: { kcal: 270, p: 10, c: 48, f: 8, unit_g: { tbsp: 8, tsp: 3 }, typical_g: 5, emoji: "🌿" },
-        dukkah: { kcal: 450, p: 15, c: 25, f: 38, unit_g: { tbsp: 10, tsp: 3 }, typical_g: 10, emoji: "🌿" },
-        furikake: { kcal: 200, p: 10, c: 30, f: 6, unit_g: { tbsp: 8, tsp: 3 }, typical_g: 5, emoji: "🌿" },
-        tajin: { kcal: 120, p: 3, c: 25, f: 2, unit_g: { tbsp: 7, tsp: 2.5 }, typical_g: 4, emoji: "🌿" },
-        garlic: { kcal: 149, p: 6, c: 33, f: 0.5, unit_g: { clove: 5 }, typical_g: 15, emoji: "🧄" },
-        ginger: { kcal: 80, p: 2, c: 18, f: 1, unit_g: { tbsp: 8, tsp: 3 }, typical_g: 10, emoji: "🫚" },
-        scallion: { kcal: 32, p: 2, c: 7, f: 0.2, unit_g: { stalk: 15 }, typical_g: 30, emoji: "🌱" },
-        onion: { kcal: 40, p: 1, c: 9, f: 0.1, unit_g: { whole: 110 }, typical_g: 80, emoji: "🧅" },
-        lemon: { kcal: 29, p: 1, c: 9, f: 0, unit_g: { whole: 58, tbsp: 15 }, typical_g: 15, emoji: "🍋" },
-        lime: { kcal: 30, p: 1, c: 11, f: 0, unit_g: { whole: 44, tbsp: 15 }, typical_g: 15, emoji: "🍋" },
-        cilantro: { kcal: 23, p: 2, c: 4, f: 0, unit_g: { handful: 15 }, typical_g: 10, emoji: "🌿" },
-        parsley: { kcal: 36, p: 3, c: 6, f: 1, unit_g: { handful: 15 }, typical_g: 10, emoji: "🌿" },
-        basil: { kcal: 23, p: 3, c: 3, f: 1, unit_g: { handful: 10 }, typical_g: 8, emoji: "🌿" },
-        mint: { kcal: 44, p: 3, c: 9, f: 1, unit_g: { handful: 10 }, typical_g: 8, emoji: "🌿" },
-        rosemary: { kcal: 131, p: 3, c: 21, f: 6, unit_g: { tbsp: 2, tsp: 1 }, typical_g: 3, emoji: "🌿" },
-        chives: { kcal: 30, p: 3, c: 4, f: 1, unit_g: { tbsp: 5, tsp: 2 }, typical_g: 8, emoji: "🌿" },
-        dill_fresh: { kcal: 43, p: 4, c: 7, f: 1, unit_g: { handful: 10 }, typical_g: 8, emoji: "🌿" },
-        lemongrass: { kcal: 99, p: 2, c: 25, f: 1, unit_g: { stalk: 20 }, typical_g: 20, emoji: "🌿" },
-        kaffir_lime: { kcal: 50, p: 1, c: 12, f: 0, unit_g: { whole: 2 }, typical_g: 2, emoji: "🌿" },
-        thai_basil: { kcal: 22, p: 3, c: 3, f: 0, unit_g: { handful: 10 }, typical_g: 10, emoji: "🌿" },
-        pandan: { kcal: 100, p: 2, c: 22, f: 1, unit_g: { whole: 5 }, typical_g: 5, emoji: "🌿" },
-        chili_fresh: { kcal: 40, p: 2, c: 9, f: 0, unit_g: { whole: 15 }, typical_g: 10, emoji: "🌶️" },
-        tomato: { kcal: 18, p: 1, c: 4, f: 0, unit_g: { whole: 120 }, typical_g: 100, emoji: "🍅" },
-        cucumber: { kcal: 15, p: 1, c: 4, f: 0, unit_g: { whole: 200 }, typical_g: 80, emoji: "🥒" },
-        avocado: { kcal: 160, p: 2, c: 9, f: 15, unit_g: { whole: 150 }, typical_g: 75, emoji: "🥑" },
-        bell_pepper: { kcal: 31, p: 1, c: 6, f: 0.3, unit_g: { whole: 160 }, typical_g: 80, emoji: "🫑" },
-        cabbage: { kcal: 25, p: 1.3, c: 5.8, f: 0.1, unit_g: { handful: 60 }, typical_g: 80, emoji: "🥬" },
-        carrot: { kcal: 41, p: 1, c: 10, f: 0, unit_g: { whole: 80 }, typical_g: 50, emoji: "🥕" },
-        corn: { kcal: 86, p: 3.3, c: 19, f: 1.4, unit_g: { whole: 150 }, typical_g: 80, emoji: "🌽" },
-        leek: { kcal: 61, p: 2, c: 14, f: 0, unit_g: { whole: 80 }, typical_g: 60, emoji: "🌿" },
-        mushroom: { kcal: 22, p: 3.1, c: 3.3, f: 0.3, unit_g: { whole: 20 }, typical_g: 80, emoji: "🍄" },
-        spinach: { kcal: 23, p: 2.9, c: 3.6, f: 0.4, unit_g: { handful: 30 }, typical_g: 60, emoji: "🥬" },
-        bok_choy: { kcal: 13, p: 1.5, c: 2.2, f: 0.2, unit_g: { whole: 200 }, typical_g: 120, emoji: "🥬" },
-        kimchi: { kcal: 15, p: 1, c: 3, f: 0, unit_g: { tbsp: 30 }, typical_g: 60, emoji: "🥬" },
-        butter: { kcal: 717, p: 0.9, c: 0, f: 81, unit_g: { tbsp: 14, tsp: 5 }, typical_g: 15, emoji: "🧈" },
-        eggs_dairy: { kcal: 143, p: 12.6, c: 0.7, f: 9.5, unit_g: { whole: 58 }, typical_g: 58, emoji: "🥚" },
-        milk: { kcal: 61, p: 3.2, c: 4.8, f: 3.3, unit_g: { tbsp: 15, ml: 1 }, typical_g: 50, emoji: "🥛" },
-        heavy_cream: { kcal: 340, p: 2.8, c: 2.7, f: 37, unit_g: { tbsp: 15, ml: 1 }, typical_g: 30, emoji: "🥛" },
-        sour_cream: { kcal: 193, p: 2.9, c: 4.7, f: 19, unit_g: { tbsp: 14, tsp: 5 }, typical_g: 30, emoji: "🥛" },
-        cream_cheese: { kcal: 342, p: 6, c: 4, f: 34, unit_g: { tbsp: 14, tsp: 5 }, typical_g: 25, emoji: "🧀" },
-        creme_fraiche: { kcal: 292, p: 3, c: 3, f: 30, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 30, emoji: "🥛" },
-        yogurt: { kcal: 59, p: 10, c: 3.6, f: 0.4, unit_g: { tbsp: 15 }, typical_g: 80, emoji: "🥛" },
-        labneh: { kcal: 190, p: 8, c: 4, f: 16, unit_g: { tbsp: 15 }, typical_g: 40, emoji: "🥛" },
-        cheese_parm: { kcal: 431, p: 38, c: 4, f: 29, unit_g: { tbsp: 8, tsp: 3 }, typical_g: 15, emoji: "🧀" },
-        cheese_mozz: { kcal: 280, p: 22, c: 2.2, f: 22, unit_g: { slice: 30 }, typical_g: 30, emoji: "🧀" },
-        cheese_feta: { kcal: 264, p: 14, c: 4, f: 21, unit_g: { tbsp: 15 }, typical_g: 30, emoji: "🧀" },
-        cheese_cheddar: { kcal: 402, p: 25, c: 1, f: 33, unit_g: { slice: 30 }, typical_g: 30, emoji: "🧀" },
-        cheese_gruyere: { kcal: 413, p: 30, c: 0, f: 32, unit_g: { slice: 30 }, typical_g: 25, emoji: "🧀" },
-        cheese_provolone: { kcal: 352, p: 26, c: 2, f: 27, unit_g: { slice: 28 }, typical_g: 28, emoji: "🧀" },
-        quark_low_fat: { kcal: 67, p: 12, c: 4, f: 0.2, unit_g: { tbsp: 30, g: 1 }, typical_g: 150, emoji: "🥛" },
-        skyr: { kcal: 63, p: 11, c: 4, f: 0.2, unit_g: { tbsp: 30, g: 1 }, typical_g: 150, emoji: "🥛" },
-        cottage_cheese: { kcal: 98, p: 11, c: 3, f: 4.3, unit_g: { tbsp: 30, g: 1 }, typical_g: 100, emoji: "🥛" },
-        ricotta: { kcal: 174, p: 11, c: 3, f: 13, unit_g: { tbsp: 30, g: 1 }, typical_g: 80, emoji: "🥛" },
-        greek_yogurt: { kcal: 73, p: 10, c: 4, f: 0.4, unit_g: { tbsp: 30, g: 1 }, typical_g: 150, emoji: "🥛" },
-        olive_oil: { kcal: 884, p: 0, c: 0, f: 100, unit_g: { tbsp: 14, tsp: 4 }, typical_g: 10, emoji: "🫙" },
-        neutral_oil: { kcal: 884, p: 0, c: 0, f: 100, unit_g: { tbsp: 14, tsp: 4 }, typical_g: 10, emoji: "🫙" },
-        chicken_stock: { kcal: 15, p: 1, c: 1, f: 0.5, unit_g: { tbsp: 15, ml: 1 }, typical_g: 100, emoji: "🍲" },
-        canned_tomato: { kcal: 32, p: 1.5, c: 7, f: 0.2, unit_g: { tbsp: 15 }, typical_g: 200, emoji: "🍅" },
-        tomato_paste: { kcal: 82, p: 4, c: 19, f: 0.4, unit_g: { tbsp: 16, tsp: 5 }, typical_g: 20, emoji: "🍅" },
-        black_beans: { kcal: 132, p: 8.9, c: 24, f: 0.5, unit_g: { tbsp: 30 }, typical_g: 80, emoji: "🫘" },
-        kidney_beans: { kcal: 127, p: 9, c: 23, f: 0.5, unit_g: { tbsp: 30 }, typical_g: 80, emoji: "🫘" },
-        coconut_cream: { kcal: 330, p: 3.3, c: 7.7, f: 34, unit_g: { tbsp: 15, ml: 1 }, typical_g: 40, emoji: "🥥" },
-        panko: { kcal: 385, p: 11, c: 73, f: 7, unit_g: { tbsp: 8, tsp: 3 }, typical_g: 20, emoji: "🍞" },
-        breadcrumbs: { kcal: 395, p: 13, c: 72, f: 5, unit_g: { tbsp: 8, tsp: 3 }, typical_g: 20, emoji: "🍞" },
-        flour: { kcal: 364, p: 10, c: 76, f: 1, unit_g: { tbsp: 10, tsp: 3 }, typical_g: 15, emoji: "🌾" },
-        cornstarch: { kcal: 381, p: 0.3, c: 91, f: 0.1, unit_g: { tbsp: 10, tsp: 3 }, typical_g: 8, emoji: "🌾" },
-        honey: { kcal: 304, p: 0.3, c: 82, f: 0, unit_g: { tbsp: 21, tsp: 7 }, typical_g: 15, emoji: "🍯" },
-        sugar: { kcal: 387, p: 0, c: 100, f: 0, unit_g: { tbsp: 12, tsp: 4 }, typical_g: 10, emoji: "🍚" },
-        sesame_seeds: { kcal: 573, p: 18, c: 23, f: 50, unit_g: { tbsp: 9, tsp: 3 }, typical_g: 5, emoji: "🌿" },
-        peanuts: { kcal: 567, p: 26, c: 16, f: 49, unit_g: { tbsp: 15 }, typical_g: 20, emoji: "🥜" },
-        almonds: { kcal: 579, p: 21, c: 22, f: 50, unit_g: { tbsp: 15 }, typical_g: 15, emoji: "🌰" },
-        pine_nuts: { kcal: 673, p: 14, c: 13, f: 68, unit_g: { tbsp: 10 }, typical_g: 10, emoji: "🌰" },
-        raisins: { kcal: 299, p: 3.1, c: 79, f: 0.5, unit_g: { tbsp: 10 }, typical_g: 15, emoji: "🍇" },
-        dashi: { kcal: 5, p: 0, c: 1, f: 0, unit_g: { tbsp: 15, ml: 1 }, typical_g: 100, emoji: "🍲" },
-        japanese_curry_roux: { kcal: 488, p: 7, c: 53, f: 29, unit_g: { tbsp: 20 }, typical_g: 40, emoji: "🍛" },
-        nori: { kcal: 35, p: 6, c: 5, f: 0, unit_g: { sheet: 2 }, typical_g: 2, emoji: "🌿" },
-        glass_noodles: { kcal: 351, p: 0, c: 86, f: 0.1, unit_g: { tbsp: 20 }, typical_g: 30, emoji: "🍜" },
-        rice_paper: { kcal: 344, p: 1, c: 82, f: 0, unit_g: { sheet: 10 }, typical_g: 10, emoji: "🫓" },
-        pickled_veg: { kcal: 20, p: 1, c: 5, f: 0, unit_g: { tbsp: 15 }, typical_g: 30, emoji: "🥒" },
-        dried_chili: { kcal: 274, p: 12, c: 56, f: 5, unit_g: { whole: 2 }, typical_g: 3, emoji: "🌶️" },
-        pomegranate_mol: { kcal: 320, p: 1, c: 77, f: 0, unit_g: { tbsp: 21, tsp: 7 }, typical_g: 15, emoji: "🍎" },
-        preserved_lemon: { kcal: 43, p: 1, c: 10, f: 0, unit_g: { tbsp: 15 }, typical_g: 15, emoji: "🍋" },
-        potato: { kcal: 77, p: 2, c: 17.5, f: 0.1, unit_g: { whole: 150, g: 1 }, typical_g: 300, emoji: "🥔" },
-        rice: { kcal: 365, p: 7.1, c: 80, f: 0.7, unit_g: { g: 1 }, typical_g: 80, emoji: "🍚" },
-        rice_cooked: { kcal: 130, p: 2.7, c: 28, f: 0.3, unit_g: { g: 1 }, typical_g: 150, emoji: "🍚" },
-        noodle: { kcal: 357, p: 13, c: 71, f: 1.5, unit_g: { g: 1 }, typical_g: 80, emoji: "🍜" },
-        bread: { kcal: 265, p: 9, c: 51, f: 3.2, unit_g: { slice: 35, whole: 200 }, typical_g: 80, emoji: "🫓" },
-        chicken_thigh: { kcal: 144, p: 18.6, c: 0, f: 7.9, unit_g: { g: 1 }, typical_g: 150, emoji: "🍗" },
-        chicken_breast: { kcal: 106, p: 23.2, c: 0, f: 1.9, unit_g: { g: 1 }, typical_g: 150, emoji: "🍗" },
-        beef_regular: { kcal: 254, p: 17.2, c: 0, f: 20, unit_g: { g: 1 }, typical_g: 150, emoji: "🥩" },
-        beef_lean: { kcal: 137, p: 21.4, c: 0, f: 5.5, unit_g: { g: 1 }, typical_g: 150, emoji: "🥩" },
-        eggs: { kcal: 143, p: 12.6, c: 0.7, f: 9.5, unit_g: { whole: 58 }, typical_g: 58, emoji: "🥚" },
-        salmon: { kcal: 208, p: 20.4, c: 0, f: 13.4, unit_g: { g: 1 }, typical_g: 150, emoji: "🐟" },
-        tofu: { kcal: 76, p: 8.1, c: 1.9, f: 4.8, unit_g: { g: 1 }, typical_g: 150, emoji: "🫘" },
-        tuna_canned: { kcal: 116, p: 26, c: 0, f: 1, unit_g: { g: 1 }, typical_g: 130, emoji: "🐟" },
-        shrimp: { kcal: 99, p: 21, c: 0, f: 0.3, unit_g: { g: 1 }, typical_g: 150, emoji: "🦐" },
-        cod: { kcal: 82, p: 18, c: 0, f: 0.7, unit_g: { g: 1 }, typical_g: 150, emoji: "🐟" },
-        turkey_mince: { kcal: 150, p: 21, c: 0, f: 7, unit_g: { g: 1 }, typical_g: 150, emoji: "🦃" },
-        pork_tenderloin: { kcal: 143, p: 21, c: 0, f: 6, unit_g: { g: 1 }, typical_g: 150, emoji: "🥩" },
-        lamb_mince: { kcal: 282, p: 17, c: 0, f: 23, unit_g: { g: 1 }, typical_g: 150, emoji: "🥩" },
-        broccoli: { kcal: 34, p: 3, c: 7, f: 0.4, unit_g: { whole: 200, handful: 80 }, typical_g: 100, emoji: "🥦" },
-        zucchini: { kcal: 17, p: 1, c: 3, f: 0.3, unit_g: { whole: 200 }, typical_g: 150, emoji: "🥒" },
-        eggplant: { kcal: 25, p: 1, c: 6, f: 0.2, unit_g: { whole: 300 }, typical_g: 150, emoji: "🍆" },
-        bean_sprouts: { kcal: 30, p: 3, c: 6, f: 0, unit_g: { handful: 50 }, typical_g: 80, emoji: "🌱" },
-        water: { kcal: 0, p: 0, c: 0, f: 0, typical_g: 15, unit_g: { tbsp: 15, tsp: 5, cup: 240 } },
-        edamame: { kcal: 122, p: 11, c: 10, f: 5, unit_g: { tbsp: 20 }, typical_g: 80, emoji: "🫘" },
-        snap_peas: { kcal: 42, p: 3, c: 8, f: 0.2, unit_g: { handful: 50 }, typical_g: 60, emoji: "🫛" },
-        kale: { kcal: 49, p: 4, c: 9, f: 1, unit_g: { handful: 30 }, typical_g: 60, emoji: "🥬" },
-        lettuce: { kcal: 15, p: 1, c: 3, f: 0, unit_g: { handful: 30 }, typical_g: 50, emoji: "🥬" },
-        daikon: { kcal: 18, p: 1, c: 4, f: 0, unit_g: { whole: 300 }, typical_g: 80, emoji: "🌿" },
-        jalapeño: { kcal: 29, p: 1, c: 7, f: 0.3, unit_g: { whole: 14 }, typical_g: 14, emoji: "🌶️" },
-        quark_low_fat: { kcal: 67, p: 12, c: 4, f: 0.2, unit_g: { tbsp: 30 }, typical_g: 150, emoji: "🥛" },
-        skyr: { kcal: 63, p: 11, c: 4, f: 0.2, unit_g: { tbsp: 30 }, typical_g: 150, emoji: "🥛" },
-        cottage_cheese: { kcal: 98, p: 11, c: 3, f: 4.3, unit_g: { tbsp: 30 }, typical_g: 100, emoji: "🥛" },
-        ricotta: { kcal: 174, p: 11, c: 3, f: 13, unit_g: { tbsp: 30 }, typical_g: 80, emoji: "🧀" },
-        tuna_canned: { kcal: 116, p: 26, c: 0, f: 1, unit_g: { g: 1 }, typical_g: 130, emoji: "🐟" },
-        shrimp: { kcal: 99, p: 21, c: 0, f: 0.3, unit_g: { g: 1 }, typical_g: 150, emoji: "🦐" },
-        cod: { kcal: 82, p: 18, c: 0, f: 0.7, unit_g: { g: 1 }, typical_g: 150, emoji: "🐟" },
-        turkey_mince: { kcal: 150, p: 21, c: 0, f: 7, unit_g: { g: 1 }, typical_g: 150, emoji: "🦃" },
-        red_wine_vinegar: { kcal: 19, p: 0, c: 0.3, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 10, emoji: "🫙" },
-        capers: { kcal: 23, p: 2, c: 5, f: 0.9, unit_g: { tbsp: 15 }, typical_g: 10, emoji: "🫙" },
-        white_wine: { kcal: 82, p: 0, c: 3, f: 0, a: 11, unit_g: { tbsp: 15, ml: 1 }, typical_g: 30, emoji: "🍷" },
-        curry_paste: { kcal: 150, p: 5, c: 12, f: 10, unit_g: { tbsp: 18, tsp: 6 }, typical_g: 25, emoji: "🌿" },
-        // === MISSING INGREDIENT MAPPINGS (added) ===
-        banana: { kcal: 89, p: 1.1, c: 23, f: 0.3, unit_g: { piece: 120, g: 1 }, typical_g: 120, emoji: "🍌" },
-        oats: { kcal: 389, p: 17, c: 66, f: 7, unit_g: { cup: 90, g: 1 }, typical_g: 80, emoji: "🌾" },
-        dark_chocolate: { kcal: 546, p: 5, c: 60, f: 31, unit_g: { g: 1, tbsp: 15 }, typical_g: 20, emoji: "🍫" },
-        chocolate_chips: { kcal: 540, p: 5, c: 60, f: 30, unit_g: { g: 1, tbsp: 15 }, typical_g: 20, emoji: "🍫" },
-        whey_protein: { kcal: 370, p: 74, c: 7, f: 4, unit_g: { g: 1, scoop: 30 }, typical_g: 30, emoji: "💪" },
-        almond_milk: { kcal: 16, p: 0.6, c: 1, f: 1, unit_g: { ml: 1, cup: 240 }, typical_g: 100, emoji: "🥛" },
-        vanilla_extract: { kcal: 288, p: 0, c: 13, f: 0.1, unit_g: { tsp: 4, g: 1 }, typical_g: 4, emoji: "🫙" },
-        baking_powder: { kcal: 53, p: 0, c: 28, f: 0, unit_g: { tsp: 4, g: 1 }, typical_g: 4, emoji: "🫙" },
-        couscous: { kcal: 376, p: 13, c: 77, f: 0.6, unit_g: { g: 1, cup: 180 }, typical_g: 80, emoji: "🌾" },
-        bulgur: { kcal: 342, p: 12, c: 76, f: 1.3, unit_g: { g: 1, cup: 180 }, typical_g: 80, emoji: "🌾" },
-        rice_vermicelli: { kcal: 364, p: 6, c: 80, f: 0.6, unit_g: { g: 1 }, typical_g: 80, emoji: "🍜" },
-        frozen_peas: { kcal: 77, p: 5, c: 14, f: 0.4, unit_g: { g: 1, cup: 150 }, typical_g: 80, emoji: "🫛" },
-        green_olives: { kcal: 145, p: 1, c: 4, f: 15, unit_g: { g: 1, piece: 5 }, typical_g: 30, emoji: "🫒" },
-        black_olives: { kcal: 115, p: 0.8, c: 6, f: 10, unit_g: { g: 1, piece: 5 }, typical_g: 30, emoji: "🫒" },
-        mustard: { kcal: 66, p: 4, c: 6, f: 4, unit_g: { tsp: 5, tbsp: 15 }, typical_g: 10, emoji: "🫙" },
-        pickle_juice: { kcal: 3, p: 0, c: 0.4, f: 0, unit_g: { tbsp: 15, tsp: 5 }, typical_g: 15, emoji: "🫙" },
-        berbere: { kcal: 251, p: 11, c: 43, f: 6, unit_g: { tsp: 3, tbsp: 9 }, typical_g: 5, emoji: "🌶️" },
-        bay_leaves: { kcal: 313, p: 8, c: 75, f: 8, unit_g: { piece: 0.5 }, typical_g: 1, emoji: "🌿" },
-        cloves: { kcal: 274, p: 6, c: 66, f: 13, unit_g: { tsp: 2, piece: 0.2 }, typical_g: 1, emoji: "🌿" },
-        // === NEW ENTRIES (USDA FoodData Central) ===
-        anchovy_paste: { kcal: 128, p: 22, c: 0, f: 4, unit_g: { tsp: 5, tbsp: 15 }, typical_g: 10, emoji: "🐟" },
-        doubanjiang: { kcal: 100, p: 7, c: 8, f: 4, unit_g: { tbsp: 18, tsp: 6 }, typical_g: 20, emoji: "🫙" },
-        gherkins: { kcal: 11, p: 0.4, c: 2.4, f: 0.1, unit_g: { piece: 30, tbsp: 15 }, typical_g: 30, emoji: "🥒" },
-        naan: { kcal: 317, p: 9, c: 56, f: 7, unit_g: { piece: 90, g: 1 }, typical_g: 90, emoji: "🫓" },
-        flour: { kcal: 364, p: 10, c: 76, f: 1, unit_g: { tbsp: 8, tsp: 3, g: 1 }, typical_g: 30, emoji: "🌾" },
-        pasta: { kcal: 371, p: 13, c: 74, f: 1.5, unit_g: { g: 1 }, typical_g: 80, emoji: "🍝" },
-        radish: { kcal: 16, p: 0.7, c: 3.4, f: 0.1, unit_g: { piece: 10, slice: 3 }, typical_g: 30, emoji: "🌿" },
-        shallot: { kcal: 72, p: 2.5, c: 17, f: 0.1, unit_g: { piece: 30, tbsp: 15 }, typical_g: 30, emoji: "🧅" },
-        tomatillo: { kcal: 32, p: 1, c: 5.8, f: 1, unit_g: { piece: 35 }, typical_g: 50, emoji: "🍅" },
-        tortilla_wheat: { kcal: 312, p: 8, c: 51, f: 8, unit_g: { piece: 45, g: 1 }, typical_g: 45, emoji: "🌯" },
-        brown_sugar: { kcal: 377, p: 0, c: 97, f: 0, unit_g: { tsp: 4, tbsp: 12 }, typical_g: 10, emoji: "🍯" },
-        white_pepper: { kcal: 296, p: 10, c: 69, f: 2.1, unit_g: { tsp: 2, g: 1 }, typical_g: 1, emoji: "🌿" },
-        fried_shallots: { kcal: 490, p: 8, c: 57, f: 25, unit_g: { tbsp: 12 }, typical_g: 10, emoji: "🧅" },
-        galangal: { kcal: 70, p: 1.7, c: 15, f: 0.8, unit_g: { tsp: 3, tbsp: 9 }, typical_g: 5, emoji: "🌿" },
-        pine_nuts: { kcal: 673, p: 14, c: 13, f: 68, unit_g: { tbsp: 9, g: 1 }, typical_g: 15, emoji: "🌰" },
-        pomegranate_mol: { kcal: 267, p: 1, c: 68, f: 0.3, unit_g: { tbsp: 20, tsp: 7 }, typical_g: 15, emoji: "🫙" },
-        soy_milk: { kcal: 33, p: 3, c: 2, f: 2, unit_g: { ml: 1, cup: 240 }, typical_g: 100, emoji: "🥛" },
-        // === ID aliases — NUTRITION_DB-aligned keys ===
-        white_rice: { kcal: 365, p: 7.1, c: 80, f: 0.7, unit_g: { g: 1 }, typical_g: 80, emoji: "🍚" },
-        glass_noodle: { kcal: 351, p: 0, c: 86, f: 0.1, unit_g: { tbsp: 20 }, typical_g: 30, emoji: "🍜" },
-        tuna_water: { kcal: 128, p: 23.6, c: 0, f: 2.97, unit_g: { g: 1 }, typical_g: 130, emoji: "🐟" },
-        tortilla: { kcal: 312, p: 8, c: 51, f: 8, unit_g: { piece: 45, g: 1 }, typical_g: 45, emoji: "🌯" },
-        yoghurt_nonfat: { kcal: 56, p: 5.7, c: 7.7, f: 0.2, unit_g: { tbsp: 30, g: 1 }, typical_g: 150, emoji: "🥛" },
-        smoked_bacon: { kcal: 548, p: 37, c: 1.5, f: 42.3, unit_g: { g: 1, tbsp: 15 }, typical_g: 50, emoji: "🥓" },
-
-      };
+      // NUT and INGREDIENT_DB used to live here as separate, hand-duplicated
+      // copies of ingredient macros. Everything now reads from the single
+      // canonical NUTRITION_DB defined in nutrition.js (loaded before this
+      // file) — see that file for the full ingredient list.
       function parseIngredientGrams(e, a) {
         if (!e) return null;
-        const t = INGREDIENT_DB[a];
+        const t = NUTRITION_DB[a];
         if (!t) return null;
         const i = e.toString().toLowerCase().trim();
         let n = 0;
@@ -373,7 +127,7 @@ const NUT = {
                                     : t.typical_g || null;
       }
       function calcIngredientMacros(e, a) {
-        const t = INGREDIENT_DB[e];
+        const t = NUTRITION_DB[e];
         if (!t) return null;
         const i = parseIngredientGrams(a, e);
         if (!i) return null;
@@ -457,12 +211,12 @@ const NUT = {
       function baseMacros(e) {
         if (!e || e === "none") return { kcal: 0, p: 0, c: 0, f: 0 };
         const a = Math.max(weights.servings, 1),
-          t = NUT[activeProtein] || NUT.chicken_thigh,
-          i = NUT[e] || { kcal: 0, p: 0, c: 0, f: 0 },
+          t = NUTRITION_DB[activeProtein] || NUTRITION_DB.chicken_thigh,
+          i = NUTRITION_DB[e] || { kcal: 0, p: 0, c: 0, f: 0 },
           n = weights.chicken / 100,
           s = weights[e] ? weights[e] / 100 : 0,
           o = "eggs" === activeProtein ? 0 : weights.eggs * (eggSizeG / 100),
-          r = NUT.eggs;
+          r = NUTRITION_DB.eggs;
         return {
           kcal: (n * t.kcal + s * i.kcal) / a + o * r.kcal,
           p: (n * t.p + s * i.p) / a + o * r.p,
@@ -491,13 +245,13 @@ const NUT = {
       // protein term (baseMacros zeroes everything when carb === "none").
       function macrosWith(recipe, pgTot, cgTot) {
         const a = Math.max(weights.servings, 1),
-          t = NUT[activeProtein] || NUT.chicken_thigh,
-          carbValid = recipe.carb && recipe.carb !== "none" && NUT[recipe.carb],
-          i = carbValid ? NUT[recipe.carb] : { kcal: 0, p: 0, c: 0, f: 0 },
+          t = NUTRITION_DB[activeProtein] || NUTRITION_DB.chicken_thigh,
+          carbValid = recipe.carb && recipe.carb !== "none" && NUTRITION_DB[recipe.carb],
+          i = carbValid ? NUTRITION_DB[recipe.carb] : { kcal: 0, p: 0, c: 0, f: 0 },
           n = pgTot / 100,
           s = carbValid && cgTot ? cgTot / 100 : 0,
           o = "eggs" === activeProtein ? 0 : weights.eggs * (eggSizeG / 100),
-          r = NUT.eggs;
+          r = NUTRITION_DB.eggs;
         return {
           kcal: (n * t.kcal + s * i.kcal) / a + o * r.kcal,
           p: (n * t.p + s * i.p) / a + o * r.p,
@@ -513,7 +267,7 @@ const NUT = {
         const sm = getSauceMacros(recipe);
         let sk = 0, sp = 0, sc = 0, sf = 0;
         if (recipe.sideEgg) {
-          const nut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
+          const nut = NUTRITION_DB.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
           const gPP = (sideEggCount * sideEggSizeG) / Math.max(weights.servings, 1);
           sk = (nut.kcal * gPP) / 100; sp = (nut.p * gPP) / 100;
           sc = (nut.c * gPP) / 100; sf = (nut.f * gPP) / 100;
@@ -531,9 +285,9 @@ const NUT = {
       // remaining calorie/carb budget on carbs. Returns feasible=false when the
       // active constraints cannot all be met.
       function solveAutoWeight(recipe) {
-        const t = NUT[activeProtein] || NUT.chicken_thigh,
-          carbValid = recipe.carb && recipe.carb !== "none" && NUT[recipe.carb],
-          i = carbValid ? NUT[recipe.carb] : { kcal: 0, p: 0, c: 0, f: 0 },
+        const t = NUTRITION_DB[activeProtein] || NUTRITION_DB.chicken_thigh,
+          carbValid = recipe.carb && recipe.carb !== "none" && NUTRITION_DB[recipe.carb],
+          i = carbValid ? NUTRITION_DB[recipe.carb] : { kcal: 0, p: 0, c: 0, f: 0 },
           hasProtein = recipe.protein && recipe.protein !== "none" && t.p > 0,
           fx = _autoFixed(recipe),
           sv = Math.max(weights.servings, 1),
@@ -632,7 +386,7 @@ const NUT = {
         }
         return changed;
       }
-      // The protein NUT key to show a recipe with by default — its own protein,
+      // The protein NUTRITION_DB key to show a recipe with by default — its own protein,
       // keeping the current variant if it already belongs to that family.
       function _nativeVariant(recipe) {
         const fam = {
@@ -698,7 +452,7 @@ const NUT = {
               `<span class="protein-macro-hint" id="proteinHint">${a.variants.find((e) => e.key === activeProtein)?.sub || ""}</span>`),
               (s.style.display = "flex"));
           else {
-            const a = NUT["eggs" === e ? "eggs" : e];
+            const a = NUTRITION_DB["eggs" === e ? "eggs" : e];
             ((s.innerHTML = `<span class="protein-macro-hint">${a ? a.kcal + " kcal · " + a.p + "g Protein · " + a.f + "g Fat per 100g" : ""}</span>`),
               (s.style.display = "flex"));
           }
@@ -862,7 +616,7 @@ const NUT = {
           btn.classList.toggle("active", sizeMap[btn.textContent.trim()] === sideEggSizeG);
         });
         // Recalculate macros inline (same as changeSideEggCount)
-        const nut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
+        const nut = NUTRITION_DB.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
         const gPP = Math.round((sideEggCount * sideEggSizeG) / Math.max(modalServings, 1));
         const grid = document.querySelector("#sideEggRow .ing-macro-grid");
         if (grid) {
@@ -886,7 +640,7 @@ const NUT = {
         if (el) el.textContent = sideEggCount;
         // Update the size buttons active state — don't touch them, sideEggSizeG hasn't changed
         // Recalculate and update the macro panel inside sideEggRow
-        const nut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
+        const nut = NUTRITION_DB.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
         const gPP = Math.round((sideEggCount * sideEggSizeG) / Math.max(modalServings, 1));
         const grid = document.querySelector("#sideEggRow .ing-macro-grid");
         if (grid) {
@@ -1556,7 +1310,7 @@ const NUT = {
             i = getSauceMacros(e);
           let seKcal = 0, seP = 0, seC = 0, seF = 0;
           if (e.sideEgg) {
-            const nut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
+            const nut = NUTRITION_DB.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
             const gPP = Math.round((sideEggCount * sideEggSizeG) / Math.max(weights.servings, 1));
             seKcal = Math.round((nut.kcal * gPP) / 100);
             seP    = Math.round(((nut.p  * gPP) / 100) * 10) / 10;
@@ -1785,7 +1539,7 @@ const NUT = {
         const a = parseFloat(document.getElementById("mfProtMin")?.value);
         if (!a || a <= 0) return;
         const t = Math.max(weights.servings, 1),
-          i = NUT[activeProtein] || NUT.chicken_thigh;
+          i = NUTRITION_DB[activeProtein] || NUTRITION_DB.chicken_thigh;
         if (!i || !i.p) return;
         const n = Math.round((a * t * 100) / i.p);
         ((weights.chicken = Math.max(50, Math.min(3e3, n))), autoCalcCarbs());
@@ -1983,9 +1737,9 @@ const NUT = {
           {
             label: `Protein — ${activeProtein.replace("_", " ")} (${weights.chicken}g raw)`,
             g: weights.chicken,
-            n: NUT[activeProtein] || NUT.chicken_thigh,
+            n: NUTRITION_DB[activeProtein] || NUTRITION_DB.chicken_thigh,
           },
-          { label: `🥚 Eggs (${weights.eggs} × ${eggSizeG}g)`, g: weights.eggs * eggSizeG, n: NUT.eggs },
+          { label: `🥚 Eggs (${weights.eggs} × ${eggSizeG}g)`, g: weights.eggs * eggSizeG, n: NUTRITION_DB.eggs },
         ];
         ["potato", "rice", "noodle", "bread"].forEach((e) => {
           if (weights[e] > 0) {
@@ -1995,7 +1749,7 @@ const NUT = {
               noodle: "🍜 Noodles (dry)",
               bread: "🫓 Bread/Wrap",
             };
-            a.push({ label: `${t[e]} (${weights[e]}g raw)`, g: weights[e], n: NUT[e] });
+            a.push({ label: `${t[e]} (${weights[e]}g raw)`, g: weights[e], n: NUTRITION_DB[e] });
           }
         });
         let t = 0,
@@ -2069,7 +1823,7 @@ const NUT = {
         weights.servings = a;
         let seKcal = 0, seP = 0, seC = 0, seF = 0;
         if (e.sideEgg) {
-          const nut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
+          const nut = NUTRITION_DB.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
           const gPP = Math.round(sideEggCount * sideEggSizeG);
           seKcal = Math.round((nut.kcal * gPP) / 100);
           seP    = Math.round(((nut.p * gPP) / 100) * 10) / 10;
@@ -2340,7 +2094,7 @@ const NUT = {
         // Side-egg stepper for sideEgg: true recipes
         const _hasSideEgg = !!e.sideEgg;
         const _sgPP = Math.round(sideEggCount * sideEggSizeG);
-        const _sgNut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
+        const _sgNut = NUTRITION_DB.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
         const _sgK = Math.round((_sgNut.kcal * _sgPP) / 100);
         const _sgP = Math.round((_sgNut.p * _sgPP) / 100 * 10) / 10;
         const _sgC = Math.round((_sgNut.c * _sgPP) / 100 * 10) / 10;
@@ -2350,7 +2104,7 @@ const NUT = {
             (o || _isNoneProtein)
               ? k
               : (() => {
-                  const a = NUT[r] || NUT.chicken_thigh,
+                  const a = NUTRITION_DB[r] || NUTRITION_DB.chicken_thigh,
                     t = Math.round((a.kcal * p) / 100),
                     i = Math.round(((a.p * p) / 100) * 10) / 10,
                     n = Math.round(((a.c * p) / 100) * 10) / 10,
@@ -2358,7 +2112,7 @@ const NUT = {
                   return `\n  <div class="modal-weight-row" id="protWeightRow">\n    <div class="modal-weight-row-main" onclick="toggleWeightRow('protWeightRow')">\n      <label>${d} ${l.short}</label>\n      <input type="number" class="modal-weight-input" id="mwProt" value="${_awI ? _awI.pg * modalServings : weights.chicken}"\n        min="50" max="3000"\n        onclick="event.stopPropagation()"\n        oninput="updateModalWeight('prot', this.value, '${e.id}')">\n      <span class="modal-weight-unit">g batch total</span>\n      <span class="modal-weight-hint">${p}g per portion</span>\n      <span class="modal-weight-expand">▼</span>\n    </div>\n    <div class="modal-weight-macro-panel">\n      <div class="ing-macro-grid" style="margin-top:8px;">\n        <div class="ing-macro-cell mk"><span class="imc-val">${t}</span><span class="imc-lbl">kcal</span></div>\n        <div class="ing-macro-cell mp"><span class="imc-val">${i}g</span><span class="imc-lbl">protein</span></div>\n        <div class="ing-macro-cell mc"><span class="imc-val">${n}g</span><span class="imc-lbl">carbs</span></div>\n        <div class="ing-macro-cell mf"><span class="imc-val">${s}g</span><span class="imc-lbl">fat</span></div>\n      </div>\n      <div class="ing-macro-hint">Per portion · ${p}g · per 100g: ${a.kcal}kcal ${a.p}g P ${a.c}g C ${a.f}g F</div>\n    </div>\n  </div>`;
                 })()
           }\n  <div class="modal-weight-row" id="carbWeightRow">\n    ${(() => {
-            const a = NUT[e.carb] || {},
+            const a = NUTRITION_DB[e.carb] || {},
               t = Math.round(((a.kcal || 0) * u) / 100),
               i = Math.round((((a.p || 0) * u) / 100) * 10) / 10,
               n = Math.round((((a.c || 0) * u) / 100) * 10) / 10,
@@ -2389,7 +2143,7 @@ const NUT = {
                 g = null;
               try {
                 if (a.amt && a.amt.includes("{{proteinG}}")) {
-                  const e = NUT[r] || NUT.chicken_thigh;
+                  const e = NUTRITION_DB[r] || NUTRITION_DB.chicken_thigh;
                   g = {
                     grams: p,
                     kcal: Math.round((e.kcal * p) / 100),
@@ -2398,7 +2152,7 @@ const NUT = {
                     f: Math.round(((e.f * p) / 100) * 10) / 10,
                   };
                 } else if (a.amt && a.amt.includes("{{carbG}}")) {
-                  const a = NUT[e.carb] || {};
+                  const a = NUTRITION_DB[e.carb] || {};
                   g = {
                     grams: u,
                     kcal: Math.round(((a.kcal || 0) * u) / 100),
@@ -2407,7 +2161,7 @@ const NUT = {
                     f: Math.round((((a.f || 0) * u) / 100) * 10) / 10,
                   };
                 } else if (a.amt && a.amt.includes("{{eggCount}}")) {
-                  const _eggNut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
+                  const _eggNut = NUTRITION_DB.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
                   const _eggG = Math.round(eggCount * eggSizeG);
                   g = {
                     grams: _eggG,
@@ -2457,7 +2211,7 @@ const NUT = {
         activeProtein = _pAP2; weights.chicken = _pCh2;
         let _seKcal = 0, _seP = 0, _seC = 0, _seF = 0;
         if (e.sideEgg) {
-          const _nut = NUT.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
+          const _nut = NUTRITION_DB.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
           const _gPP = Math.round(sideEggCount * sideEggSizeG);
           _seKcal = Math.round((_nut.kcal * _gPP) / 100);
           _seP    = Math.round((_nut.p  * _gPP) / 100 * 10) / 10;
@@ -2936,22 +2690,33 @@ const NUT = {
       let _nutdbSortCol = "name";
       let _nutdbSortDir = 1;
       let _nutdbQuery = "";
+      let _nutdbActiveCats = new Set(NUTRITION_CATEGORIES.map((c) => c.id));
 
+      const NUTDB_HIDDEN_ALIASES = new Set(["chicken", "egg"]); // pure internal aliases (== chicken_thigh/eggs), not distinct foods
       function _buildNutdbData() {
         if (_nutdbData) return;
-        const raw = Object.assign({}, NUTRITION_DB, NUTRITION_CARBS);
-        _nutdbData = Object.entries(raw).map(([key, v]) => ({
+        _nutdbData = Object.entries(NUTRITION_DB)
+          .filter(([key]) => !NUTDB_HIDDEN_ALIASES.has(key))
+          .map(([key, v]) => ({
           key,
           name: key.replace(/_/g, " "),
           kcal: v.kcal ?? null,
           p: v.p ?? null,
           c: v.c ?? null,
           f: v.f ?? null,
+          category: v.category || "staples",
         }));
       }
 
       function nutdbFilter() {
         _nutdbQuery = document.getElementById("nutdbSearch").value.toLowerCase();
+        _nutdbRender();
+      }
+
+      function nutdbToggleCategory(catId, btn) {
+        if (_nutdbActiveCats.has(catId)) _nutdbActiveCats.delete(catId);
+        else _nutdbActiveCats.add(catId);
+        btn.classList.toggle("active", _nutdbActiveCats.has(catId));
         _nutdbRender();
       }
 
@@ -2973,7 +2738,7 @@ const NUT = {
       function _nutdbRender() {
         _buildNutdbData();
         const q = _nutdbQuery;
-        let rows = q ? _nutdbData.filter((r) => r.name.includes(q)) : _nutdbData.slice();
+        let rows = _nutdbData.filter((r) => _nutdbActiveCats.has(r.category) && (!q || r.name.includes(q)));
         rows.sort((a, b) => {
           if (_nutdbSortCol === "name") return _nutdbSortDir * a.name.localeCompare(b.name);
           const av = a[_nutdbSortCol] ?? -1;
