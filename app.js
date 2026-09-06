@@ -2831,8 +2831,12 @@
         if (r.carb === "none") return "snack";
         return "main";
       }
+      // RAND_SLOT_TYPES picks which candidate pool a slot draws from;
+      // RAND_SLOT_DISPLAY_LABELS is just what it's called on screen — lunch
+      // and dinner draw from the same "main" pool (the catalog doesn't
+      // distinguish them) but are still separate, separately-sized slots.
       const RAND_SLOT_TYPES = ["breakfast", "main", "main", "main"];
-      const RAND_SLOT_LABELS = { breakfast: "🍳 Breakfast", main: "🍽️ Main", snack: "🥗 Snack" };
+      const RAND_SLOT_DISPLAY_LABELS = ["🍳 Breakfast", "🍽️ Lunch", "🍽️ Dinner", "🍽️ Extra"];
       let randSlots = [null, null, null, null];
       let randLocked = [false, false, false, false];
       let randUsedIds = new Set();
@@ -2853,22 +2857,68 @@
         return pool[Math.floor(Math.random() * pool.length)];
       }
 
-      function randRecipeMacros(recipe) {
-        // baseMacros() reads the module-global activeProtein, not anything
-        // tied to the recipe — without swapping it to this recipe's own
-        // family first, a beef/fish/tofu/egg recipe silently got costed as
-        // whatever protein was last selected on the main Recipes page
-        // (e.g. every card priced as chicken thigh, including beef ones).
-        const savedProtein = activeProtein;
-        activeProtein = _nativeVariant(recipe);
-        const base = baseMacros(recipe.carb);
-        activeProtein = savedProtein;
+      // Each slot gets a share of the daily target (default: split evenly),
+      // editable per card (the "bigger lunch, smaller dinner" case). The
+      // recipe's protein/carb GRAMS are then solved — not just looked up at
+      // some fixed global weight — so the card actually lands near its
+      // share instead of always using whatever the last-viewed recipe's
+      // weight happened to be. This mirrors the site's own per-recipe
+      // auto-weight solver (protein floor first, then fill the carb/kcal
+      // budget) — see solveAutoWeight() — just driven by this slot's share
+      // of the day instead of a global macro-filter constraint.
+      let randShares = [25, 25, 25, 25];
+      function randAdjustShare(i, delta) {
+        randShares[i] = Math.max(0, Math.min(100, randShares[i] + delta));
+        randRenderCard(i);
+        randRenderMacros();
+      }
+
+      function randRecipeMacrosForSlot(i) {
+        const recipe = randSlots[i];
+        if (!recipe) return { kcal: 0, p: 0, c: 0, f: 0, pg: 0, cg: 0 };
+
+        const target = randTarget();
+        const share = (randShares[i] || 0) / 100;
+        const shareTarget = { kcal: target.kcal * share, p: target.p * share, c: target.c * share, f: target.f * share };
+
+        const nativeProtein = NUTRITION_DB[_nativeVariant(recipe)] || NUTRITION_DB.chicken_thigh;
+        const carbInfo = recipe.carb !== "none" ? NUTRITION_DB[recipe.carb] || { kcal: 0, p: 0, c: 0, f: 0 } : { kcal: 0, p: 0, c: 0, f: 0 };
         const sauce = getSauceMacros(recipe);
+        const hasProtein = recipe.protein && recipe.protein !== "none";
+        const hasCarb = recipe.carb && recipe.carb !== "none";
+
+        // Floors matter as much as the target here: a tight share can solve
+        // to a technically-correct but uncookable "0g noodles" bolognese
+        // when the recipe's fixed sauce alone already eats the whole carb
+        // budget. AUTO_W.pgMin is the same floor the site's own per-recipe
+        // solver uses; carbFloor is a smaller version of the same idea for
+        // carbs specifically (0g carb is fine when the recipe HAS no carb,
+        // never fine when it does).
+        let pg = hasProtein && nativeProtein.p > 0 ? Math.max(0, ((shareTarget.p - sauce.p) * 100) / nativeProtein.p) : 0;
+        if (hasProtein) pg = Math.max(pg, AUTO_W.pgMin);
+        pg = Math.min(pg, PORTION_BOUNDS.protMax);
+
+        let cg = 0;
+        if (hasCarb && carbInfo.c > 0) {
+          const remainingCarb = shareTarget.c - sauce.c - (pg * nativeProtein.c) / 100;
+          cg = Math.max(0, (remainingCarb * 100) / carbInfo.c);
+          const carbFloor = 15;
+          cg = Math.max(cg, carbFloor);
+        }
+        cg = Math.min(cg, PORTION_BOUNDS.carbMax);
+
+        const kcal = (pg * nativeProtein.kcal) / 100 + (cg * carbInfo.kcal) / 100 + sauce.kcal;
+        const p = (pg * nativeProtein.p) / 100 + (cg * carbInfo.p) / 100 + sauce.p;
+        const c = (pg * nativeProtein.c) / 100 + (cg * carbInfo.c) / 100 + sauce.c;
+        const f = (pg * nativeProtein.f) / 100 + (cg * carbInfo.f) / 100 + sauce.f;
+
         return {
-          kcal: Math.round(base.kcal + sauce.kcal),
-          p: Math.round((base.p + sauce.p) * 10) / 10,
-          c: Math.round((base.c + sauce.c) * 10) / 10,
-          f: Math.round((base.f + sauce.f) * 10) / 10,
+          kcal: Math.round(kcal),
+          p: Math.round(p * 10) / 10,
+          c: Math.round(c * 10) / 10,
+          f: Math.round(f * 10) / 10,
+          pg: Math.round(pg),
+          cg: Math.round(cg),
         };
       }
 
@@ -2896,7 +2946,7 @@
         const sums = { kcal: 0, p: 0, c: 0, f: 0 };
         randSlots.forEach((r, i) => {
           if (r && randLocked[i]) {
-            const m = randRecipeMacros(r);
+            const m = randRecipeMacrosForSlot(i);
             sums.kcal += m.kcal; sums.p += m.p; sums.c += m.c; sums.f += m.f;
           }
         });
@@ -2950,14 +3000,14 @@
         if (!el) return;
         const r = randSlots[i];
         const locked = randLocked[i];
-        const slotLabel = RAND_SLOT_LABELS[RAND_SLOT_TYPES[i]];
+        const slotLabel = RAND_SLOT_DISPLAY_LABELS[i];
         if (!r) {
           el.style.borderColor = "";
           el.style.background = "";
           el.innerHTML = `<div class="rand-card-top"><span class="rand-card-num">${slotLabel}</span></div><div class="rand-empty">No ${RAND_SLOT_TYPES[i]} recipe matches your filters</div>`;
           return;
         }
-        const m = randRecipeMacros(r);
+        const m = randRecipeMacrosForSlot(i);
         el.style.borderColor = locked ? "#47e8a3" : "";
         el.style.background = locked ? "rgba(71,232,163,0.06)" : "";
         el.innerHTML = `
@@ -2970,7 +3020,15 @@
         </div>
         <div class="card-title" style="cursor:pointer" onclick="openModal('${r.id}')">${r.title}</div>
         <div class="tags">${r.tags.slice(0, 2).map((t) => `<span class="tag tag-${t}">${tagLabel(t)}</span>`).join("")}</div>
-        <div class="rand-card-macros">${m.kcal} kcal · ${m.p}g P · ${m.c}g C · ${m.f}g F</div>`;
+        <div class="rand-card-macros">${m.kcal} kcal · ${m.p}g P · ${m.c}g C · ${m.f}g F</div>
+        <div class="rand-card-portion">
+          <span class="rand-portion-grams">${m.pg}g protein · ${m.cg}g carb</span>
+          <span class="rand-portion-stepper">
+            <button onclick="randAdjustShare(${i}, -5)">−</button>
+            <span>${randShares[i]}% of day</span>
+            <button onclick="randAdjustShare(${i}, 5)">+</button>
+          </span>
+        </div>`;
       }
 
       function randReroll(i) {

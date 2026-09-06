@@ -5212,6 +5212,44 @@
         color: var(--muted);
         margin-top: 6px;
       }
+      .rand-card-portion {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid var(--border);
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .rand-portion-grams {
+        font-size: 10px;
+        color: var(--muted);
+      }
+      .rand-portion-stepper {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 10px;
+        color: var(--text);
+        white-space: nowrap;
+      }
+      .rand-portion-stepper button {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        color: var(--text);
+        font-size: 12px;
+        line-height: 1;
+        cursor: pointer;
+        padding: 0;
+      }
+      .rand-portion-stepper button:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
       .rand-empty {
         font-size: 12px;
         color: var(--muted);
