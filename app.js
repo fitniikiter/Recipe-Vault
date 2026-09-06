@@ -96,26 +96,31 @@
         }
         0 === n && (n = 1);
         const c = t.unit_g || {};
+        // A count-based unit (tbsp/clove/piece/...) this ingredient doesn't define
+        // its own conversion for falls back to ITS OWN typical_g before a generic
+        // cross-ingredient guess — "2 pieces star anise" using a bread-slice-sized
+        // 50g default was how a 2g spice turned into 100g in a recipe's totals.
+        const d = t.typical_g;
         return i.includes("tbsp")
-          ? n * (c.tbsp || 15)
+          ? n * (c.tbsp || d || 15)
           : i.includes("tsp")
-            ? n * (c.tsp || 5)
+            ? n * (c.tsp || d || 5)
             : i.includes("ml")
               ? n * (c.ml || 1)
               : i.includes("clove")
-                ? n * (c.clove || 5)
+                ? n * (c.clove || d || 5)
                 : i.includes("stalk") || i.includes("sprig")
-                  ? n * (c.stalk || 15)
+                  ? n * (c.stalk || d || 15)
                   : i.includes("whole")
-                    ? n * (c.whole || 100)
+                    ? n * (c.whole || d || 100)
                     : i.includes("piece")
-                      ? n * (c.piece || 50)
+                      ? n * (c.piece || c.whole || d || 50)
                       : i.includes("slice")
-                      ? n * (c.slice || 30)
+                      ? n * (c.slice || d || 30)
                       : i.includes("sheet")
-                        ? n * (c.sheet || 2)
+                        ? n * (c.sheet || d || 2)
                         : i.includes("handful")
-                          ? n * (c.handful || 30)
+                          ? n * (c.handful || d || 30)
                           : i.includes("pinch")
                             ? 0.5 * n
                             : i.includes("splash")
@@ -165,6 +170,24 @@
         currentCuisineFilter = "all",
         weights = { chicken: 150, potato: 150, rice: 150, noodle: 150, bread: 150, eggs: 0, servings: 1 };
       const CARB_RATIOS = { potato: 1.25, rice: 0.33, noodle: 0.33, bread: 0.2 };
+      // A recipe's sauce/spice amounts are fixed per portion (see
+      // calcSauceMacros) — they don't scale with the protein/carb weight
+      // sliders. That's fine at normal amounts, but with no ceiling a huge
+      // batch total at 1 serving implied a single portion of several
+      // kilograms of "meat" seasoned with the recipe's fixed 2 tbsp of
+      // sauce. Cap the batch total so the effective PER-PORTION weight
+      // never exceeds a realistic ceiling, whatever combination of weight
+      // and serving count produced it.
+      const PORTION_BOUNDS = { protMax: 400, carbMax: 350 };
+      function _capToServings(g, perPortionMax) {
+        return Math.min(g, perPortionMax * Math.max(weights.servings, 1));
+      }
+      function _reclampAllWeights() {
+        weights.chicken = _capToServings(weights.chicken, PORTION_BOUNDS.protMax);
+        ["potato", "rice", "noodle", "bread"].forEach((k) => {
+          weights[k] = _capToServings(weights[k], PORTION_BOUNDS.carbMax);
+        });
+      }
       const TAG_FLAGS = {
         "korean": "🇰🇷", "japanese": "🇯🇵", "thai": "🇹🇭", "mexican": "🇲🇽",
         "chinese": "🇨🇳", "indian": "🇮🇳", "vietnamese": "🇻🇳", "american": "🇺🇸",
@@ -705,7 +728,7 @@
         if (e === "prot") {
           clearTimeout(_protWeightTimer);
           _protWeightTimer = setTimeout(() => {
-            const i = Math.max(0, Math.min(3e3, parseInt(a) || 0)),
+            const i = _capToServings(Math.max(0, Math.min(3e3, parseInt(a) || 0)), PORTION_BOUNDS.protMax),
               n = R.find((r) => r.id === t);
             if (n) {
               weights.chicken = i;
@@ -726,7 +749,7 @@
         } else {
           clearTimeout(_carbWeightTimer);
           _carbWeightTimer = setTimeout(() => {
-            const i = Math.max(0, Math.min(3e3, parseInt(a) || 0)),
+            const i = _capToServings(Math.max(0, Math.min(3e3, parseInt(a) || 0)), PORTION_BOUNDS.carbMax),
               n = R.find((r) => r.id === t);
             if (n) {
               weights[n.carb] = i;
@@ -743,9 +766,11 @@
         }
       }
       function updateGlobalWeight(e) {
-        const a = Math.max(50, Math.min(3e3, parseInt(e) || 500));
+        const aRaw = Math.max(50, Math.min(3e3, parseInt(e) || 500));
+        const a = _capToServings(aRaw, PORTION_BOUNDS.protMax);
         ((weights.chicken = a),
           autoCalcCarbs(),
+          _reclampAllWeights(),
           Object.keys(_sauceMacroCache).forEach((e) => delete _sauceMacroCache[e]));
         const t = document.getElementById("chickenInput");
         const _fpw = document.getElementById("filterProteinWeight");
@@ -760,10 +785,14 @@
           updateCalcDisplay());
       }
       function _filterProteinInput(v) {
-        const g = v === "" ? 0 : Math.max(0, Math.min(3000, parseInt(v) || 0));
+        const gRaw = v === "" ? 0 : Math.max(0, Math.min(3000, parseInt(v) || 0));
+        const g = _capToServings(gRaw, PORTION_BOUNDS.protMax);
         weights.chicken = g;
         autoCalcCarbs();
+        _reclampAllWeights(); // autoCalcCarbs derives carbs from a ratio > 1x protein — re-check the carb ceiling too
         Object.keys(_sauceMacroCache).forEach((k) => delete _sauceMacroCache[k]);
+        const fpw = document.getElementById("filterProteinWeight");
+        fpw && (fpw.value = weights.chicken);
         const ci = document.getElementById("chickenInput");
         ci && (ci.value = g);
         document.querySelectorAll(".card-weight-input").forEach((e) => { e.value = g; });
@@ -775,12 +804,15 @@
         updateCalcDisplay();
       }
       function _filterCarbInput(v) {
-        const g = v === "" ? 0 : Math.max(0, Math.min(3000, parseInt(v) || 0));
+        const gRaw = v === "" ? 0 : Math.max(0, Math.min(3000, parseInt(v) || 0));
+        const g = _capToServings(gRaw, PORTION_BOUNDS.carbMax);
         weights.potato = g;
         weights.rice = g;
         weights.noodle = g;
         weights.bread = g;
         Object.keys(_sauceMacroCache).forEach((k) => delete _sauceMacroCache[k]);
+        const fcw = document.getElementById("filterCarbWeight");
+        fcw && (fcw.value = g);
         const mwc = document.getElementById("mwCarb");
         mwc && (mwc.value = g);
         updateCardMacros();
@@ -1685,9 +1717,18 @@
           filterRecipes(),
           updateCalcDisplay());
       }
+      function _syncGlobalWeightInputs() {
+        const cw = document.getElementById("chickenInput");
+        cw && (cw.value = weights.chicken);
+        const fpw = document.getElementById("filterProteinWeight");
+        fpw && (fpw.value = weights.chicken);
+        document.querySelectorAll(".card-weight-input").forEach((e) => { e.value = weights.chicken; });
+      }
       function changeGlobalServings(e) {
         const a = Math.max(1, Math.min(10, weights.servings + e));
         weights.servings = a;
+        _reclampAllWeights(); // fewer servings lowers the per-portion ceiling for the same batch total
+        _syncGlobalWeightInputs();
         const t = document.getElementById("servingsInput");
         t && (t.textContent = a);
         const i = document.getElementById("globalServingVal");
@@ -1703,6 +1744,8 @@
           i = Math.max(1, Math.min(10, t + e));
         ((a.textContent = i),
           (weights.servings = i),
+          _reclampAllWeights(), // fewer servings lowers the per-portion ceiling for the same batch total
+          _syncGlobalWeightInputs(),
           Object.keys(_sauceMacroCache).forEach((e) => delete _sauceMacroCache[e]),
           updateCardMacros(),
           currentModalRecipe && refreshRecipeTabIfOpen(R.find((e) => e.id === currentModalRecipe.id)),
@@ -1711,9 +1754,11 @@
       }
       function updateCalc() {
         _disableAutoWeightIfOn();
-        ((weights.chicken = parseFloat(document.getElementById("chickenInput").value) || 0),
-          (weights.servings = parseInt(document.getElementById("servingsInput").textContent) || 1),
+        ((weights.servings = parseInt(document.getElementById("servingsInput").textContent) || 1),
+          (weights.chicken = _capToServings(parseFloat(document.getElementById("chickenInput").value) || 0, PORTION_BOUNDS.protMax)),
           autoCalcCarbs(),
+          _reclampAllWeights(),
+          (document.getElementById("chickenInput").value = weights.chicken),
           document.querySelectorAll(".card-weight-input").forEach((e) => {
             e.value = weights.chicken;
           }),
@@ -3186,7 +3231,7 @@
         let i = 0, n = 0, s = 0, o = 0;
         a.ingredients.forEach((e) => {
           e.items.forEach((e) => {
-            if (e.amt && (e.amt.includes("{{proteinG}}") || e.amt.includes("{{carbG}}"))) return;
+            if (e.amt && (e.amt.includes("{{proteinG}}") || e.amt.includes("{{carbG}}") || e.amt.includes("{{eggCount}}"))) return;
             const a = e.id || findIngredientId(e.name);
             if (!a) return;
             const c = calcIngredientMacros(a, e.amt || "");
@@ -3716,7 +3761,7 @@
       ING_NAME_MAP["thai red chili (sliced)"] = "chili_fresh";
       ING_NAME_MAP["chili (sliced)"] = "chili_fresh";
       ING_NAME_MAP["chili (sliced, optional)"] = "chili_fresh";
-      ING_NAME_MAP["dried red chilis"] = "chili_flakes";
+      ING_NAME_MAP["dried red chilis"] = "dried_chili"; // whole dried chili pods (~2g each), not ground flakes
       ING_NAME_MAP["green pepper (diced)"] = "bell_pepper";
       ING_NAME_MAP["red bell pepper (diced)"] = "bell_pepper";
       ING_NAME_MAP["red bell pepper (finely diced)"] = "bell_pepper";
@@ -3891,7 +3936,7 @@
       ING_NAME_MAP["bacon lardons"] = "smoked_bacon";
       ING_NAME_MAP["smoked bacon"] = "smoked_bacon";
       // === Coverage check fixes (2026-09) — closes remaining silent-drop gaps ===
-      ING_NAME_MAP["toasted rice powder"] = "rice"; // ground toasted rice, same base macros
+      ING_NAME_MAP["toasted rice powder"] = "flour"; // near-identical macros to rice, but "flour" has tsp/tbsp units defined — this is used a teaspoon at a time, not by the 100g+ "rice" typically means
       ING_NAME_MAP["celery"] = "celery";
       ING_NAME_MAP["celery stalks"] = "celery";
       ING_NAME_MAP["apple"] = "apple";
