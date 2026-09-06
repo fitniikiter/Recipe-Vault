@@ -108,7 +108,9 @@
                   ? n * (c.stalk || 15)
                   : i.includes("whole")
                     ? n * (c.whole || 100)
-                    : i.includes("slice")
+                    : i.includes("piece")
+                      ? n * (c.piece || 50)
+                      : i.includes("slice")
                       ? n * (c.slice || 30)
                       : i.includes("sheet")
                         ? n * (c.sheet || 2)
@@ -3888,6 +3890,16 @@
       ING_NAME_MAP["smoked bacon lardons"] = "smoked_bacon";
       ING_NAME_MAP["bacon lardons"] = "smoked_bacon";
       ING_NAME_MAP["smoked bacon"] = "smoked_bacon";
+      // === Coverage check fixes (2026-09) — closes remaining silent-drop gaps ===
+      ING_NAME_MAP["toasted rice powder"] = "rice"; // ground toasted rice, same base macros
+      ING_NAME_MAP["celery"] = "celery";
+      ING_NAME_MAP["celery stalks"] = "celery";
+      ING_NAME_MAP["apple"] = "apple";
+      ING_NAME_MAP["orange"] = "orange";
+      ING_NAME_MAP["mixed salad leaves"] = "lettuce";
+      ING_NAME_MAP["salad leaves"] = "lettuce";
+      ING_NAME_MAP["piri piri sauce"] = "hot_sauce"; // closest chili-sauce proxy, no dedicated entry
+      ING_NAME_MAP["gouda"] = "cheese_cheddar"; // closest semi-hard cheese proxy, no dedicated entry
 
 		function findIngredientId(e) {                             
         if (!e) return null;

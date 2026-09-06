@@ -122,6 +122,7 @@ const NUTRITION_DB = {
     vitamin_d: null, vitamin_b1: null, vitamin_b2: null, vitamin_b3: null,
     vitamin_b5: null, vitamin_b6: null, vitamin_b12: null, folate: null,
     choline: null, fdc_id: null, data_type: "Estimated", notes: "Chicken/poultry sausage, cooked (Geflügelwurst / Geflügel-Nürnberger). Values estimated from USDA poultry sausage composites.",
+    unit_g: { piece: 75 }, typical_g: 150,
     category: "proteins",
   },
   chicken_thigh: {
@@ -731,6 +732,13 @@ const NUTRITION_DB = {
   //  FRESH PRODUCE (vegetables, fruit, fresh herbs & aromatics)
   // ──────────────────────────────────────────────────────────
 
+  apple: {
+    kcal: 52, p: 0.3, c: 13.8, f: 0.2,
+    fiber: 2.4, sugar: 10.4,
+    fdc_id: null, data_type: "Estimated",
+    notes: "Apple, raw, with skin",
+    unit_g: {"whole":180}, typical_g: 150, emoji: "🍎", category: "fresh",
+  },
   avocado: {
     kcal: 160, p: 2, c: 9, f: 15,
     unit_g: {"whole":150}, typical_g: 75, emoji: "🥑", category: "fresh",
@@ -766,6 +774,13 @@ const NUTRITION_DB = {
   carrot: {
     kcal: 41, p: 1, c: 10, f: 0,
     unit_g: {"whole":80}, typical_g: 50, emoji: "🥕", category: "fresh",
+  },
+  celery: {
+    kcal: 16, p: 0.7, c: 3, f: 0.2,
+    fiber: 1.6, sugar: 1.3,
+    fdc_id: null, data_type: "Estimated",
+    notes: "Celery, raw, stalks",
+    unit_g: {"stalk":40,"whole":300}, typical_g: 60, emoji: "🌿", category: "fresh",
   },
   chili_fresh: {
     kcal: 40, p: 2, c: 9, f: 0,
@@ -870,6 +885,13 @@ const NUTRITION_DB = {
   onion: {
     kcal: 40, p: 1, c: 9, f: 0.1,
     unit_g: {"whole":110}, typical_g: 80, emoji: "🧅", category: "fresh",
+  },
+  orange: {
+    kcal: 47, p: 0.9, c: 11.8, f: 0.1,
+    fiber: 2.4, sugar: 9.4,
+    fdc_id: null, data_type: "Estimated",
+    notes: "Orange, raw, all commercial varieties",
+    unit_g: {"whole":130,"segment":16}, typical_g: 130, emoji: "🍊", category: "fresh",
   },
   pandan: {
     kcal: 100, p: 2, c: 22, f: 1,
