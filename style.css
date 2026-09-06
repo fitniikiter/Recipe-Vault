@@ -5042,6 +5042,12 @@
         display: flex;
         align-items: center;
         gap: 12px;
+        margin-bottom: 12px;
+      }
+      .nutdb-cat-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
         margin-bottom: 20px;
       }
       .nutdb-controls input {
@@ -5123,6 +5129,99 @@
       @media (max-width: 600px) {
         .nutdb-page { padding: 24px 12px; }
         .nutdb-table td, .nutdb-table thead th { padding: 9px 10px; }
+      }
+      .rand-page {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+      .rand-header { margin-bottom: 24px; }
+      .rand-header h2 {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 26px;
+        letter-spacing: 0.5px;
+        margin-bottom: 6px;
+      }
+      .rand-header p { color: var(--muted); font-size: 13px; }
+      .rand-target-input {
+        width: 60px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        color: var(--text);
+        padding: 3px 6px;
+        font-size: 11px;
+      }
+      .rand-filter-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 14px 0;
+      }
+      .rand-filter-row > div { display: flex; gap: 8px; flex-wrap: wrap; }
+      .rand-filter-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--muted);
+        flex-shrink: 0;
+      }
+      .rand-pantry-note {
+        font-size: 11px;
+        color: var(--accent3);
+        margin-left: auto;
+      }
+      .rand-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+        gap: 14px;
+        margin: 20px 0;
+      }
+      .rand-card {
+        background: var(--card);
+        border: 1.5px solid var(--border);
+        border-radius: 8px;
+        padding: 16px;
+        transition: all 0.2s;
+        min-height: 140px;
+      }
+      .rand-card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+      .rand-card-num {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 11px;
+        color: var(--accent);
+        letter-spacing: 1px;
+        opacity: 0.8;
+      }
+      .rand-card-btns { display: flex; gap: 4px; }
+      .rand-card-btns button {
+        background: transparent;
+        border: none;
+        font-size: 15px;
+        padding: 2px;
+        cursor: pointer;
+      }
+      .rand-card-macros {
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 6px;
+      }
+      .rand-empty {
+        font-size: 12px;
+        color: var(--muted);
+        text-align: center;
+        padding: 30px 10px;
+      }
+      .rand-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
       }
       .prot-weight-wrap {
         display: flex;

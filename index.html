@@ -107,6 +107,9 @@
       <button class="nav-tab" onclick="switchTab('nutrition', this)">
         <span class="tab-icon">🥦</span><span class="tab-label">Nutrition DB</span>
       </button>
+      <button class="nav-tab" onclick="switchTab('randomizer', this)">
+        <span class="tab-icon">🎲</span><span class="tab-label">Randomizer</span>
+      </button>
       <div class="theme-toggle">
         <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">
           <span class="theme-icon" id="themeIcon">☀️</span> <span id="themeLabel">Light</span>
@@ -535,6 +538,15 @@
           <input id="nutdbSearch" type="text" placeholder="Search ingredients..." oninput="nutdbFilter()" />
           <span class="nutdb-count" id="nutdbCount"></span>
         </div>
+        <div class="nutdb-cat-row">
+          <button class="filter-btn active" onclick="nutdbToggleCategory('proteins', this)">🥩 Proteins</button>
+          <button class="filter-btn active" onclick="nutdbToggleCategory('dairy', this)">🥛 Dairy & Eggs</button>
+          <button class="filter-btn active" onclick="nutdbToggleCategory('carbs', this)">🍚 Carbs</button>
+          <button class="filter-btn active" onclick="nutdbToggleCategory('fresh', this)">🥬 Fresh Produce</button>
+          <button class="filter-btn active" onclick="nutdbToggleCategory('sauces', this)">🫙 Sauces & Condiments</button>
+          <button class="filter-btn active" onclick="nutdbToggleCategory('spices', this)">🌿 Spices & Herbs</button>
+          <button class="filter-btn active" onclick="nutdbToggleCategory('staples', this)">🥫 Pantry Staples</button>
+        </div>
         <div class="nutdb-wrap">
           <table class="nutdb-table" id="nutdbTable">
             <thead>
@@ -548,6 +560,43 @@
             </thead>
             <tbody id="nutdbBody"></tbody>
           </table>
+        </div>
+      </div>
+    </div>
+    <div class="page" id="page-randomizer">
+      <div class="rand-page">
+        <div class="rand-header">
+          <h2>🎲 Meal Randomizer</h2>
+          <p>Roll a day of meals — lock the ones you like, reroll the rest. Respects your Pantry and Dietary Filters settings automatically.</p>
+        </div>
+
+        <div class="results-box">
+          <h3>Your Day So Far</h3>
+          <div class="results-grid" id="randMacroGrid"></div>
+          <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:14px; font-size:11px; color:var(--muted);">
+            <span>Target:</span>
+            <label>Kcal <input type="number" id="randTargetKcal" class="rand-target-input" value="2000" min="0" oninput="randUpdateTarget()"></label>
+            <label>Protein <input type="number" id="randTargetP" class="rand-target-input" value="160" min="0" oninput="randUpdateTarget()">g</label>
+            <label>Carbs <input type="number" id="randTargetC" class="rand-target-input" value="190" min="0" oninput="randUpdateTarget()">g</label>
+            <label>Fat <input type="number" id="randTargetF" class="rand-target-input" value="60" min="0" oninput="randUpdateTarget()">g</label>
+          </div>
+        </div>
+
+        <div class="rand-filter-row">
+          <span class="rand-filter-label">Cuisine</span>
+          <div id="randCuisineChips"></div>
+        </div>
+        <div class="rand-filter-row">
+          <span class="rand-filter-label">Diet</span>
+          <div id="randDietChips"></div>
+          <span class="rand-pantry-note" id="randPantryNote"></span>
+        </div>
+
+        <div class="rand-grid" id="randGrid"></div>
+
+        <div class="rand-actions">
+          <button class="filter-pill" onclick="randRerollAll()">🎲 Reroll unlocked</button>
+          <button class="filter-pill" onclick="randResetLocks()">🔓 Unlock all</button>
         </div>
       </div>
     </div>
