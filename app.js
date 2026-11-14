@@ -2613,8 +2613,21 @@
                 ALCOHOL_RECIPE_IDS = new Set(),
                 SPICY_RECIPE_IDS = new Set(),
                 DIP_RECIPE_IDS = new Set();
-      let disabledIngredients = new Set(JSON.parse(localStorage.getItem("pantryDisabled") || "[]"));
+      // My Pantry is switched off via the "pantry-off" class on <html> (see
+      // index.html). While off, a visitor's saved pantry selection is left
+      // untouched in localStorage but NOT applied — otherwise recipes would
+      // stay hidden with no visible control to bring them back. Dietary
+      // filters still add their blocked ingredients at startup.
+      const PANTRY_ENABLED = !document.documentElement.classList.contains("pantry-off");
+      let disabledIngredients = new Set(PANTRY_ENABLED ? JSON.parse(localStorage.getItem("pantryDisabled") || "[]") : []);
+      // Active dietary filters must block their ingredients before the first
+      // filterRecipes() run, not only at the end of startup.
+      activeDietary.forEach((id) => {
+        const d = DIETARY_FILTERS.find((f) => f.id === id);
+        d && d.blocks.forEach((ing) => disabledIngredients.add(ing));
+      });
       function savePantry() {
+        if (!PANTRY_ENABLED) return; // don't overwrite the saved selection with dietary-only state
         try {
           localStorage.setItem("pantryDisabled", JSON.stringify([...disabledIngredients]));
         } catch (e) {}
@@ -2737,9 +2750,20 @@
           document.querySelectorAll(".page").forEach((e) => e.classList.remove("active")),
           document.getElementById("page-" + e).classList.add("active"),
           "pantry" === e && (renderPantry(), buildDietaryGrid()),
-          "compare" === e && buildCompareTable(),
-          "nutrition" === e && renderNutritionDB(),
+          "nutrition" === e && switchNutView(_nutView),
           "randomizer" === e && renderRandomizer());
+      }
+
+      // The Nutrition tab holds two views (formerly separate tabs): the
+      // carb/protein comparison and the full ingredient database.
+      let _nutView = "compare";
+      try { _nutView = localStorage.getItem("nutView") === "db" ? "db" : "compare"; } catch (e) {}
+      function switchNutView(view) {
+        _nutView = view === "db" ? "db" : "compare";
+        try { localStorage.setItem("nutView", _nutView); } catch (e) {}
+        document.querySelectorAll(".nut-switch-btn").forEach((b) => b.classList.toggle("active", b.dataset.view === _nutView));
+        document.querySelectorAll(".nut-view").forEach((v) => v.classList.toggle("active", v.id === "nutview-" + _nutView));
+        "db" === _nutView ? renderNutritionDB() : buildCompareTable();
       }
 
       let _nutdbData = null;
@@ -3083,7 +3107,7 @@
         const note = document.getElementById("randPantryNote");
         if (note) {
           const n = disabledIngredients.size;
-          note.textContent = n ? `🧺 Respecting ${n} unavailable pantry item${n === 1 ? "" : "s"}` : "";
+          note.textContent = PANTRY_ENABLED && n ? `🧺 Respecting ${n} unavailable pantry item${n === 1 ? "" : "s"}` : "";
         }
       }
 

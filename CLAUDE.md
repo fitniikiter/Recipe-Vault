@@ -27,6 +27,11 @@ NO backend. NO framework. NO external code dependencies. Always free.
 To edit: UI/style → style.css · app logic → app.js · recipes → recipes-archive.js.
 Read only the file you need — that's the whole point of the split.
 
+## Tabs
+Recipes · Calorie Calculator · Nutrition (compare view + ingredient database) ·
+Randomizer. My Pantry is switched OFF (not deleted): remove the `pantry-off`
+class on `<html>` in index.html to bring it back.
+
 ## Rules — ALWAYS FOLLOW
 - Always push directly to main after every change automatically
 - All code comments in English

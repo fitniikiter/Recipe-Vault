@@ -5328,3 +5328,53 @@
       .rand-target-input {
         margin: 0 4px;
       }
+
+      /* ── My Pantry switched off (class on <html>) ── */
+      .pantry-off .nav-tab-pantry,
+      .pantry-off #page-pantry,
+      .pantry-off .hiw-section-pantry {
+        display: none !important;
+      }
+      /* ── Nutrition tab: switch between the compare view and the full database ── */
+      .nut-switch {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 24px 20px 0;
+      }
+      .nut-switch-btn {
+        flex: 1 1 160px;
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: 1.5px solid var(--border);
+        background: var(--card);
+        color: var(--muted);
+        font-family: "DM Sans", sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .nut-switch-btn:hover {
+        color: var(--text);
+      }
+      .nut-switch-btn.active {
+        border-color: var(--accent);
+        color: var(--accent);
+        background: rgba(255, 140, 0, 0.08);
+      }
+      .nut-view {
+        display: none;
+      }
+      .nut-view.active {
+        display: block;
+      }
+      .nut-view .compare-page,
+      .nut-view .nutdb-page {
+        padding-top: 20px;
+      }
+      #dietaryGrid {
+        margin-bottom: 0;
+      }

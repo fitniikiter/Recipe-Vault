@@ -43,7 +43,10 @@ for a CSS tweak, etc. Grep the anchors below.
   `.serving-stepper`, `.modal-variant-btn.active`). Light-mode overrides are
   `html.light ...`; theme tokens are CSS vars on `:root` / `html.light`.
 - **HTML structure** → `index.html`. Pages: `#page-recipes`, `#page-calc`,
-  `#page-nutrition`, `#page-compare`, `#page-pantry`. Modals: `#recipeModal`,
+  `#page-nutrition` (two views: `#nutview-compare` + `#nutview-db`, switched by
+  `switchNutView`), `#page-randomizer`, `#page-pantry` (switched OFF via the
+  `pantry-off` class on `<html>`; `PANTRY_ENABLED` in `app.js` reads it).
+  Dietary filters live in the recipe filter panel (`#dietaryGrid`). Modals: `#recipeModal`,
   `#hiwOverlay`.
 - **PWA / offline** → `manifest.json`, `sw.js` (precache list + fetch strategy),
   `icon-192.png` / `icon-512.png`.
