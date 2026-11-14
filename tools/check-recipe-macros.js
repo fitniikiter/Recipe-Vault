@@ -2,9 +2,9 @@
 //
 // Sanity-checks every recipe's computed macros at default weights (150g of
 // its native protein, 1 serving). This runs the SAME functions the live site
-// uses (parseIngredientGrams, calcIngredientMacros, baseMacros) pulled
-// straight out of app.js, so it tests the real calculation path, not a
-// reimplementation of it.
+// uses (parseIngredientGrams, calcIngredientMacros and the macro engine:
+// portionFor / macrosForPortion) pulled straight out of app.js, so it tests
+// the real calculation path, not a reimplementation of it.
 //
 // A flagged recipe isn't automatically wrong — the bounds below are
 // guardrails to catch data-entry mistakes (a misparsed amount, an ingredient
@@ -49,7 +49,12 @@ const ingNameMapFullSrc = appSrc.slice(ingMapStart, ingMapEnd);
 
 const fnParseIngredientGrams = extractFunction(appSrc, "function parseIngredientGrams(e, a) {");
 const fnCalcIngredientMacros = extractFunction(appSrc, "function calcIngredientMacros(e, a) {");
-const fnBaseMacros = extractFunction(appSrc, "function baseMacros(e) {");
+// The macro engine is one contiguous block in app.js (see its header comment).
+const engStart = appSrc.indexOf("// ─── Macro engine (single source of truth)");
+const engEnd = appSrc.indexOf("// Fixed macros per serving, in the shape the solver expects.");
+if (engStart === -1 || engEnd === -1) throw new Error("Macro engine markers not found — app.js structure changed?");
+const engineSrc = appSrc.slice(engStart, engEnd);
+const fnGetRecipeProtein = extractFunction(appSrc, "function getRecipeProtein(e) {");
 
 // Mirror autoCalcCarbs(): carb weights are DERIVED from protein weight via
 // CARB_RATIOS, not a flat number — using the same flat weight for every carb
@@ -66,8 +71,14 @@ const sandbox = {
     eggs: 0,
     servings: 1,
   },
-  activeProtein: "chicken_thigh",
+  // App defaults the engine reads (see the `let eggSizeG = 58, ...` block in app.js).
   eggSizeG: 58,
+  eggCount: 2,
+  sideEggSizeG: 58,
+  sideEggCount: 1,
+  _autoW: {},
+  autoWeightActive: () => false,
+  FISH_PROTEIN_IDS: new Set(["salmon", "shrimp", "cod", "tuna_canned", "tuna_water"]),
 };
 vm.createContext(sandbox);
 vm.runInContext(
@@ -75,21 +86,19 @@ vm.runInContext(
   fnParseIngredientGrams + "\n" +
   fnCalcIngredientMacros + "\n" +
   ingNameMapFullSrc + "\n" +
-  fnBaseMacros + "\n" +
+  fnGetRecipeProtein + "\n" +
+  engineSrc + "\n" +
   recSrc + "\n" +
   "this.__RECIPE_DETAILS = RECIPE_DETAILS;\n" +
   "this.__R = R;\n" +
   "this.__findIngredientId = findIngredientId;\n" +
   "this.__calcIngredientMacros = calcIngredientMacros;\n" +
-  "this.__baseMacros = baseMacros;\n",
+  "this.__portionFor = portionFor;\n" +
+  "this.__macrosForPortion = macrosForPortion;\n",
   sandbox
 );
 
-const { __R: R, __RECIPE_DETAILS: RECIPE_DETAILS, __findIngredientId: findIngredientId, __calcIngredientMacros: calcIngredientMacros, __baseMacros: baseMacros } = sandbox;
-
-// Same mapping _nativeVariant() uses in app.js to pick a recipe's default
-// protein display — check each recipe against ITS OWN protein, not always chicken.
-const NATIVE_VARIANT = { chicken: "chicken_thigh", beef: "beef_regular", eggs: "eggs", fish: "salmon", tofu: "tofu" };
+const { __R: R, __RECIPE_DETAILS: RECIPE_DETAILS, __findIngredientId: findIngredientId, __calcIngredientMacros: calcIngredientMacros, __portionFor: portionFor, __macrosForPortion: macrosForPortion } = sandbox;
 
 function calcSauceMacros(recipe) {
   const detail = RECIPE_DETAILS[recipe.id];
@@ -107,6 +116,8 @@ function calcSauceMacros(recipe) {
   return { kcal: Math.round(i), p: Math.round(n * 10) / 10, c: Math.round(s * 10) / 10, f: Math.round(o * 10) / 10 };
 }
 
+sandbox.getSauceMacros = calcSauceMacros;
+
 // Sane per-PORTION bounds for a single meal in a high-protein fitness app.
 const BOUNDS = { kcalMin: 200, kcalMax: 1200, proteinMin: 15, proteinMax: 90, carbMax: 150, fatMax: 70 };
 const SAUCE_SHARE_MAX = 0.6; // extras (sauce/spice/veg) shouldn't dominate over protein+carb
@@ -114,14 +125,13 @@ const SAUCE_SHARE_MAX = 0.6; // extras (sauce/spice/veg) shouldn't dominate over
 const flags = [];
 for (const recipe of R) {
   if (recipe.protein === "none" || !recipe.protein) continue;
-  sandbox.activeProtein = NATIVE_VARIANT[recipe.protein] || "chicken_thigh";
-  const base = baseMacros(recipe.carb);
   const sauce = calcSauceMacros(recipe);
+  const m = macrosForPortion(recipe, portionFor(recipe));
   const total = {
-    kcal: Math.round(base.kcal + sauce.kcal),
-    p: Math.round((base.p + sauce.p) * 10) / 10,
-    c: Math.round((base.c + sauce.c) * 10) / 10,
-    f: Math.round((base.f + sauce.f) * 10) / 10,
+    kcal: Math.round(m.kcal),
+    p: Math.round(m.p * 10) / 10,
+    c: Math.round(m.c * 10) / 10,
+    f: Math.round(m.f * 10) / 10,
   };
   const issues = [];
   if (total.kcal < BOUNDS.kcalMin) issues.push(`kcal too low (${total.kcal} < ${BOUNDS.kcalMin})`);

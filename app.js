@@ -233,6 +233,8 @@
         sideEggCount = 1,
         activeProtein = "chicken_thigh",
         carbEnabled = { potato: !0, rice: !0, noodle: !0, bread: !0, sweet_potato: !0 };
+      // LEGACY: protein + carb term for the old global weight widget only.
+      // Recipe macros come from recipeMacros() in the macro engine below.
       function baseMacros(e) {
         if (!e || e === "none") return { kcal: 0, p: 0, c: 0, f: 0 };
         const a = Math.max(weights.servings, 1),
@@ -285,24 +287,108 @@
         };
       }
 
-      // Fixed macros per serving that do NOT depend on the protein/carb grams:
-      // the whole-egg term, the sauce, and any side-egg. Used by the solver.
-      function _autoFixed(recipe) {
-        const eggOnly = macrosWith(recipe, 0, 0); // isolates the weights.eggs term
-        const sm = getSauceMacros(recipe);
-        let sk = 0, sp = 0, sc = 0, sf = 0;
-        if (recipe.sideEgg) {
-          const nut = NUTRITION_DB.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
-          const gPP = (sideEggCount * sideEggSizeG) / Math.max(weights.servings, 1);
-          sk = (nut.kcal * gPP) / 100; sp = (nut.p * gPP) / 100;
-          sc = (nut.c * gPP) / 100; sf = (nut.f * gPP) / 100;
+      // ─── Macro engine (single source of truth) ───────────────────────────
+      // Every number the app shows for a recipe — card, filter, modal header,
+      // modal total bar, Randomizer — comes from recipeMacros()/macrosForPortion().
+      // Don't re-derive macros anywhere else.
+      //
+      // Model (all values PER PORTION):
+      //   protein grams × the recipe's OWN protein  (never a global protein)
+      // + carb grams × the recipe's carb base
+      // + fixed part: sauce/extras from the ingredient list + optional side egg
+      //
+      // Where the grams come from, in order of precedence (see portionFor):
+      //   1. a Randomizer portion override (only inside the modal)
+      //   2. egg recipes: whole eggs (eggCount × eggSizeG), never a gram solve
+      //   3. per-recipe auto-weight, when the auto toggles are on
+      //   4. the global batch weights divided by servings
+      const PROTEIN_FAMILIES = {
+        chicken: ["chicken_thigh", "chicken_breast"],
+        beef: ["beef_regular", "beef_lean"],
+        eggs: ["eggs"],
+        fish: ["salmon"],
+        tofu: ["tofu"],
+      };
+      // The chosen variant per family (Thigh/Breast, 20%/5%). Kept per family so
+      // picking "Lean" on a beef recipe can't change what chicken recipes use.
+      const proteinVariantPref = { chicken: "chicken_thigh", beef: "beef_regular" };
+      const ZERO_MACROS = { kcal: 0, p: 0, c: 0, f: 0 };
+
+      // NUTRITION_DB key of the protein this recipe is cooked with, or null.
+      function proteinKeyFor(recipe) {
+        const famName = recipe && recipe.protein && recipe.protein !== "none" ? getRecipeProtein(recipe) : null;
+        const fam = famName && PROTEIN_FAMILIES[famName];
+        if (!fam) return null;
+        const pref = proteinVariantPref[famName];
+        return pref && fam.includes(pref) ? pref : fam[0];
+      }
+      function carbNutFor(recipe) {
+        return recipe && recipe.carb && recipe.carb !== "none" && NUTRITION_DB[recipe.carb] ? NUTRITION_DB[recipe.carb] : null;
+      }
+
+      // Set while a recipe opened from the Randomizer is shown in the modal, so
+      // the modal cooks the portion the Randomizer planned: { id, pg, cg, eggCount }.
+      let _portionOverride = null;
+      function _overrideFor(recipe) {
+        return _portionOverride && recipe && _portionOverride.id === recipe.id ? _portionOverride : null;
+      }
+
+      // Per-portion grams for a recipe. `inModal` lets the Randomizer override apply.
+      function portionFor(recipe, inModal) {
+        const sv = Math.max(weights.servings, 1),
+          key = proteinKeyFor(recipe),
+          hasCarb = !!carbNutFor(recipe),
+          ov = inModal ? _overrideFor(recipe) : null,
+          aw = !ov && autoWeightActive() && _autoW[recipe.id] ? _autoW[recipe.id] : null;
+        let pg = 0, cg = 0, eggs = null;
+        if (key === "eggs") {
+          eggs = ov && ov.eggCount != null ? ov.eggCount : eggCount;
+          pg = eggs * eggSizeG;
+        } else if (key) {
+          pg = ov ? ov.pg : aw ? aw.pg : weights.chicken / sv;
         }
+        if (hasCarb) cg = ov ? ov.cg : aw ? aw.cg : (weights[recipe.carb] || 0) / sv;
+        return { key, pg, cg, eggs, source: ov ? "randomizer" : aw ? "auto" : "global" };
+      }
+
+      // The part of a portion that does not depend on protein/carb grams:
+      // sauce + extras, plus the fried side egg (counted per portion).
+      function fixedMacros(recipe) {
+        const sm = getSauceMacros(recipe);
+        let kcal = sm.kcal || 0, p = sm.p || 0, c = sm.c || 0, f = sm.f || 0;
+        if (recipe.sideEgg) {
+          const nut = NUTRITION_DB.eggs, g = sideEggCount * sideEggSizeG;
+          kcal += (nut.kcal * g) / 100; p += (nut.p * g) / 100; c += (nut.c * g) / 100; f += (nut.f * g) / 100;
+        }
+        return { kcal, p, c, f };
+      }
+
+      // Unrounded macros of one portion for explicit grams.
+      function macrosForPortion(recipe, portion) {
+        const pn = portion.key ? NUTRITION_DB[portion.key] || ZERO_MACROS : ZERO_MACROS,
+          cn = carbNutFor(recipe) || ZERO_MACROS,
+          fx = fixedMacros(recipe),
+          a = (portion.pg || 0) / 100,
+          b = (portion.cg || 0) / 100;
         return {
-          k: eggOnly.kcal + sm.kcal + sk,
-          p: eggOnly.p + sm.p + sp,
-          c: eggOnly.c + sm.c + sc,
-          f: eggOnly.f + sm.f + sf,
+          kcal: a * pn.kcal + b * cn.kcal + fx.kcal,
+          p: a * pn.p + b * cn.p + fx.p,
+          c: a * pn.c + b * cn.c + fx.c,
+          f: a * pn.f + b * cn.f + fx.f,
         };
+      }
+
+      // What the UI shows: whole numbers for the recipe's current portion.
+      function recipeMacros(recipe, inModal) {
+        const m = macrosForPortion(recipe, portionFor(recipe, inModal));
+        return { kcal: Math.round(m.kcal), p: Math.round(m.p), c: Math.round(m.c), f: Math.round(m.f) };
+      }
+      // ─────────────────────────────────────────────────────────────────────
+
+      // Fixed macros per serving, in the shape the solver expects.
+      function _autoFixed(recipe) {
+        const fx = fixedMacros(recipe);
+        return { k: fx.kcal, p: fx.p, c: fx.c, f: fx.f };
       }
 
       // Solve one recipe for per-serving protein (pg) and carb (cg) grams.
@@ -310,7 +396,9 @@
       // remaining calorie/carb budget on carbs. Returns feasible=false when the
       // active constraints cannot all be met.
       function solveAutoWeight(recipe) {
-        const t = NUTRITION_DB[activeProtein] || NUTRITION_DB.chicken_thigh,
+        const _pKey = proteinKeyFor(recipe),
+          _isEgg = _pKey === "eggs",
+          t = (_pKey && NUTRITION_DB[_pKey]) || ZERO_MACROS,
           carbValid = recipe.carb && recipe.carb !== "none" && NUTRITION_DB[recipe.carb],
           i = carbValid ? NUTRITION_DB[recipe.carb] : { kcal: 0, p: 0, c: 0, f: 0 },
           hasProtein = recipe.protein && recipe.protein !== "none" && t.p > 0,
@@ -325,12 +413,14 @@
 
         // Protein grams (per serving): minimum needed to clear the floor.
         let pg;
-        if (apOn && hasProtein && protMin > 0) {
+        if (_isEgg) {
+          pg = eggCount * eggSizeG; // eggs come in whole pieces — not solved
+        } else if (apOn && hasProtein && protMin > 0) {
           pg = ((protMin - fx.p) * 100) / t.p; // carb's tiny protein ignored
         } else {
           pg = hasProtein ? weights.chicken / sv : 0;
         }
-        pg = Math.max(hasProtein ? AUTO_W.pgMin : 0, Math.min(AUTO_W.pgMax, pg));
+        if (!_isEgg) pg = Math.max(hasProtein ? AUTO_W.pgMin : 0, Math.min(AUTO_W.pgMax, pg));
 
         // Carb grams (per serving): fill up to the tightest active ceiling.
         let cg = 0;
@@ -353,7 +443,7 @@
         // Optional kitchen-friendly rounding (protein up, carbs down so the
         // constraints stay satisfied where possible).
         if (_autoRound5()) {
-          if (hasProtein) pg = Math.min(AUTO_W.pgMax, Math.ceil(pg / 5) * 5);
+          if (hasProtein && !_isEgg) pg = Math.min(AUTO_W.pgMax, Math.ceil(pg / 5) * 5);
           if (carbValid) cg = Math.max(0, Math.floor(cg / 5) * 5);
         }
 
@@ -414,15 +504,7 @@
       // The protein NUTRITION_DB key to show a recipe with by default — its own protein,
       // keeping the current variant if it already belongs to that family.
       function _nativeVariant(recipe) {
-        const fam = {
-          chicken: ["chicken_thigh", "chicken_breast"],
-          beef: ["beef_regular", "beef_lean"],
-          eggs: ["eggs"],
-          fish: ["salmon"],
-          tofu: ["tofu"],
-        }[recipe && recipe.protein];
-        if (!fam) return activeProtein; // "none"/unknown: leave global as-is
-        return fam.includes(activeProtein) ? activeProtein : fam[0];
+        return proteinKeyFor(recipe) || activeProtein; // "none"/unknown: leave global as-is
       }
       // ─────────────────────────────────────────────────────────────────────
 
@@ -624,6 +706,12 @@
         (i && (buildIngredientsTab(i), updateModalMacros(i)), updateCardMacros(), updateCalcDisplay());
       }
       function changeModalEggCount(e, a) {
+        // Opened from the Randomizer: step from the planned count, then hand
+        // control back to the normal (global) egg count.
+        if (_portionOverride && _portionOverride.id === a && _portionOverride.eggCount != null) {
+          eggCount = _portionOverride.eggCount;
+          _portionOverride.eggCount = null;
+        }
         eggCount = Math.max(1, Math.min(20, eggCount + e));
         const t = document.getElementById("modalEggCountVal");
         t && (t.textContent = eggCount);
@@ -642,7 +730,7 @@
         });
         // Recalculate macros inline (same as changeSideEggCount)
         const nut = NUTRITION_DB.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
-        const gPP = Math.round((sideEggCount * sideEggSizeG) / Math.max(modalServings, 1));
+        const gPP = Math.round(sideEggCount * sideEggSizeG); // one side egg per portion, not shared across servings
         const grid = document.querySelector("#sideEggRow .ing-macro-grid");
         if (grid) {
           grid.innerHTML =
@@ -666,7 +754,7 @@
         // Update the size buttons active state — don't touch them, sideEggSizeG hasn't changed
         // Recalculate and update the macro panel inside sideEggRow
         const nut = NUTRITION_DB.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
-        const gPP = Math.round((sideEggCount * sideEggSizeG) / Math.max(modalServings, 1));
+        const gPP = Math.round(sideEggCount * sideEggSizeG); // one side egg per portion, not shared across servings
         const grid = document.querySelector("#sideEggRow .ing-macro-grid");
         if (grid) {
           grid.innerHTML =
@@ -685,6 +773,9 @@
       }
       function selectModalVariant(e, a) {
         activeProtein = e;
+        Object.keys(PROTEIN_FAMILIES).forEach((fam) => {
+          PROTEIN_FAMILIES[fam].length > 1 && PROTEIN_FAMILIES[fam].includes(e) && (proteinVariantPref[fam] = e);
+        });
         computeAllAutoWeights(); // refresh auto-weights BEFORE the modal re-renders (was one step behind)
         const t =
             { chicken_thigh: "chicken", chicken_breast: "chicken", beef_regular: "beef", beef_lean: "beef" }[e] || e,
@@ -717,7 +808,7 @@
       }
       let _protWeightTimer = null, _carbWeightTimer = null;
       function updateModalWeight(e, a, t) {
-        _disableAutoWeightIfOn();
+        (_portionOverride && _portionOverride.id === t) || _disableAutoWeightIfOn();
         const inputId = e === "prot" ? "mwProt" : "mwCarb";
         // Strip leading zeros immediately on mobile
         const el = document.getElementById(inputId);
@@ -730,12 +821,16 @@
           _protWeightTimer = setTimeout(() => {
             const i = _capToServings(Math.max(0, Math.min(3e3, parseInt(a) || 0)), PORTION_BOUNDS.protMax),
               n = R.find((r) => r.id === t);
-            if (n) {
+            if (n && _overrideFor(n)) {
+              _portionOverride.pg = i / Math.max(modalServings, 1);
+            } else if (n) {
               weights.chicken = i;
               const elC = document.getElementById("chickenInput");
               elC && (elC.value = i);
               const fpw = document.getElementById("filterProteinWeight");
               fpw && (fpw.value = i);
+            }
+            if (n) {
               buildIngredientsTab(n);
               refreshRecipeTabIfOpen(n);
               updateModalMacros(n);
@@ -752,7 +847,7 @@
             const i = _capToServings(Math.max(0, Math.min(3e3, parseInt(a) || 0)), PORTION_BOUNDS.carbMax),
               n = R.find((r) => r.id === t);
             if (n) {
-              weights[n.carb] = i;
+              _overrideFor(n) ? (_portionOverride.cg = i / Math.max(modalServings, 1)) : (weights[n.carb] = i);
               buildIngredientsTab(n);
               refreshRecipeTabIfOpen(n);
               updateModalMacros(n);
@@ -1339,22 +1434,11 @@
         (R.forEach((e) => {
           const a = document.querySelector(`.card[data-id="${e.id}"]`);
           if (!a) return;
-          const _aw = autoWeightActive() ? _autoW[e.id] : null,
-            t = _aw ? macrosWith(e, _aw.pg * _sv, _aw.cg * _sv) : baseMacros(e.carb),
-            i = getSauceMacros(e);
-          let seKcal = 0, seP = 0, seC = 0, seF = 0;
-          if (e.sideEgg) {
-            const nut = NUTRITION_DB.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
-            const gPP = Math.round((sideEggCount * sideEggSizeG) / Math.max(weights.servings, 1));
-            seKcal = Math.round((nut.kcal * gPP) / 100);
-            seP    = Math.round(((nut.p  * gPP) / 100) * 10) / 10;
-            seC    = Math.round(((nut.c  * gPP) / 100) * 10) / 10;
-            seF    = Math.round(((nut.f  * gPP) / 100) * 10) / 10;
-          }
-          const n = Math.round(t.kcal + i.kcal + seKcal),
-            s = Math.round(t.p + i.p + seP),
-            o = Math.round(t.c + i.c + seC),
-            r = Math.round(t.f + i.f + seF),
+          const _m = recipeMacros(e),
+            n = _m.kcal,
+            s = _m.p,
+            o = _m.c,
+            r = _m.f,
             c = calcScore(e, s, r);
           ((a.querySelector('[data-macro="kcal"]').textContent = n),
             (a.querySelector('[data-macro="prot"]').textContent = s + "g"),
@@ -1380,9 +1464,9 @@
           const i = R.find((e) => e.id === a);
           if (!i) return;
           const n = Math.max(weights.servings, 1),
-            _awS = (autoWeightActive() && i && _autoW[i.id]) ? _autoW[i.id] : null,
-            s = _awS ? _awS.pg : Math.round(weights.chicken / n),
-            o = i ? (_awS ? _awS.cg : Math.round(weights[i.carb] / n)) : 0;
+            _pS = portionFor(i),
+            s = Math.round(_pS.pg),
+            o = Math.round(_pS.cg);
           let r = "<ul>";
           (t.ingredients.forEach((e) => {
             ((r += `<li class="card-sauce-section" style="list-style:none;">${e.section}</li>`),
@@ -1449,14 +1533,11 @@
               const searchText = t.title.toLowerCase() + " " + t.desc.toLowerCase() + " " + t.tags.join(" ").toLowerCase() + " " + _badges.join(" ");
               return words.every(w => searchText.includes(w));
             })(),
-            r = (autoWeightActive() && _autoW[t.id])
-              ? macrosWith(t, _autoW[t.id].pg * _sv, _autoW[t.id].cg * _sv)
-              : baseMacros(t.carb),
-            c = getSauceMacros(t),
-            l = Math.round(r.kcal + c.kcal),
-            d = Math.round(r.p + c.p),
-            m = Math.round(r.c + c.c),
-            h = Math.round(r.f + c.f),
+            _fm = recipeMacros(t),
+            l = _fm.kcal,
+            d = _fm.p,
+            m = _fm.c,
+            h = _fm.f,
             p = calcScore(t, d, h),
             u =
               l <= macroFilter.kcalMax &&
@@ -1857,35 +1938,11 @@
       let currentModalRecipe = null;
       function updateModalMacros(e) {
         if (!e) return;
-        const a = weights.servings;
-        weights.servings = modalServings;
-        // Per-recipe auto grams (not for eggs-protein recipes, which use the egg override below)
-        const _awM = (autoWeightActive() && e.protein !== "eggs" && _autoW[e.id]) ? _autoW[e.id] : null;
-        // For eggs-protein recipes: temporarily override so baseMacros uses egg values
-        const _pAP = activeProtein, _pCh = weights.chicken;
-        if (e.protein === "eggs") { activeProtein = "eggs"; weights.chicken = eggCount * eggSizeG * modalServings; }
-        const t = _awM ? macrosWith(e, _awM.pg * modalServings, _awM.cg * modalServings) : baseMacros(e.carb);
-        activeProtein = _pAP; weights.chicken = _pCh;
-        const i = getSauceMacros(e);
-        weights.servings = a;
-        let seKcal = 0, seP = 0, seC = 0, seF = 0;
-        if (e.sideEgg) {
-          const nut = NUTRITION_DB.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
-          const gPP = Math.round(sideEggCount * sideEggSizeG);
-          seKcal = Math.round((nut.kcal * gPP) / 100);
-          seP    = Math.round(((nut.p * gPP) / 100) * 10) / 10;
-          seC    = Math.round(((nut.c * gPP) / 100) * 10) / 10;
-          seF    = Math.round(((nut.f * gPP) / 100) * 10) / 10;
-        }
-        const _unused = null,
-          n = Math.round(t.kcal + i.kcal + seKcal),
-          s = Math.round(t.p + i.p + seP),
-          o = Math.round(t.c + i.c + seC),
-          r = Math.round(t.f + i.f + seF);
-        ((document.getElementById("mKcal").textContent = n),
-          (document.getElementById("mProt").textContent = s + "g"),
-          (document.getElementById("mCarbs").textContent = o + "g"),
-          (document.getElementById("mFat").textContent = r + "g"));
+        const m = recipeMacros(e, true);
+        ((document.getElementById("mKcal").textContent = m.kcal),
+          (document.getElementById("mProt").textContent = m.p + "g"),
+          (document.getElementById("mCarbs").textContent = m.c + "g"),
+          (document.getElementById("mFat").textContent = m.f + "g"));
       }
       function openModal(e) {
         const a = R.find((a) => a.id === e);
@@ -1894,6 +1951,7 @@
         // globally selected one, so ingredients and macros match. Recompute the
         // auto-weights so they reflect this protein.
         activeProtein = _nativeVariant(a);
+        _portionOverride && _portionOverride.id !== a.id && (_portionOverride = null);
         computeAllAutoWeights();
         ((currentModalRecipe = a),
           (document.getElementById("modalNum").textContent = "#" + String(a.displayNum).padStart(3, "0")),
@@ -1947,6 +2005,7 @@
       }
       function closeModalDirect() {
         (document.getElementById("recipeModal").classList.remove("open"), (document.body.style.overflow = ""));
+        _portionOverride = null; // a Randomizer portion only lives as long as its modal
         // Reset the embed so a playing video doesn't keep running behind the closed modal.
         const v = document.querySelector("#tab-video iframe");
         v && (v.src = v.src);
@@ -2118,9 +2177,10 @@
             }[r] || "🍗",
           m = { potato: "🥔", rice: "🍚", noodle: "🍜", bread: "🫓" }[e.carb] || "🍽️",
           h = { potato: "Potato", rice: "Rice", noodle: "Noodles", bread: "Bread/Wrap" }[e.carb] || "Carb",
-          _awI = (autoWeightActive() && !o && _autoW[e.id]) ? _autoW[e.id] : null,
-          p = o ? Math.round(eggCount * eggSizeG) : (_awI ? _awI.pg : Math.round(weights.chicken / i)),
-          u = _awI ? _awI.cg : Math.round((weights[e.carb] || 0) / i);
+          _por = portionFor(e, true),
+          _eggN = _por.eggs != null ? _por.eggs : eggCount,
+          p = Math.round(_por.pg),
+          u = Math.round(_por.cg);
         let g = "";
         if (!o && s && s.variants) {
           const a = s.variants
@@ -2144,7 +2204,7 @@
             )
             .join(
               "",
-            )}\n    </div>\n    <div class="modal-weight-row">\n      <div class="modal-weight-row-main" style="cursor:default;flex-wrap:nowrap;align-items:center;gap:8px;">\n        <label style="flex-shrink:0;white-space:nowrap;">🥚 Egg Count</label>\n        <div class="serving-stepper" style="margin-left:0;">\n          <button class="step-btn" onclick="changeModalEggCount(-1, '${e.id}')">−</button>\n          <span class="serving-val" id="modalEggCountVal" style="width:36px;height:30px;line-height:30px;font-size:15px;">${eggCount}</span>\n          <button class="step-btn" onclick="changeModalEggCount(1, '${e.id}')">+</button>\n        </div>\n        <span class="modal-weight-hint" style="margin-left:auto;">${p}g per portion</span>\n      </div>\n    </div>`;
+            )}\n    </div>\n    <div class="modal-weight-row">\n      <div class="modal-weight-row-main" style="cursor:default;flex-wrap:nowrap;align-items:center;gap:8px;">\n        <label style="flex-shrink:0;white-space:nowrap;">🥚 Egg Count</label>\n        <div class="serving-stepper" style="margin-left:0;">\n          <button class="step-btn" onclick="changeModalEggCount(-1, '${e.id}')">−</button>\n          <span class="serving-val" id="modalEggCountVal" style="width:36px;height:30px;line-height:30px;font-size:15px;">${_eggN}</span>\n          <button class="step-btn" onclick="changeModalEggCount(1, '${e.id}')">+</button>\n        </div>\n        <span class="modal-weight-hint" style="margin-left:auto;">${p}g per portion</span>\n      </div>\n    </div>`;
         }
         // Side-egg stepper for sideEgg: true recipes
         const _hasSideEgg = !!e.sideEgg;
@@ -2164,7 +2224,7 @@
                     i = Math.round(((a.p * p) / 100) * 10) / 10,
                     n = Math.round(((a.c * p) / 100) * 10) / 10,
                     s = Math.round(((a.f * p) / 100) * 10) / 10;
-                  return `\n  <div class="modal-weight-row" id="protWeightRow">\n    <div class="modal-weight-row-main" onclick="toggleWeightRow('protWeightRow')">\n      <label>${d} ${l.short}</label>\n      <input type="number" class="modal-weight-input" id="mwProt" value="${_awI ? _awI.pg * modalServings : weights.chicken}"\n        min="50" max="3000"\n        onclick="event.stopPropagation()"\n        oninput="updateModalWeight('prot', this.value, '${e.id}')">\n      <span class="modal-weight-unit">g batch total</span>\n      <span class="modal-weight-hint">${p}g per portion</span>\n      <span class="modal-weight-expand">▼</span>\n    </div>\n    <div class="modal-weight-macro-panel">\n      <div class="ing-macro-grid" style="margin-top:8px;">\n        <div class="ing-macro-cell mk"><span class="imc-val">${t}</span><span class="imc-lbl">kcal</span></div>\n        <div class="ing-macro-cell mp"><span class="imc-val">${i}g</span><span class="imc-lbl">protein</span></div>\n        <div class="ing-macro-cell mc"><span class="imc-val">${n}g</span><span class="imc-lbl">carbs</span></div>\n        <div class="ing-macro-cell mf"><span class="imc-val">${s}g</span><span class="imc-lbl">fat</span></div>\n      </div>\n      <div class="ing-macro-hint">Per portion · ${p}g · per 100g: ${a.kcal}kcal ${a.p}g P ${a.c}g C ${a.f}g F</div>\n    </div>\n  </div>`;
+                  return `\n  <div class="modal-weight-row" id="protWeightRow">\n    <div class="modal-weight-row-main" onclick="toggleWeightRow('protWeightRow')">\n      <label>${d} ${l.short}</label>\n      <input type="number" class="modal-weight-input" id="mwProt" value="${Math.round(_por.pg * modalServings)}"\n        min="50" max="3000"\n        onclick="event.stopPropagation()"\n        oninput="updateModalWeight('prot', this.value, '${e.id}')">\n      <span class="modal-weight-unit">g batch total</span>\n      <span class="modal-weight-hint">${p}g per portion</span>\n      <span class="modal-weight-expand">▼</span>\n    </div>\n    <div class="modal-weight-macro-panel">\n      <div class="ing-macro-grid" style="margin-top:8px;">\n        <div class="ing-macro-cell mk"><span class="imc-val">${t}</span><span class="imc-lbl">kcal</span></div>\n        <div class="ing-macro-cell mp"><span class="imc-val">${i}g</span><span class="imc-lbl">protein</span></div>\n        <div class="ing-macro-cell mc"><span class="imc-val">${n}g</span><span class="imc-lbl">carbs</span></div>\n        <div class="ing-macro-cell mf"><span class="imc-val">${s}g</span><span class="imc-lbl">fat</span></div>\n      </div>\n      <div class="ing-macro-hint">Per portion · ${p}g · per 100g: ${a.kcal}kcal ${a.p}g P ${a.c}g C ${a.f}g F</div>\n    </div>\n  </div>`;
                 })()
           }\n  <div class="modal-weight-row" id="carbWeightRow">\n    ${(() => {
             const a = NUTRITION_DB[e.carb] || {},
@@ -2172,7 +2232,7 @@
               i = Math.round((((a.p || 0) * u) / 100) * 10) / 10,
               n = Math.round((((a.c || 0) * u) / 100) * 10) / 10,
               s = Math.round((((a.f || 0) * u) / 100) * 10) / 10;
-            return `\n    <div class="modal-weight-row-main" onclick="toggleWeightRow('carbWeightRow')">\n      <label>${m} ${h}</label>\n      <input type="number" class="modal-weight-input" id="mwCarb" value="${_awI ? _awI.cg * modalServings : (weights[e.carb] || 0)}"\n        min="0" max="3000"\n        onclick="event.stopPropagation()"\n        oninput="updateModalWeight('carb', this.value, '${e.id}')">\n      <span class="modal-weight-unit">g batch total</span>\n      <span class="modal-weight-hint">${u}g per portion</span>\n      <span class="modal-weight-expand">▼</span>\n    </div>\n    <div class="modal-weight-macro-panel">\n      <div class="ing-macro-grid" style="margin-top:8px;">\n        <div class="ing-macro-cell mk"><span class="imc-val">${t}</span><span class="imc-lbl">kcal</span></div>\n        <div class="ing-macro-cell mp"><span class="imc-val">${i}g</span><span class="imc-lbl">protein</span></div>\n        <div class="ing-macro-cell mc"><span class="imc-val">${n}g</span><span class="imc-lbl">carbs</span></div>\n        <div class="ing-macro-cell mf"><span class="imc-val">${s}g</span><span class="imc-lbl">fat</span></div>\n      </div>\n      <div class="ing-macro-hint">Per portion · ${u}g · per 100g: ${a.kcal || 0}kcal ${a.p || 0}g P ${a.c || 0}g C ${a.f || 0}g F</div>\n    </div>`;
+            return `\n    <div class="modal-weight-row-main" onclick="toggleWeightRow('carbWeightRow')">\n      <label>${m} ${h}</label>\n      <input type="number" class="modal-weight-input" id="mwCarb" value="${Math.round(_por.cg * modalServings)}"\n        min="0" max="3000"\n        onclick="event.stopPropagation()"\n        oninput="updateModalWeight('carb', this.value, '${e.id}')">\n      <span class="modal-weight-unit">g batch total</span>\n      <span class="modal-weight-hint">${u}g per portion</span>\n      <span class="modal-weight-expand">▼</span>\n    </div>\n    <div class="modal-weight-macro-panel">\n      <div class="ing-macro-grid" style="margin-top:8px;">\n        <div class="ing-macro-cell mk"><span class="imc-val">${t}</span><span class="imc-lbl">kcal</span></div>\n        <div class="ing-macro-cell mp"><span class="imc-val">${i}g</span><span class="imc-lbl">protein</span></div>\n        <div class="ing-macro-cell mc"><span class="imc-val">${n}g</span><span class="imc-lbl">carbs</span></div>\n        <div class="ing-macro-cell mf"><span class="imc-val">${s}g</span><span class="imc-lbl">fat</span></div>\n      </div>\n      <div class="ing-macro-hint">Per portion · ${u}g · per 100g: ${a.kcal || 0}kcal ${a.p || 0}g P ${a.c || 0}g C ${a.f || 0}g F</div>\n    </div>`;
           })()}\n  </div>${_hasSideEgg ? _sideEggBlock : ""}`,
           b = 0,
           f = 0,
@@ -2184,12 +2244,13 @@
           ((y += `<div class="ing-section-title">${a.section}</div><ul class="ing-list">`),
             a.items.forEach((a) => {
               const t = (a.amt || "").includes("{{proteinG}}") || (a.amt || "").includes("{{carbG}}") || (a.amt || "").includes("{{eggCount}}"),
-                n = o ? eggCount * eggSizeG : weights.chicken,
-                s = weights[e.carb] || 0,
+                // The list is the whole batch: per-portion grams × servings.
+                n = _por.pg * i,
+                s = _por.cg * i,
                 c = (a.amt || "")
                   .replace("{{proteinG}}", Math.round(n))
                   .replace("{{carbG}}", Math.round(s))
-                  .replace("{{eggCount}}", eggCount)
+                  .replace("{{eggCount}}", _eggN * i)
                   .replace("{{servings}}", i);
               let d = t ? c : scaleAmt(c, i),
                 m = a.name;
@@ -2217,7 +2278,7 @@
                   };
                 } else if (a.amt && a.amt.includes("{{eggCount}}")) {
                   const _eggNut = NUTRITION_DB.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
-                  const _eggG = Math.round(eggCount * eggSizeG);
+                  const _eggG = Math.round(_eggN * eggSizeG);
                   g = {
                     grams: _eggG,
                     kcal: Math.round((_eggNut.kcal * _eggG) / 100),
@@ -2257,31 +2318,17 @@
             }
           }
         });
-        const _svBak = weights.servings;
-        weights.servings = modalServings;
-        const _pAP2 = activeProtein, _pCh2 = weights.chicken;
-        if (e.protein === "eggs") { activeProtein = "eggs"; weights.chicken = eggCount * eggSizeG * modalServings; }
-        const S = baseMacros(e.carb),
-          C = getSauceMacros(e);
-        activeProtein = _pAP2; weights.chicken = _pCh2;
-        let _seKcal = 0, _seP = 0, _seC = 0, _seF = 0;
-        if (e.sideEgg) {
-          const _nut = NUTRITION_DB.eggs || { kcal: 143, p: 12.6, c: 0.7, f: 9.5 };
-          const _gPP = Math.round(sideEggCount * sideEggSizeG);
-          _seKcal = Math.round((_nut.kcal * _gPP) / 100);
-          _seP    = Math.round((_nut.p  * _gPP) / 100 * 10) / 10;
-          _seC    = Math.round((_nut.c  * _gPP) / 100 * 10) / 10;
-          _seF    = Math.round((_nut.f  * _gPP) / 100 * 10) / 10;
-        }
-        const T = Math.round(S.kcal + C.kcal + _seKcal),
-          x = Math.round(S.p + C.p + _seP),
-          B = Math.round(S.c + C.c + _seC),
-          P = Math.round(S.f + C.f + _seF);
-        weights.servings = _svBak;
+        const _tm = recipeMacros(e, true),
+          T = _tm.kcal,
+          x = _tm.p,
+          B = _tm.c,
+          P = _tm.f;
         ((y += `<div class="ing-total-bar">\n    <div class="ing-total-title">📊 Total per portion</div>\n    <div class="ing-total-grid">\n      <div class="ing-total-cell mk"><span class="itc-val">${T}</span><span class="itc-lbl">kcal</span></div>\n      <div class="ing-total-cell mp"><span class="itc-val">${x}g</span><span class="itc-lbl">protein</span></div>\n      <div class="ing-total-cell mc"><span class="itc-val">${B}g</span><span class="itc-lbl">carbs</span></div>\n      <div class="ing-total-cell mf"><span class="itc-val">${P}g</span><span class="itc-lbl">fat</span></div>\n    </div>\n    <div class="ing-macro-hint" style="margin-top:8px;">Tap any ingredient to see its macros</div>\n  </div>`),
           t.placeholder
             ? (y += '<div class="ing-note">📌 Full ingredient list coming soon — follow on YouTube & TikTok!</div>')
-            : (y += '<div class="ing-note">📌 Weights are global — changes apply to all recipes.</div>'),
+            : (y += _por.source === "randomizer"
+                ? '<div class="ing-note">🎲 Portion sized by the Randomizer for this meal. Changes here stay in this recipe.</div>'
+                : '<div class="ing-note">📌 Weights are global — changes apply to all recipes.</div>'),
           (document.getElementById("tab-ingredients").innerHTML = y));
       }
       function changeModalServings(e, a) {
@@ -2319,9 +2366,9 @@
           });
         });
         const n = Math.max(weights.servings, 1),
-          _awR = (autoWeightActive() && e && _autoW[e.id]) ? _autoW[e.id] : null,
-          s = _awR ? Math.round(_awR.pg * n) : Math.round(weights.chicken),
-          o = e ? (_awR ? Math.round(_awR.cg * n) : Math.round(weights[e.carb])) : 0,
+          _pR = e ? portionFor(e, true) : { pg: 0, cg: 0 },
+          s = Math.round(_pR.pg * n),
+          o = Math.round(_pR.cg * n),
           _proteinNames = {
             chicken_thigh: "Chicken thigh (boneless, skinless, raw)",
             chicken_breast: "Chicken breast (boneless, skinless, raw)",
@@ -2957,11 +3004,10 @@
       // (see below: picking now weighs each candidate's resulting fat,
       // since fat is the one macro portioning can't fix after the fact).
       function randSolveRecipeAtShare(recipe, shareTarget) {
-        const nativeProtein = NUTRITION_DB[_nativeVariant(recipe)] || NUTRITION_DB.chicken_thigh;
-        const carbInfo = recipe.carb !== "none" ? NUTRITION_DB[recipe.carb] || { kcal: 0, p: 0, c: 0, f: 0 } : { kcal: 0, p: 0, c: 0, f: 0 };
-        const sauce = getSauceMacros(recipe);
-        const hasProtein = recipe.protein && recipe.protein !== "none";
-        const hasCarb = recipe.carb && recipe.carb !== "none";
+        const key = proteinKeyFor(recipe),
+          pn = (key && NUTRITION_DB[key]) || ZERO_MACROS,
+          cn = carbNutFor(recipe),
+          fx = fixedMacros(recipe); // sauce + side egg — same fixed part the cards and modal use
 
         // Floors matter as much as the target here: a tight share can solve
         // to a technically-correct but uncookable "0g noodles" bolognese
@@ -2970,32 +3016,47 @@
         // solver uses; carbFloor is a smaller version of the same idea for
         // carbs specifically (0g carb is fine when the recipe HAS no carb,
         // never fine when it does).
-        let pg = hasProtein && nativeProtein.p > 0 ? Math.max(0, ((shareTarget.p - sauce.p) * 100) / nativeProtein.p) : 0;
-        if (hasProtein) pg = Math.max(pg, AUTO_W.pgMin);
-        pg = Math.min(pg, PORTION_BOUNDS.protMax);
+        let pg = 0, eggs = null;
+        if (key && pn.p > 0) {
+          pg = Math.max(0, ((shareTarget.p - fx.p) * 100) / pn.p);
+          pg = Math.min(Math.max(pg, AUTO_W.pgMin), PORTION_BOUNDS.protMax);
+          if (key === "eggs") {
+            // Eggs are cooked whole: round to a real count the modal can show.
+            eggs = Math.max(1, Math.min(6, Math.round(pg / eggSizeG)));
+            pg = eggs * eggSizeG;
+          }
+        }
 
         let cg = 0;
-        if (hasCarb && carbInfo.c > 0) {
-          const remainingCarb = shareTarget.c - sauce.c - (pg * nativeProtein.c) / 100;
-          cg = Math.max(0, (remainingCarb * 100) / carbInfo.c);
+        if (cn && cn.c > 0) {
+          const remainingCarb = shareTarget.c - fx.c - (pg * pn.c) / 100;
           const carbFloor = 15;
-          cg = Math.max(cg, carbFloor);
+          cg = Math.min(Math.max((remainingCarb * 100) / cn.c, carbFloor), PORTION_BOUNDS.carbMax);
         }
-        cg = Math.min(cg, PORTION_BOUNDS.carbMax);
 
-        const kcal = (pg * nativeProtein.kcal) / 100 + (cg * carbInfo.kcal) / 100 + sauce.kcal;
-        const p = (pg * nativeProtein.p) / 100 + (cg * carbInfo.p) / 100 + sauce.p;
-        const c = (pg * nativeProtein.c) / 100 + (cg * carbInfo.c) / 100 + sauce.c;
-        const f = (pg * nativeProtein.f) / 100 + (cg * carbInfo.f) / 100 + sauce.f;
-
+        // Round the grams first, then compute macros from the rounded grams,
+        // so the numbers on the card are exactly what the modal shows.
+        pg = Math.round(pg);
+        cg = Math.round(cg);
+        const m = macrosForPortion(recipe, { key, pg, cg });
         return {
-          kcal: Math.round(kcal),
-          p: Math.round(p * 10) / 10,
-          c: Math.round(c * 10) / 10,
-          f: Math.round(f * 10) / 10,
-          pg: Math.round(pg),
-          cg: Math.round(cg),
+          kcal: Math.round(m.kcal),
+          p: Math.round(m.p),
+          c: Math.round(m.c),
+          f: Math.round(m.f),
+          pg,
+          cg,
+          eggs,
         };
+      }
+
+      // Open a Randomizer pick in the modal with the portion planned for its slot.
+      function randOpen(i) {
+        const r = randSlots[i];
+        if (!r) return;
+        const m = randRecipeMacrosForSlot(i);
+        _portionOverride = { id: r.id, pg: m.pg, cg: m.cg, eggCount: m.eggs };
+        openModal(r.id);
       }
 
       function randShareTargetFor(i) {
@@ -3070,9 +3131,9 @@
         if (!grid) return;
         const rows = [
           ["kcal", "Kcal", Math.round(sums.kcal), target.kcal, "var(--accent2)", ""],
-          ["protein", "Protein", Math.round(sums.p * 10) / 10, target.p, "var(--accent3)", "g"],
-          ["carbs", "Carbs", Math.round(sums.c * 10) / 10, target.c, "#47b3e8", "g"],
-          ["fat", "Fat", Math.round(sums.f * 10) / 10, target.f, "#e8a347", "g"],
+          ["protein", "Protein", Math.round(sums.p), target.p, "var(--accent3)", "g"],
+          ["carbs", "Carbs", Math.round(sums.c), target.c, "#47b3e8", "g"],
+          ["fat", "Fat", Math.round(sums.f), target.f, "#e8a347", "g"],
         ];
         grid.innerHTML = rows
           .map(
@@ -3134,11 +3195,11 @@
             <button onclick="randToggleLock(${i})" title="Lock">${locked ? "🔒" : "🔓"}</button>
           </span>
         </div>
-        <div class="card-title" style="cursor:pointer" onclick="openModal('${r.id}')">${r.title}</div>
+        <div class="card-title" style="cursor:pointer" onclick="randOpen(${i})">${r.title}</div>
         <div class="tags">${r.tags.slice(0, 2).map((t) => `<span class="tag tag-${t}">${tagLabel(t)}</span>`).join("")}</div>
         <div class="rand-card-macros">${m.kcal} kcal · ${m.p}g P · ${m.c}g C · ${m.f}g F</div>
         <div class="rand-card-portion">
-          <span class="rand-portion-grams">${[m.pg ? m.pg + "g protein" : "", m.cg ? m.cg + "g carb" : ""].filter(Boolean).join(" · ") || "fixed portion"}</span>
+          <span class="rand-portion-grams">${[m.eggs ? m.eggs + (m.eggs === 1 ? " egg" : " eggs") : m.pg ? m.pg + "g protein" : "", m.cg ? m.cg + "g carb" : ""].filter(Boolean).join(" · ") || "fixed portion"}</span>
           <span class="rand-portion-stepper">
             <button onclick="randAdjustShare(${i}, -5)">−</button>
             <span>${randShares[i]}% of day</span>

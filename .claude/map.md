@@ -21,8 +21,12 @@ for a CSS tweak, etc. Grep the anchors below.
 - **Search + filter (show/hide cards)** → `app.js` `function filterRecipes`.
   Filter state lives in `macroFilter`, `carbEnabled`, `proteinEnabled`,
   `flavorFilter`, etc.
-- **Macro math** → `app.js` `function baseMacros` (global weights) and
-  `function macrosWith` (explicit grams). Sauce macros: `calcSauceMacros`.
+- **Macro math** → `app.js`, block "Macro engine (single source of truth)":
+  `recipeMacros(recipe)` is the ONLY place recipe macros come from (card,
+  filter, modal header, modal total bar, Randomizer). `portionFor` decides the
+  per-portion grams, `macrosForPortion` does the arithmetic, `fixedMacros` is
+  sauce + side egg, `proteinKeyFor` picks the recipe's own protein.
+  `baseMacros`/`macrosWith` are legacy — don't use them for recipes.
 - **Auto-weight (per-recipe solver)** → `app.js` `function solveAutoWeight`,
   `computeAllAutoWeights`, `autoGramsPerServing`. Rounding checkbox: `chkRound5`.
 - **Recipe modal (popup)** → `app.js` `function openModal`,
