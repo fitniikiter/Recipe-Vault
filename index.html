@@ -88,7 +88,7 @@
     <!-- Self-hosted fonts (Bebas Neue + DM Sans) — no runtime dependency on
          Google Fonts. Files live in /fonts, generated into /fonts.css. -->
     <link rel="stylesheet" href="/fonts.css" />
-    <link rel="stylesheet" href="style.css?v=202609062" />
+    <link rel="stylesheet" href="style.css?v=202611141" />
   </head>
   <body>
     <div class="nav-tabs">
@@ -571,7 +571,7 @@
         </div>
 
         <div class="results-box">
-          <h3>Your Day So Far</h3>
+          <h3>Your Day — Locked Meals</h3>
           <div class="results-grid" id="randMacroGrid"></div>
           <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:14px; font-size:11px; color:var(--muted);">
             <span>Target:</span>
@@ -582,9 +582,9 @@
           </div>
           <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:12px;">
             <span style="font-size:11px; color:var(--muted);">Goal:</span>
-            <button class="filter-btn" id="randGoalBtnCut" onclick="randSetGoal('cut')">📉 Abnehmen — at or under target</button>
-            <button class="filter-btn" id="randGoalBtnMaintain" onclick="randSetGoal('maintain')">⚖️ Halten — close to target</button>
-            <button class="filter-btn" id="randGoalBtnBulk" onclick="randSetGoal('bulk')">📈 Zunehmen — at or over target</button>
+            <button class="filter-btn" id="randGoalBtnCut" onclick="randSetGoal('cut')">📉 Cut — at or under target</button>
+            <button class="filter-btn" id="randGoalBtnMaintain" onclick="randSetGoal('maintain')">⚖️ Maintain — close to target</button>
+            <button class="filter-btn" id="randGoalBtnBulk" onclick="randSetGoal('bulk')">📈 Bulk — at or over target</button>
           </div>
         </div>
 
@@ -802,13 +802,7 @@
     </div>
     <footer>
       <strong>FIT NIIKITER'S RECIPE VAULT</strong> · HIGH PROTEIN · LOW CALORIE · HEALTHY ·
-      <a
-        href="/cdn-cgi/l/email-protection#dcbab5a8b2b5b5b7b5a8b9ae9cbbb1bdb5b0f2bfb3b1"
-        style="color: var(--muted); text-decoration: none"
-        ><span class="__cf_email__" data-cfemail="a4c2cdd0cacdcdcfcdd0c1d6e4c3c9c5cdc88ac7cbc9"
-          >[email protected]</span
-        ></a
-      >
+      <a href="mailto:fitniikiter@gmail.com" style="color: var(--muted); text-decoration: none">fitniikiter@gmail.com</a>
       <div
         style="
           margin-top: 10px;
@@ -824,10 +818,9 @@
         All macro and nutritional values are based on USDA FoodData Central data (fdc.nal.usda.gov) and calculated from raw ingredient weights. Values may vary depending on brand, preparation method, and exact portion size. This website is for informational purposes only and does not constitute medical or nutritional advice. Consult a qualified professional before making significant dietary changes.
       </div>
     </footer>
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="nutrition.js?v=202609061" defer></script>
   <script src="recipes.js?v=202604031347" defer></script>
-    <script src="app.js?v=202609064" defer></script>
+    <script src="app.js?v=202611141" defer></script>
     <div class="hiw-overlay" id="hiwOverlay" onclick="event.target === this && closeHowItWorksModal()">
       <div class="hiw-modal">
         <button class="hiw-modal-close" onclick="closeHowItWorksModal()">✕</button>

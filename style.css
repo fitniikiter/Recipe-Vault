@@ -5305,3 +5305,26 @@
         font-size: 11px;
         color: var(--muted);
       }
+
+      /* ── Light-mode fixes: elements that were styled for dark only ── */
+      html.light .results-box {
+        background: var(--card);
+        border-color: var(--border);
+      }
+      html.light .results-box .result-card {
+        background: rgba(0, 0, 0, 0.04);
+      }
+      html.light input[type="range"].mf-slider {
+        background: linear-gradient(to right, var(--accent) var(--fill, 0%), rgba(0, 0, 0, 0.14) var(--fill, 0%));
+      }
+      html.light input[type="range"].mf-slider.off {
+        background: rgba(0, 0, 0, 0.14);
+      }
+      html.light .compare-note,
+      html.light .pantry-info {
+        color: #555;
+      }
+      /* Keep the "g" unit clear of the number input */
+      .rand-target-input {
+        margin: 0 4px;
+      }

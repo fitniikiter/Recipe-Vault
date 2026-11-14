@@ -1947,6 +1947,14 @@
       }
       function closeModalDirect() {
         (document.getElementById("recipeModal").classList.remove("open"), (document.body.style.overflow = ""));
+        // Reset the embed so a playing video doesn't keep running behind the closed modal.
+        const v = document.querySelector("#tab-video iframe");
+        v && (v.src = v.src);
+        // Drop the deep-link param so a reload doesn't reopen the modal.
+        try {
+          const u = new URL(window.location.href);
+          u.searchParams.has("recipe") && (u.searchParams.delete("recipe"), history.replaceState(null, "", u.pathname + u.search + u.hash));
+        } catch (e) {}
       }
       function switchModalTab(e, a) {
         (document.querySelectorAll("#modalTabs .modal-tab").forEach((e) => e.classList.remove("active")),
@@ -3020,6 +3028,7 @@
           f: parseInt(document.getElementById("randTargetF").value) || 0,
         };
         try { localStorage.setItem("randTarget", JSON.stringify(t)); } catch (e) {}
+        randSlots.forEach((_, i) => randRenderCard(i)); // portions are solved against the target, so cards go stale otherwise
         randRenderMacros();
       }
 
@@ -3055,6 +3064,7 @@
       function randCuisineToggle(id, btn) {
         (randActiveCuisines.has(id) ? randActiveCuisines.delete(id) : randActiveCuisines.add(id));
         btn.classList.toggle("active", randActiveCuisines.has(id));
+        randRerollAll(); // apply the filter now, same as switching goal
       }
 
       function randBuildFilterChips() {
@@ -3067,7 +3077,7 @@
         const dEl = document.getElementById("randDietChips");
         if (dEl) {
           dEl.innerHTML = DIETARY_FILTERS.map(
-            (d) => `<button class="filter-btn ${activeDietary.has(d.id) ? "active" : ""}" onclick="toggleDietary('${d.id}'); randBuildFilterChips();">${d.icon} ${d.label}</button>`
+            (d) => `<button class="filter-btn ${activeDietary.has(d.id) ? "active" : ""}" onclick="toggleDietary('${d.id}'); randBuildFilterChips(); randRerollAll();">${d.icon} ${d.label}</button>`
           ).join("");
         }
         const note = document.getElementById("randPantryNote");
@@ -3104,7 +3114,7 @@
         <div class="tags">${r.tags.slice(0, 2).map((t) => `<span class="tag tag-${t}">${tagLabel(t)}</span>`).join("")}</div>
         <div class="rand-card-macros">${m.kcal} kcal · ${m.p}g P · ${m.c}g C · ${m.f}g F</div>
         <div class="rand-card-portion">
-          <span class="rand-portion-grams">${m.pg}g protein · ${m.cg}g carb</span>
+          <span class="rand-portion-grams">${[m.pg ? m.pg + "g protein" : "", m.cg ? m.cg + "g carb" : ""].filter(Boolean).join(" · ") || "fixed portion"}</span>
           <span class="rand-portion-stepper">
             <button onclick="randAdjustShare(${i}, -5)">−</button>
             <span>${randShares[i]}% of day</span>
@@ -3155,6 +3165,11 @@
         randUsedIds.clear();
         for (let i = 0; i < 4; i++) {
           if (!randSlots[i]) {
+            const next = randPickOne(RAND_SLOT_TYPES[i], randUsedIds, i);
+            randSlots[i] = next;
+            if (next) randUsedIds.add(next.id);
+          } else if (!randLocked[i] && !randCandidatePool(RAND_SLOT_TYPES[i]).some((r) => r.id === randSlots[i].id)) {
+            // Pantry/diet settings changed since this pick — it no longer qualifies.
             const next = randPickOne(RAND_SLOT_TYPES[i], randUsedIds, i);
             randSlots[i] = next;
             if (next) randUsedIds.add(next.id);
