@@ -10,7 +10,8 @@ for a CSS tweak, etc. Grep the anchors below.
 | `index.html` | ~57KB | HTML skeleton: nav, the 5 pages, modals. 2 tiny inline scripts (scroll-top, SW register). |
 | `style.css` | ~135KB | ALL CSS. |
 | `app.js` | ~236KB | ALL app logic + inline reference data. |
-| `recipes.js` | ~590KB | Recipe content: `const R` + `const RECIPE_DETAILS`. |
+| `recipes.js` | ~48KB | GENERATED 16-recipe test set: `const R` + `const RECIPE_DETAILS`. |
+| `recipes-archive.js` | ~600KB | Full 198-recipe catalog, not loaded by the site. Edit recipes here, then `node tools/build-testset.js`. |
 | `nutrition.js` | ~46KB | `NUTRITION_DB`, `NUTRITION_DISPLAY`, `NUTRITION_CARBS`. |
 
 ## Where is X? (grep these)

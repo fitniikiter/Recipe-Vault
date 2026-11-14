@@ -11,8 +11,11 @@ NO backend. NO framework. NO external code dependencies. Always free.
 - app.js (~236KB) — ALL app logic + inline reference data (NUT, INGREDIENT_DB,
   CARB_RATIOS, DIETARY_FILTERS, PANTRY_ITEMS, ING_NAME_MAP, CARB_COMPARE,
   PROTEIN_DEFS). Grep the function/const name.
-- recipes.js (~590KB) — ALL recipe content: `const R` (recipe cards) and
-  `const RECIPE_DETAILS` (full details). This is where recipes live.
+- recipes.js (~48KB) — GENERATED test set (16 recipes) that the site loads:
+  `const R` (recipe cards) and `const RECIPE_DETAILS` (full details).
+- recipes-archive.js (~600KB) — the FULL catalog (198 recipes), NOT loaded by the
+  site. Source of truth for recipe content. `node tools/build-testset.js`
+  rebuilds recipes.js from it (`--all` restores the full catalog).
 - nutrition.js (~46KB) — nutrition lookup DB (NUTRITION_DB, NUTRITION_DISPLAY,
   NUTRITION_CARBS) used by the calculator / nutrition checks.
 - manifest.json + sw.js + icon-192.png + icon-512.png + og-image.png + avatar.jpg
@@ -21,7 +24,7 @@ NO backend. NO framework. NO external code dependencies. Always free.
 - Standalone pages (not part of the SPA): fat-loss-guide.html, trainingsplan.html,
   model.html.
 
-To edit: UI/style → style.css · app logic → app.js · recipes → recipes.js.
+To edit: UI/style → style.css · app logic → app.js · recipes → recipes-archive.js.
 Read only the file you need — that's the whole point of the split.
 
 ## Rules — ALWAYS FOLLOW
@@ -29,7 +32,10 @@ Read only the file you need — that's the whole point of the split.
 - All code comments in English
 - All recipe content in English (brand names in parentheses ok)
 - No external code dependencies ever (fonts/images are hosted content, not code deps)
-- Current recipe count: 198 — displayNum runs 1–198 with no gaps, next new one is 199
+- FOUNDATION PHASE: the site runs on a 16-recipe test set until macro logic,
+  data format, pages and design are finished. Do NOT add new recipes yet.
+- Archive recipe count: 198 — displayNum runs 1–198 with no gaps, next new one is 199
+  (the test set keeps the original displayNum, so it has gaps on screen)
 
 ## Recipe Structure
 Split across two objects in recipes.js, both keyed/matched by the same `id`:
@@ -41,7 +47,8 @@ R (card, in `const R = [...]`):
 RECIPE_DETAILS (detail, in `const RECIPE_DETAILS = { <id>: {...} }`):
 { image, video, ingredients[{section, items[{name, amt}]}], steps[], hacks[], notes }
 
-⚠ To add/edit a recipe, update BOTH R and RECIPE_DETAILS in recipes.js.
+⚠ To add/edit a recipe, update BOTH R and RECIPE_DETAILS in recipes-archive.js,
+then run `node tools/build-testset.js` (recipes.js is generated — never edit it by hand).
 
 ## Creator
 FIT NIIKITER — TikTok + YouTube food content creator
