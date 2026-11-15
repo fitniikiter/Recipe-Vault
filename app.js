@@ -245,24 +245,6 @@
         sideEggCount = 1,
         activeProtein = "chicken_thigh",
         carbEnabled = { potato: !0, rice: !0, noodle: !0, bread: !0, sweet_potato: !0 };
-      // LEGACY: protein + carb term for the old global weight widget only.
-      // Recipe macros come from recipeMacros() in the macro engine below.
-      function baseMacros(e) {
-        if (!e || e === "none") return { kcal: 0, p: 0, c: 0, f: 0 };
-        const a = Math.max(weights.servings, 1),
-          t = NUTRITION_DB[activeProtein] || NUTRITION_DB.chicken_thigh,
-          i = NUTRITION_DB[e] || { kcal: 0, p: 0, c: 0, f: 0 },
-          n = weights.chicken / 100,
-          s = weights[e] ? weights[e] / 100 : 0,
-          o = "eggs" === activeProtein ? 0 : weights.eggs * (eggSizeG / 100),
-          r = NUTRITION_DB.eggs;
-        return {
-          kcal: (n * t.kcal + s * i.kcal) / a + o * r.kcal,
-          p: (n * t.p + s * i.p) / a + o * r.p,
-          c: (n * t.c + s * i.c) / a + o * r.c,
-          f: (n * t.f + s * i.f) / a + o * r.f,
-        };
-      }
 
       // ─── Auto-weight (per-recipe) ────────────────────────────────────────
       // Macros are linear in the protein/carb grams, so we can solve each
@@ -280,24 +262,6 @@
       function _autoCarbOn() { return !!document.getElementById("chkAutoCarb")?.checked; }
       function _autoRound5() { return !!document.getElementById("chkRound5")?.checked; }
 
-      // Like baseMacros but takes explicit total grams and always counts the
-      // protein term (baseMacros zeroes everything when carb === "none").
-      function macrosWith(recipe, pgTot, cgTot) {
-        const a = Math.max(weights.servings, 1),
-          t = NUTRITION_DB[activeProtein] || NUTRITION_DB.chicken_thigh,
-          carbValid = recipe.carb && recipe.carb !== "none" && NUTRITION_DB[recipe.carb],
-          i = carbValid ? NUTRITION_DB[recipe.carb] : { kcal: 0, p: 0, c: 0, f: 0 },
-          n = pgTot / 100,
-          s = carbValid && cgTot ? cgTot / 100 : 0,
-          o = "eggs" === activeProtein ? 0 : weights.eggs * (eggSizeG / 100),
-          r = NUTRITION_DB.eggs;
-        return {
-          kcal: (n * t.kcal + s * i.kcal) / a + o * r.kcal,
-          p: (n * t.p + s * i.p) / a + o * r.p,
-          c: (n * t.c + s * i.c) / a + o * r.c,
-          f: (n * t.f + s * i.f) / a + o * r.f,
-        };
-      }
 
       // ─── Macro engine (single source of truth) ───────────────────────────
       // Every number the app shows for a recipe — card, filter, modal header,
@@ -481,17 +445,6 @@
         R.forEach((r) => { _autoW[r.id] = solveAutoWeight(r); });
       }
 
-      // Per-serving grams to render for a recipe: auto when active, else global.
-      function autoGramsPerServing(recipe) {
-        const sv = Math.max(weights.servings, 1);
-        if (autoWeightActive() && _autoW[recipe.id]) return _autoW[recipe.id];
-        const carbValid = recipe.carb && recipe.carb !== "none";
-        return {
-          pg: recipe.protein && recipe.protein !== "none" ? Math.round(weights.chicken / sv) : 0,
-          cg: carbValid ? Math.round((weights[recipe.carb] || 0) / sv) : 0,
-          feasible: true,
-        };
-      }
       function toggleRound5() {
         updateCardMacros();
         filterRecipes();
@@ -543,64 +496,6 @@
         { key: "salmon", icon: "🐟", name: "Salmon", variants: null },
         { key: "tofu", icon: "🫘", name: "Tofu", variants: null },
       ];
-      function selectProtein(e) {
-        const a = PROTEIN_DEFS.find((a) => a.key === e);
-        if (!a) return;
-        ((activeProtein = a.variants ? a.variants[0].key : e),
-          document.querySelectorAll(".protein-btn").forEach((a) => {
-            a.classList.toggle("active", a.dataset.protein === e);
-          }));
-        const t = document.getElementById("eggControls"),
-          i = document.getElementById("proteinWeightSection");
-        (t && (t.style.display = "eggs" === e ? "block" : "none"),
-          i && (i.style.display = "eggs" === e ? "none" : "block"));
-        const n = document.getElementById("proteinInputLabel");
-        n &&
-          (n.textContent =
-            ({ chicken: "🍗", beef: "🥩", eggs: "🥚", salmon: "🐟", tofu: "🫘" }[e] || "🍗") + " Protein — raw weight");
-        const s = document.getElementById("variantRow");
-        if (s)
-          if (a.variants)
-            ((s.innerHTML =
-              a.variants
-                .map(
-                  (a) =>
-                    `<button class="variant-btn ${activeProtein === a.key ? "active" : ""}" onclick="selectVariant('${a.key}','${e}')" title="${a.sub}">${a.label}</button>`,
-                )
-                .join("") +
-              `<span class="protein-macro-hint" id="proteinHint">${a.variants.find((e) => e.key === activeProtein)?.sub || ""}</span>`),
-              (s.style.display = "flex"));
-          else {
-            const a = NUTRITION_DB["eggs" === e ? "eggs" : e];
-            ((s.innerHTML = `<span class="protein-macro-hint">${a ? a.kcal + " kcal · " + a.p + "g Protein · " + a.f + "g Fat per 100g" : ""}</span>`),
-              (s.style.display = "flex"));
-          }
-        (updateCardMacros(), filterRecipes(), updateCalcDisplay());
-      }
-      function selectVariant(e, a) {
-        ((activeProtein = e),
-          document.querySelectorAll(".variant-btn").forEach((a) => {
-            a.classList.toggle(
-              "active",
-              a.textContent.trim() === document.querySelector(`.variant-btn[onclick*="${e}"]`)?.textContent.trim(),
-            );
-          }));
-        const t = PROTEIN_DEFS.find((e) => e.key === a),
-          i = document.getElementById("variantRow");
-        (i &&
-          t?.variants &&
-          (i.innerHTML =
-            t.variants
-              .map(
-                (e) =>
-                  `<button class="variant-btn ${activeProtein === e.key ? "active" : ""}" onclick="selectVariant('${e.key}','${a}')" title="${e.sub}">${e.label}</button>`,
-              )
-              .join("") +
-            `<span class="protein-macro-hint">${t.variants.find((e) => e.key === activeProtein)?.sub || ""}</span>`),
-          updateCardMacros(),
-          filterRecipes(),
-          updateCalcDisplay());
-      }
       let proteinEnabled = { chicken: !0, beef: !0, eggs: !0, fish: !0, tofu: !0 },
         videoFilterOnly = !1,
         flavorFilter = "all";
@@ -608,18 +503,6 @@
       function getRecipeProtein(e) {
         const a = e.protein || "chicken";
         return FISH_PROTEIN_IDS.has(a) ? "fish" : a;
-      }
-      function getActiveProteinDisplay() {
-        const e = {
-          chicken_thigh: { ing: "Chicken thigh (boneless, skinless, raw)", short: "Chicken thigh" },
-          chicken_breast: { ing: "Chicken breast (boneless, skinless, raw)", short: "Chicken breast" },
-          beef_regular: { ing: "Ground beef (20% fat, raw)", short: "Ground beef (20% fat)" },
-          beef_lean: { ing: "Lean ground beef (5% fat, raw)", short: "Lean ground beef" },
-          eggs: { ing: "Eggs (whole)", short: "Eggs" },
-          salmon: { ing: "Salmon fillet (skin on, raw)", short: "Salmon" },
-          tofu: { ing: "Firm tofu", short: "Tofu" },
-        };
-        return e[activeProtein] || e.chicken_thigh;
       }
       function toggleFilterSection(el) {
         el.closest(".filter-section").classList.toggle("open");
@@ -714,10 +597,9 @@
         const t = { 48: "S", 58: "M", 68: "L" }[e];
         (document.querySelectorAll(".egg-size-btn").forEach((e) => {
           e.classList.toggle("active", e.id === "egg" + t);
-        }),
-          (weights.eggs = eggCount));
+        }));
         const i = R.find((e) => e.id === a);
-        (i && (buildIngredientsTab(i), updateModalMacros(i)), updateCardMacros(), updateCalcDisplay());
+        (i && (buildIngredientsTab(i), updateModalMacros(i)), updateCardMacros());
       }
       function changeModalEggCount(e, a) {
         // Opened from the Randomizer: step from the planned count, then hand
@@ -730,9 +612,9 @@
         const t = document.getElementById("modalEggCountVal");
         t && (t.textContent = eggCount);
         const i = document.getElementById("eggCountVal");
-        (i && (i.textContent = eggCount), (weights.eggs = eggCount));
+        i && (i.textContent = eggCount);
         const n = R.find((e) => e.id === a);
-        (n && (buildIngredientsTab(n), updateModalMacros(n)), updateCardMacros(), updateCalcDisplay());
+        (n && (buildIngredientsTab(n), updateModalMacros(n)), updateCardMacros());
       }
       // Side-egg controls for sideEgg: true recipes
       function setSideEggSize(g, id) {
@@ -791,34 +673,10 @@
           PROTEIN_FAMILIES[fam].length > 1 && PROTEIN_FAMILIES[fam].includes(e) && (proteinVariantPref[fam] = e);
         });
         computeAllAutoWeights(); // refresh auto-weights BEFORE the modal re-renders (was one step behind)
-        const t =
-            { chicken_thigh: "chicken", chicken_breast: "chicken", beef_regular: "beef", beef_lean: "beef" }[e] || e,
-          i = PROTEIN_DEFS.find((e) => e.key === t);
-        document.querySelectorAll(".protein-btn").forEach((e) => {
-          e.classList.toggle("active", e.dataset.protein === t);
-        });
-        const n = document.getElementById("variantRow");
-        n &&
-          i &&
-          i.variants &&
-          ((n.innerHTML =
-            i.variants
-              .map(
-                (e) =>
-                  `<button class="variant-btn ${activeProtein === e.key ? "active" : ""}" onclick="selectVariant('${e.key}','${t}')" title="${e.sub}">${e.label}</button>`,
-              )
-              .join("") +
-            `<span class="protein-macro-hint" id="proteinHint">${i.variants.find((e) => e.key === activeProtein)?.sub || ""}</span>`),
-          (n.style.display = "flex"));
-        const s = document.getElementById("proteinInputLabel");
-        s &&
-          (s.textContent =
-            ({ chicken: "🍗", beef: "🥩", eggs: "🥚", salmon: "🐟", tofu: "🫘" }[t] || "🍗") + " Protein — raw weight");
         const o = R.find((e) => e.id === a);
         (o && (buildIngredientsTab(o), refreshRecipeTabIfOpen(o), updateModalMacros(o)),
           updateCardMacros(),
-          filterRecipes(),
-          updateCalcDisplay());
+          filterRecipes());
       }
       let _protWeightTimer = null, _carbWeightTimer = null;
       function updateModalWeight(e, a, t) {
@@ -850,7 +708,6 @@
               updateModalMacros(n);
               updateCardMacros();
               filterRecipes();
-              updateCalcDisplay();
               const refEl = document.getElementById("mwProt");
               if (refEl) { refEl.focus(); try { const l = refEl.value.length; refEl.setSelectionRange(l, l); } catch(ex) {} }
             }
@@ -869,31 +726,11 @@
               updateModalMacros(n);
               updateCardMacros();
               filterRecipes();
-              updateCalcDisplay();
               const refEl = document.getElementById("mwCarb");
               if (refEl) { refEl.focus(); try { const l = refEl.value.length; refEl.setSelectionRange(l, l); } catch(ex) {} }
             }
           }, 600);
         }
-      }
-      function updateGlobalWeight(e) {
-        const aRaw = Math.max(50, Math.min(3e3, parseInt(e) || 500));
-        const a = _capToServings(aRaw, PORTION_BOUNDS.protMax);
-        ((weights.chicken = a),
-          autoCalcCarbs(),
-          _reclampAllWeights(),
-          Object.keys(_sauceMacroCache).forEach((e) => delete _sauceMacroCache[e]));
-        const t = document.getElementById("chickenInput");
-        const _fpw = document.getElementById("filterProteinWeight");
-        (t && (t.value = a),
-          _fpw && parseInt(_fpw.value) !== a && (_fpw.value = a),
-          document.querySelectorAll(".card-weight-input").forEach((e) => {
-            parseInt(e.value) !== a && (e.value = a);
-          }),
-          updateCardMacros(),
-          currentModalRecipe && refreshRecipeTabIfOpen(R.find((e) => e.id === currentModalRecipe.id)),
-          filterRecipes(),
-          updateCalcDisplay());
       }
       function _filterProteinInput(v) {
         const gRaw = v === "" ? 0 : Math.max(0, Math.min(3000, parseInt(v) || 0));
@@ -912,7 +749,6 @@
         updateCardMacros();
         currentModalRecipe && refreshRecipeTabIfOpen(R.find((e) => e.id === currentModalRecipe.id));
         filterRecipes();
-        updateCalcDisplay();
       }
       function _filterCarbInput(v) {
         const gRaw = v === "" ? 0 : Math.max(0, Math.min(3000, parseInt(v) || 0));
@@ -926,13 +762,6 @@
         updateCardMacros();
         currentModalRecipe && refreshRecipeTabIfOpen(R.find((e) => e.id === currentModalRecipe.id));
         filterRecipes();
-        updateCalcDisplay();
-      }
-      function toggleVideoFilter() {
-        setTimeout(() => {
-          const e = document.getElementById("chkVideoOnly");
-          e && ((videoFilterOnly = e.checked), filterRecipes());
-        }, 0);
       }
       // sync a filter button's active class without triggering its handler
       function _syncFilterBtn(btnId, val) {
@@ -954,7 +783,7 @@
             input.dataset.prev = input.value; input.value = 0; weights[type] = 0;
           }
         }
-        filterRecipes(); updateCalcDisplay();
+        filterRecipes();
       }
       function toggleProteinBtn(type, btn) {
         btn.classList.toggle("active");
@@ -964,27 +793,13 @@
         proteinEnabled[type] = enabled;
         updatePillStates(); filterRecipes();
       }
-      function setMacroPreset(inputId, value, btn) {
-        const input = document.getElementById(inputId);
-        if (!input) return;
-        const current = parseFloat(input.value);
-        const grp = btn.closest('[data-preset-group]');
-        if (grp) grp.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        if (current === value) {
-          input.value = '';
-        } else {
-          input.value = value;
-          btn.classList.add('active');
-        }
-        applyMacroFilterLive();
-      }
       function toggleAutoProteinBtn(btn) {
         btn.classList.toggle("active");
         const on = btn.classList.contains("active");
         const chk = document.getElementById("chkAutoProtein");
         if (chk) chk.checked = on;
         if (on) applyAutoProteinWeight();
-        updateCardMacros(); filterRecipes(); updateCalcDisplay();
+        updateCardMacros(); filterRecipes();
       }
       function toggleAutoCarbBtn(btn) {
         btn.classList.toggle("active");
@@ -992,7 +807,7 @@
         const chk = document.getElementById("chkAutoCarb");
         if (chk) chk.checked = on;
         if (on) applyAutoCarbWeight();
-        updateCardMacros(); filterRecipes(); updateCalcDisplay();
+        updateCardMacros(); filterRecipes();
       }
       function toggleVideoBtn(btn) {
         btn.classList.toggle("active");
@@ -1140,12 +955,7 @@
           buildDietaryGrid(),
           updatePillStates(),
           updateCardMacros(),
-          filterRecipes(),
-          updateCalcDisplay());
-      }
-      function toggleDietaryPanel() {
-        const e = document.getElementById("dietaryPanel");
-        e && e.classList.toggle("open");
+          filterRecipes());
       }
       function togglePantrySection(e) {
         const a = document.getElementById("psec-" + e);
@@ -1158,41 +968,6 @@
             i = document.getElementById("pcount-" + e);
           i && (i.textContent = t > 0 ? `${a.length - t}/${a.length}` : `${a.length}/${a.length}`);
         });
-      }
-      function toggleCardSauce(e, a) {
-        e.stopPropagation();
-        const t = document.getElementById("sauce-btn-" + a),
-          i = document.getElementById("sauce-panel-" + a);
-        if (!t || !i) return;
-        if (t.classList.contains("open")) return (t.classList.remove("open"), void i.classList.remove("open"));
-        {
-          const e = RECIPE_DETAILS[a];
-          if (e && e.ingredients) {
-            const t = R.find((e) => e.id === a),
-              n = Math.max(weights.servings, 1),
-              s = Math.round(weights.chicken / n),
-              o = t ? Math.round(weights[t.carb] / n) : 0;
-            let r = "<ul>";
-            (e.ingredients.forEach((e) => {
-              ((r += `<li class="card-sauce-section" style="list-style:none;">${e.section}</li>`),
-                e.items.forEach((e) => {
-                  const a = (e.amt || "").includes("{{proteinG}}") || (e.amt || "").includes("{{carbG}}"),
-                    t = (e.amt || "")
-                      .replace("{{proteinG}}", s)
-                      .replace("{{carbG}}", o)
-                      .replace("{{servings}}", n);
-                  let i = a ? t : scaleAmt(t, n),
-                    c = e.name;
-                  (
-                    
-                    (r += `<li><span class="si-name">${c}</span><span class="si-amt">${i}</span></li>`));
-                }));
-            }),
-              (r += "</ul>"),
-              (i.innerHTML = r));
-          } else i.innerHTML = '<div style="font-size:11px;color:#555;">Full ingredient list coming soon.</div>';
-        }
-        (t.classList.add("open"), i.classList.add("open"));
       }
       function buildAllCards() {
         const e = document.getElementById("recipeGrid"),
@@ -1402,67 +1177,6 @@
                 : "Very filling";
       }
       let macroFilter = { kcalMax: 9999, protMin: 0, carbMax: 999, fatMax: 999, scoreMin: 1, timeMax: 999 };
-      function applyMacroFilter() {
-        const e = (e) => {
-          const a = document.getElementById(e);
-          return a ? parseFloat(a.value) : null;
-        };
-        ((macroFilter.kcalMax = e("mfKcalMax") ?? 9999),
-          (macroFilter.protMin = e("mfProtMin") ?? 0),
-          (macroFilter.carbMax = e("mfCarbMax") ?? 999),
-          (macroFilter.fatMax = e("mfFatMax") ?? 999),
-          (macroFilter.scoreMin = e("mfScoreMin") ?? 1),
-          (macroFilter.timeMax = e("mfTimeMax") ?? 999),
-          filterRecipes());
-      }
-      function applyMacroFilterLive() {
-        (applyMacroFilter(), updatePillStates());
-      }
-      function applyMacroFilterLive() {
-        ((macroFilter.kcalMax = parseFloat(document.getElementById("mfKcalMax")?.value) || 9999),
-          (macroFilter.protMin = parseFloat(document.getElementById("mfProtMin")?.value) || 0),
-          (macroFilter.carbMax = parseFloat(document.getElementById("mfCarbMax")?.value) || 999),
-          (macroFilter.fatMax = parseFloat(document.getElementById("mfFatMax")?.value) || 999),
-          (macroFilter.timeMax = parseFloat(document.getElementById("mfTimeMax")?.value) || 999),
-          (macroFilter.scoreMin = parseFloat(document.getElementById("mfScoreMin")?.value) || 1),
-          applyAutoProteinWeight(),
-          applyAutoCarbWeight(),
-          updateCardMacros(),
-          updatePillStates(),
-          filterRecipes());
-      }
-      function toggleAutoProtein() {
-        setTimeout(() => {
-          const e = document.getElementById("chkAutoProtein");
-          e && (e.checked && applyAutoProteinWeight(), updateCardMacros(), filterRecipes(), updateCalcDisplay());
-        }, 0);
-      }
-      function applyAutoProteinWeight() {
-        const e = document.getElementById("chkAutoProtein");
-        if (!e || !e.checked) return;
-        const a = parseFloat(document.getElementById("mfProtMin")?.value);
-        if (!a || a <= 0) return;
-        const t = Math.max(weights.servings, 1),
-          i = NUTRITION_DB[activeProtein] || NUTRITION_DB.chicken_thigh;
-        if (!i || !i.p) return;
-        const n = Math.round((a * t * 100) / i.p);
-        ((weights.chicken = Math.max(50, Math.min(3e3, n))), autoCalcCarbs());
-        const s = document.getElementById("chickenInput");
-        s && (s.value = weights.chicken);
-        const fpw3 = document.getElementById("filterProteinWeight");
-        fpw3 && (fpw3.value = weights.chicken);
-        const o = document.getElementById("mwProt");
-        (o && (o.value = weights.chicken), Object.keys(_sauceMacroCache).forEach((e) => delete _sauceMacroCache[e]));
-      }
-      function resetMacroFilter() {
-        (["mfKcalMax", "mfProtMin", "mfCarbMax", "mfFatMax", "mfTimeMax", "mfScoreMin"].forEach((e) => {
-          const a = document.getElementById(e);
-          a && (a.value = "");
-        }),
-          (macroFilter = { kcalMax: 9999, protMin: 0, carbMax: 999, fatMax: 999, scoreMin: 1, timeMax: 999 }),
-          updatePillStates(),
-          filterRecipes());
-      }
       function _mfSliderVal(id) {
         const el = document.getElementById(id);
         if (!el) return NaN;
@@ -1512,22 +1226,10 @@
           updatePillStates(),
           filterRecipes());
       }
-      function toggleAutoProtein() {
-        setTimeout(() => {
-          const e = document.getElementById("chkAutoProtein");
-          e && (e.checked && applyAutoProteinWeight(), updateCardMacros(), filterRecipes(), updateCalcDisplay());
-        }, 0);
-      }
       // Superseded by the per-recipe solver (computeAllAutoWeights, run inside
       // updateCardMacros/filterRecipes). Kept as no-ops so existing call sites
       // stay harmless; per-recipe weights no longer mutate the global weights.
       function applyAutoProteinWeight() {}
-      function toggleAutoCarb() {
-        setTimeout(() => {
-          const e = document.getElementById("chkAutoCarb");
-          e && (updateCardMacros(), filterRecipes(), updateCalcDisplay());
-        }, 0);
-      }
       function applyAutoCarbWeight() {}
       function resetMacroFilter() {
         macroFilter = { kcalMax: 9999, protMin: 0, carbMax: 999, fatMax: 999, scoreMin: 1, timeMax: 999 };
@@ -1544,48 +1246,6 @@
         _resetSlider("mfScoreMin", "mfScoreMinD");
         _resetSlider("mfTimeMax", "mfTimeMaxD");
         filterRecipes();
-      }
-      function syncCarbFilter(e, a) {
-        const t = parseFloat(a) > 0;
-        carbEnabled[e] = t;
-        const i = document.getElementById("chk" + e.charAt(0).toUpperCase() + e.slice(1));
-        (i && (i.checked = t));
-        _syncFilterBtn("btn" + e.charAt(0).toUpperCase() + e.slice(1), t);
-        ((weights[e] = parseFloat(a) || 0), filterRecipes(), updateCalcDisplay());
-      }
-      function toggleCarb(e) {
-        setTimeout(() => {
-          const a = document.getElementById("chk" + e.charAt(0).toUpperCase() + e.slice(1));
-          if (!a) return;
-          carbEnabled[e] = a.checked;
-          const t = document.getElementById(e + "Input");
-          if (t)
-            if (a.checked) {
-              const a = CARB_RATIOS[e] || 0.5,
-                i = Math.round(weights.chicken * a);
-              ((t.value = i), (weights[e] = i));
-            } else ((t.dataset.prev = t.value), (t.value = 0), (weights[e] = 0));
-          (filterRecipes(), updateCalcDisplay());
-        }, 0);
-      }
-      function setEggSize(e) {
-        ((eggSizeG = { S: 48, M: 58, L: 68 }[e] || 58),
-          document.querySelectorAll(".egg-size-btn").forEach((e) => e.classList.remove("active")));
-        const a = document.getElementById("egg" + e);
-        (a && a.classList.add("active"),
-          (weights.eggs = eggCount),
-          updateCardMacros(),
-          filterRecipes(),
-          updateCalcDisplay());
-      }
-      function changeEggCount(e) {
-        eggCount = Math.max(0, Math.min(20, eggCount + e));
-        const a = document.getElementById("eggCountVal");
-        (a && (a.textContent = eggCount),
-          (weights.eggs = eggCount),
-          updateCardMacros(),
-          filterRecipes(),
-          updateCalcDisplay());
       }
       function _syncGlobalWeightInputs() {
         const cw = document.getElementById("chickenInput");
@@ -1608,92 +1268,7 @@
         const n = document.getElementById("pillServingsLabel");
         n && (n.textContent = a + (1 === a ? " Serving" : " Servings"));
         const s = document.getElementById("pillServings");
-        (s && s.classList.toggle("has-active", 2 !== a), updateCardMacros(), filterRecipes(), updateCalcDisplay());
-      }
-      function changeServings(e) {
-        const a = document.getElementById("servingsInput"),
-          t = parseInt(a.textContent) || 2,
-          i = Math.max(1, Math.min(10, t + e));
-        ((a.textContent = i),
-          (weights.servings = i),
-          _reclampAllWeights(), // fewer servings lowers the per-portion ceiling for the same batch total
-          _syncGlobalWeightInputs(),
-          Object.keys(_sauceMacroCache).forEach((e) => delete _sauceMacroCache[e]),
-          updateCardMacros(),
-          currentModalRecipe && refreshRecipeTabIfOpen(R.find((e) => e.id === currentModalRecipe.id)),
-          filterRecipes(),
-          updateCalcDisplay());
-      }
-      function updateCalc() {
-        _disableAutoWeightIfOn();
-        ((weights.servings = parseInt(document.getElementById("servingsInput").textContent) || 1),
-          (weights.chicken = _capToServings(parseFloat(document.getElementById("chickenInput").value) || 0, PORTION_BOUNDS.protMax)),
-          autoCalcCarbs(),
-          _reclampAllWeights(),
-          (document.getElementById("chickenInput").value = weights.chicken),
-          document.querySelectorAll(".card-weight-input").forEach((e) => {
-            e.value = weights.chicken;
-          }),
-          ["potato", "rice", "noodle", "bread"].forEach((e) => {
-            const a = document.getElementById("chk" + e.charAt(0).toUpperCase() + e.slice(1));
-            a && (carbEnabled[e] = a.checked);
-          }),
-          updateCalcDisplay(),
-          updateCardMacros(),
-          filterRecipes());
-      }
-      function makeResultGrid(e) {
-        return `\n    <div class="result-card kcal"><span class="r-val">${Math.round(e.kcal)}</span><span class="r-unit">kcal</span><span class="r-lbl">Calories</span></div>\n    <div class="result-card protein"><span class="r-val">${Math.round(e.p)}</span><span class="r-unit">g</span><span class="r-lbl">Protein</span></div>\n    <div class="result-card carbs"><span class="r-val">${Math.round(e.c)}</span><span class="r-unit">g</span><span class="r-lbl">Carbs</span></div>\n    <div class="result-card fat"><span class="r-val">${Math.round(e.f)}</span><span class="r-unit">g</span><span class="r-lbl">Fat</span></div>\n  `;
-      }
-      function updateCalcDisplay() {
-        ["potato", "rice", "noodle", "bread"].forEach((e) => {
-          const a = baseMacros(e),
-            t = document.getElementById("res-" + e + "-grid");
-          t && (t.innerHTML = makeResultGrid(a));
-        });
-        const e = Math.max(weights.servings, 1);
-        let a = [
-          {
-            label: `Protein — ${activeProtein.replace("_", " ")} (${weights.chicken}g raw)`,
-            g: weights.chicken,
-            n: NUTRITION_DB[activeProtein] || NUTRITION_DB.chicken_thigh,
-          },
-          { label: `🥚 Eggs (${weights.eggs} × ${eggSizeG}g)`, g: weights.eggs * eggSizeG, n: NUTRITION_DB.eggs },
-        ];
-        ["potato", "rice", "noodle", "bread"].forEach((e) => {
-          if (weights[e] > 0) {
-            const t = {
-              potato: "🥔 Potato",
-              rice: "🍚 Rice (dry)",
-              noodle: "🍜 Noodles (dry)",
-              bread: "🫓 Bread/Wrap",
-            };
-            a.push({ label: `${t[e]} (${weights[e]}g raw)`, g: weights[e], n: NUTRITION_DB[e] });
-          }
-        });
-        let t = 0,
-          i = 0,
-          n = 0,
-          s = 0;
-        const o = document.getElementById("breakdownBody");
-        o &&
-          (o.innerHTML =
-            a
-              .map((a) => {
-                const o = ((a.g / 100) * a.n.kcal) / e,
-                  r = ((a.g / 100) * a.n.p) / e,
-                  c = ((a.g / 100) * a.n.c) / e,
-                  l = ((a.g / 100) * a.n.f) / e;
-                return (
-                  (t += o),
-                  (i += r),
-                  (n += c),
-                  (s += l),
-                  `<tr>\n      <td>${a.label}</td>\n      <td>${Math.round(a.g / e)}g per portion</td>\n      <td>${Math.round(o)}</td>\n      <td>${Math.round(r)}g</td>\n      <td>${Math.round(c)}g</td>\n      <td>${Math.round(10 * l) / 10}g</td>\n    </tr>`
-                );
-              })
-              .join("") +
-            `\n    <tr class="total-row">\n      <td>Base total per portion</td><td>—</td>\n      <td>${Math.round(t)}</td>\n      <td>${Math.round(i)}g</td>\n      <td>${Math.round(n)}g</td>\n      <td>${Math.round(10 * s) / 10}g</td>\n    </tr>`);
+        (s && s.classList.toggle("has-active", 2 !== a), updateCardMacros(), filterRecipes());
       }
 
       function getRecipeDetail(e) {
@@ -2136,7 +1711,7 @@
         const s = document.getElementById("pillServings");
         s && s.classList.toggle("has-active", 2 !== modalServings);
         const o = R.find((e) => e.id === a);
-        o && (buildIngredientsTab(o), updateModalMacros(o), updateCardMacros(), updateCalcDisplay());
+        o && (buildIngredientsTab(o), updateModalMacros(o), updateCardMacros());
       }
       function toggleStepIng(e, a) {
         const t = document.getElementById(a);
@@ -2496,9 +2071,6 @@
         }),
           updatePantryCounts());
       }
-      function updatePantryAfterRender() {
-        updatePantryCounts();
-      }
       function toggleIngredient(e, a) {
         (disabledIngredients.has(e) ? disabledIngredients.delete(e) : disabledIngredients.add(e),
           a.classList.toggle("disabled", disabledIngredients.has(e)),
@@ -2613,15 +2185,14 @@
             (r) =>
               `<tr><td class="nutdb-name">${r.name}</td><td>${fmt(r.kcal)}</td><td>${fmt(r.p)}</td><td>${fmt(r.c)}</td><td>${fmt(r.f)}</td></tr>`
           )
-          .join("");
+          .join("") || `<tr><td colspan="5" class="nutdb-empty">${_nutdbActiveCats.size ? "No ingredient matches your search." : "Select at least one category above."}</td></tr>`;
         document.getElementById("nutdbCount").textContent = rows.length + " ingredients";
       }
 
       // ─── Meal Randomizer ────────────────────────────────────────────────
-      // Reuses the site's real filtering state (disabledIngredients /
-      // INGREDIENT_RECIPE_MAP / activeDietary via toggleDietary) so a recipe
-      // excluded by Pantry or Dietary Filters elsewhere is excluded here too,
-      // instead of maintaining a second, divergent copy of that logic.
+      // Reuses the site's real filter predicates (dietBlocks / pantryBlocks) so
+      // a recipe excluded by the dietary filters elsewhere is excluded here
+      // too, instead of maintaining a second, divergent copy of that logic.
       const RAND_CUISINES = ["mediterranean", "american", "mexican", "korean", "japanese", "middle-eastern", "indian", "thai", "chinese", "greek"];
       let randActiveCuisines = new Set();
       // Every recipe declares its mealType as a list (breakfast | main | snack |
@@ -2712,9 +2283,15 @@
       // budget) — see solveAutoWeight() — just driven by this slot's share
       // of the day instead of a global macro-filter constraint.
       let randShares = [25, 25, 25, 25];
+      const RAND_SHARE_MIN = 10, RAND_SHARE_MAX = 70;
       function randAdjustShare(i, delta) {
-        randShares[i] = Math.max(0, Math.min(100, randShares[i] + delta));
-        randRenderCard(i);
+        // A bigger meal has to come out of another one: the day never plans
+        // more than 100% of the target.
+        const others = randShares.reduce((sum, v, k) => (k === i ? sum : sum + v), 0);
+        const next = Math.max(RAND_SHARE_MIN, Math.min(RAND_SHARE_MAX, 100 - others, randShares[i] + delta));
+        if (next === randShares[i]) return;
+        randShares[i] = next;
+        randSlots.forEach((_, k) => randRenderCard(k)); // other cards' + buttons depend on the total
         randRenderMacros();
       }
 
@@ -2841,11 +2418,13 @@
         const target = randTarget();
         const sums = { kcal: 0, p: 0, c: 0, f: 0 };
         randSlots.forEach((r, i) => {
-          if (r && randLocked[i]) {
+          if (r) {
             const m = randRecipeMacrosForSlot(i);
             sums.kcal += m.kcal; sums.p += m.p; sums.c += m.c; sums.f += m.f;
           }
         });
+        const shareEl = document.getElementById("randDayShare");
+        shareEl && (shareEl.textContent = randSlots.reduce((sum, r, i) => (r ? sum + randShares[i] : sum), 0));
         const pct = (v, t) => (t > 0 ? Math.min(100, Math.round((v / t) * 100)) : 0);
         const grid = document.getElementById("randMacroGrid");
         if (!grid) return;
@@ -2921,9 +2500,9 @@
         <div class="rand-card-portion">
           <span class="rand-portion-grams">${[m.eggs ? m.eggs + (m.eggs === 1 ? " egg" : " eggs") : m.pg ? m.pg + "g protein" : "", m.cg ? m.cg + "g carb" : ""].filter(Boolean).join(" · ") || "fixed portion"}</span>
           <span class="rand-portion-stepper">
-            <button onclick="randAdjustShare(${i}, -5)">−</button>
+            <button onclick="randAdjustShare(${i}, -5)" ${randShares[i] <= RAND_SHARE_MIN ? "disabled" : ""} title="Smaller portion">−</button>
             <span>${randShares[i]}% of day</span>
-            <button onclick="randAdjustShare(${i}, 5)">+</button>
+            <button onclick="randAdjustShare(${i}, 5)" ${randShares[i] >= RAND_SHARE_MAX || randShares.reduce((a, b) => a + b, 0) >= 100 ? "disabled" : ""} title="Bigger portion — shrink another meal first if the day is full">+</button>
           </span>
         </div>`;
       }
@@ -3174,32 +2753,6 @@
           t ? t.after(i) : document.getElementById("adminIngList").appendChild(i),
           i.querySelector("input").focus());
       }
-      function getAdminIngredientsValue() {
-        const e = [...document.getElementById("adminIngList").children],
-          a = [];
-        let t = null;
-        return (
-          e.forEach((e) => {
-            if (e.classList.contains("admin-section-title")) ((t = { section: e.textContent, items: [] }), a.push(t));
-            else if (e.classList.contains("admin-ing-row") && t) {
-              const a = e.querySelector(".admin-ing-name")?.value || "",
-                i = e.querySelector(".admin-ing-amt")?.value || "";
-              a && t.items.push({ name: a, amt: i });
-            }
-          }),
-          a
-        );
-      }
-      function toggleRecipeVisibility() {
-        if (!editingRecipeId) return;
-        HIDDEN_RECIPE_IDS.has(editingRecipeId)
-          ? HIDDEN_RECIPE_IDS.delete(editingRecipeId)
-          : HIDDEN_RECIPE_IDS.add(editingRecipeId);
-        try {
-          localStorage.setItem("hiddenRecipes", JSON.stringify([...HIDDEN_RECIPE_IDS]));
-        } catch (e) {}
-        (updateAdminVisibilityBtn(), filterRecipes());
-      }
       function updateAdminVisibilityBtn() {
         const e = document.getElementById("adminVisibilityBtn");
         if (!e || !editingRecipeId) return;
@@ -3207,76 +2760,6 @@
         ((e.textContent = a ? "👁 Show recipe" : "🚫 Hide recipe"),
           (e.style.borderColor = a ? "#47e8a3" : "#e84747"),
           (e.style.color = a ? "#47e8a3" : "#e84747"));
-      }
-      function saveAdminEdit() {
-        const e = R.find((e) => e.id === editingRecipeId);
-        if (!e) return;
-        parseInt(document.getElementById("aRecipeNum").value) || e.id;
-        ((e.title = document.getElementById("aTitle").value),
-          (e.desc = document.getElementById("aDesc").value),
-          (e.time = parseInt(document.getElementById("aTime").value) || e.time),
-          (e.tags = document
-            .getElementById("aTags")
-            .value.split(",")
-            .map((e) => e.trim())
-            .filter(Boolean)),
-          (e.sauce_kcal = parseFloat(document.getElementById("aSkcal").value) || 0),
-          (e.sauce_p = parseFloat(document.getElementById("aSp").value) || 0),
-          (e.sauce_c = parseFloat(document.getElementById("aSc").value) || 0),
-          (e.sauce_f = parseFloat(document.getElementById("aSf").value) || 0));
-        const a = document.getElementById("aVideoId").value.trim(),
-          t = document.getElementById("aImageUrl").value.trim(),
-          i = {
-            steps: getAdminStepsValues(),
-            hacks: getAdminHacksValues(),
-            ingredients: getAdminIngredientsValue(),
-            notes: document.getElementById("aNotes").value,
-            video: a || null,
-            image: t || null,
-            placeholder: !1,
-          };
-        ((adminOverrides[editingRecipeId] = i), delete _sauceMacroCache[editingRecipeId], saveAdminOverrides());
-        const n = document.querySelector(`.card[data-id="${editingRecipeId}"]`);
-        if (n) {
-          const a = baseMacros(e.carb),
-            t = getSauceMacros(e),
-            i = Math.round(a.kcal + t.kcal),
-            s = Math.round(a.p + t.p),
-            o = Math.round(a.c + t.c),
-            r = Math.round(a.f + t.f);
-          ((n.querySelector(".card-title").textContent = e.title),
-            (n.querySelector(".card-desc").textContent = e.desc));
-          const c = n.querySelector(".card-num-inline");
-          c && (c.textContent = "#" + String(editingRecipeId).padStart(3, "0"));
-          const l = n.querySelector('[data-macro="kcal"]');
-          l && (l.textContent = i);
-          const d = n.querySelector('[data-macro="prot"]');
-          d && (d.textContent = s + "g");
-          const m = n.querySelector('[data-macro="carb"]');
-          m && (m.textContent = o + "g");
-          const h = n.querySelector('[data-macro="fat"]');
-          h && (h.textContent = r + "g");
-        }
-        if (n) {
-          const a = n.querySelector(".card-thumb-wrap");
-          let t = "";
-          (i.image
-            ? (t =
-                '<div class="card-thumb-wrap"><img class="card-thumb" src="' +
-                i.image +
-                '" loading="lazy" alt="' +
-                e.title +
-                '"></div>')
-            : i.video &&
-              (t =
-                '<div class="card-thumb-wrap"><img class="card-thumb" src="https://img.youtube.com/vi/' +
-                i.video +
-                '/hqdefault.jpg" loading="lazy" alt="' +
-                e.title +
-                '"><div class="play-overlay"><span>▶️</span></div></div>'),
-            t ? (a ? (a.outerHTML = t) : n.insertAdjacentHTML("afterbegin", t)) : a && a.remove());
-        }
-        closeAdminEdit();
       }
       function closeAdminEdit() {
         (document.getElementById("adminModalOverlay").classList.remove("open"),
@@ -3301,29 +2784,107 @@
       let c2Goal = "fat_loss",
         c2Gender = "m",
         c2ActivityFactor = 1.375;
+      // The last computed plan, so it can be handed to the Randomizer.
+      let c2Plan = null;
+      function _c2ResultsShown() {
+        return document.getElementById("calc2Results").classList.contains("show");
+      }
       function setGoal(e) {
         ((c2Goal = e),
           document.getElementById("goalFatLoss").classList.toggle("active", "fat_loss" === e),
           document.getElementById("goalMuscle").classList.toggle("active", "muscle" === e));
+        _c2ResultsShown() && runCalc(true); // keep visible results in step with the selection
       }
       function setGender(e) {
         ((c2Gender = e),
           document.getElementById("genderM").classList.toggle("active", "m" === e),
           document.getElementById("genderF").classList.toggle("active", "f" === e));
+        _c2ResultsShown() && runCalc(true);
       }
       function setActivity(e) {
         (document.querySelectorAll(".activity-opt").forEach((e) => e.classList.remove("active")),
           e.classList.add("active"),
           (c2ActivityFactor = parseFloat(e.dataset.factor)));
+        _c2ResultsShown() && runCalc(true);
       }
-      function runCalc() {
+      // Shows a validation message under the form instead of a browser alert.
+      function _c2Error(msg) {
+        const el = document.getElementById("calc2Error");
+        el && ((el.textContent = msg || ""), (el.style.display = msg ? "block" : "none"));
+      }
+      const C2_FIELDS = [
+        { id: "c2Age", label: "Age", min: 14, max: 90, unit: "years" },
+        { id: "c2Weight", label: "Weight", min: 30, max: 300, unit: "kg" },
+        { id: "c2Height", label: "Height", min: 100, max: 250, unit: "cm" },
+      ];
+      function _c2SaveInputs() {
+        try {
+          localStorage.setItem(
+            "calcInputs",
+            JSON.stringify({
+              age: document.getElementById("c2Age").value,
+              weight: document.getElementById("c2Weight").value,
+              height: document.getElementById("c2Height").value,
+              bf: document.getElementById("c2BF").value,
+              goal: c2Goal,
+              gender: c2Gender,
+              activity: c2ActivityFactor,
+            }),
+          );
+        } catch (e) {}
+      }
+      // Restore the visitor's last entries so the form isn't empty on every visit.
+      function _c2RestoreInputs() {
+        let d;
+        try { d = JSON.parse(localStorage.getItem("calcInputs") || "null"); } catch (e) {}
+        if (!d) return;
+        [["c2Age", d.age], ["c2Weight", d.weight], ["c2Height", d.height], ["c2BF", d.bf]].forEach(([id, v]) => {
+          const el = document.getElementById(id);
+          el && v && (el.value = v);
+        });
+        (d.goal === "muscle" || d.goal === "fat_loss") && setGoal(d.goal);
+        (d.gender === "m" || d.gender === "f") && setGender(d.gender);
+        const act = [...document.querySelectorAll(".activity-opt")].find((o) => parseFloat(o.dataset.factor) === d.activity);
+        act && setActivity(act);
+      }
+      // Hand the computed plan to the Randomizer as its daily target.
+      function calcToRandomizer() {
+        if (!c2Plan) return;
+        try {
+          localStorage.setItem("randTarget", JSON.stringify({ kcal: c2Plan.kcal, p: c2Plan.p, c: c2Plan.c, f: c2Plan.f }));
+          localStorage.setItem("randGoal", "fat_loss" === c2Plan.goal ? "cut" : "bulk");
+        } catch (e) {}
+        randSlots = randSlots.map((r, i) => (randLocked[i] ? r : null)); // re-pick unlocked meals for the new target
+        const tab = document.querySelector(`.nav-tab[onclick*="'randomizer'"]`);
+        tab && switchTab("randomizer", tab);
+        window.scrollTo(0, 0);
+      }
+      function runCalc(quiet) {
         const e = parseFloat(document.getElementById("c2Age").value),
           a = parseFloat(document.getElementById("c2Weight").value),
           t = parseFloat(document.getElementById("c2Height").value),
           i = parseFloat(document.getElementById("c2BF").value);
-        if (!e || !a || !t) return void alert("Please fill in age, weight and height.");
+        const bad = C2_FIELDS.find((f) => {
+          const v = parseFloat(document.getElementById(f.id).value);
+          return isNaN(v) || v < f.min || v > f.max;
+        });
+        if (bad) {
+          if (quiet) return;
+          const empty = document.getElementById(bad.id).value === "";
+          _c2Error(empty ? "Please fill in age, weight and height." : `${bad.label} must be between ${bad.min} and ${bad.max} ${bad.unit}.`);
+          document.getElementById(bad.id).focus();
+          return;
+        }
+        if (document.getElementById("c2BF").value !== "" && (isNaN(i) || i < 3 || i > 60)) {
+          if (quiet) return;
+          _c2Error("Body fat must be between 3 and 60 % — or leave it empty.");
+          document.getElementById("c2BF").focus();
+          return;
+        }
+        _c2Error("");
+        _c2SaveInputs();
         let n;
-        if (!isNaN(i) && i > 3 && i < 60) {
+        if (!isNaN(i) && i >= 3 && i <= 60) {
           n = 370 + 21.6 * (a * (1 - i / 100));
         } else n = "m" === c2Gender ? 10 * a + 6.25 * t - 5 * e + 5 : 10 * a + 6.25 * t - 5 * e - 161;
         const s = Math.round(n * c2ActivityFactor);
@@ -3359,6 +2920,7 @@
           (document.getElementById("rAdjust").textContent = l),
           (document.getElementById("rTarget2").textContent = r + " kcal"),
           (document.getElementById("rProtDetail").textContent = `${m}g (${d}g × ${a}kg)`));
+        c2Plan = { kcal: r, p: m, c: Math.max(0, k), f: u, goal: c2Goal };
         const y = "fat_loss" === c2Goal ? "−" : "+",
           b = "fat_loss" === c2Goal ? "red" : "green",
           f = document.getElementById("rWeekly");
@@ -3373,7 +2935,7 @@
         };
         ((document.getElementById("calc2Tip").innerHTML = v[c2Goal]),
           document.getElementById("calc2Results").classList.add("show"),
-          document.getElementById("calc2Results").scrollIntoView({ behavior: "smooth", block: "start" }));
+          quiet || document.getElementById("calc2Results").scrollIntoView({ behavior: "smooth", block: "start" }));
       }
       function setDipFilter(a) {
         dipFilter = !dipFilter;
@@ -4676,17 +4238,7 @@
         buildIngredientRecipeMap(),
         buildAllCards(),
         buildDisplayNumbers(),
-        (function () {
-          const e = document.getElementById("proteinSelector");
-          e &&
-            ((e.innerHTML = PROTEIN_DEFS.map(
-              (e) =>
-                `<div class="protein-btn ${"chicken" === e.key ? "active" : ""}" data-protein="${e.key}" onclick="selectProtein('${e.key}')">\n      <span class="pb-icon">${e.icon}</span>\n      <span class="pb-name">${e.name}</span>\n    </div>`,
-            ).join("")),
-            selectProtein("chicken"));
-        })(),
         updateCardMacros(),
-        updateCalcDisplay(),
         filterRecipes(),
         (function () {
           const visibleCards = Array.from(document.querySelectorAll("#recipeGrid .card")).filter(
@@ -4704,3 +4256,4 @@
         updatePillStates(),
         buildDietaryGrid(),
         document.querySelectorAll('#page-recipes .filter-section').forEach(s => s.classList.add('open')));
+      _c2RestoreInputs();

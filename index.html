@@ -20,9 +20,10 @@
        DATA:  const NUT, INGREDIENT_DB, CARB_RATIOS, DIETARY_FILTERS,
               PANTRY_ITEMS, ING_NAME_MAP, CARB_COMPARE, PROTEIN_DEFS
        LOGIC: buildAllCards() (card grid), filterRecipes() (search + filter),
-              baseMacros()/macrosWith() (macro math), solveAutoWeight() (per-recipe
-              auto-weight), openModal()/buildIngredientsTab()/buildRecipeTab()
-              (recipe modal), updateCalcDisplay() (calculator), anime() (WAAPI shim).
+              recipeMacros() (the macro engine — the only place macros are
+              computed), solveAutoWeight() (per-recipe auto-weight),
+              openModal()/buildIngredientsTab()/buildRecipeTab() (recipe modal),
+              runCalc() (calculator), renderRandomizer(), anime() (WAAPI shim).
 
   4. recipes.js  — ALL recipe content (this is where recipes live):
        const R (cards: id, title, desc, tags, carb, time, displayNum) and
@@ -91,7 +92,7 @@
     <!-- Self-hosted fonts (Bebas Neue + DM Sans) — no runtime dependency on
          Google Fonts. Files live in /fonts, generated into /fonts.css. -->
     <link rel="stylesheet" href="/fonts.css" />
-    <link rel="stylesheet" href="style.css?v=202611142" />
+    <link rel="stylesheet" href="style.css?v=202611154" />
   </head>
   <body>
     <div class="nav-tabs">
@@ -337,8 +338,8 @@
         <div class="calc2-header">
           <h2>Calorie Calculator</h2>
           <p>
-            Enter your stats and goal — get your daily calorie target, macros and how many recipes from this vault fit
-            your plan.
+            Enter your stats and goal — get your daily calorie target and macros, then let the Randomizer plan a
+            day of recipes that fits them.
           </p>
         </div>
         <div class="goal-selector">
@@ -401,6 +402,7 @@
             </div>
           </div>
         </div>
+        <div class="calc2-error" id="calc2Error" role="alert" style="display: none"></div>
         <button class="calc2-btn" onclick="runCalc()">Calculate My Plan →</button>
         <div class="calc2-results" id="calc2Results">
           <div class="results-goal-label" id="resultsGoalLabel"></div>
@@ -456,6 +458,7 @@
             </div>
           </div>
           <div class="calc2-note" id="calc2Tip"></div>
+          <button class="calc2-btn calc2-btn-secondary" onclick="calcToRandomizer()">🎲 Plan a day of meals for this target →</button>
           <div class="formula-accordion" id="formulaAccordion">
             <div
               class="formula-accordion-header"
@@ -659,7 +662,7 @@
         </div>
 
         <div class="results-box">
-          <h3>Your Day — Locked Meals</h3>
+          <h3>Your Day — <span id="randDayShare">100</span>% of target planned</h3>
           <div class="results-grid" id="randMacroGrid"></div>
           <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:14px; font-size:11px; color:var(--muted);">
             <span>Target:</span>
@@ -818,7 +821,7 @@
     </footer>
     <script src="nutrition.js?v=202611151" defer></script>
   <script src="recipes.js?v=202611152" defer></script>
-    <script src="app.js?v=202611153" defer></script>
+    <script src="app.js?v=202611154" defer></script>
     <div class="hiw-overlay" id="hiwOverlay" onclick="event.target === this && closeHowItWorksModal()">
       <div class="hiw-modal">
         <button class="hiw-modal-close" onclick="closeHowItWorksModal()">✕</button>

@@ -20,7 +20,9 @@ for a CSS tweak, etc. Grep the anchors below.
   `updateCardMacros` recomputes the macro numbers on each card).
 - **Search + filter (show/hide cards)** → `app.js` `function filterRecipes`.
   Filter state lives in `macroFilter`, `carbEnabled`, `proteinEnabled`,
-  `flavorFilter`, etc.
+  `flavorFilter`, `activeDietary`, etc. Dietary rules are data
+  (`DIETARY_FILTERS`) evaluated by `dietBlocks(recipe)`; `pantryBlocks` is the
+  (switched-off) pantry. `doResetAll` resets everything.
 - **Macro math** → `app.js`, block "Macro engine (single source of truth)":
   `recipeMacros(recipe)` is the ONLY place recipe macros come from (card,
   filter, modal header, modal total bar, Randomizer). `portionFor` decides the
@@ -32,8 +34,11 @@ for a CSS tweak, etc. Grep the anchors below.
 - **Recipe modal (popup)** → `app.js` `function openModal`,
   `buildIngredientsTab`, `buildRecipeTab`, `updateModalMacros`,
   `selectModalVariant` (Thigh/Breast, 20%/5%).
-- **Calorie calculator (TDEE page)** → `app.js` `function runCalc`,
-  `updateCalcDisplay`, `setGoal`, `setGender`.
+- **Calorie calculator (TDEE page)** → `app.js` `function runCalc`, `setGoal`,
+  `setGender`, `setActivity`; `calcToRandomizer` hands the plan to the Randomizer.
+- **Randomizer** → `app.js` `renderRandomizer`, `randPickOne`,
+  `randSolveRecipeAtShare` (portion per slot), `randOpen` (opens the modal with
+  that portion), `randAdjustShare`.
 - **Protein selection / native protein** → `activeProtein` (global), variants in
   `const PROTEIN_DEFS`, `_nativeVariant(recipe)`.
 - **Share link / OG** → `app.js` `function shareRecipe`; per-recipe preview

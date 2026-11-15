@@ -5378,3 +5378,40 @@
       #dietaryGrid {
         margin-bottom: 0;
       }
+
+      /* ── Calculator: inline validation + hand-off to the Randomizer ── */
+      .calc2-error {
+        margin: 0 0 12px;
+        padding: 10px 14px;
+        border-radius: 8px;
+        border: 1px solid rgba(232, 71, 71, 0.45);
+        background: rgba(232, 71, 71, 0.08);
+        color: #e84747;
+        font-size: 13px;
+      }
+      .calc2-btn-secondary {
+        margin-top: 14px;
+        background: transparent;
+        color: var(--accent);
+        border: 1.5px solid var(--accent);
+      }
+      .calc2-btn-secondary:hover {
+        background: rgba(255, 140, 0, 0.08);
+      }
+
+      .nutdb-empty {
+        text-align: center;
+        color: var(--muted);
+        padding: 28px 16px !important;
+      }
+      .rand-portion-stepper button:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+      /* Nutrition table: all five columns fit a phone without sideways scrolling */
+      @media (max-width: 600px) {
+        .nutdb-table { font-size: 12px; }
+        .nutdb-table td, .nutdb-table thead th { padding: 8px 6px; }
+        .nutdb-table thead th { font-size: 11px; white-space: normal; }
+        .nutdb-table td.nutdb-name { white-space: normal; }
+      }
