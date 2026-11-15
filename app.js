@@ -169,6 +169,7 @@
         dipFilter = false,
         currentCuisineFilter = "all",
         weights = { chicken: 150, potato: 150, rice: 150, noodle: 150, bread: 150, eggs: 0, servings: 1 };
+      const DEFAULT_PROTEIN_G = 150;
       const CARB_RATIOS = { potato: 1.25, rice: 0.33, noodle: 0.33, bread: 0.2 };
       // A recipe's sauce/spice amounts are fixed per portion (see
       // calcSauceMacros) — they don't scale with the protein/carb weight
@@ -217,6 +218,17 @@
                 : e <= 55 || e <= 70 || e <= 90
                   ? "🕔"
                   : "🕕";
+      }
+      // The carb amount is ONE setting, shown as dry rice in the filter panel.
+      // Other carb types are the equivalent amount by CARB_RATIOS (potato is
+      // mostly water, so the same meal needs ~3.8× the grams of rice). Setting
+      // it from any type keeps the others in step.
+      function setCarbAmount(type, grams) {
+        const base = grams / (CARB_RATIOS[type] || CARB_RATIOS.rice);
+        ["potato", "rice", "noodle", "bread"].forEach((k) => {
+          weights[k] = _capToServings(Math.round(base * CARB_RATIOS[k]), PORTION_BOUNDS.carbMax);
+        });
+        CARB_RATIOS[type] && (weights[type] = _capToServings(grams, PORTION_BOUNDS.carbMax));
       }
       function autoCalcCarbs() {
         const e = weights.chicken;
@@ -667,8 +679,10 @@
           macroFilter.protMin > 0 ||
           macroFilter.carbMax < 999 ||
           macroFilter.fatMax < 999 ||
+          macroFilter.scoreMin > 1 ||
           macroFilter.timeMax < 999
         ) count++;
+        if (activeDietary.size) count++;
         if (videoFilterOnly) count++;
         if (flavorFilter !== "all" || spicyFilter || dipFilter) count++;
         const badge = document.getElementById("filterCountBadge");
@@ -847,7 +861,9 @@
             const i = _capToServings(Math.max(0, Math.min(3e3, parseInt(a) || 0)), PORTION_BOUNDS.carbMax),
               n = R.find((r) => r.id === t);
             if (n) {
-              _overrideFor(n) ? (_portionOverride.cg = i / Math.max(modalServings, 1)) : (weights[n.carb] = i);
+              _overrideFor(n) ? (_portionOverride.cg = i / Math.max(modalServings, 1)) : setCarbAmount(n.carb, i);
+              const fcw = document.getElementById("filterCarbWeight");
+              fcw && (fcw.value = weights.rice);
               buildIngredientsTab(n);
               refreshRecipeTabIfOpen(n);
               updateModalMacros(n);
@@ -901,10 +917,7 @@
       function _filterCarbInput(v) {
         const gRaw = v === "" ? 0 : Math.max(0, Math.min(3000, parseInt(v) || 0));
         const g = _capToServings(gRaw, PORTION_BOUNDS.carbMax);
-        weights.potato = g;
-        weights.rice = g;
-        weights.noodle = g;
-        weights.bread = g;
+        setCarbAmount("rice", g);
         Object.keys(_sauceMacroCache).forEach((k) => delete _sauceMacroCache[k]);
         const fcw = document.getElementById("filterCarbWeight");
         fcw && (fcw.value = g);
@@ -914,16 +927,6 @@
         currentModalRecipe && refreshRecipeTabIfOpen(R.find((e) => e.id === currentModalRecipe.id));
         filterRecipes();
         updateCalcDisplay();
-      }
-      function toggleProteinFilter(e) {
-        setTimeout(() => {
-          const a = document.getElementById("chkP" + e.charAt(0).toUpperCase() + e.slice(1));
-          a &&
-            ((proteinEnabled[e] = a.checked),
-            a.checked && syncDietaryFromProtein(),
-            updatePillStates(),
-            filterRecipes());
-        }, 0);
       }
       function toggleVideoFilter() {
         setTimeout(() => {
@@ -959,7 +962,6 @@
         const chk = document.getElementById("chkP" + type.charAt(0).toUpperCase() + type.slice(1));
         if (chk) chk.checked = enabled;
         proteinEnabled[type] = enabled;
-        if (enabled) syncDietaryFromProtein();
         updatePillStates(); filterRecipes();
       }
       function setMacroPreset(inputId, value, btn) {
@@ -1000,164 +1002,60 @@
         videoFilterOnly = on;
         filterRecipes();
       }
+      // ─── Dietary filters ─────────────────────────────────────────────────
+      // Each filter is a self-contained rule; a recipe is hidden when ANY active
+      // filter matches it (see dietBlocks). A rule can match by:
+      //   blocks    ingredient ids found in the recipe's ingredient list
+      //   proteins  the recipe's protein family
+      //   carbs     the recipe's carb base
+      //   tags      a recipe tag
+      //   sideEgg   the recipe is served with a fried egg
+      // Dietary filters do NOT touch the protein/carb buttons or the pantry —
+      // switching one off restores exactly what it hid.
+      const _DIET_MEAT = ["chicken", "chicken_thigh", "chicken_breast", "chicken_sausage", "chicken_stock", "beef_regular", "beef_lean", "lamb_mince", "pork_belly", "pork_loin", "pork_tenderloin", "smoked_bacon", "turkey_mince", "duck_breast"];
+      const _DIET_FISH = ["salmon", "shrimp", "cod", "tuna_canned", "tuna_oil", "tuna_water", "anchovy_paste", "fish_sauce", "oyster_sauce", "dashi"];
+      const _DIET_PORK = ["pork_belly", "pork_loin", "pork_tenderloin", "smoked_bacon"];
+      const _DIET_ALCOHOL = ["sake", "white_wine", "mirin"];
+      const _DIET_EGG = ["eggs", "eggs_dairy", "egg", "egg_noodle", "mayo", "mayo_light"];
+      const _DIET_DAIRY = ["butter", "milk", "heavy_cream", "cream_cheese", "sour_cream", "creme_fraiche", "labneh", "cheese_parm", "cheese_mozz", "cheese_feta", "cheese_cheddar", "cheese_gruyere", "cheese_provolone", "yogurt", "greek_yogurt", "yoghurt_nonfat", "quark_low_fat", "skyr", "cottage_cheese", "ricotta", "whey_protein", "whey_protein_concentrate", "whey_protein_isolate"];
       const DIETARY_FILTERS = [
-        {
-          id: "no_alcohol",
-          icon: "🍶",
-          label: "No Alcohol",
-          sub: "No sake/wine/mirin",
-          blocks: ["sake", "white_wine", "mirin"],
-        },
-        {
-          id: "halal",
-          icon: "☪️",
-          label: "Halal",
-          sub: "No alcohol, no pork",
-          blocks: ["sake", "white_wine", "mirin"],
-        },
-        {
-          id: "gluten_free",
-          icon: "🌾",
-          label: "Gluten-Free",
-          sub: "No wheat/barley/rye",
-          blocks: ["panko", "flour", "worcestershire", "hoisin"],
-        },
-        {
-          id: "dairy_free",
-          icon: "🥛",
-          label: "Dairy-Free",
-          sub: "No milk/cheese/butter",
-          blocks: [
-            "butter",
-            "milk",
-            "heavy_cream",
-            "cream_cheese",
-            "sour_cream",
-            "creme_fraiche",
-            "labneh",
-            "cheese_parm",
-            "cheese_mozz",
-            "cheese_feta",
-            "cheese_cheddar",
-            "cheese_gruyere",
-            "cheese_provolone",
-            "yogurt",
-            "quark_low_fat",
-            "skyr",
-            "cottage_cheese",
-            "ricotta",
-          ],
-        },
-        {
-          id: "nut_free",
-          icon: "🥜",
-          label: "Nut-Free",
-          sub: "No peanuts/tree nuts",
-          blocks: ["peanuts", "pine_nuts", "peanut_butter", "almonds", "tahini"],
-        },
-        {
-          id: "no_soy",
-          icon: "🫘",
-          label: "No Soy",
-          sub: "No soy sauce/tofu",
-          blocks: ["soy_sauce", "hoisin", "miso", "doenjang", "teriyaki", "oyster_sauce", "tofu"],
-        },
-        {
-          id: "no_fish",
-          icon: "🐟",
-          label: "No Fish/Seafood",
-          sub: "No fish/seafood",
-          blocks: ["fish_sauce", "dashi", "salmon", "shrimp", "cod", "tuna_canned"],
-        },
-        { id: "no_eggs", icon: "🥚", label: "No Eggs", sub: "Egg-free recipes only", blocks: ["eggs", "eggs_dairy"] },
-        { id: "no_beef", icon: "🐄", label: "No Beef", sub: "Beef-free only", blocks: ["beef_regular", "beef_lean"] },
-        { id: "no_pork", icon: "🐷", label: "No Pork", sub: "Pork-free only", blocks: [] },
-        {
-          id: "low_spice",
-          icon: "🌶️",
-          label: "Low Spice",
-          sub: "Mild recipes only",
-          blocks: [
-            "gochujang",
-            "gochugaru",
-            "harissa",
-            "sriracha",
-            "hot_sauce",
-            "chili_flakes",
-            "dried_chili",
-            "chili_fresh",
-            "chipotle_adobo",
-            "cayenne",
-          ],
-        },
-        {
-          id: "no_garlic",
-          icon: "🧄",
-          label: "No Garlic/Onion",
-          sub: "FODMAP-friendly",
-          blocks: ["garlic", "onion", "garlic_powder", "onion_powder"],
-        },
-        {
-          id: "vegetarian",
-          icon: "🌱",
-          label: "Vegetarian",
-          sub: "No meat",
-          blocks: [
-            "chicken_thigh",
-            "chicken_breast",
-            "beef_regular",
-            "beef_lean",
-            "salmon",
-            "shrimp",
-            "cod",
-            "tuna_canned",
-            "turkey_mince",
-            "fish_sauce",
-            "dashi",
-          ],
-        },
-        {
-          id: "vegan",
-          icon: "🌿",
-          label: "Vegan",
-          sub: "No animal products",
-          blocks: [
-            "chicken_thigh",
-            "chicken_breast",
-            "beef_regular",
-            "beef_lean",
-            "salmon",
-            "shrimp",
-            "cod",
-            "tuna_canned",
-            "turkey_mince",
-            "fish_sauce",
-            "dashi",
-            "oyster_sauce",
-            "eggs",
-            "eggs_dairy",
-            "butter",
-            "milk",
-            "heavy_cream",
-            "cream_cheese",
-            "sour_cream",
-            "creme_fraiche",
-            "labneh",
-            "cheese_parm",
-            "cheese_mozz",
-            "cheese_feta",
-            "cheese_cheddar",
-            "cheese_gruyere",
-            "cheese_provolone",
-            "yogurt",
-            "quark_low_fat",
-            "skyr",
-            "cottage_cheese",
-            "ricotta",
-            "honey",
-          ],
-        },
+        { id: "no_alcohol", icon: "🍶", label: "No Alcohol", sub: "No sake/wine/mirin", blocks: _DIET_ALCOHOL },
+        { id: "halal", icon: "☪️", label: "Halal", sub: "No alcohol, no pork", blocks: [..._DIET_ALCOHOL, ..._DIET_PORK] },
+        { id: "gluten_free", icon: "🌾", label: "Gluten-Free", sub: "No wheat/barley/rye", blocks: ["panko", "flour", "worcestershire", "hoisin", "breadcrumbs", "couscous", "bulgur", "barley", "naan", "pasta"], carbs: ["bread", "noodle"] },
+        { id: "dairy_free", icon: "🥛", label: "Dairy-Free", sub: "No milk/cheese/butter", blocks: _DIET_DAIRY },
+        { id: "nut_free", icon: "🥜", label: "Nut-Free", sub: "No peanuts/tree nuts", blocks: ["peanuts", "pine_nuts", "peanut_butter", "almonds", "cashews", "tahini"] },
+        { id: "no_soy", icon: "🫘", label: "No Soy", sub: "No soy sauce/tofu", blocks: ["soy_sauce", "sweet_soy", "hoisin", "miso", "doenjang", "teriyaki", "oyster_sauce", "tofu", "tempeh", "edamame", "soy_milk"], proteins: ["tofu"] },
+        { id: "no_fish", icon: "🐟", label: "No Fish/Seafood", sub: "No fish/seafood", blocks: _DIET_FISH, proteins: ["fish"] },
+        { id: "no_eggs", icon: "🥚", label: "No Eggs", sub: "Egg-free recipes only", blocks: _DIET_EGG, proteins: ["eggs"], sideEgg: true },
+        { id: "no_beef", icon: "🐄", label: "No Beef", sub: "Beef-free only", blocks: ["beef_regular", "beef_lean"], proteins: ["beef"] },
+        { id: "no_pork", icon: "🐷", label: "No Pork", sub: "Pork-free only", blocks: _DIET_PORK },
+        { id: "low_spice", icon: "🌶️", label: "Low Spice", sub: "Mild recipes only", blocks: [], tags: ["spicy"] },
+        { id: "no_garlic", icon: "🧄", label: "No Garlic/Onion", sub: "FODMAP-friendly", blocks: ["garlic", "onion", "garlic_powder", "onion_powder", "shallot", "fried_shallots", "leek", "scallion", "chives"] },
+        { id: "vegetarian", icon: "🌱", label: "Vegetarian", sub: "No meat", blocks: [..._DIET_MEAT, ..._DIET_FISH], proteins: ["chicken", "beef", "fish"] },
+        { id: "vegan", icon: "🌿", label: "Vegan", sub: "No animal products", blocks: [..._DIET_MEAT, ..._DIET_FISH, ..._DIET_EGG, ..._DIET_DAIRY, "honey"], proteins: ["chicken", "beef", "fish", "eggs"], sideEgg: true },
       ];
+      // recipe id → Set of ingredient ids, filled by buildIngredientRecipeMap().
+      const RECIPE_INGREDIENT_IDS = {};
+      // True when an active dietary filter rules this recipe out.
+      function dietBlocks(recipe) {
+        if (!activeDietary.size) return false;
+        const ings = RECIPE_INGREDIENT_IDS[recipe.id];
+        return DIETARY_FILTERS.some(
+          (f) =>
+            activeDietary.has(f.id) &&
+            ((f.proteins && f.proteins.includes(getRecipeProtein(recipe))) ||
+              (f.carbs && f.carbs.includes(recipe.carb)) ||
+              (f.tags && f.tags.some((t) => recipe.tags.includes(t))) ||
+              (f.sideEgg && recipe.sideEgg) ||
+              (ings && f.blocks.some((id) => ings.has(id)))),
+        );
+      }
+      // True when the (optional) My Pantry feature has an ingredient of this recipe unchecked.
+      function pantryBlocks(recipe) {
+        if (!disabledIngredients.size) return false;
+        const ings = RECIPE_INGREDIENT_IDS[recipe.id];
+        return !!ings && [...disabledIngredients].some((id) => ings.has(id));
+      }
       let activeDietary = new Set(JSON.parse(localStorage.getItem("dietaryFilters") || "[]"));
       function saveDietary() {
         try {
@@ -1181,32 +1079,15 @@
         e.textContent = a.join(" · ");
       }
       function toggleDietary(e) {
-        const a = DIETARY_FILTERS.find((a) => a.id === e);
-        a &&
-          (activeDietary.has(e)
-            ? (activeDietary.delete(e),
-              a.blocks.forEach((e) => {
-                [...activeDietary].some((a) => {
-                  const t = DIETARY_FILTERS.find((e) => e.id === a);
-                  return t && t.blocks.includes(e);
-                }) || disabledIngredients.delete(e);
-              }),
-              savePantry())
-            : (activeDietary.add(e),
-              a.blocks.forEach((e) => {
-                disabledIngredients.add(e);
-              }),
-              savePantry()),
+        if (!DIETARY_FILTERS.some((f) => f.id === e)) return;
+        (activeDietary.has(e) ? activeDietary.delete(e) : activeDietary.add(e),
           saveDietary(),
-          applyDietaryToProteinFilters(),
           buildDietaryGrid(),
-          updatePantryCounts(),
-          document.getElementById("pantry-sauces")?.children.length > 0 && renderPantry(),
           updatePillStates(),
           filterRecipes());
       }
       function isPantryModified() {
-        return disabledIngredients.size > 0 || activeDietary.size > 0;
+        return (PANTRY_ENABLED && disabledIngredients.size > 0) || activeDietary.size > 0;
       }
       function resetAllFilters() {
         isPantryModified() ? document.getElementById("resetConfirmOverlay").classList.add("open") : doResetAll();
@@ -1214,8 +1095,9 @@
       function doResetAll() {
         (document.getElementById("resetConfirmOverlay").classList.remove("open"),
           (currentCuisineFilter = "all"),
-          document.querySelectorAll(".filter-btn").forEach((e) => e.classList.remove("active")),
-          document.querySelector(".filter-btn")?.classList.add("active"),
+          // Only the cuisine buttons — other tabs (Nutrition, Randomizer) reuse .filter-btn.
+          document.querySelectorAll('#filterPanel [onclick^="setFilter("]').forEach((e) => e.classList.remove("active")),
+          document.querySelector(`#filterPanel [onclick^="setFilter('all'"]`)?.classList.add("active"),
           ["Potato", "Rice", "Noodle", "Bread"].forEach((e) => {
             const a = document.getElementById("chk" + e);
             (a && (a.checked = !0), (carbEnabled[e.toLowerCase()] = !0));
@@ -1231,7 +1113,10 @@
         _syncFilterBtn("btnVideoOnly", false),
           (videoFilterOnly = !1),
           resetMacroFilter(),
-          (weights.servings = 1));
+          (weights.servings = 1),
+          (weights.chicken = DEFAULT_PROTEIN_G),
+          autoCalcCarbs(),
+          _syncGlobalWeightInputs());
         const a = document.getElementById("globalServingVal");
         a && (a.textContent = "1");
         const t = document.getElementById("servingsInput");
@@ -1251,106 +1136,12 @@
         try {
           localStorage.removeItem("dietaryFilters");
         } catch (e) {}
-        (document.getElementById("pantry-sauces")?.children.length > 0 && (renderPantry(), buildDietaryGrid()),
+        (document.getElementById("pantry-sauces")?.children.length > 0 && renderPantry(),
+          buildDietaryGrid(),
           updatePillStates(),
           updateCardMacros(),
           filterRecipes(),
           updateCalcDisplay());
-      }
-      function applyDietaryToProteinFilters() {
-        const e = activeDietary.has("no_beef"),
-          a = activeDietary.has("no_eggs"),
-          t = activeDietary.has("no_fish"),
-          i = activeDietary.has("vegetarian"),
-          n = activeDietary.has("vegan");
-        activeDietary.has("halal") && ["sake", "white_wine", "mirin"].forEach((e) => disabledIngredients.add(e));
-        // Gluten-free: disable bread/noodle carb options
-        if (activeDietary.has("gluten_free")) {
-          carbEnabled["bread"] = false;
-          carbEnabled["noodle"] = false;
-          const chkBread = document.getElementById("chkBread");
-          const chkNoodle = document.getElementById("chkNoodle");
-          if (chkBread) chkBread.checked = false;
-          if (chkNoodle) chkNoodle.checked = false;
-          _syncFilterBtn("btnBread", false); _syncFilterBtn("btnNoodle", false);
-        } else {
-          // Only re-enable if not manually disabled
-          if (!localStorage.getItem("carbManualDisabled_bread")) carbEnabled["bread"] = true;
-          if (!localStorage.getItem("carbManualDisabled_noodle")) carbEnabled["noodle"] = true;
-        }
-        const s = i || n,
-          o = e || i || n,
-          r = a || n,
-          c = t || i || n,
-          l = t || i || n,
-          d = t || i || n,
-          m = t || i || n,
-          h = i || n,
-          p = (e, shouldDisable) => {
-            // Only force-disable when dietary requires it
-            // Never re-enable — respect user's manual protein filter state
-            if (shouldDisable) {
-              const t = document.getElementById(e);
-              if (t && t.checked) {
-                t.checked = false;
-                const i = e.replace("chkP", "").toLowerCase();
-                proteinEnabled[i] = false;
-                _syncFilterBtn("btn" + e.replace("chk", ""), false);
-              }
-            }
-          };
-        (p("chkPChicken", s), p("chkPBeef", o), p("chkPEggs", r), p("chkPFish", c));
-        const u = {
-          chicken_thigh: s,
-          chicken_breast: s,
-          beef_regular: o,
-          beef_lean: o,
-          eggs: r,
-          eggs_dairy: r,
-          salmon: c,
-          shrimp: l,
-          cod: d,
-          tuna_canned: m,
-          turkey_mince: h,
-        };
-        Object.entries(u).forEach(([e, a]) => {
-          if (a) disabledIngredients.add(e);
-          else {
-            [...activeDietary].some((a) => {
-              const t = DIETARY_FILTERS.find((e) => e.id === a);
-              return t && t.blocks.includes(e);
-            }) || disabledIngredients.delete(e);
-          }
-        });
-      }
-      function syncDietaryFromProtein() {
-        const e = [];
-        (proteinEnabled.fish && activeDietary.has("no_fish") && (activeDietary.delete("no_fish"), e.push("no_fish")),
-          (proteinEnabled.beef || proteinEnabled.beef_lean) &&
-            activeDietary.has("no_beef") &&
-            (activeDietary.delete("no_beef"), e.push("no_beef")),
-          proteinEnabled.eggs && activeDietary.has("no_eggs") && (activeDietary.delete("no_eggs"), e.push("no_eggs")),
-          (proteinEnabled.chicken || proteinEnabled.beef) &&
-            activeDietary.has("vegetarian") &&
-            (activeDietary.delete("vegetarian"), e.push("vegetarian")),
-          (proteinEnabled.chicken || proteinEnabled.beef || proteinEnabled.fish || proteinEnabled.eggs) &&
-            activeDietary.has("vegan") &&
-            (activeDietary.delete("vegan"), e.push("vegan")),
-          e.length > 0 &&
-            (saveDietary(),
-            e.forEach((e) => {
-              const a = DIETARY_FILTERS.find((a) => a.id === e);
-              a &&
-                a.blocks.forEach((e) => {
-                  [...activeDietary].some((a) => {
-                    const t = DIETARY_FILTERS.find((e) => e.id === a);
-                    return t && t.blocks.includes(e);
-                  }) || disabledIngredients.delete(e);
-                });
-            }),
-            savePantry(),
-            buildDietaryGrid(),
-            updateDietaryBar()));
       }
       function toggleDietaryPanel() {
         const e = document.getElementById("dietaryPanel");
@@ -1502,12 +1293,9 @@
               : ((i.style.display = "none"), (i.style.opacity = "")));
           if (((i.style.opacity = ""), (t.carb !== "none" && !carbEnabled[t.carb]))) return void (i.style.display = "none");
           if ("sweet_potato" === t.carb && !carbEnabled.potato) return void (i.style.display = "none");
-          // Hide none/none recipes when carb or protein filters are active
-          if (t.carb === "none" && t.protein === "none") {
-            const carbFiltered = Object.values(carbEnabled).some(v => !v);
-            const protFiltered = Object.values(proteinEnabled).some(v => !v);
-            if (carbFiltered || protFiltered) return void (i.style.display = "none");
-          }
+          // Recipes without a protein/carb base (dips, baked oats) are not
+          // affected by the protein/carb buttons — those only switch off what
+          // they name.
           const n = getRecipeProtein(t);
           if (n !== "none" && !proteinEnabled[n]) return void (i.style.display = "none");
           if (videoFilterOnly) {
@@ -1546,7 +1334,7 @@
               h <= macroFilter.fatMax &&
               p >= macroFilter.scoreMin &&
               t.time <= macroFilter.timeMax,
-            g = Object.entries(INGREDIENT_RECIPE_MAP).some(([e, a]) => disabledIngredients.has(e) && a.includes(t.id)),
+            g = dietBlocks(t) || pantryBlocks(t),
             k = "all" === flavorFilter || (t.flavor || "savory") === flavorFilter,
             j = !spicyFilter || SPICY_RECIPE_IDS.has(t.id),
             q = !dipFilter || DIP_RECIPE_IDS.has(t.id),
@@ -1557,6 +1345,7 @@
         const i = R.filter((e) => !HIDDEN_RECIPE_IDS.has(e.id)).length,
           n = document.getElementById("totalCount");
         (n && (n.textContent = i), t && (t.style.display = 0 === a ? "block" : "none"));
+        updatePillStates(); // the badge always reflects what was just filtered
       }
       function setFilter(e, a) {
         ((currentCuisineFilter = e),
@@ -1803,6 +1592,8 @@
         cw && (cw.value = weights.chicken);
         const fpw = document.getElementById("filterProteinWeight");
         fpw && (fpw.value = weights.chicken);
+        const fcw = document.getElementById("filterCarbWeight");
+        fcw && (fcw.value = weights.rice);
         document.querySelectorAll(".card-weight-input").forEach((e) => { e.value = weights.chicken; });
       }
       function changeGlobalServings(e) {
@@ -2663,16 +2454,9 @@
       // My Pantry is switched off via the "pantry-off" class on <html> (see
       // index.html). While off, a visitor's saved pantry selection is left
       // untouched in localStorage but NOT applied — otherwise recipes would
-      // stay hidden with no visible control to bring them back. Dietary
-      // filters still add their blocked ingredients at startup.
+      // stay hidden with no visible control to bring them back.
       const PANTRY_ENABLED = !document.documentElement.classList.contains("pantry-off");
       let disabledIngredients = new Set(PANTRY_ENABLED ? JSON.parse(localStorage.getItem("pantryDisabled") || "[]") : []);
-      // Active dietary filters must block their ingredients before the first
-      // filterRecipes() run, not only at the end of startup.
-      activeDietary.forEach((id) => {
-        const d = DIETARY_FILTERS.find((f) => f.id === id);
-        d && d.blocks.forEach((ing) => disabledIngredients.add(ing));
-      });
       function savePantry() {
         if (!PANTRY_ENABLED) return; // don't overwrite the saved selection with dietary-only state
         try {
@@ -2716,69 +2500,14 @@
         updatePantryCounts();
       }
       function toggleIngredient(e, a) {
-        if (disabledIngredients.has(e)) {
-          const t = DIETARY_FILTERS.filter((a) => activeDietary.has(a.id) && a.blocks.includes(e));
-          (t.forEach((a) => {
-            (activeDietary.delete(a.id),
-              a.blocks.forEach((a) => {
-                if (a === e) return;
-                [...activeDietary].some((e) => {
-                  const t = DIETARY_FILTERS.find((a) => a.id === e);
-                  return t && t.blocks.includes(a);
-                }) || disabledIngredients.delete(a);
-              }));
-          }),
-            t.length > 0 && (saveDietary(), buildDietaryGrid(), updateDietaryBar()),
-            disabledIngredients.delete(e),
-            a.classList.remove("disabled"));
-        } else (disabledIngredients.add(e), a.classList.add("disabled"));
-        (savePantry(), updatePantryCounts());
-        if (
-          [
-            "chicken_thigh",
-            "chicken_breast",
-            "beef_regular",
-            "beef_lean",
-            "eggs",
-            "eggs_dairy",
-            "salmon",
-            "shrimp",
-            "cod",
-            "tuna_canned",
-            "turkey_mince",
-          ].includes(e)
-        ) {
-          const a = {
-            chicken_thigh: "chkPChicken",
-            chicken_breast: "chkPChicken",
-            beef_regular: "chkPBeef",
-            beef_lean: "chkPBeef",
-            eggs: "chkPEggs",
-            eggs_dairy: "chkPEggs",
-            salmon: "chkPFish",
-            shrimp: "chkPFish",
-            cod: "chkPFish",
-            tuna_canned: "chkPFish",
-          }[e];
-          if (a) {
-            const t = !disabledIngredients.has(e),
-              i = document.getElementById(a);
-            if (i) {
-              i.checked = t;
-              const e = a.replace("chkP", "").toLowerCase();
-              ((proteinEnabled[e] = t), t && syncDietaryFromProtein());
-              _syncFilterBtn("btn" + a.replace("chk", ""), t);
-            }
-          }
-        }
-        filterRecipes();
+        (disabledIngredients.has(e) ? disabledIngredients.delete(e) : disabledIngredients.add(e),
+          a.classList.toggle("disabled", disabledIngredients.has(e)),
+          savePantry(),
+          updatePantryCounts(),
+          filterRecipes());
       }
       function pantrySelectAll() {
         (disabledIngredients.clear(),
-          activeDietary.clear(),
-          saveDietary(),
-          buildDietaryGrid(),
-          updateDietaryBar(),
           savePantry(),
           renderPantry(),
           filterRecipes());
@@ -2917,8 +2646,7 @@
           if (HIDDEN_RECIPE_IDS.has(r.id)) return false;
           if (!recipeIsMealType(r, mealType)) return false;
           if (randActiveCuisines.size && !r.tags.some((t) => randActiveCuisines.has(t))) return false;
-          const excluded = Object.entries(INGREDIENT_RECIPE_MAP).some(([ing, ids]) => disabledIngredients.has(ing) && ids.includes(r.id));
-          return !excluded;
+          return !dietBlocks(r) && !pantryBlocks(r);
         });
       }
 
@@ -3662,6 +3390,7 @@
         filterRecipes();
       }
       function setFlavorFilter(e, a) {
+        e === flavorFilter && (e = "all"); // clicking the active flavor switches it off
         ((flavorFilter = e),
           document
             .querySelectorAll(".filter-btn.sweet, .filter-btn.savory")
@@ -3672,6 +3401,7 @@
           ("all" !== flavorFilter || "all" !== currentCuisineFilter
             ? t.classList.add("has-active")
             : t.classList.remove("has-active")),
+          updatePillStates(),
           filterRecipes());
       }
       function calcSauceMacros(e) {
@@ -4419,6 +4149,7 @@
             (section.items || []).forEach(item => {
               const ingId = findIngredientId(item.name);
               if (!ingId) return;
+              (RECIPE_INGREDIENT_IDS[recipeId] || (RECIPE_INGREDIENT_IDS[recipeId] = new Set())).add(ingId);
               if (!INGREDIENT_RECIPE_MAP[ingId]) INGREDIENT_RECIPE_MAP[ingId] = [];
               if (!INGREDIENT_RECIPE_MAP[ingId].includes(recipeId)) {
                 INGREDIENT_RECIPE_MAP[ingId].push(recipeId);
@@ -4972,9 +4703,4 @@
         })(),
         updatePillStates(),
         buildDietaryGrid(),
-        applyDietaryToProteinFilters(),
-        document.querySelectorAll('#page-recipes .filter-section').forEach(s => s.classList.add('open')),
-        activeDietary.forEach((e) => {
-          const a = DIETARY_FILTERS.find((a) => a.id === e);
-          a && a.blocks.forEach((e) => disabledIngredients.add(e));
-        }));
+        document.querySelectorAll('#page-recipes .filter-section').forEach(s => s.classList.add('open')));
