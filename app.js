@@ -2895,11 +2895,12 @@
       // instead of maintaining a second, divergent copy of that logic.
       const RAND_CUISINES = ["mediterranean", "american", "mexican", "korean", "japanese", "middle-eastern", "indian", "thai", "chinese", "greek"];
       let randActiveCuisines = new Set();
-      // Every recipe declares its mealType (breakfast | main | snack | dip) —
-      // tools/validate-recipes.js enforces it. Slots draw from "breakfast" and
-      // "main"; snacks and dips are never a standalone meal.
-      function classifyMealType(r) {
-        return r.mealType || "main";
+      // Every recipe declares its mealType as a list (breakfast | main | snack |
+      // dip) — a dish can be both a breakfast and a main. Enforced by
+      // tools/validate-recipes.js. Slots draw from "breakfast" and "main";
+      // snacks and dips are never a standalone meal.
+      function recipeIsMealType(r, type) {
+        return (r.mealType || ["main"]).includes(type);
       }
       // RAND_SLOT_TYPES picks which candidate pool a slot draws from;
       // RAND_SLOT_DISPLAY_LABELS is just what it's called on screen — lunch
@@ -2914,7 +2915,7 @@
       function randCandidatePool(mealType) {
         return R.filter((r) => {
           if (HIDDEN_RECIPE_IDS.has(r.id)) return false;
-          if (classifyMealType(r) !== mealType) return false;
+          if (!recipeIsMealType(r, mealType)) return false;
           if (randActiveCuisines.size && !r.tags.some((t) => randActiveCuisines.has(t))) return false;
           const excluded = Object.entries(INGREDIENT_RECIPE_MAP).some(([ing, ids]) => disabledIngredients.has(ing) && ids.includes(r.id));
           return !excluded;

@@ -15,7 +15,8 @@
 //   displayNum  positive integer, unique
 //   protein     chicken | beef | eggs | fish | tofu | none
 //   carb        rice | potato | noodle | bread | none
-//   mealType    breakfast | main | snack | dip   (Randomizer slots use this)
+//   mealType    non-empty array of breakfast | main | snack | dip — a dish can
+//               be both, e.g. ["breakfast", "main"]. Randomizer slots use this.
 //   time        minutes, integer 1–240
 //   title, desc non-empty strings
 //   tags        array of known tags (TAGS below), no duplicates
@@ -82,7 +83,8 @@ function validateFile(file) {
     seenNums.add(r.displayNum);
     if (!PROTEINS.includes(r.protein)) err(r, `protein must be one of ${PROTEINS.join("|")} (got ${JSON.stringify(r.protein)})`);
     if (!CARBS.includes(r.carb)) err(r, `carb must be one of ${CARBS.join("|")} (got ${JSON.stringify(r.carb)})`);
-    if (!MEAL_TYPES.includes(r.mealType)) err(r, `mealType must be one of ${MEAL_TYPES.join("|")} (got ${JSON.stringify(r.mealType)})`);
+    const mealOk = Array.isArray(r.mealType) && r.mealType.length > 0 && r.mealType.every((m) => MEAL_TYPES.includes(m)) && new Set(r.mealType).size === r.mealType.length;
+    if (!mealOk) err(r, `mealType must be a non-empty array of ${MEAL_TYPES.join("|")} without duplicates (got ${JSON.stringify(r.mealType)})`);
     if (!Number.isInteger(r.time) || r.time < 1 || r.time > 240) err(r, `time must be whole minutes 1–240 (got ${JSON.stringify(r.time)})`);
     if (!nonEmpty(r.title)) err(r, "title is empty");
     if (!nonEmpty(r.desc)) err(r, "desc is empty");
@@ -93,7 +95,9 @@ function validateFile(file) {
     else {
       r.tags.filter((t) => !TAGS.includes(t)).forEach((t) => err(r, `unknown tag "${t}" — add it to TAGS in tools/validate-recipes.js if it is intended`));
       if (new Set(r.tags).size !== r.tags.length) err(r, "duplicate tags");
-      if (r.mealType === "dip" !== r.tags.includes("dip")) err(r, 'mealType "dip" and the "dip" tag must go together');
+      const isDip = mealOk && r.mealType.includes("dip");
+      if (isDip !== r.tags.includes("dip")) err(r, 'mealType "dip" and the "dip" tag must go together');
+      if (isDip && r.mealType.length > 1) err(r, "a dip is not also a meal — mealType must be just [\"dip\"]");
     }
     Object.keys(r).filter((k) => !CARD_KEYS.includes(k)).forEach((k) => err(r, `unknown card field "${k}"`));
 

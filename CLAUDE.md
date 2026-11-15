@@ -50,7 +50,7 @@ R (card, in `const R = [...]`):
 { id, protein, displayNum, carb, mealType, time, title, desc, tags[], flavor,
   hint, sideEgg? }
   protein: chicken|beef|eggs|fish|tofu|none · carb: rice|potato|noodle|bread|none
-  mealType: breakfast|main|snack|dip · flavor: savory|sweet
+  mealType: array of breakfast|main|snack|dip, e.g. ["breakfast", "main"] · flavor: savory|sweet
 
 RECIPE_DETAILS (detail, in `const RECIPE_DETAILS = { <id>: {...} }`):
 { image, video, ingredients[{section, items[{name, amt}]}], steps[], hacks[], notes }
@@ -62,6 +62,13 @@ The macro engine adds them — never also write the base as a fixed amount.
 ⚠ To add/edit a recipe, update BOTH R and RECIPE_DETAILS in recipes-archive.js,
 run `node tools/check.js` (must pass), then `node tools/build-testset.js`
 (recipes.js is generated — never edit it by hand).
+
+## Later — after the foundation is finished (agreed with Nick, do not start early)
+- Orphaned recipe data: `thai-basil-chicken-rice` has RECIPE_DETAILS but no card
+  (validator warning). Decide: delete or add a card.
+- Review the recipes flagged by `node tools/check-recipe-macros.js recipes-archive.js`
+  (17 flagged — mostly "extras dominate": the sauce has more kcal than protein + carb).
+- Review mealType assignments (auto-assigned; most egg dishes are ["breakfast", "main"]).
 
 ## Creator
 FIT NIIKITER — TikTok + YouTube food content creator
