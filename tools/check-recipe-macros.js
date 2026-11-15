@@ -37,7 +37,9 @@ function extractFunction(src, signature) {
 
 const nutSrc = fs.readFileSync(path.join(REPO, "nutrition.js"), "utf8");
 const appSrc = fs.readFileSync(path.join(REPO, "app.js"), "utf8");
-const recSrc = fs.readFileSync(path.join(REPO, "recipes.js"), "utf8");
+// Optional argument: the recipes file to check (default: the live recipes.js).
+const RECIPES_FILE = process.argv[2] ? path.resolve(process.argv[2]) : path.join(REPO, "recipes.js");
+const recSrc = fs.readFileSync(RECIPES_FILE, "utf8");
 
 // ING_NAME_MAP is a `const {...}` object literal followed by hundreds of
 // `ING_NAME_MAP["..."] = "...";` statements appended after it — grab the

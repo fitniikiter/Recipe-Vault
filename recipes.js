@@ -14,6 +14,7 @@ const R = [
   desc: "Boneless thighs with quick-pickled cucumber, spring onions and Korean glaze over jasmine rice.",
   tags: ["korean"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
   {
@@ -27,6 +28,7 @@ const R = [
   desc: "Caramelised honey garlic chicken tossed with udon noodles and a punchy soy-sesame sauce.",
   tags: ["asian"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
   {
@@ -39,6 +41,7 @@ const R = [
   desc: "Pan-seared chicken with a high-protein Greek yogurt Caesar dressing, romaine, and parmesan in a toasted wrap.",
   tags: ["american", "mediterranean"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
   {
@@ -52,6 +55,7 @@ const R = [
   desc: "Pad kra pao-style minced beef with fresh Thai basil, fish sauce, oyster sauce, and a runny crispy fried egg on top.",
   tags: ["eggs", "thai", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
   {
@@ -64,6 +68,7 @@ const R = [
   desc: "Creamy baked oats with banana, chocolate whey, egg and dark chocolate chips — high-protein, macro-friendly dessert or breakfast.",
   tags: ["eggs", "oats", "protein-powder", "comfort"],
   flavor: "sweet",
+  mealType: "breakfast",
   hint: "",
 },
   {
@@ -76,6 +81,7 @@ const R = [
   desc: "Lean beef over crispy potato cubes with homemade Big Mac sauce, pickles, iceberg lettuce — all the flavour, none of the bun.",
   tags: ["american", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
   {
@@ -88,6 +94,7 @@ const R = [
   desc: "Juicy BBQ-glazed chicken with crispy smashed potatoes and a tangy Greek yogurt dip.",
   tags: ["american", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
   {
@@ -100,6 +107,7 @@ const R = [
   desc: "Double smash patties with crispy lacey edges, melted cheese, and a secret high-protein special sauce on a toasted brioche bun.",
   tags: ["american", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
   {
@@ -112,6 +120,7 @@ const R = [
   desc: "Slow-cooked ground beef ragù with hidden blended cottage cheese for extra protein — rich, meaty, and deeply satisfying.",
   tags: ["mediterranean", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
   {
@@ -124,6 +133,7 @@ const R = [
   desc: "Wok-fried day-old rice with eggs, gochujang, sesame oil, and spring onion — simple, fast, and dangerously good.",
   tags: ["korean", "spicy"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "Uses 150g cooked (day-old) rice — cook ~50g dry rice the night before.",
 },
   {
@@ -136,6 +146,7 @@ const R = [
   desc: "Eggs poached in a spiced tomato-pepper sauce with crumbled feta and crusty bread for dipping.",
   tags: ["middle-eastern", "mediterranean"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
   {
@@ -148,6 +159,7 @@ const R = [
   desc: "Pan-seared salmon fillet with a sticky homemade teriyaki glaze over steamed rice with sesame and spring onion.",
   tags: ["japanese"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
   {
@@ -160,6 +172,7 @@ const R = [
   desc: "Oven-crisped tofu over rice with seasoned spinach, carrot, cucumber and gochujang — the vegan bibimbap that actually satisfies.",
   tags: ["korean", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
   {
@@ -172,6 +185,7 @@ const R = [
   desc: "High-protein Caesar dressing with light mayo, low-fat quark and parmesan — creamy, tangy, and only ~167 kcal per batch.",
   tags: ["dip", "mediterranean"],
   flavor: "savory",
+  mealType: "dip",
   hint: "",
 },
   {
@@ -185,6 +199,7 @@ const R = [
   desc: "Crispy soy-ginger ground beef served in butter lettuce cups with a light miso sesame salad — low carb, high protein, ready in 15 minutes.",
   tags: ["japanese"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
   {
@@ -198,6 +213,7 @@ title: "Cinnamon Apple Egg Porridge",
 desc: "Creamy high-protein porridge with caramelised cinnamon apple — eggs stirred in off the heat for a silky, custardy texture.",
 tags: ["american", "comfort", "oats"],
 flavor: "sweet",
+mealType: "breakfast",
 hint: "",
 },
 ];
@@ -577,8 +593,8 @@ const RECIPE_DETAILS = {
   image: null,
   video: null,
   ingredients: [
-    { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{proteinG}}g raw" }] },
-    { section: "Carb Base", items: [{ name: "Day-old jasmine rice (cooked)", amt: "150g", id: "rice_cooked" }] },
+    { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{eggCount}} pieces" }] },
+    { section: "Carb Base", items: [{ name: "Jasmine rice (dry) — cooked a day ahead", amt: "{{carbG}}g" }] },
     { section: "Sauce", items: [
       { name: "Gochujang", amt: "1 tbsp" },
       { name: "Soy sauce", amt: "1.5 tbsp" },
@@ -610,7 +626,7 @@ const RECIPE_DETAILS = {
   image: null,
   video: null,
   ingredients: [
-    { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{proteinG}}g raw" }] },
+    { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{eggCount}} pieces" }] },
     { section: "Carb Base", items: [{ name: "Sourdough or crusty bread", amt: "{{carbG}}g" }] },
     { section: "Tomato Sauce", items: [
       { name: "Canned crushed tomatoes", amt: "400g" },

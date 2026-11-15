@@ -1139,6 +1139,10 @@ const NUTRITION_DB = {
     kcal: 313, p: 8, c: 75, f: 8,
     unit_g: {"piece":0.5}, typical_g: 1, emoji: "🌿", category: "spices",
   },
+  curry_leaves: {
+    kcal: 108, p: 6, c: 19, f: 1,
+    unit_g: {"piece":0.1,"tbsp":2,"tsp":0.7,"handful":3}, typical_g: 2, emoji: "🌿", category: "spices",
+  },
   berbere: {
     kcal: 251, p: 11, c: 43, f: 6,
     unit_g: {"tsp":3,"tbsp":9}, typical_g: 5, emoji: "🌶️", category: "spices",

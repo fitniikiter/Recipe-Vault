@@ -2895,20 +2895,11 @@
       // instead of maintaining a second, divergent copy of that logic.
       const RAND_CUISINES = ["mediterranean", "american", "mexican", "korean", "japanese", "middle-eastern", "indian", "thai", "chinese", "greek"];
       let randActiveCuisines = new Set();
-      // No recipe carries a manual meal-type field (yet — that's real curation
-      // work for another day). This derives one from data already there:
-      // protein "eggs" and a handful of title keywords are strong breakfast
-      // signals in this catalog, dip-tagged recipes are condiments/sauces (not
-      // a standalone meal), and everything else with a carb base is a
-      // lunch-or-dinner "main" — this recipe pool doesn't meaningfully
-      // distinguish lunch from dinner, so it isn't a separate slot.
-      const MEAL_TYPE_KEYWORDS = ["breakfast", "porridge", "pancake", "waffle", "omelette", "omelet", "scramble", "hash", "tamagoyaki", "menemen", "huevos", "bauernfr", "tortilla españ", "tortilla espan"];
+      // Every recipe declares its mealType (breakfast | main | snack | dip) —
+      // tools/validate-recipes.js enforces it. Slots draw from "breakfast" and
+      // "main"; snacks and dips are never a standalone meal.
       function classifyMealType(r) {
-        if (r.tags.includes("dip")) return "excluded";
-        const text = (r.title + " " + r.id + " " + r.desc).toLowerCase();
-        if (r.protein === "eggs" || r.tags.includes("oats") || MEAL_TYPE_KEYWORDS.some((k) => text.includes(k))) return "breakfast";
-        if (r.carb === "none") return "snack";
-        return "main";
+        return r.mealType || "main";
       }
       // RAND_SLOT_TYPES picks which candidate pool a slot draws from;
       // RAND_SLOT_DISPLAY_LABELS is just what it's called on screen — lunch
@@ -4080,6 +4071,8 @@
         "berbere spice blend": "berbere",
         "bay leaves": "bay_leaves",
         "bay leaf": "bay_leaves",
+        "curry leaves": "curry_leaves",
+        "curry leaves (fresh or dried)": "curry_leaves",
         cloves: "cloves",
         "cloves (ground)": "cloves",
         "ground cloves": "cloves",

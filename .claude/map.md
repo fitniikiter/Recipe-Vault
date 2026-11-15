@@ -38,6 +38,10 @@ for a CSS tweak, etc. Grep the anchors below.
   `const PROTEIN_DEFS`, `_nativeVariant(recipe)`.
 - **Share link / OG** → `app.js` `function shareRecipe`; per-recipe preview
   stubs live in `/r/<id>/index.html`, their images in `/og/<id>.png`.
+- **Recipe schema + checks** → `tools/validate-recipes.js` (schema in its
+  header), `tools/check.js` runs it plus ingredient coverage and macro
+  plausibility. `tools/build-testset.js` generates `recipes.js`.
+- **Randomizer meal slots** → card field `mealType`; `classifyMealType` just reads it.
 - **Reference data** →
   - `app.js`: `const NUT`, `INGREDIENT_DB`, `CARB_RATIOS`, `DIETARY_FILTERS`,
     `PANTRY_ITEMS`, `ING_NAME_MAP`, `CARB_COMPARE`, `PROTEIN_DEFS`.

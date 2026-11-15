@@ -374,6 +374,7 @@ const R = [
   desc: "Boneless thighs with quick-pickled cucumber, spring onions and Korean glaze over jasmine rice.",
   tags: ["korean"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -388,6 +389,7 @@ const R = [
   desc: "Caramelised honey garlic chicken tossed with udon noodles and a punchy soy-sesame sauce.",
   tags: ["asian"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -400,6 +402,7 @@ const R = [
   desc: "Pan-seared chicken with a high-protein Greek yogurt Caesar dressing, romaine, and parmesan in a toasted wrap.",
   tags: ["american", "mediterranean"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -413,6 +416,7 @@ const R = [
   desc: "Pad kra pao-style minced beef with fresh Thai basil, fish sauce, oyster sauce, and a runny crispy fried egg on top.",
   tags: ["eggs", "thai", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -425,6 +429,7 @@ const R = [
   desc: "Creamy baked oats with banana, chocolate whey, egg and dark chocolate chips — high-protein, macro-friendly dessert or breakfast.",
   tags: ["eggs", "oats", "protein-powder", "comfort"],
   flavor: "sweet",
+  mealType: "breakfast",
   hint: "",
 },
 {
@@ -437,6 +442,7 @@ const R = [
   desc: "Lean beef over crispy potato cubes with homemade Big Mac sauce, pickles, iceberg lettuce — all the flavour, none of the bun.",
   tags: ["american", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -449,6 +455,7 @@ const R = [
   desc: "Sticky, garlicky bulgogi-glazed ground beef over crispy oven-roasted potato cubes with gochujang mayo and sesame.",
   tags: ["korean"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -461,6 +468,7 @@ const R = [
   desc: "Rich, creamy tikka masala made with marinated chicken and a lightened-up tomato-yogurt sauce.",
   tags: ["indian"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -473,6 +481,7 @@ const R = [
   desc: "Crispy-skinned chicken glazed with five-spice and hoisin, served over jasmine rice with steamed bok choy.",
   tags: ["chinese"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -485,6 +494,7 @@ const R = [
   desc: "Juicy BBQ-glazed chicken with crispy smashed potatoes and a tangy Greek yogurt dip.",
   tags: ["american", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -499,6 +509,7 @@ const R = [
   desc: "Sweet-savory bulgogi beef over steamed rice with wilted sesame spinach and crispy kimchi.",
   tags: ["korean"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -511,6 +522,7 @@ const R = [
   desc: "Double smash patties with crispy lacey edges, melted cheese, and a secret high-protein special sauce on a toasted brioche bun.",
   tags: ["american", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -523,6 +535,7 @@ const R = [
   desc: "Seasoned ground beef taco meat over cilantro rice with fresh pico de gallo and Greek yogurt sour cream.",
   tags: ["mexican"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -535,6 +548,7 @@ const R = [
   desc: "Silky tofu and ground beef simmered in a fiery doubanjiang sauce — bold, numbing, and seriously addictive.",
   tags: ["chinese", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -547,6 +561,7 @@ const R = [
   desc: "Minced beef larb with toasted rice powder, fresh mint, lime, and chili — bright, herby, and punchy.",
   tags: ["thai", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -559,6 +574,7 @@ const R = [
   desc: "Spiced ground beef kofta patties with roasted potato wedges and a cool garlic-yogurt tahini dip.",
   tags: ["middle-eastern"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -572,6 +588,7 @@ const R = [
   desc: "Ground beef simmered in a sweet dashi-soy broth over rice with a soft-boiled egg — the ultimate Japanese comfort bowl.",
   tags: ["eggs", "japanese"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -584,6 +601,7 @@ const R = [
   desc: "Slow-cooked ground beef ragù with hidden blended cottage cheese for extra protein — rich, meaty, and deeply satisfying.",
   tags: ["mediterranean", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -597,6 +615,7 @@ const R = [
   desc: "Ground beef bibimbap with gochujang, sautéed veggies, a crispy fried egg, and sesame oil — restaurant vibes at home.",
   tags: ["eggs", "korean", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -609,6 +628,7 @@ const R = [
   desc: "Crispy potato skins loaded with spiced ground beef, melted cheddar, and Greek yogurt — American comfort done right.",
   tags: ["american", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -621,6 +641,7 @@ const R = [
   desc: "Lean ground beef simmered in a spiced onion-tomato masala with green peas — quick, high-protein, and deeply aromatic.",
   tags: ["indian"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -633,6 +654,7 @@ const R = [
   desc: "Bun Bo Nam Bo-style ground beef with lemongrass, fish sauce, fresh herbs, and rice noodles — light, fragrant, and punchy.",
   tags: ["vietnamese"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -645,6 +667,7 @@ const R = [
   desc: "Thin flatbread topped with spiced ground beef, fresh tomatoes, parsley, and a squeeze of lemon — low-fat and incredibly satisfying.",
   tags: ["middle-eastern", "turkish"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -657,6 +680,7 @@ const R = [
   desc: "Tender beef and rice meatballs in a bright avgolemono lemon-egg sauce served over potatoes — comforting and surprisingly protein-dense.",
   tags: ["mediterranean", "greek"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -670,6 +694,7 @@ const R = [
   desc: "Ground beef with crispy scallions, soy sauce, and sesame oil tossed through thick wheat noodles — deceptively simple and deeply savory.",
   tags: ["eggs", "taiwanese"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -682,6 +707,7 @@ const R = [
   desc: "Wok-tossed beef strips with tomatoes, red onions, aji amarillo, and soy sauce over rice — one of the world's great fusion stir-fries.",
   tags: ["peruvian"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -694,6 +720,7 @@ const R = [
   desc: "Chipotle-marinated ground beef with black beans, cilantro rice, pico de gallo, and Greek yogurt crema — Chipotle done better at home.",
   tags: ["mexican"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -707,6 +734,7 @@ const R = [
   desc: "Lean ground beef in a light sesame-miso-chili broth with ramen noodles and bok choy — a high-protein take on the Japanese classic without the heavy fat.",
   tags: ["japanese", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -719,6 +747,7 @@ const R = [
   desc: "Spiced ground beef with fiery harissa paste on warm flatbread, topped with cool yogurt and fresh mint — bold North African flavors in every bite.",
   tags: ["north-african", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -731,6 +760,7 @@ const R = [
   desc: "Ground beef slow-simmered in a rich coconut-chili paste with lemongrass and galangal over steamed rice — intensely aromatic and unlike anything else in the vault.",
   tags: ["indonesian", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -743,6 +773,7 @@ const R = [
   desc: "Ground beef sautéed with berbere spice blend, jalapeños, and caramelized onions over spiced potatoes — bold East African flavors, zero complexity.",
   tags: ["ethiopian", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -756,6 +787,7 @@ const R = [
   desc: "Lean ground beef in a quick star anise and cinnamon-spiced broth with rice noodles, bean sprouts, and fresh Thai basil — a weeknight pho that actually delivers.",
   tags: ["vietnamese"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -768,6 +800,7 @@ const R = [
   desc: "Ground beef over rice drenched in homemade chimichurri — vibrant parsley, garlic, oregano, and red wine vinegar. Fresh, herby, and done in 20 minutes.",
   tags: ["argentinian"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -780,6 +813,7 @@ const R = [
   desc: "Seasoned ground beef in a crusty baguette with pickled daikon and carrots, jalapeño, fresh cilantro, and sriracha mayo — Vietnam's greatest sandwich, high-protein edition.",
   tags: ["vietnamese", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -794,6 +828,7 @@ const R = [
   desc: "Spicy stir-fried chicken in gochujang dakgalbi sauce with chewy glass noodles and cabbage.",
   tags: ["korean", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -806,6 +841,7 @@ const R = [
   desc: "Boldly spiced chicken stuffed into a toasted flatbread with garlic yogurt sauce and pickled red onion.",
   tags: ["middle-eastern"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -818,6 +854,7 @@ const R = [
   desc: "Sliced chicken over jasmine rice with a creamy spicy peanut sauce and quick-pickled cucumber.",
   tags: ["thai", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -830,6 +867,7 @@ const R = [
   desc: "Juicy brined chicken with crispy rosemary potatoes and a light lemon-mustard pan sauce.",
   tags: ["mediterranean"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -842,6 +880,7 @@ const R = [
   desc: "Classic kung pao with chicken, toasted peanuts, and dried chili — sweet, sour, spicy, and crunchy.",
   tags: ["chinese", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -854,6 +893,7 @@ const R = [
   desc: "Tandoori-spiced chicken chunks charred and wrapped in warm naan with a fresh mint chutney.",
   tags: ["indian"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -866,6 +906,7 @@ const R = [
   desc: "Crispy oven-baked panko chicken with a rich homemade tonkatsu sauce over steamed rice.",
   tags: ["japanese"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -878,6 +919,7 @@ const R = [
   desc: "Cumin-spiced chicken over cilantro lime rice with corn, black beans, and a Greek yogurt crema.",
   tags: ["mexican"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -890,6 +932,7 @@ const R = [
   desc: "Quick wok-tossed egg noodles with chicken, vegetables, and a savory oyster-soy sauce.",
   tags: ["chinese", "asian"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -902,6 +945,7 @@ const R = [
   desc: "Shawarma-spiced chicken over roasted potato wedges with tahini sauce and a fresh tomato-herb salad.",
   tags: ["middle-eastern"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -916,6 +960,7 @@ const R = [
   desc: "Wok-fried day-old rice with eggs, gochujang, sesame oil, and spring onion — simple, fast, and dangerously good.",
   tags: ["korean", "spicy"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "Uses 150g cooked (day-old) rice — cook ~50g dry rice the night before.",
 },
 {
@@ -928,6 +973,7 @@ const R = [
   desc: "Eggs poached in a spiced tomato-pepper sauce with crumbled feta and crusty bread for dipping.",
   tags: ["middle-eastern", "mediterranean"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 {
@@ -940,6 +986,7 @@ const R = [
   desc: "Raw egg stirred into steaming hot rice with soy sauce and sesame oil — Japan's ultimate 10-minute comfort dish.",
   tags: ["japanese"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 {
@@ -952,6 +999,7 @@ const R = [
   desc: "Fried eggs on crispy tortillas with smoky ranchero tomato sauce, black beans, and fresh coriander.",
   tags: ["mexican"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 {
@@ -964,6 +1012,7 @@ const R = [
   desc: "The ultimate Chinese home-cook classic — soft scrambled eggs with sweet tomatoes in a light umami sauce over rice.",
   tags: ["chinese"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 {
@@ -976,6 +1025,7 @@ const R = [
   desc: "Crispy potato hash with caramelised onion, smoked paprika, and eggs baked right into the pan — brunch goals.",
   tags: ["american", "comfort"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 {
@@ -988,6 +1038,7 @@ const R = [
   desc: "A super-crispy, puffed Thai omelette with fish sauce and lime over jasmine rice — the best egg dish you've never made.",
   tags: ["thai"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 {
@@ -1000,6 +1051,7 @@ const R = [
   desc: "Fluffy egg white omelette with feta, sun-dried tomatoes, and spinach in a toasted whole-wheat wrap.",
   tags: ["mediterranean"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 {
@@ -1012,6 +1064,7 @@ const R = [
   desc: "Silky low-and-slow French scrambled eggs with crème fraîche and chives on thick sourdough toast.",
   tags: ["comfort", "fusion", "french"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 {
@@ -1024,6 +1077,7 @@ const R = [
   desc: "Wok-tossed egg noodles with scrambled eggs, bean sprouts, and soy-sesame sauce — faster than delivery, better than both.",
   tags: ["asian"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 
@@ -1040,6 +1094,7 @@ const R = [
   desc: "Juicy lemon-marinated chicken breast over fluffy rice with tzatziki, cherry tomatoes, and fresh herbs.",
   tags: ["greek", "mediterranean"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1052,6 +1107,7 @@ const R = [
   desc: "White miso and mirin glazed chicken breast, seared until caramelised, over steamed rice with quick-pickled radish.",
   tags: ["japanese"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1064,6 +1120,7 @@ const R = [
   desc: "Spiced harissa-marinated chicken breast over fluffy couscous with roasted peppers and Greek yogurt.",
   tags: ["north-african", "mediterranean", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1076,6 +1133,7 @@ const R = [
   desc: "Poached and shredded chicken breast over rice vermicelli with nuoc cham dressing, cucumber, and fresh herbs.",
   tags: ["vietnamese"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1088,6 +1146,7 @@ const R = [
   desc: "Grilled spiced chicken breast over a fresh tabbouleh-style couscous loaded with parsley, tomato, and lemon.",
   tags: ["middle-eastern", "mediterranean"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1102,6 +1161,7 @@ const R = [
   desc: "Lean spiced beef with cumin, coriander and cinnamon over couscous with roasted cherry tomatoes and yogurt.",
   tags: ["north-african", "moroccan"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1114,6 +1174,7 @@ const R = [
   desc: "Seared lean beef sliced thin over rice with ponzu dressing, grated daikon, and spring onion.",
   tags: ["japanese"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1126,6 +1187,7 @@ const R = [
   desc: "Lean ground beef with tomatoes, olives, and cumin-spiced sofrito over rice with fresh pico de gallo.",
   tags: ["mexican"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1138,6 +1200,7 @@ const R = [
   desc: "Fragrant lemongrass and fish sauce lean beef mince over steamed rice with shredded carrot and cucumber.",
   tags: ["vietnamese"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1150,6 +1213,7 @@ const R = [
   desc: "Lean ground beef with baharat spices and pine nuts over bulgur wheat with yogurt and fresh mint.",
   tags: ["turkish", "middle-eastern"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1164,6 +1228,7 @@ const R = [
   desc: "Fluffy baked frittata with wilted spinach, crumbled feta and cherry tomatoes — high protein, zero effort plating.",
   tags: ["greek", "mediterranean"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 {
@@ -1176,6 +1241,7 @@ const R = [
   desc: "Soft-scrambled eggs cooked directly in a spiced tomato and pepper sauce — the Turkish breakfast worth making any time of day.",
   tags: ["turkish", "middle-eastern"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 {
@@ -1188,6 +1254,7 @@ const R = [
   desc: "Layered sweet-savory rolled omelette sliced over steamed rice with soy dipping sauce and pickled ginger.",
   tags: ["japanese"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 {
@@ -1200,6 +1267,7 @@ const R = [
   desc: "Silky, custardy steamed eggs in a stone bowl with gochugaru, spring onion, and sesame — deceptively simple and deeply satisfying.",
   tags: ["korean", "spicy"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 {
@@ -1212,6 +1280,7 @@ const R = [
   desc: "Eggs poached in a vibrant green tomatillo, spinach and jalapeño sauce, finished with crumbled feta and fresh coriander.",
   tags: ["middle-eastern", "mexican", "spicy"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 
@@ -1226,6 +1295,7 @@ const R = [
   desc: "Pan-seared salmon fillet with a sticky homemade teriyaki glaze over steamed rice with sesame and spring onion.",
   tags: ["japanese"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1238,6 +1308,7 @@ const R = [
   desc: "White miso and sake glazed salmon over steamed rice with edamame, pickled ginger, and sesame.",
   tags: ["japanese"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1250,6 +1321,7 @@ const R = [
   desc: "Canned or fresh ahi tuna in a sesame soy marinade over sushi rice with avocado, cucumber, and edamame.",
   tags: ["hawaiian", "japanese"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1262,6 +1334,7 @@ const R = [
   desc: "Flaky oven-baked cod with lemon, garlic and fresh herbs over roasted potatoes — the cleanest high-protein dinner there is.",
   tags: ["mediterranean"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1274,6 +1347,7 @@ const R = [
   desc: "Wok-blasted shrimp in a fiery lime and fish sauce dressing over steamed rice with fresh herbs and cucumber.",
   tags: ["thai", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1288,6 +1362,7 @@ const R = [
   desc: "Oven-crisped tofu over rice with seasoned spinach, carrot, cucumber and gochujang — the vegan bibimbap that actually satisfies.",
   tags: ["korean", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1300,6 +1375,7 @@ const R = [
   desc: "Braised and pan-crisped tofu in a sticky gochugaru and soy glaze over rice with quick-pickled vegetables.",
   tags: ["korean"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1312,6 +1388,7 @@ const R = [
   desc: "Pad kra pao-style with crispy tofu, fresh Thai basil, oyster sauce and a runny fried egg — the plant-based version that holds its own.",
   tags: ["thai"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1324,6 +1401,7 @@ const R = [
   desc: "White miso glazed tofu over rice with edamame, shredded carrot, pickled ginger, and sesame dressing.",
   tags: ["japanese"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1336,6 +1414,7 @@ const R = [
   desc: "Firm tofu braised in soy, vinegar and bay leaves until sticky and caramelised — the Filipino adobo technique that makes tofu impossible to resist.",
   tags: ["filipino"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1349,6 +1428,7 @@ const R = [
   desc: "High-protein Caesar dressing with light mayo, low-fat quark and parmesan — creamy, tangy, and only ~167 kcal per batch.",
   tags: ["dip", "mediterranean"],
   flavor: "savory",
+  mealType: "dip",
   hint: "",
 },
 
@@ -1362,6 +1442,7 @@ const R = [
   desc: "Tender marinated chicken in a rich, creamy tomato-butter masala with cashews and fragrant Indian spices.",
   tags: ["indian"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1374,6 +1455,7 @@ const R = [
   desc: "Glossy homemade teriyaki sauce over pan-seared chicken — cleaner than takeout, tastes just as good.",
   tags: ["japanese"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1386,6 +1468,7 @@ const R = [
   desc: "Smoky chipotle-marinated thighs over cilantro lime rice with black bean salsa and Greek yogurt crema.",
   tags: ["mexican"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1398,6 +1481,7 @@ const R = [
   desc: "Thick, creamy potato-and-egg omelette — the classic Spanish tapa that's more satisfying than it looks.",
   tags: ["mediterranean", "comfort", "spanish"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 {
@@ -1410,6 +1494,7 @@ const R = [
   desc: "Crispy fried potatoes with scrambled eggs, spring onion and optional ham — the ultimate German farmer's breakfast.",
   tags: ["comfort", "german"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 
@@ -1423,6 +1508,7 @@ const R = [
   desc: "Golden frittata packed with roasted potato, rosemary and parmesan — Italian comfort in a pan.",
   tags: ["mediterranean", "comfort", "italian"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 
@@ -1436,6 +1522,7 @@ const R = [
   desc: "Crispy skillet potatoes scrambled with egg, jalapeño and salsa — a classic Mexican breakfast ready in 12 minutes.",
   tags: ["mexican", "spicy"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 
@@ -1449,6 +1536,7 @@ const R = [
   desc: "Spiced egg omelette with onion, green chili, coriander and cumin served with warm roti — fast, protein-dense, and full of flavour.",
   tags: ["indian", "spicy"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 
@@ -1462,6 +1550,7 @@ const R = [
   desc: "Soft-boiled eggs simmered in a fragrant onion-tomato masala — a staple of Indian home cooking that's wildly underrated.",
   tags: ["indian"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 
@@ -1476,6 +1565,7 @@ const R = [
   desc: "Fluffy butter-scrambled eggs, crispy turkey bacon, cheddar, and crispy potato bites wrapped in a golden-toasted flour tortilla.",
   tags: ["american", "comfort"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 
@@ -1490,6 +1580,7 @@ const R = [
   desc: "Eggs poached directly in spicy tomato sauce, served with crusty bread to scoop — quick, dramatic, and deeply satisfying.",
   tags: ["mediterranean", "comfort", "italian", "spicy"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 
@@ -1503,6 +1594,7 @@ const R = [
   desc: "Chipotle-braised crumbled tofu in corn tortillas with avocado, pickled onion and fresh coriander — the Chipotle copycat done at home.",
   tags: ["mexican"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1516,6 +1608,7 @@ const R = [
   desc: "Crispy tofu cubes in a velvety spiced spinach sauce — a high-protein take on palak paneer that's lighter but just as satisfying.",
   tags: ["indian"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1529,6 +1622,7 @@ const R = [
   desc: "Marinated grilled tofu in a rich tomato-yogurt tikka sauce — all the comfort of the classic, completely plant-based.",
   tags: ["indian"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1542,6 +1636,7 @@ const R = [
   desc: "Crispy smoked tofu glazed in BBQ sauce over smashed potatoes with Greek yogurt dip — American comfort gone plant-based.",
   tags: ["american", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1555,6 +1650,7 @@ const R = [
   desc: "Crumbled tofu ragù with tomato, red wine and parmesan — a plant-based bolognese that's genuinely meaty in texture.",
   tags: ["mediterranean", "comfort", "italian"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1568,6 +1664,7 @@ const R = [
   desc: "Chicken breast in a creamy Dijon mustard sauce with steamed potatoes — a French bistro classic that's lighter than it tastes.",
   tags: ["mediterranean", "comfort", "french"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1581,6 +1678,7 @@ const R = [
   desc: "Shredded chicken in chipotle-tomato sauce over crispy potato wedges with Greek yogurt crema — smoky, bold, and macro-smart.",
   tags: ["mexican"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1594,6 +1692,7 @@ const R = [
   desc: "Tender chicken breast in a spiced spinach sauce — clean, protein-dense, and deeply aromatic served with warm naan.",
   tags: ["indian"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1607,6 +1706,7 @@ const R = [
   desc: "Pan-seared chicken breast in a bright lemon-caper butter sauce tossed with spaghetti — Italian elegance in 20 minutes.",
   tags: ["mediterranean", "comfort", "italian"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1620,6 +1720,7 @@ const R = [
   desc: "White bean chicken chili spooned over a crispy baked potato with cheddar and Greek yogurt — the ultimate loaded potato.",
   tags: ["american", "comfort", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1633,6 +1734,7 @@ const R = [
   desc: "Lemon-oregano marinated chicken skewers over herbed potato wedges with tzatziki and tomato — a Greek feast in a bowl.",
   tags: ["mediterranean", "greek"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1646,6 +1748,7 @@ const R = [
   desc: "Chicken braised in a saffron-almond sauce with a hard-boiled egg stirred in — a 16th-century Spanish classic that still slaps.",
   tags: ["mediterranean", "spanish"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1659,6 +1762,7 @@ const R = [
   desc: "Pan-seared chicken breast in a light cream-mustard sauce with boiled potatoes — classic German comfort made macro-friendly.",
   tags: ["comfort", "german"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1672,6 +1776,7 @@ const R = [
   desc: "Smoky beef chili piled onto a crispy baked potato with melted cheddar and Greek yogurt — American comfort, macro-optimised.",
   tags: ["american", "comfort", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1685,6 +1790,7 @@ const R = [
   desc: "Hearty paprika beef stew with tender boiled potatoes — a Central European classic that's high in protein and deeply warming.",
   tags: ["comfort", "german"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1698,6 +1804,7 @@ const R = [
   desc: "French shepherd's pie — spiced ground beef under a golden mashed potato crust, baked until bubbling.",
   tags: ["comfort", "french"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1711,6 +1818,7 @@ const R = [
   desc: "Spiced shredded beef in crispy cheese-dipped corn tortillas with consommé for dipping — the taco that broke the internet.",
   tags: ["mexican"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1724,6 +1832,7 @@ const R = [
   desc: "Charred citrus-marinated beef strips over crispy potato wedges with fresh pico de gallo and yogurt crema.",
   tags: ["mexican"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1737,6 +1846,7 @@ const R = [
   desc: "Ground beef simmered in a Kashmiri-spiced tomato sauce with warming spices — served with naan for scooping.",
   tags: ["indian"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1750,6 +1860,7 @@ const R = [
   desc: "Tender herbed beef meatballs in a rich tomato broth with potatoes — an Italian farmhouse soup that eats like a full meal.",
   tags: ["mediterranean", "comfort", "italian"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1763,6 +1874,7 @@ const R = [
   desc: "Sweet and tangy beef Sloppy Joe filling piled into a crispy baked potato — childhood nostalgia, macro-optimised.",
   tags: ["american", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1776,6 +1888,7 @@ const R = [
   desc: "Lean ground beef in a rich veggie gravy under a fluffy mashed potato topping — the British classic stripped down to pure comfort.",
   tags: ["comfort", "british"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -1790,6 +1903,7 @@ const R = [
   desc: "Smoky chipotle-spiced ground beef, black beans, butter-scrambled eggs, and cheddar wrapped in a flour tortilla — bold, filling, and built for prep day.",
   tags: ["mexican", "american", "spicy", "comfort", "eggs"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 
@@ -1804,6 +1918,7 @@ const R = [
   desc: "Gochujang-marinated chicken, a crispy fried egg, and sriracha-sesame yogurt sauce in a warm flour tortilla — Korea meets breakfast in the best way.",
   tags: ["korean", "fusion", "spicy", "eggs"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 
@@ -1818,6 +1933,7 @@ const R = [
   desc: "Soft scrambled eggs with crumbled feta, wilted spinach, roasted red peppers, and a cool tzatziki drizzle — a bright, high-protein Mediterranean morning.",
   tags: ["mediterranean", "greek"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 
@@ -1832,6 +1948,7 @@ const R = [
   desc: "Smash-crisped beef patties, a runny fried egg, melted cheese, pickles, and a smoky burger sauce — a smash burger in breakfast burrito form.",
   tags: ["american", "comfort", "eggs"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 
@@ -1845,6 +1962,7 @@ const R = [
   desc: "German chicken sausages (Geflügel-Nürnberger), slow-scrambled eggs, caramelized onions & mustard-potato schmear — dunked in homemade brown gravy.",
   tags: ["german", "comfort"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 {
@@ -1857,6 +1975,7 @@ const R = [
     desc: "Chicken thighs braised in ras el hanout with preserved lemon and olives — roasted potatoes and a bright harissa carrot salad on the side.",
     tags: ["moroccan", "comfort"],
     flavor: "savory",
+    mealType: "main",
     hint: "",
   },
 {
@@ -1869,6 +1988,7 @@ const R = [
   desc: "Classic Gurkensalat with a creamy Quark and Greek yogurt dressing — 19g protein per portion as a side dish in 10 minutes.",
   tags: ["german"],
   flavor: "savory",
+  mealType: "snack",
   hint: "",
 },
 
@@ -1883,6 +2003,7 @@ const R = [
   tags: ["american", "comfort", "eggs"],
   sideEgg: true,
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 {
@@ -1895,6 +2016,7 @@ const R = [
   desc: "Giant baked potato loaded with smoky BBQ ground beef, Greek yogurt slaw, and cheddar — comfort food that actually hits macros.",
   tags: ["american", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "Par-boil the potato for 20 min before oven for faster, crispier skin.",
 },
 {
@@ -1907,6 +2029,7 @@ const R = [
   desc: "Crispy smashed potatoes drenched in rich beef and onion gravy — American comfort food at its most satisfying.",
   tags: ["american", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1919,6 +2042,7 @@ const R = [
   desc: "Ground beef and crispy bacon pan-fried with golden potato chunks, garlic, and rosemary — rustic, protein-packed one-pan dinner.",
   tags: ["american", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1931,6 +2055,7 @@ const R = [
   desc: "All the flavours of a Philly cheesesteak — beef, peppers, onions, and melted provolone — over crispy potato cubes.",
   tags: ["american", "comfort"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 {
@@ -1943,6 +2068,7 @@ const R = [
   desc: "Seasoned ground beef over golden oven-roasted potato cubes with burger sauce and pickles — deconstructed fast food, macro-friendly.",
   tags: ["american", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1955,6 +2081,7 @@ const R = [
   desc: "Taco-seasoned ground beef over crispy roasted potato cubes with pico de gallo, jalapeño, and Greek yogurt crema.",
   tags: ["mexican", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1967,6 +2094,7 @@ const R = [
   desc: "Rich, deeply spiced Mexican birria broth with ground beef and tender potatoes — made fast with ground beef instead of slow-braised cuts.",
   tags: ["mexican", "comfort", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1979,6 +2107,7 @@ const R = [
   desc: "Classic Mexican picadillo — spiced ground beef with potatoes, tomatoes, olives, and raisins — served as a hearty bowl.",
   tags: ["mexican", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -1992,6 +2121,7 @@ const R = [
   tags: ["mexican", "spicy", "eggs"],
   sideEgg: true,
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2004,6 +2134,7 @@ const R = [
   desc: "Baked potato loaded with enchilada-sauced ground beef and melted cheddar — all the flavour of enchiladas without the tortilla carbs.",
   tags: ["mexican", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "Par-boil potato 20 min before oven to speed up cooking.",
 },
 {
@@ -2016,6 +2147,7 @@ const R = [
   desc: "One-pan chicken roasted over crispy lemon-herb potatoes with cherry tomatoes and fresh herbs.",
   tags: ["mediterranean"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2028,6 +2160,7 @@ const R = [
   desc: "Ground beef, kimchi, and crispy potato cubes stir-fried together in one pan — spicy, funky, fast, and deeply satisfying.",
   tags: ["korean", "spicy"],
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 {
@@ -2040,6 +2173,7 @@ const R = [
   desc: "Potato cubes braised in a fiery gochujang sauce with ground beef — all the sticky, spicy flavour of tteokbokki without the rice cakes.",
   tags: ["korean", "spicy", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2052,6 +2186,7 @@ const R = [
   desc: "Korean fermented soybean paste stew with ground beef, potato, zucchini, and tofu — earthy, deeply savoury, and warming.",
   tags: ["korean", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2064,6 +2199,7 @@ const R = [
   desc: "Shawarma-spiced ground beef over golden roasted potato cubes with garlic yogurt, pickled chili, and fresh herbs.",
   tags: ["middle-eastern"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2076,6 +2212,7 @@ const R = [
   desc: "Ground beef braised with ras el hanout, preserved lemon, and potato in a fragrant tomato base — finished with harissa yogurt and mint.",
   tags: ["moroccan", "north-african", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2088,6 +2225,7 @@ const R = [
   desc: "Spiced ground beef over silky mashed potato with garlic yogurt, Aleppo chili butter, and dried mint — inspired by Turkish manti dumplings.",
   tags: ["turkish", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2100,6 +2238,7 @@ const R = [
   desc: "Rich, golden Japanese curry with ground beef and tender potato — made fast with a curry roux block for an authentic thick, glossy sauce.",
   tags: ["japanese", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2112,6 +2251,7 @@ const R = [
   desc: "Sichuan-inspired ground beef in a spicy, numbing doubanjiang sauce over potato cubes — bold, funky, and deeply satisfying.",
   tags: ["chinese", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2125,6 +2265,7 @@ const R = [
   tags: ["thai", "spicy", "eggs"],
   sideEgg: true,
   flavor: "savory",
+  mealType: "breakfast",
   hint: "",
 },
 {
@@ -2137,6 +2278,7 @@ const R = [
   desc: "Sticky teriyaki-glazed ground beef over crispy oven-roasted potato cubes with spring onion and sesame — simple and completely addictive.",
   tags: ["japanese"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2149,6 +2291,7 @@ const R = [
   desc: "Crispy patatas bravas topped with smoky spiced ground beef and a tangy light aioli — Spanish tapas turned into a macro-friendly bowl.",
   tags: ["spanish", "mediterranean", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2161,6 +2304,7 @@ const R = [
   desc: "Ground beef braised in soy sauce and vinegar adobo style with tender potato cubes — salty, tangy, and deeply addictive Filipino comfort food.",
   tags: ["filipino", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2173,6 +2317,7 @@ const R = [
   desc: "Classic Indian ground beef and potato curry with aromatic whole spices, ginger, garlic, and a rich tomato base — finished with fresh coriander.",
   tags: ["indian", "comfort", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2185,6 +2330,7 @@ title: "Greek Smashed Potato Bowl",
 desc: "Garlic-herb chicken thighs on shatteringly crispy smashed potatoes — lemon yogurt sauce, big texture contrast.",
 tags: ["mediterranean", "comfort", "greek"],
 flavor: "savory",
+mealType: "main",
 hint: "",
 },
 {
@@ -2197,6 +2343,7 @@ hint: "",
   desc: "Seared chicken thighs smothered in creamy green chimichurri mayo — on aggressively crispy smashed potatoes with a tomato red onion salad.",
   tags: ["argentinian"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2209,6 +2356,7 @@ hint: "",
   desc: "Fiery harissa-marinated chicken thighs charred in the pan — on paprika smashed potatoes with a Moroccan carrot and orange salad.",
   tags: ["moroccan", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2221,6 +2369,7 @@ hint: "",
   desc: "Full shawarma spice blend on pan-seared chicken thighs — cumin smashed potatoes, garlic yogurt sauce, and a proper sumac fattoush salad.",
   tags: ["middle-eastern"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2233,6 +2382,7 @@ hint: "",
   desc: "Chicken thighs glazed in a fiery buldak sauce over crispy smashed potatoes — cooled down by a sesame cucumber salad on the side.",
   tags: ["korean", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2245,6 +2395,7 @@ hint: "",
   desc: "Crispy baked cornstarch-coated chicken bites and potato bites with fried basil — a lighter take on the Taiwanese street food classic.",
   tags: ["taiwanese"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2257,6 +2408,7 @@ hint: "",
   desc: "Chicken thighs simmered in a fragrant coconut curry with curry leaves and potatoes — bold, aromatic, and deeply warming.",
   tags: ["asian", "spicy", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2269,6 +2421,7 @@ hint: "",
   desc: "Chicken thighs marinated in piri piri paste, pan-seared and served over crispy roasted potatoes with a lemon herb cucumber salad.",
   tags: ["mediterranean", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2281,6 +2434,7 @@ hint: "",
   desc: "Chicken thighs slow-simmered in a peanut-coconut massaman curry with soft potatoes — rich, mildly spiced, and deeply satisfying.",
   tags: ["thai", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2293,6 +2447,7 @@ hint: "",
   desc: "Chicken thighs braised in a sweet soy-mirin broth with potatoes and onions — Japan's ultimate comfort dish, lighter than the original.",
   tags: ["japanese", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2305,6 +2460,7 @@ hint: "",
   desc: "Crispy paprika chicken thighs over patatas bravas with smoky bravas sauce and light garlic aioli — with a sherry vinegar cucumber salad.",
   tags: ["spanish"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2317,6 +2473,7 @@ hint: "",
   desc: "Chicken thighs simmered in a quick dark mole with dark chocolate and chipotle — served with roasted potatoes and a jalapeño cucumber salad.",
   tags: ["mexican", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2329,6 +2486,7 @@ hint: "",
   desc: "Chicken thighs braised in a fiery gochujang-soy broth with potatoes — a spicy Korean one-pot that deepens as it reduces.",
   tags: ["korean", "spicy", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2341,6 +2499,7 @@ hint: "",
   desc: "Chicken thighs glazed in a char siu hoisin-five spice sauce over crispy roasted potatoes — with a hoisin sesame cucumber salad.",
   tags: ["chinese"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2353,6 +2512,7 @@ hint: "",
   desc: "Chicken thighs simmered in a fragrant green curry with light coconut milk and potatoes — fresh, herby, and surprisingly lean.",
   tags: ["thai"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2365,6 +2525,7 @@ hint: "",
   desc: "Grilled chicken thighs with a punchy nam jim jaew dipping sauce over crispy potatoes — the Thai classic, leaner and faster.",
   tags: ["thai", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2377,6 +2538,7 @@ hint: "",
   desc: "Baked panko chicken katsu with crispy potato wedges and tonkatsu sauce — 80% of the deep-fried version with a fraction of the oil.",
   tags: ["japanese"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2389,6 +2551,7 @@ hint: "",
   desc: "Za'atar and sumac-marinated chicken thighs roasted with potatoes and a pomegranate molasses glaze — with a sumac cucumber salad.",
   tags: ["middle-eastern"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2401,6 +2564,7 @@ hint: "",
   desc: "Lemon-oregano chicken thighs over crispy smashed potatoes with a garlic yogurt sauce and a fresh Greek cucumber salad.",
   tags: ["greek"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2413,6 +2577,7 @@ hint: "",
   desc: "Chicken thighs marinated in herby chermoula, roasted with potatoes and served with a preserved lemon cucumber salad.",
   tags: ["moroccan"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2425,6 +2590,7 @@ hint: "",
   desc: "Smoky chipotle pulled chicken tinga loaded into crispy baked potatoes with light sour cream and a jalapeño lime cucumber salad.",
   tags: ["mexican", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2437,6 +2603,7 @@ hint: "",
   desc: "Chicken thighs braised in a star anise and cinnamon pho broth with potatoes — finished with fresh herbs, lime, and bean sprouts.",
   tags: ["vietnamese"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2449,10 +2616,11 @@ hint: "",
   desc: "Crispy roasted potatoes loaded with smoky chipotle chicken, melted cheddar, light sour cream, and a lime cilantro cucumber salad.",
   tags: ["mexican", "comfort", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
-  id: "cucumber-Yoghurt-salad",
+  id: "cucumber-yoghurt-salad",
   protein: "none",
   displayNum: 169,
   carb: "none",
@@ -2461,6 +2629,7 @@ hint: "",
   desc: "Thinly sliced cucumber folded into seasoned Yoghurt with dill and garlic — creamy, refreshing, and almost zero calories.",
   tags: ["dip", "german"],
   flavor: "savory",
+  mealType: "dip",
   hint: "",
 },
 {
@@ -2473,6 +2642,7 @@ title: "Shawarma Chicken Rice Bowl",
 desc: "Chicken thighs crusted in shawarma spices, served over basmati rice with garlic yogurt sauce and a fresh cucumber-tomato salad.",
 tags: ["middle-eastern"],
 flavor: "savory",
+mealType: "main",
 hint: "",
 },{
 id: "mexican-chipotle-chicken-wrap",
@@ -2484,6 +2654,7 @@ title: "Smoky Chipotle Chicken Wrap",
 desc: "Charred chipotle chicken thighs wrapped in a toasted tortilla with crisp lettuce and a creamy garlic yogurt sauce.",
 tags: ["mexican", "spicy"],
 flavor: "savory",
+mealType: "main",
 hint: "",
 },{
 id: "chinese-dan-dan-udon",
@@ -2495,6 +2666,7 @@ title: "Spicy Dan Dan Udon Noodles",
 desc: "Ground beef in a rich sesame-chili sauce over thick udon noodles — Sichuan street food turned high-protein weeknight banger.",
 tags: ["chinese", "spicy"],
 flavor: "savory",
+mealType: "main",
 hint: "",
 },{
 id: "american-smash-burger-wrap",
@@ -2506,6 +2678,7 @@ title: "Smash Burger Wrap",
 desc: "Crispy smashed beef patty with melted cheese and special sauce — all the burger flavour wrapped in a toasted tortilla.",
 tags: ["american", "comfort"],
 flavor: "savory",
+mealType: "main",
 hint: "",
 },
 {
@@ -2519,6 +2692,7 @@ hint: "",
   desc: "Pan-seared chicken thighs in a creamy garlic parmesan yogurt sauce — all the richness of comfort food at half the calories.",
   tags: ["american", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2532,6 +2706,7 @@ hint: "",
   desc: "Juicy chicken thighs in a golden garlic pan sauce with crispy smashed potatoes and a fresh tomato salad — weeknight comfort in 25 minutes.",
   tags: ["american", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2545,6 +2720,7 @@ hint: "",
   desc: "Yogurt-marinated chicken thighs charred in the oven — served with cumin-roasted potatoes and cool cucumber raita.",
   tags: ["indian", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "Marinate 20 min minimum — overnight gives dramatically deeper flavour.",
 },
 {
@@ -2558,6 +2734,7 @@ hint: "",
   desc: "Crispy soy-ginger ground beef served in butter lettuce cups with a light miso sesame salad — low carb, high protein, ready in 15 minutes.",
   tags: ["japanese"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2571,6 +2748,7 @@ hint: "",
   desc: "Pan-seared chicken thighs in a silky soy-mirin glaze finished with 5g butter — Japanese weeknight comfort in under 20 minutes.",
   tags: ["japanese", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2584,6 +2762,7 @@ hint: "",
   desc: "Crispy oven-seared chicken thighs tossed in a buttery hot sauce — served with golden potato wedges and a cool Greek yogurt celery salad.",
   tags: ["american", "spicy", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2597,6 +2776,7 @@ hint: "",
   desc: "Extra-crispy pan-seared chicken thighs glazed in a sticky honey soy sauce — with roasted potatoes and a light sesame cucumber salad.",
   tags: ["asian", "fusion"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2610,6 +2790,7 @@ hint: "",
   desc: "Gochugaru-marinated chicken thighs charred in a hot pan and served over roasted potatoes with a sharp, tangy quick-pickled radish salad.",
   tags: ["korean", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2623,6 +2804,7 @@ hint: "",
   desc: "Baked crispy tostadas loaded with spiced ground beef, cumin-roasted potato cubes, and a tangy lime cabbage slaw.",
   tags: ["mexican", "spicy"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2636,6 +2818,7 @@ hint: "",
   desc: "Spiced ground beef köfte patties with a secret pinch of cinnamon — grilled hot and served with roasted potatoes, garlic yogurt, and cucumber-tomato salad.",
   tags: ["turkish", "middle-eastern"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2649,6 +2832,7 @@ hint: "",
   desc: "Pan-seared chicken thighs glazed in a creamy dijon honey sauce with Greek yogurt — served over baby potatoes with a simple green salad.",
   tags: ["american", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2662,6 +2846,7 @@ title: "Cinnamon Apple Egg Porridge",
 desc: "Creamy high-protein porridge with caramelised cinnamon apple — eggs stirred in off the heat for a silky, custardy texture.",
 tags: ["american", "comfort", "oats"],
 flavor: "sweet",
+mealType: "breakfast",
 hint: "",
 },
 {
@@ -2674,6 +2859,7 @@ title: "Peanut Satay Chicken + Crispy Potatoes",
 desc: "Chicken thigh strips glazed in a rich peanut-lime satay sauce — over pan-fried crispy potatoes with a fresh cucumber-tomato salad.",
 tags: ["asian", "spicy"],
 flavor: "savory",
+mealType: "main",
 hint: "",
 },
 {
@@ -2686,6 +2872,7 @@ title: "Moroccan Harissa Chicken + Cumin Potatoes",
 desc: "Harissa-glazed chicken thighs caramelized in a pan — served over cumin-spiced crispy potatoes with a fresh mint-tomato salad.",
 tags: ["moroccan", "north-african", "spicy"],
 flavor: "savory",
+mealType: "main",
 hint: "",
 },
 {
@@ -2698,6 +2885,7 @@ title: "Honey Sriracha Chicken + Sweet Potato",
 desc: "Sticky honey-sriracha glazed chicken thighs over pan-fried sweet potato cubes — sweet heat, sesame, and a crisp cucumber-tomato salad.",
 tags: ["asian", "spicy"],
 flavor: "savory",
+mealType: "main",
 hint: "",
 },
 {
@@ -2710,6 +2898,7 @@ hint: "",
   desc: "Thinly sliced beef simmered in sweet soy-mirin glaze over steamed rice — topped with a raw egg yolk and spring onion.",
   tags: ["japanese", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -2723,6 +2912,7 @@ hint: "",
   desc: "Ground beef with Ras el Hanout and warm spices in tomato sauce over rice — topped with cool mint yogurt.",
   tags: ["moroccan", "north-african", "comfort"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 
@@ -2736,6 +2926,7 @@ hint: "",
   desc: "Spiced ground beef with oregano and allspice stuffed into warm pita with homemade tzatziki, tomato, and red onion.",
   tags: ["greek", "mediterranean"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2748,6 +2939,7 @@ title: "Korean Egg Toast",
 desc: "Fluffy egg bonded to toasted bread, layered with ham and cheese, finished with a spicy gochujang mayo — Seoul street food in 10 minutes.",
 tags: ["korean", "comfort", "spicy"],
 flavor: "savory",
+mealType: "breakfast",
 hint: "",
 },{
 id: "asian-chicken-satay-rice",
@@ -2759,6 +2951,7 @@ title: "Chicken Satay Skewers",
 desc: "Turmeric-marinated chicken thighs grilled to a caramel char, served over jasmine rice with a creamy spicy peanut sauce.",
 tags: ["asian", "spicy"],
 flavor: "savory",
+mealType: "main",
 hint: "Marinate overnight for dramatically better char and flavour — next day prep takes under 15 minutes.",
 },{
 id: "indian-butter-chicken-light-rice",
@@ -2770,6 +2963,7 @@ title: "Butter Chicken Light",
 desc: "Tender seared chicken in a garam masala tomato sauce made creamy with Magerquark and a touch of cream cheese — same comfort, half the fat.",
 tags: ["indian", "comfort"],
 flavor: "savory",
+mealType: "main",
 hint: "",
 },{
 id: "korean-gochujang-butter-pasta-noodle",
@@ -2781,6 +2975,7 @@ title: "Gochujang Butter Pasta",
 desc: "Spaghetti tossed in gochujang toasted in butter, parmesan emulsified with pasta water — Korean-Italian fusion that hits in under 20 minutes.",
 tags: ["korean", "fusion", "spicy"],
 flavor: "savory",
+mealType: "main",
 hint: "",
 },
 {
@@ -2793,6 +2988,7 @@ hint: "",
   desc: "Chicken thighs marinated in harissa and yogurt, oven-roasted until charred — served with crispy potatoes and tahini salad.",
   tags: ["north-african", "spicy", "middle-eastern"],
   flavor: "savory",
+  mealType: "main",
   hint: "",
 },
 {
@@ -2806,6 +3002,7 @@ title: "Korean Beef Lettuce Cups",
 desc: "Lean gochujang beef in crisp butter lettuce cups — with a creamy spicy sesame mayo that ties it all together.",
 tags: ["korean", "spicy"],
 flavor: "savory",
+mealType: "main",
 hint: "",
 },
 {
@@ -2818,6 +3015,7 @@ title: "Quick Pickled Red Onions",
 desc: "Tangy, slightly sweet red onions in apple cider vinegar — ready in 15 minutes, lasts a week, makes everything taste better.",
 tags: ["dip", "fusion"],
 flavor: "savory",
+mealType: "dip",
 hint: "",
 },
 ];
@@ -4619,8 +4817,8 @@ const RECIPE_DETAILS = {
   image: null,
   video: null,
   ingredients: [
-    { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{proteinG}}g raw" }] },
-    { section: "Carb Base", items: [{ name: "Day-old jasmine rice (cooked)", amt: "150g", id: "rice_cooked" }] },
+    { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{eggCount}} pieces" }] },
+    { section: "Carb Base", items: [{ name: "Jasmine rice (dry) — cooked a day ahead", amt: "{{carbG}}g" }] },
     { section: "Sauce", items: [
       { name: "Gochujang", amt: "1 tbsp" },
       { name: "Soy sauce", amt: "1.5 tbsp" },
@@ -4653,7 +4851,7 @@ const RECIPE_DETAILS = {
   image: null,
   video: null,
   ingredients: [
-    { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{proteinG}}g raw" }] },
+    { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{eggCount}} pieces" }] },
     { section: "Carb Base", items: [{ name: "Sourdough or crusty bread", amt: "{{carbG}}g" }] },
     { section: "Tomato Sauce", items: [
       { name: "Canned crushed tomatoes", amt: "400g" },
@@ -4692,7 +4890,7 @@ const RECIPE_DETAILS = {
   image: null,
   video: null,
   ingredients: [
-    { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{proteinG}}g raw" }] },
+    { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{eggCount}} pieces" }] },
     { section: "Carb Base", items: [{ name: "Short grain Japanese rice (dry)", amt: "{{carbG}}g" }] },
     { section: "Sauce", items: [
       { name: "Soy sauce", amt: "1.5 tsp per bowl" },
@@ -4724,7 +4922,7 @@ const RECIPE_DETAILS = {
   image: null,
   video: null,
   ingredients: [
-    { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{proteinG}}g raw" }] },
+    { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{eggCount}} pieces" }] },
     { section: "Carb Base", items: [{ name: "Small corn or wheat tortillas", amt: "{{carbG}}g" }] },
     { section: "Ranchero Sauce", items: [
       { name: "Canned crushed tomatoes", amt: "300g" },
@@ -4764,7 +4962,7 @@ const RECIPE_DETAILS = {
   image: null,
   video: null,
   ingredients: [
-    { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{proteinG}}g raw" }] },
+    { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{eggCount}} pieces" }] },
     { section: "Carb Base", items: [{ name: "Jasmine rice (dry)", amt: "{{carbG}}g" }] },
     { section: "Stir Fry", items: [
       { name: "Ripe tomatoes (large)", amt: "4 medium" },
@@ -4799,7 +4997,7 @@ const RECIPE_DETAILS = {
   image: null,
   video: null,
   ingredients: [
-    { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{proteinG}}g raw" }] },
+    { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{eggCount}} pieces" }] },
     { section: "Carb Base", items: [{ name: "Waxy potatoes (diced small)", amt: "{{carbG}}g" }] },
     { section: "Hash Base", items: [
       { name: "Onion (diced)", amt: "1 medium" },
@@ -4835,7 +5033,7 @@ const RECIPE_DETAILS = {
   image: null,
   video: null,
   ingredients: [
-    { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{proteinG}}g raw" }] },
+    { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{eggCount}} pieces" }] },
     { section: "Carb Base", items: [{ name: "Jasmine rice (dry)", amt: "{{carbG}}g" }] },
     { section: "Omelette Mix", items: [
       { name: "Fish sauce", amt: "1 tbsp" },
@@ -4876,10 +5074,10 @@ const RECIPE_DETAILS = {
   image: null,
   video: null,
   ingredients: [
-    { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{proteinG}}g raw" }] },
+    { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{eggCount}} pieces" }] },
     { section: "Carb Base", items: [{ name: "Whole wheat tortilla wraps", amt: "{{carbG}}g" }] },
     { section: "Omelette", items: [
-      { name: "Egg whites (additional)", amt: "{{eggCount}} pieces" },
+      { name: "Egg whites (additional)", amt: "2 pieces" },
       { name: "Feta cheese (crumbled)", amt: "40g" },
       { name: "Baby spinach", amt: "60g" },
       { name: "Sun-dried tomatoes (drained)", amt: "30g" },
@@ -4914,7 +5112,7 @@ const RECIPE_DETAILS = {
   image: null,
   video: null,
   ingredients: [
-    { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{proteinG}}g raw" }] },
+    { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{eggCount}} pieces" }] },
     { section: "Carb Base", items: [{ name: "Sourdough bread (thick slices)", amt: "{{carbG}}g" }] },
     { section: "Scrambled Eggs", items: [
       { name: "Crème fraîche or Greek yogurt (10%)", amt: "2 tbsp" },
@@ -4947,7 +5145,7 @@ const RECIPE_DETAILS = {
   image: null,
   video: null,
   ingredients: [
-    { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{proteinG}}g raw" }] },
+    { section: "Protein", items: [{ name: "Eggs (whole)", amt: "{{eggCount}} pieces" }] },
     { section: "Carb Base", items: [{ name: "Egg noodles (dry)", amt: "{{carbG}}g" }] },
     { section: "Sauce", items: [
       { name: "Soy sauce", amt: "2 tbsp" },
@@ -5421,7 +5619,7 @@ const RECIPE_DETAILS = {
     video: "",
     ingredients: [
       { section: "Frittata", items: [
-        { name: "Whole eggs", amt: "{{proteinG}}g raw" },
+        { name: "Whole eggs", amt: "{{eggCount}} pieces" },
         { name: "Baby spinach", amt: "100g" },
         { name: "Feta cheese (crumbled)", amt: "40g" },
         { name: "Cherry tomatoes (halved)", amt: "8 pieces" },
@@ -5455,7 +5653,7 @@ const RECIPE_DETAILS = {
     video: "",
     ingredients: [
       { section: "Menemen", items: [
-        { name: "Whole eggs", amt: "{{proteinG}}g raw" },
+        { name: "Whole eggs", amt: "{{eggCount}} pieces" },
         { name: "Green pepper (diced)", amt: "1 whole" },
         { name: "Onion (diced)", amt: "½ whole" },
         { name: "Canned chopped tomatoes", amt: "250g" },
@@ -5492,7 +5690,7 @@ const RECIPE_DETAILS = {
     video: "",
     ingredients: [
       { section: "Tamagoyaki", items: [
-        { name: "Whole eggs", amt: "{{proteinG}}g raw" },
+        { name: "Whole eggs", amt: "{{eggCount}} pieces" },
         { name: "Mirin", amt: "1 tbsp" },
         { name: "Soy sauce (low-sodium)", amt: "1 tsp" },
         { name: "Sugar", amt: "1 tsp" },
@@ -5530,7 +5728,7 @@ const RECIPE_DETAILS = {
     video: "",
     ingredients: [
       { section: "Steamed Eggs", items: [
-        { name: "Whole eggs", amt: "{{proteinG}}g raw" },
+        { name: "Whole eggs", amt: "{{eggCount}} pieces" },
         { name: "Chicken or anchovy broth", amt: "180ml" },
         { name: "Fish sauce", amt: "1 tsp" },
         { name: "Gochugaru (Korean chili flakes)", amt: "1 tsp" },
@@ -5574,7 +5772,7 @@ const RECIPE_DETAILS = {
         { name: "Salt", amt: "to taste" },
       ]},
       { section: "Eggs", items: [
-        { name: "Whole eggs", amt: "{{proteinG}}g raw" },
+        { name: "Whole eggs", amt: "{{eggCount}} pieces" },
         { name: "Feta cheese (crumbled)", amt: "30g" },
       ]},
       { section: "Side", items: [
@@ -9940,7 +10138,7 @@ notes: "Leftovers keep 3 days in the fridge — reheat potatoes in a dry pan or 
     ],
     notes: "Keeps 3 days in the fridge — the spices deepen overnight. Works equally well with chicken breast; reduce the simmer time to 15 minutes.",
   },
-"cucumber-Yoghurt-salad": {
+"cucumber-yoghurt-salad": {
   image: null,
   video: "",
   ingredients: [

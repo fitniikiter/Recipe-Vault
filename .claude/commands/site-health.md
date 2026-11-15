@@ -1,16 +1,18 @@
 ---
 description: Check Recipe Vault for broken things
-allowed-tools: Read, Bash, WebSearch
+allowed-tools: Read, Bash, Grep
 ---
 
 Audit Recipe Vault health:
 
-1. Read index.html — check for JS syntax errors
-2. Read recipes.js — verify all R[] entries have matching RECIPE_DETAILS
-3. Check nutrition.js — find any ingredients in recipes not in DB
-4. Count recipes — report current total
-5. Find any TODO/FIXME comments
-6. Check if known pending bug is still present:
-   changeModalServings() cache invalidation for none/none recipes (~line 7143)
+1. Syntax: `node --check app.js recipes.js recipes-archive.js nutrition.js sw.js`
+2. Recipe data: `node tools/check.js` — schema, ingredient coverage and macro
+   plausibility for the full catalog (recipes-archive.js) and the live test
+   set (recipes.js). Must end with "All checks passed".
+3. Count recipes — report catalog total and how many are live
+4. Find any TODO/FIXME comments
+5. Load the site in a headless browser (mobile + desktop, light + dark):
+   every tab, every recipe modal, the Randomizer — report JS errors and any
+   place where card, modal and Randomizer show different macros.
 
-Report: what works, what broken, what missing.
+Report: what works, what is broken, what is missing.

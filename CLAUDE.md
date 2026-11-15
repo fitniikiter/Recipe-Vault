@@ -43,17 +43,25 @@ class on `<html>` in index.html to bring it back.
   (the test set keeps the original displayNum, so it has gaps on screen)
 
 ## Recipe Structure
-Split across two objects in recipes.js, both keyed/matched by the same `id`:
+The schema is defined (and enforced) in `tools/validate-recipes.js` — read its
+header before touching recipe data. Two objects, matched by the same `id`:
 
 R (card, in `const R = [...]`):
-{ id, protein, displayNum, carb, time, title, desc, tags[], flavor, hint,
-  sideEgg? }
+{ id, protein, displayNum, carb, mealType, time, title, desc, tags[], flavor,
+  hint, sideEgg? }
+  protein: chicken|beef|eggs|fish|tofu|none · carb: rice|potato|noodle|bread|none
+  mealType: breakfast|main|snack|dip · flavor: savory|sweet
 
 RECIPE_DETAILS (detail, in `const RECIPE_DETAILS = { <id>: {...} }`):
 { image, video, ingredients[{section, items[{name, amt}]}], steps[], hacks[], notes }
 
+The adjustable base uses placeholders in `amt`, exactly one each:
+`{{proteinG}}g raw` (or `{{eggCount}} pieces` for egg recipes) and `{{carbG}}g`.
+The macro engine adds them — never also write the base as a fixed amount.
+
 ⚠ To add/edit a recipe, update BOTH R and RECIPE_DETAILS in recipes-archive.js,
-then run `node tools/build-testset.js` (recipes.js is generated — never edit it by hand).
+run `node tools/check.js` (must pass), then `node tools/build-testset.js`
+(recipes.js is generated — never edit it by hand).
 
 ## Creator
 FIT NIIKITER — TikTok + YouTube food content creator

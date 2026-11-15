@@ -14,6 +14,7 @@
 // formatting inside each recipe survive unchanged.
 const fs = require("fs");
 const path = require("path");
+const { parseRecipeSource } = require("./lib/recipe-source");
 const REPO = path.join(__dirname, "..");
 const ARCHIVE = path.join(REPO, "recipes-archive.js");
 const OUT = path.join(REPO, "recipes.js");
@@ -38,74 +39,10 @@ const TESTSET_IDS = [
   "caesar-dressing-light", // dip (excluded from the Randomizer)
 ];
 
-// Returns the index just past the bracket that closes the one at `open`,
-// skipping strings, template literals and comments.
-function matchBracket(src, open) {
-  let depth = 0;
-  for (let i = open; i < src.length; i++) {
-    const ch = src[i];
-    if (ch === '"' || ch === "'" || ch === "`") {
-      for (i++; i < src.length && src[i] !== ch; i++) if (src[i] === "\\") i++;
-    } else if (ch === "/" && src[i + 1] === "/") {
-      i = src.indexOf("\n", i);
-      if (i < 0) break;
-    } else if (ch === "/" && src[i + 1] === "*") {
-      i = src.indexOf("*/", i) + 1;
-    } else if (ch === "{" || ch === "[") {
-      depth++;
-    } else if (ch === "}" || ch === "]") {
-      if (--depth === 0) return i + 1;
-    }
-  }
-  throw new Error("Unbalanced bracket at offset " + open);
-}
-
-// Splits the body of a top-level array/object literal into its entries.
-// Each entry is { id, text } where text is the untouched source slice.
-function splitEntries(src, bodyStart, bodyEnd, kind) {
-  const entries = [];
-  let i = bodyStart;
-  while (i < bodyEnd) {
-    const ch = src[i];
-    if (ch === "/" && src[i + 1] === "/") { i = src.indexOf("\n", i) + 1; continue; }
-    if (ch === "/" && src[i + 1] === "*") { i = src.indexOf("*/", i) + 2; continue; }
-    if (kind === "array" && ch === "{") {
-      const end = matchBracket(src, i);
-      const text = src.slice(i, end);
-      const m = text.match(/\bid:\s*"([^"]+)"/);
-      if (!m) throw new Error("Card without id near offset " + i);
-      entries.push({ id: m[1], text });
-      i = end;
-      continue;
-    }
-    if (kind === "object") {
-      const m = /^\s*(?:"([^"]+)"|([A-Za-z_$][\w$-]*))\s*:\s*\{/.exec(src.slice(i, i + 300));
-      if (m) {
-        const keyStart = i + m[0].search(/\S/);
-        const open = i + m[0].length - 1;
-        const end = matchBracket(src, open);
-        entries.push({ id: m[1] || m[2], text: src.slice(keyStart, end) });
-        i = end;
-        continue;
-      }
-    }
-    i++;
-  }
-  return entries;
-}
-
 const src = fs.readFileSync(ARCHIVE, "utf8");
 const all = process.argv.includes("--all");
 
-const rDecl = src.indexOf("const R = [");
-const rOpen = src.indexOf("[", rDecl);
-const rEnd = matchBracket(src, rOpen);
-const dDecl = src.indexOf("const RECIPE_DETAILS = {", rEnd);
-const dOpen = src.indexOf("{", dDecl);
-const dEnd = matchBracket(src, dOpen);
-
-const cards = splitEntries(src, rOpen + 1, rEnd - 1, "array");
-const details = splitEntries(src, dOpen + 1, dEnd - 1, "object");
+const { cards, details } = parseRecipeSource(src);
 
 if (all) {
   fs.writeFileSync(OUT, src);

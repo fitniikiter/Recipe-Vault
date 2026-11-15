@@ -31,7 +31,9 @@ function extractFunction(src, signature) {
 
 const nutSrc = fs.readFileSync(path.join(REPO, "nutrition.js"), "utf8");
 const appSrc = fs.readFileSync(path.join(REPO, "app.js"), "utf8");
-const recSrc = fs.readFileSync(path.join(REPO, "recipes.js"), "utf8");
+// Optional argument: the recipes file to check (default: the live recipes.js).
+const RECIPES_FILE = process.argv[2] ? path.resolve(process.argv[2]) : path.join(REPO, "recipes.js");
+const recSrc = fs.readFileSync(RECIPES_FILE, "utf8");
 
 const ingMapStart = appSrc.indexOf("const ING_NAME_MAP = {");
 const ingMapEnd = appSrc.indexOf("let compareSortKey =");
