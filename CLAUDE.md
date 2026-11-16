@@ -32,6 +32,9 @@ Recipes · Calorie Calculator · Nutrition (compare view + ingredient database) 
 Randomizer. My Pantry is switched OFF (not deleted): remove the `pantry-off`
 class on `<html>` in index.html to bring it back.
 
+Saved in the visitor's browser only (localStorage): favorites, sort order,
+diet filters, calculator inputs, Randomizer target + planned day, theme.
+
 ## Rules — ALWAYS FOLLOW
 - Always push directly to main after every change automatically
 - All code comments in English

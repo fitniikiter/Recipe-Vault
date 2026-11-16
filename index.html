@@ -92,7 +92,7 @@
     <!-- Self-hosted fonts (Bebas Neue + DM Sans) — no runtime dependency on
          Google Fonts. Files live in /fonts, generated into /fonts.css. -->
     <link rel="stylesheet" href="/fonts.css" />
-    <link rel="stylesheet" href="style.css?v=202611165" />
+    <link rel="stylesheet" href="style.css?v=202611166" />
   </head>
   <body>
     <div class="nav-tabs">
@@ -323,7 +323,21 @@
       </div>
       <div class="recipes-main">
       <div class="stats-bar">
-        Showing <span id="visibleCount">–</span> of <span id="totalCount">–</span> recipes
+        <div class="list-tools">
+          <div class="list-count">Showing <span id="visibleCount">–</span> of <span id="totalCount">–</span> recipes</div>
+          <button type="button" class="list-tool-btn" id="btnFavOnly" aria-pressed="false" onclick="toggleFavOnly()">♥ Favorites <b id="favCount"></b></button>
+          <label class="list-sort">
+            <span>Sort</span>
+            <select id="recipeSort" onchange="setRecipeSort(this.value)">
+              <option value="default">Recipe number</option>
+              <option value="kcal">Lowest calories</option>
+              <option value="protein">Most protein</option>
+              <option value="ratio">Most protein per calorie</option>
+              <option value="time">Fastest</option>
+              <option value="score">Best satiety score</option>
+            </select>
+          </label>
+        </div>
         <div class="active-filter-note" id="activeFilterNote" style="display: none"></div>
       </div>
       <div id="noResults" class="no-results" style="display: none">
@@ -694,6 +708,8 @@
         <div class="rand-actions">
           <button class="filter-pill" onclick="randRerollAll()">🎲 Reroll unlocked</button>
           <button class="filter-pill" onclick="randResetLocks()">🔓 Unlock all</button>
+          <button class="filter-pill rand-action-primary" onclick="openShoppingList()">🛒 Shopping list</button>
+          <button class="filter-pill" onclick="randShareDay()">🔗 Share this day</button>
         </div>
       </div>
     </div>
@@ -778,7 +794,7 @@
           <span class="share-icon">🔗</span> Share
         </button>
         <div class="modal-header">
-          <div class="modal-meta"><span class="modal-num" id="modalNum"></span><span class="card-time" id="modalTime"></span></div>
+          <div class="modal-meta"><span class="modal-num" id="modalNum"></span><span class="card-time" id="modalTime"></span><button type="button" class="modal-fav-btn" id="modalFavBtn" aria-pressed="false" onclick="currentModalRecipe && toggleFavorite(currentModalRecipe.id)">♡ Save</button></div>
           <div class="modal-title" id="modalTitle"></div>
         </div>
         <div class="modal-body">
@@ -821,7 +837,7 @@
     </footer>
     <script src="nutrition.js?v=202611151" defer></script>
   <script src="recipes.js?v=202611152" defer></script>
-    <script src="app.js?v=202611165" defer></script>
+    <script src="app.js?v=202611166" defer></script>
     <div class="hiw-overlay" id="hiwOverlay" onclick="event.target === this && closeHowItWorksModal()">
       <div class="hiw-modal">
         <button class="hiw-modal-close" onclick="closeHowItWorksModal()">✕</button>
@@ -900,6 +916,20 @@
           </div>
         </div>
         <div class="hiw-section">
+          <div class="hiw-section-title">♥ Favorites, Sorting & Cook Mode</div>
+          <div class="hiw-step">
+            <strong>Favorites</strong> — Tap the heart on a recipe to save it, then tap “Favorites” above the list to
+            see only those. Saved in this browser.
+          </div>
+          <div class="hiw-step">
+            <strong>Sort</strong> — Order the list by calories, protein, protein per calorie, time or satiety score.
+          </div>
+          <div class="hiw-step">
+            <strong>Cook mode</strong> — In a recipe, open the Recipe tab and tap “Start cooking” for one step at a
+            time in large type. Your screen stays on while you cook.
+          </div>
+        </div>
+        <div class="hiw-section">
           <div class="hiw-section-title">🎲 Calculator & Randomizer</div>
           <div class="hiw-step">
             <strong>Calorie Calculator</strong> — Enter your stats and goal to get your daily calories and macros.
@@ -907,6 +937,10 @@
           <div class="hiw-step">
             <strong>Randomizer</strong> — Rolls a full day of meals for a daily target and sizes each portion to its
             share of the day. Lock the meals you like, reroll the rest, and tap a meal to cook exactly that portion.
+          </div>
+          <div class="hiw-step">
+            <strong>Shopping list & sharing</strong> — “Shopping list” adds up the ingredients of the whole day.
+            “Share this day” creates a link that opens the same meals and portions.
           </div>
         </div>
         <div class="hiw-section hiw-section-pantry">
@@ -930,6 +964,42 @@
             <strong>Ingredients are clickable</strong> — tap any ingredient to see its individual macro contribution
             based on your current weight settings.
           </div>
+        </div>
+      </div>
+    </div>
+    <!-- Cook mode: one step at a time, full screen -->
+    <div class="cook-overlay" id="cookOverlay" role="dialog" aria-modal="true" aria-label="Cook mode">
+      <div class="cook-head">
+        <div class="cook-head-text">
+          <div class="cook-title" id="cookTitle"></div>
+          <div class="cook-progress" id="cookProgress"></div>
+        </div>
+        <button type="button" class="cook-close" onclick="closeCookMode()" aria-label="Close cook mode">✕</button>
+      </div>
+      <div class="cook-bar"><div id="cookBar"></div></div>
+      <div class="cook-body" id="cookBody">
+        <div class="cook-text" id="cookText"></div>
+        <div class="cook-ings" id="cookIngs"></div>
+      </div>
+      <div class="cook-nav">
+        <button type="button" id="cookPrev" onclick="cookStep(-1)">← Back</button>
+        <button type="button" id="cookNext" class="primary" onclick="cookStep(1)">Next →</button>
+      </div>
+    </div>
+    <!-- Shopping list for the Randomizer's planned day -->
+    <div class="shop-overlay" id="shopOverlay" onclick="event.target === this && closeShoppingList()">
+      <div class="shop-sheet" role="dialog" aria-modal="true" aria-label="Shopping list">
+        <div class="shop-head">
+          <div>
+            <h2>🛒 Shopping list</h2>
+            <div class="shop-meals" id="shopMeals"></div>
+          </div>
+          <button type="button" class="cook-close" onclick="closeShoppingList()" aria-label="Close shopping list">✕</button>
+        </div>
+        <div class="shop-body" id="shopBody"></div>
+        <div class="shop-foot">
+          <span>Amounts are for one portion of each meal.</span>
+          <button type="button" class="primary" onclick="shareShoppingList()">Share / copy list</button>
         </div>
       </div>
     </div>

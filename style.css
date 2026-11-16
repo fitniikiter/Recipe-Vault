@@ -5267,3 +5267,451 @@
         opacity: 1;
         transform: translate(-50%, 0);
       }
+
+      /* ══ UX features ══════════════════════════════════════════════════════ */
+      /* ── List tools: count, favorites toggle, sort ── */
+      .list-tools {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px 12px;
+      }
+      .list-count {
+        margin-right: auto;
+      }
+      .list-tool-btn,
+      .list-sort select {
+        font: inherit;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--muted);
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 6px 12px;
+        cursor: pointer;
+      }
+      .list-tool-btn b {
+        color: inherit;
+        font-weight: 700;
+      }
+      .list-tool-btn.active {
+        color: #e84770;
+        border-color: #e84770;
+        background: rgba(232, 71, 112, 0.1);
+      }
+      .list-sort {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+      }
+      .stats-bar .list-sort span {
+        color: var(--muted);
+        font-weight: 400;
+      }
+      /* ── Favorite hearts ── */
+      .card-top {
+        align-items: center;
+        gap: 8px;
+      }
+      .card-top .card-time {
+        margin-left: auto;
+      }
+      .fav-btn {
+        flex-shrink: 0;
+        width: 34px;
+        height: 34px;
+        margin: -6px -6px -6px 0;
+        border: 0;
+        border-radius: 50%;
+        background: transparent;
+        color: var(--muted);
+        font-size: 20px;
+        line-height: 1;
+        cursor: pointer;
+        transition: transform 0.12s, color 0.12s;
+      }
+      .fav-btn:hover {
+        color: #e84770;
+      }
+      .fav-btn.on {
+        color: #e84770;
+      }
+      .fav-btn:active {
+        transform: scale(1.25);
+      }
+      .modal-fav-btn {
+        margin-left: 10px;
+        padding: 4px 10px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: transparent;
+        color: var(--muted);
+        font: inherit;
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .modal-fav-btn.on {
+        color: #e84770;
+        border-color: #e84770;
+      }
+      /* ── Cook mode ── */
+      .cook-start-btn {
+        display: block;
+        width: 100%;
+        margin: 4px 0 16px;
+        padding: 12px 14px;
+        border: 1.5px solid var(--accent);
+        border-radius: 10px;
+        background: rgba(255, 140, 0, 0.08);
+        color: var(--accent);
+        font: inherit;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .cook-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 2500;
+        display: none;
+        flex-direction: column;
+        background: var(--bg);
+        color: var(--text);
+      }
+      .cook-overlay.open {
+        display: flex;
+      }
+      .cook-head {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 18px;
+        padding-top: max(14px, env(safe-area-inset-top));
+      }
+      .cook-head-text {
+        flex: 1;
+        min-width: 0;
+      }
+      .cook-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 20px;
+        letter-spacing: 0.5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .cook-progress {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .cook-close {
+        flex-shrink: 0;
+        width: 44px;
+        height: 44px;
+        border: 1px solid var(--border);
+        border-radius: 50%;
+        background: var(--card);
+        color: var(--text);
+        font-size: 18px;
+        cursor: pointer;
+      }
+      .cook-bar {
+        height: 4px;
+        background: var(--border);
+      }
+      .cook-bar > div {
+        height: 100%;
+        width: 0;
+        background: var(--accent);
+        transition: width 0.2s;
+      }
+      .cook-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 28px 22px;
+        max-width: 760px;
+        width: 100%;
+        margin: 0 auto;
+        box-sizing: border-box;
+      }
+      .cook-text {
+        font-size: clamp(20px, 5.4vw, 30px);
+        line-height: 1.45;
+        font-weight: 500;
+      }
+      .cook-ings {
+        margin-top: 24px;
+        padding: 6px 14px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--card);
+        font-size: 16px;
+      }
+      .cook-ings .step-ing-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 9px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .cook-ings .step-ing-item:last-child {
+        border-bottom: 0;
+      }
+      .cook-ings .sii-amt {
+        color: var(--accent);
+        font-weight: 700;
+        white-space: nowrap;
+      }
+      .cook-nav {
+        display: flex;
+        gap: 10px;
+        padding: 12px 18px;
+        padding-bottom: max(12px, env(safe-area-inset-bottom));
+        border-top: 1px solid var(--border);
+      }
+      .cook-nav button,
+      .shop-foot button {
+        flex: 1;
+        min-height: 52px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: var(--card);
+        color: var(--text);
+        font: inherit;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .cook-nav button.primary,
+      .shop-foot button.primary {
+        flex: 2;
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #000;
+      }
+      html.light .cook-nav button.primary,
+      html.light .shop-foot button.primary {
+        color: #fff;
+      }
+      .cook-nav button:disabled {
+        opacity: 0.35;
+        cursor: default;
+      }
+      /* ── Shopping list ── */
+      .shop-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 2400;
+        display: none;
+        align-items: flex-end;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.6);
+      }
+      .shop-overlay.open {
+        display: flex;
+      }
+      .shop-sheet {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 560px;
+        max-height: 92vh;
+        background: var(--bg);
+        color: var(--text);
+        border: 1px solid var(--border);
+        border-radius: 16px 16px 0 0;
+      }
+      @media (min-width: 700px) {
+        .shop-overlay {
+          align-items: center;
+        }
+        .shop-sheet {
+          border-radius: 16px;
+          max-height: 86vh;
+        }
+      }
+      .shop-head {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 18px 18px 12px;
+        border-bottom: 1px solid var(--border);
+      }
+      .shop-head > div {
+        flex: 1;
+        min-width: 0;
+      }
+      .shop-head h2 {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 24px;
+        letter-spacing: 0.5px;
+      }
+      .shop-meals {
+        margin-top: 2px;
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.4;
+      }
+      .shop-body {
+        overflow-y: auto;
+        padding: 4px 18px 12px;
+      }
+      .shop-group-title {
+        margin: 16px 0 4px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .shop-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-height: 44px;
+        padding: 4px 0;
+        border-bottom: 1px solid var(--border);
+        font-size: 14px;
+        cursor: pointer;
+      }
+      .shop-item input {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+        accent-color: var(--accent);
+      }
+      .shop-name {
+        flex: 1;
+      }
+      .shop-amt {
+        color: var(--accent);
+        font-weight: 700;
+        text-align: right;
+        white-space: nowrap;
+      }
+      .shop-item.done .shop-name,
+      .shop-item.done .shop-amt {
+        text-decoration: line-through;
+        opacity: 0.45;
+      }
+      .shop-foot {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 18px;
+        padding-bottom: max(12px, env(safe-area-inset-bottom));
+        border-top: 1px solid var(--border);
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .shop-foot span {
+        flex: 1;
+      }
+      .rand-actions {
+        flex-wrap: wrap;
+      }
+      .rand-action-primary {
+        border-color: var(--accent) !important;
+        color: var(--accent) !important;
+      }
+      /* ── Touch screens: comfortable tap targets ── */
+      @media (pointer: coarse) {
+        .filter-btn,
+        #dietaryGrid .dietary-btn {
+          min-height: 36px;
+          padding-left: 12px;
+          padding-right: 12px;
+          font-size: 11px;
+          display: inline-flex;
+          align-items: center;
+        }
+        .filter-dropdown-inner {
+          gap: 8px;
+        }
+        .step-btn {
+          min-width: 40px;
+          min-height: 40px;
+          font-size: 18px;
+        }
+        .serving-val {
+          min-width: 36px;
+          min-height: 40px;
+          line-height: 40px;
+        }
+        .modal-variant-btn {
+          min-height: 36px;
+          min-width: 40px;
+          padding-left: 14px;
+          padding-right: 14px;
+        }
+        .social-btn,
+        .filter-section-label {
+          min-height: 40px;
+        }
+        .mf-reset-btn,
+        .modal-share-btn,
+        .modal-fav-btn,
+        .ing-step-toggle,
+        .step-ing-btn {
+          min-height: 36px;
+          display: inline-flex;
+          align-items: center;
+        }
+        .prot-weight-input {
+          min-height: 40px;
+          font-size: 16px; /* 16px stops iOS from zooming in on focus */
+        }
+        .modal-weight-input,
+        #searchInput,
+        .list-sort select {
+          font-size: 16px;
+        }
+        .list-tool-btn,
+        .list-sort select {
+          min-height: 40px;
+        }
+        input[type="range"].mf-slider {
+          height: 8px;
+          margin: 12px 0;
+        }
+        input[type="range"].mf-slider::-webkit-slider-thumb {
+          width: 28px;
+          height: 28px;
+        }
+        input[type="range"].mf-slider::-moz-range-thumb {
+          width: 28px;
+          height: 28px;
+        }
+        #chkRound5 {
+          width: 22px !important;
+          height: 22px !important;
+        }
+        .rand-card-btns button {
+          min-width: 44px;
+          min-height: 44px;
+          font-size: 20px;
+        }
+        .rand-portion-stepper button {
+          min-width: 40px;
+          min-height: 40px;
+          font-size: 18px;
+        }
+        .rand-card .card-title {
+          padding: 6px 0;
+        }
+        .modal-close {
+          min-width: 44px;
+          min-height: 44px;
+        }
+        .fav-btn {
+          width: 44px;
+          height: 44px;
+          margin: -10px -10px -10px 0;
+          font-size: 22px;
+        }
+      }

@@ -47,6 +47,15 @@ for a CSS tweak, etc. Grep the anchors below.
   header), `tools/check.js` runs it plus ingredient coverage and macro
   plausibility. `tools/build-testset.js` generates `recipes.js`.
 - **Randomizer meal slots** → card field `mealType` (array); `recipeIsMealType(r, type)` reads it.
+- **Navigation / Back button** → `app.js` `switchTab` (tab lives in the URL
+  hash), `overlayOpened` / `overlayClosed` + the `popstate` listener (every
+  overlay adds one history entry so Back closes it).
+- **Favorites** → `favorites`, `toggleFavorite`, `toggleFavOnly`, `syncFavButtons`.
+- **Sorting** → `RECIPE_SORTS`, `setRecipeSort`, `applyRecipeSort` (CSS `order`).
+- **Cook mode** → `openCookMode`, `cookStep`, `closeCookMode` (`#cookOverlay`).
+- **Shopping list** → `buildShoppingList`, `openShoppingList` (`#shopOverlay`).
+- **Saved / shared Randomizer day** → `randSaveDay`, `randRestoreDay`, `randShareDay`
+  (link format `#randomizer/d=…&s=…&t=…&g=…`).
 - **Reference data** →
   - `app.js`: `const NUT`, `INGREDIENT_DB`, `CARB_RATIOS`, `DIETARY_FILTERS`,
     `PANTRY_ITEMS`, `ING_NAME_MAP`, `CARB_COMPARE`, `PROTEIN_DEFS`.

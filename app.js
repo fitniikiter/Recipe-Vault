@@ -259,6 +259,305 @@
       function _autoRound5() { return !!document.getElementById("chkRound5")?.checked; }
 
 
+      // ─── Favorites ───────────────────────────────────────────────────────
+      // Saved in this browser only (no accounts, no backend).
+      let favorites = new Set();
+      try { favorites = new Set(JSON.parse(localStorage.getItem("favorites") || "[]")); } catch (e) {}
+      let favOnly = false;
+      function toggleFavorite(id) {
+        favorites.has(id) ? favorites.delete(id) : favorites.add(id);
+        try { localStorage.setItem("favorites", JSON.stringify([...favorites])); } catch (e) {}
+        syncFavButtons();
+        favOnly && filterRecipes();
+      }
+      function toggleFavOnly() {
+        favOnly = !favOnly;
+        syncFavButtons();
+        filterRecipes();
+      }
+      // Keeps every heart (cards, modal) and the "Favorites" toggle in step.
+      function syncFavButtons() {
+        document.querySelectorAll("[data-fav]").forEach((b) => {
+          const on = favorites.has(b.dataset.fav);
+          b.textContent = on ? "♥" : "♡";
+          b.classList.toggle("on", on);
+          b.setAttribute("aria-pressed", on ? "true" : "false");
+        });
+        const mb = document.getElementById("modalFavBtn");
+        if (mb && typeof currentModalRecipe !== "undefined" && currentModalRecipe) {
+          const on = favorites.has(currentModalRecipe.id);
+          mb.textContent = on ? "♥ Saved" : "♡ Save";
+          mb.classList.toggle("on", on);
+          mb.setAttribute("aria-pressed", on ? "true" : "false");
+        }
+        const fb = document.getElementById("btnFavOnly");
+        if (fb) {
+          fb.classList.toggle("active", favOnly);
+          fb.setAttribute("aria-pressed", favOnly ? "true" : "false");
+          const n = document.getElementById("favCount");
+          n && (n.textContent = favorites.size ? favorites.size : "");
+        }
+      }
+
+      // ─── Sorting the recipe grid ─────────────────────────────────────────
+      // Uses the CSS `order` property, so cards are never moved in the DOM.
+      const RECIPE_SORTS = {
+        default: null,
+        kcal: (a, b) => a.m.kcal - b.m.kcal,
+        protein: (a, b) => b.m.p - a.m.p,
+        ratio: (a, b) => b.m.p / Math.max(b.m.kcal, 1) - a.m.p / Math.max(a.m.kcal, 1),
+        time: (a, b) => a.r.time - b.r.time,
+        score: (a, b) => b.score - a.score,
+      };
+      let recipeSort = "default";
+      try { RECIPE_SORTS[localStorage.getItem("recipeSort")] !== undefined && (recipeSort = localStorage.getItem("recipeSort")); } catch (e) {}
+      function setRecipeSort(key) {
+        recipeSort = RECIPE_SORTS[key] !== undefined ? key : "default";
+        try { localStorage.setItem("recipeSort", recipeSort); } catch (e) {}
+        applyRecipeSort();
+      }
+      function applyRecipeSort() {
+        const sel = document.getElementById("recipeSort");
+        sel && sel.value !== recipeSort && (sel.value = recipeSort);
+        const cmp = RECIPE_SORTS[recipeSort];
+        const rows = R.map((r, i) => {
+          const m = cmp ? recipeMacros(r) : null;
+          return { r, i, m, score: cmp ? calcScore(r, m.p, m.f) : 0 };
+        });
+        cmp && rows.sort((a, b) => cmp(a, b) || a.i - b.i); // ties keep catalog order
+        rows.forEach((row, rank) => {
+          const card = document.querySelector(`.card[data-id="${row.r.id}"]`);
+          card && (card.style.order = cmp ? rank : "");
+        });
+      }
+
+      // ─── Cook mode ───────────────────────────────────────────────────────
+      // One step at a time in large type, with that step's ingredients, and
+      // the screen kept awake. Reads the steps the Recipe tab already rendered,
+      // so amounts always match the open recipe.
+      let _cookSteps = [], _cookIdx = 0, _cookWakeLock = null;
+      function openCookMode() {
+        if (!currentModalRecipe) return;
+        buildRecipeTab(currentModalRecipe); // make sure the steps reflect the current portion
+        _cookSteps = [...document.querySelectorAll("#tab-recipe .step")].map((st) => ({
+          text: st.querySelector(".step-text > div")?.innerHTML || "",
+          ings: st.querySelector(".step-ing-panel")?.innerHTML || "",
+        }));
+        if (!_cookSteps.length) return;
+        _cookIdx = 0;
+        document.getElementById("cookTitle").textContent = currentModalRecipe.title;
+        document.getElementById("cookOverlay").classList.add("open");
+        overlayOpened(closeCookMode);
+        renderCookStep();
+        // Keep the screen on while cooking, where the browser supports it.
+        try { navigator.wakeLock && navigator.wakeLock.request("screen").then((l) => (_cookWakeLock = l)).catch(() => {}); } catch (e) {}
+      }
+      function renderCookStep() {
+        const n = _cookSteps.length, st = _cookSteps[_cookIdx];
+        document.getElementById("cookProgress").textContent = `Step ${_cookIdx + 1} of ${n}`;
+        document.getElementById("cookBar").style.width = ((_cookIdx + 1) / n) * 100 + "%";
+        document.getElementById("cookText").innerHTML = st.text;
+        const ing = document.getElementById("cookIngs");
+        ing.innerHTML = st.ings;
+        ing.style.display = st.ings.trim() ? "" : "none";
+        document.getElementById("cookPrev").disabled = 0 === _cookIdx;
+        document.getElementById("cookNext").textContent = _cookIdx === n - 1 ? "✓ Done" : "Next →";
+        document.getElementById("cookBody").scrollTop = 0;
+      }
+      function cookStep(delta) {
+        const next = _cookIdx + delta;
+        if (next >= _cookSteps.length) return void closeCookMode();
+        if (next < 0) return;
+        _cookIdx = next;
+        renderCookStep();
+      }
+      function closeCookMode(fromHistory) {
+        const el = document.getElementById("cookOverlay");
+        if (!el.classList.contains("open")) return;
+        el.classList.remove("open");
+        try { _cookWakeLock && _cookWakeLock.release(); } catch (e) {}
+        _cookWakeLock = null;
+        true === fromHistory || overlayClosed(closeCookMode);
+      }
+      document.addEventListener("keydown", (e) => {
+        if (!document.getElementById("cookOverlay")?.classList.contains("open")) return;
+        "ArrowRight" === e.key && cookStep(1);
+        "ArrowLeft" === e.key && cookStep(-1);
+      });
+
+      // ─── Shopping list (from the Randomizer's planned day) ───────────────
+      const _UNICODE_FRACTIONS = { "½": 0.5, "¼": 0.25, "¾": 0.75, "⅓": 1 / 3, "⅔": 2 / 3, "⅛": 0.125 };
+      // "1.5 tbsp" → { n: 1.5, unit: "tbsp" }; "pinch" → null (not summable)
+      function _parseAmount(amt) {
+        const m = /^\s*(\d+(?:[.,]\d+)?)?\s*([½¼¾⅓⅔⅛])?\s*(.*)$/.exec(String(amt || ""));
+        if (!m || (m[1] == null && m[2] == null)) return null;
+        const n = (m[1] ? parseFloat(m[1].replace(",", ".")) : 0) + (m[2] ? _UNICODE_FRACTIONS[m[2]] : 0);
+        let unit = m[3].trim().toLowerCase().replace(/\s+raw$/, "");
+        const key = unit.replace(/(?<=[a-z]{3})s$/, ""); // cloves → clove, so singular and plural add up
+        return { n, unit, key };
+      }
+      function _fmtAmount(n) {
+        const r = Math.round(n * 10) / 10;
+        return String(r % 1 === 0 ? Math.round(r) : r);
+      }
+      // Ingredients of every planned meal at the portion planned for its slot,
+      // merged by ingredient and grouped by supermarket section.
+      function buildShoppingList() {
+        const groups = {};
+        const add = (name, amt, id) => {
+          const ingId = id || findIngredientId(name) || null;
+          const key = ingId || name.toLowerCase();
+          const cat = (ingId && NUTRITION_DB[ingId] && NUTRITION_DB[ingId].category) || "other";
+          const g = (groups[cat] = groups[cat] || {});
+          const it = (g[key] = g[key] || { name, units: {}, text: [] });
+          const p = _parseAmount(amt);
+          if (p) {
+            const u = (it.units[p.key] = it.units[p.key] || { n: 0, unit: p.unit });
+            u.n += p.n;
+            p.unit.length > u.unit.length && (u.unit = p.unit); // prefer the plural spelling ("cloves") for a summed amount
+          } else if (amt && !it.text.includes(amt)) it.text.push(amt);
+        };
+        randSlots.forEach((r, i) => {
+          if (!r) return;
+          const m = randRecipeMacrosForSlot(i),
+            key = proteinKeyFor(r);
+          (getRecipeDetail(r).ingredients || []).forEach((sec) =>
+            (sec.items || []).forEach((item) => {
+              const a = item.amt || "";
+              if (a.includes("{{proteinG}}")) add(item.name, m.pg + "g", key);
+              else if (a.includes("{{eggCount}}")) add("Eggs", (m.eggs || eggCount) + " pieces", "eggs");
+              else if (a.includes("{{carbG}}")) add(item.name, m.cg + "g", r.carb);
+              else add(item.name, a, item.id);
+            }),
+          );
+          r.sideEgg && sideEggCount > 0 && add("Eggs", sideEggCount + " pieces", "eggs");
+        });
+        const order = ["proteins", "fresh", "dairy", "carbs", "sauces", "spices", "staples", "other"];
+        return order
+          .filter((c) => groups[c])
+          .map((c) => {
+            const meta = NUTRITION_CATEGORIES.find((x) => x.id === c) || { label: "Other", emoji: "🧺" };
+            const items = Object.values(groups[c])
+              .map((it) => ({
+                name: it.name,
+                amt: [...Object.values(it.units).map((u) => (_fmtAmount(u.n) + (/^(g|kg|ml|l)\b/.test(u.unit) ? "" : " ") + u.unit).trim()), ...it.text].join(" + "),
+              }))
+              .sort((a, b) => a.name.localeCompare(b.name));
+            return { label: meta.emoji + " " + meta.label, items };
+          });
+      }
+      function _shoppingListText() {
+        return (
+          "Shopping list — " +
+          randSlots.filter(Boolean).map((r) => r.title).join(", ") +
+          "\n\n" +
+          buildShoppingList()
+            .map((g) => g.label + "\n" + g.items.map((it) => "- " + it.name + (it.amt ? ": " + it.amt : "")).join("\n"))
+            .join("\n\n")
+        );
+      }
+      function openShoppingList() {
+        const groups = buildShoppingList();
+        if (!groups.length) return void showNotice("Roll some meals first.");
+        const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+        document.getElementById("shopMeals").textContent = randSlots.filter(Boolean).map((r) => r.title).join(" · ");
+        document.getElementById("shopBody").innerHTML = groups
+          .map(
+            (g) =>
+              `<div class="shop-group-title">${esc(g.label)}</div>` +
+              g.items
+                .map(
+                  (it) =>
+                    `<label class="shop-item"><input type="checkbox" onchange="this.parentNode.classList.toggle('done', this.checked)"><span class="shop-name">${esc(it.name)}</span><span class="shop-amt">${esc(it.amt)}</span></label>`,
+                )
+                .join(""),
+          )
+          .join("");
+        document.getElementById("shopOverlay").classList.add("open");
+        document.body.style.overflow = "hidden";
+        overlayOpened(closeShoppingList);
+      }
+      function closeShoppingList(fromHistory) {
+        const el = document.getElementById("shopOverlay");
+        if (!el.classList.contains("open")) return;
+        el.classList.remove("open");
+        document.body.style.overflow = "";
+        true === fromHistory || overlayClosed(closeShoppingList);
+      }
+      // Hand text or a link to the phone's share sheet, or copy it.
+      function shareOrCopy(payload, copiedMsg) {
+        const text = payload.url || payload.text;
+        const copy = () => {
+          const done = () => showNotice(copiedMsg);
+          if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, () => prompt("Copy:", text));
+          else prompt("Copy:", text);
+        };
+        if (navigator.share) navigator.share(payload).catch((e) => { e && "AbortError" === e.name || copy(); });
+        else copy();
+      }
+      function shareShoppingList() {
+        shareOrCopy({ title: "Shopping list", text: _shoppingListText() }, "Shopping list copied.");
+      }
+
+      // ─── Randomizer: remember the day and share it ───────────────────────
+      let _randRestored = false;
+      function randSaveDay() {
+        if (!_randRestored) return; // never overwrite the saved day before it was read
+        try {
+          localStorage.setItem("randDay", JSON.stringify({ ids: randSlots.map((r) => (r ? r.id : null)), locked: randLocked, shares: randShares }));
+        } catch (e) {}
+      }
+      function _randApplyDay(d) {
+        if (!d || !Array.isArray(d.ids)) return false;
+        const slots = d.ids.slice(0, 4).map((id) => R.find((r) => r.id === id) || null);
+        if (!slots.some(Boolean)) return false;
+        randSlots = [0, 1, 2, 3].map((i) => slots[i] || null);
+        Array.isArray(d.locked) && (randLocked = [0, 1, 2, 3].map((i) => !!d.locked[i] && !!randSlots[i]));
+        if (Array.isArray(d.shares) && d.shares.length === 4 && d.shares.every((v) => v >= RAND_SHARE_MIN && v <= RAND_SHARE_MAX) && d.shares.reduce((a, b) => a + b, 0) <= 100)
+          randShares = d.shares.map(Number);
+        return true;
+      }
+      // A shared link looks like  #randomizer/d=id,id,id,id&s=25,25,25,25&t=2000,160,190,60&g=cut
+      function _randDayFromHash() {
+        const h = window.location.hash;
+        if (!h.startsWith("#randomizer/")) return null;
+        const q = new URLSearchParams(h.slice("#randomizer/".length));
+        const nums = (k) => (q.get(k) || "").split(",").map(Number);
+        const t = nums("t");
+        return {
+          ids: (q.get("d") || "").split(","),
+          shares: nums("s"),
+          target: t.length === 4 && t.every((v) => v >= 0 && v < 20000) ? { kcal: t[0], p: t[1], c: t[2], f: t[3] } : null,
+          goal: ["cut", "maintain", "bulk"].includes(q.get("g")) ? q.get("g") : null,
+        };
+      }
+      function randRestoreDay() {
+        if (_randRestored) return;
+        _randRestored = true;
+        const shared = _randDayFromHash();
+        if (shared && _randApplyDay(shared)) {
+          try {
+            shared.target && localStorage.setItem("randTarget", JSON.stringify(shared.target));
+            shared.goal && localStorage.setItem("randGoal", shared.goal);
+            history.replaceState(history.state, "", "#randomizer"); // the long link has done its job
+          } catch (e) {}
+          showNotice("Loaded a shared day of meals.");
+          return;
+        }
+        try { _randApplyDay(JSON.parse(localStorage.getItem("randDay") || "null")); } catch (e) {}
+      }
+      function randShareDay() {
+        if (!randSlots.some(Boolean)) return;
+        const t = randTarget();
+        const url =
+          window.location.origin + window.location.pathname + "#randomizer/" +
+          "d=" + randSlots.map((r) => (r ? r.id : "")).join(",") +
+          "&s=" + randShares.join(",") +
+          "&t=" + [t.kcal, t.p, t.c, t.f].join(",") +
+          "&g=" + randGoal();
+        shareOrCopy({ title: "My day of meals — FIT NIIKITER's Recipe Vault", url }, "Link to this day copied.");
+      }
+
       // ─── Macro engine (single source of truth) ───────────────────────────
       // Every number the app shows for a recipe — card, filter, modal header,
       // modal total bar, Randomizer — comes from recipeMacros()/macrosForPortion().
@@ -890,6 +1189,7 @@
       function doResetAll() {
         (document.getElementById("resetConfirmOverlay").classList.remove("open"),
           (currentCuisineFilter = "all"),
+          (favOnly = !1),
           // Only the cuisine buttons — other tabs (Nutrition, Randomizer) reuse .filter-btn.
           document.querySelectorAll('#filterPanel [onclick^="setFilter("]').forEach((e) => e.classList.remove("active")),
           document.querySelector(`#filterPanel [onclick^="setFilter('all'"]`)?.classList.add("active"),
@@ -969,7 +1269,7 @@
             : r &&
               r.video &&
               (c = `<div class="card-thumb-wrap"><img class="card-thumb" onerror="(this.closest('.card-thumb-wrap')||this).remove()" src="https://img.youtube.com/vi/${r.video}/hqdefault.jpg" ${loadingAttrs} alt="${e.title}"><div class="play-overlay"><span>▶️</span></div></div>`),
-            (i.innerHTML = `${c}\n      <div class="card-top">\n        <div class="card-num">#${String(e.displayNum).padStart(3, "0")}</div>\n        <div class="card-time"><span class="time-icon">${clockEmoji(e.time)}</span>${e.time} min</div>\n      </div>\n      <div class="card-title">${e.title}</div>\n      <div class="card-desc">${e.desc}</div>\n      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin-bottom:10px;">\n        ${e.carb !== "none" ? '<span class="carb-badge ' + e.carb + '" style="margin-bottom:0;vertical-align:middle;">' + a[e.carb] + '</span>' : ""}\n        ${s !== "none" ? `<span class="protein-badge ${s}" style="margin-bottom:0;vertical-align:middle;">${o}</span>` : ""}\n        <span class="flavor-badge ${e.flavor || "savory"}" style="margin-bottom:0;">${"sweet" === e.flavor ? "🍯 Sweet" : "🧂 Savory"}</span>\n        ${ALCOHOL_RECIPE_IDS.has(e.id) ? '<span class="flavor-badge alcohol" style="margin-bottom:0;">🍶 Alcohol</span>' : ""}\n        ${SPICY_RECIPE_IDS.has(e.id) ? '<span class="flavor-badge spicy" style="margin-bottom:0;">🌶️ Spicy</span>' : ""}\n        ${DIP_RECIPE_IDS.has(e.id) ? '<span class="flavor-badge dip" style="margin-bottom:0;">🥣 Dip</span>' : ""}\n      </div>\n      <div class="macro-row">\n        <div class="macro-box kcal-box">    <span class="val" data-macro="kcal">—</span>  <span class="lbl">kcal</span></div>\n        <div class="macro-box protein-box"> <span class="val" data-macro="prot">—</span> <span class="lbl">protein</span></div>\n        <div class="macro-box carbs-box">   <span class="val" data-macro="carbs">—</span><span class="lbl">carbs</span></div>\n        <div class="macro-box fat-box">     <span class="val" data-macro="fat">—</span>  <span class="lbl">fat</span></div>\n      </div>\n      <div style="font-size:9px;color:var(--faint);text-align:right;margin-top:-8px;margin-bottom:6px;" data-macro-context>per portion · <span data-serving-label>1 serving</span></div>\n      <div class="score-row">\n        <span class="score-badge" data-score></span>\n        <div class="score-bar-bg"><div class="score-bar-fill" data-fill></div></div>\n        <span class="score-label" data-scorelabel></span>\n      </div>\n      <div class="card-bottom"><div class="tags">${n}</div></div>\n      <div class="card-click-hint">tap to open recipe →</div>`),
+            (i.innerHTML = `${c}\n      <div class="card-top">\n        <div class="card-num">#${String(e.displayNum).padStart(3, "0")}</div>\n        <div class="card-time"><span class="time-icon">${clockEmoji(e.time)}</span>${e.time} min</div>\n        <button type="button" class="fav-btn" data-fav="${e.id}" aria-label="Save as favorite" aria-pressed="false" onclick="event.stopPropagation(); toggleFavorite('${e.id}')">♡</button>\n      </div>\n      <div class="card-title">${e.title}</div>\n      <div class="card-desc">${e.desc}</div>\n      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin-bottom:10px;">\n        ${e.carb !== "none" ? '<span class="carb-badge ' + e.carb + '" style="margin-bottom:0;vertical-align:middle;">' + a[e.carb] + '</span>' : ""}\n        ${s !== "none" ? `<span class="protein-badge ${s}" style="margin-bottom:0;vertical-align:middle;">${o}</span>` : ""}\n        <span class="flavor-badge ${e.flavor || "savory"}" style="margin-bottom:0;">${"sweet" === e.flavor ? "🍯 Sweet" : "🧂 Savory"}</span>\n        ${ALCOHOL_RECIPE_IDS.has(e.id) ? '<span class="flavor-badge alcohol" style="margin-bottom:0;">🍶 Alcohol</span>' : ""}\n        ${SPICY_RECIPE_IDS.has(e.id) ? '<span class="flavor-badge spicy" style="margin-bottom:0;">🌶️ Spicy</span>' : ""}\n        ${DIP_RECIPE_IDS.has(e.id) ? '<span class="flavor-badge dip" style="margin-bottom:0;">🥣 Dip</span>' : ""}\n      </div>\n      <div class="macro-row">\n        <div class="macro-box kcal-box">    <span class="val" data-macro="kcal">—</span>  <span class="lbl">kcal</span></div>\n        <div class="macro-box protein-box"> <span class="val" data-macro="prot">—</span> <span class="lbl">protein</span></div>\n        <div class="macro-box carbs-box">   <span class="val" data-macro="carbs">—</span><span class="lbl">carbs</span></div>\n        <div class="macro-box fat-box">     <span class="val" data-macro="fat">—</span>  <span class="lbl">fat</span></div>\n      </div>\n      <div style="font-size:9px;color:var(--faint);text-align:right;margin-top:-8px;margin-bottom:6px;" data-macro-context>per portion · <span data-serving-label>1 serving</span></div>\n      <div class="score-row">\n        <span class="score-badge" data-score></span>\n        <div class="score-bar-bg"><div class="score-bar-fill" data-fill></div></div>\n        <span class="score-label" data-scorelabel></span>\n      </div>\n      <div class="card-bottom"><div class="tags">${n}</div></div>\n      <div class="card-click-hint">tap to open recipe →</div>`),
             t.appendChild(i));
         }),
           e.appendChild(t));
@@ -1000,6 +1300,7 @@
           m && (m.textContent = weights.servings + (1 === weights.servings ? " serving" : " servings"));
         }),
           refreshOpenSaucePanels());
+        applyRecipeSort(); // the order depends on the numbers that were just recomputed
       }
       function refreshOpenSaucePanels() {
         document.querySelectorAll(".card-sauce-panel.open").forEach((e) => {
@@ -1042,6 +1343,7 @@
         (R.forEach((t) => {
           const i = document.querySelector(`.card[data-id="${t.id}"]`);
           if (!i) return;
+          if (favOnly && !favorites.has(t.id)) return void (i.style.display = "none");
           if (t.carb !== "none" && !carbEnabled[t.carb]) return void (i.style.display = "none");
           if ("sweet_potato" === t.carb && !carbEnabled.potato) return void (i.style.display = "none");
           // Recipes without a protein/carb base (dips, baked oats) are not
@@ -1107,6 +1409,7 @@
         const out = [];
         const q = (document.getElementById("searchInput")?.value || "").trim();
         q && out.push(`Search “${q}”`);
+        favOnly && out.push("Favorites only");
         Object.entries(proteinEnabled).forEach(([k, on]) => on || out.push("No " + k));
         ["potato", "rice", "noodle", "bread"].forEach((k) => carbEnabled[k] || out.push("No " + (k === "noodle" ? "noodles" : k)));
         macroFilter.kcalMax < 9999 && out.push(`≤ ${macroFilter.kcalMax} kcal`);
@@ -1360,7 +1663,9 @@
             modal.classList.toggle("no-carb", a.carb === "none");
           })(),
           document.getElementById("recipeModal").classList.add("open"),
-          (document.body.style.overflow = "hidden"));
+          (document.body.style.overflow = "hidden"),
+          overlayOpened(closeModalDirect),
+          syncFavButtons());
         anime({
           targets: document.querySelector("#recipeModal .modal"),
           scale: [0.92, 1],
@@ -1380,17 +1685,53 @@
       function closeModal(e) {
         e.target === document.getElementById("recipeModal") && closeModalDirect();
       }
-      function closeModalDirect() {
-        (document.getElementById("recipeModal").classList.remove("open"), (document.body.style.overflow = ""));
+      // ─── Overlays and the Back button ────────────────────────────────────
+      // Every overlay (recipe, cook mode, shopping list, How it works) adds one
+      // history entry when it opens, so the phone's Back button closes the
+      // overlay instead of leaving the site. Closing it in the UI steps back
+      // over that entry again.
+      const _overlayStack = []; // close functions of the open overlays, oldest first
+      let _skipPop = 0; // popstate events caused by our own history.go()
+      function overlayOpened(closeFn) {
+        if (_overlayStack.includes(closeFn)) return;
+        _overlayStack.push(closeFn);
+        try { history.pushState({ rvOverlay: _overlayStack.length }, ""); } catch (e) {}
+      }
+      // Call after an overlay was closed from the UI (not by Back).
+      function overlayClosed(closeFn) {
+        const i = _overlayStack.lastIndexOf(closeFn);
+        if (i === -1) return void _cleanRecipeParam();
+        const above = _overlayStack.splice(i).slice(1);
+        above.forEach((fn) => fn(true));
+        _skipPop++;
+        try { history.go(-(above.length + 1)); } catch (e) { _skipPop--; }
+      }
+      // Drop the ?recipe= deep-link param so a reload doesn't reopen the recipe.
+      function _cleanRecipeParam() {
+        try {
+          const u = new URL(window.location.href);
+          u.searchParams.has("recipe") && (u.searchParams.delete("recipe"), history.replaceState(history.state, "", u.pathname + u.search + u.hash));
+        } catch (e) {}
+      }
+      window.addEventListener("popstate", () => {
+        if (_skipPop > 0) {
+          _skipPop--;
+        } else if (_overlayStack.length) {
+          _overlayStack.pop()(true); // Back pressed: close the top overlay
+        }
+        _overlayStack.length || _cleanRecipeParam();
+        const t = tabFromHash();
+        t !== activeTab && switchTab(t, null, true);
+      });
+      function closeModalDirect(fromHistory) {
+        const modal = document.getElementById("recipeModal");
+        if (!modal.classList.contains("open")) return;
+        (modal.classList.remove("open"), (document.body.style.overflow = ""));
         _portionOverride = null; // a Randomizer portion only lives as long as its modal
         // Reset the embed so a playing video doesn't keep running behind the closed modal.
         const v = document.querySelector("#tab-video iframe");
         v && (v.src = v.src);
-        // Drop the deep-link param so a reload doesn't reopen the modal.
-        try {
-          const u = new URL(window.location.href);
-          u.searchParams.has("recipe") && (u.searchParams.delete("recipe"), history.replaceState(null, "", u.pathname + u.search + u.hash));
-        } catch (e) {}
+        true === fromHistory || overlayClosed(closeModalDirect);
       }
       function switchModalTab(e, a) {
         (document.querySelectorAll("#modalTabs .modal-tab").forEach((e) => e.classList.remove("active")),
@@ -1407,7 +1748,11 @@
         a && a.classList.contains("active") && e && buildRecipeTab(e);
       }
       document.addEventListener("keydown", (e) => {
-        "Escape" === e.key && closeModalDirect();
+        // Escape closes the topmost overlay only.
+        if ("Escape" !== e.key) return;
+        if (document.getElementById("cookOverlay")?.classList.contains("open")) return void closeCookMode();
+        if (document.getElementById("shopOverlay")?.classList.contains("open")) return void closeShoppingList();
+        closeModalDirect();
       });
       let modalServings = 2;
       function scaleAmt(e, a) {
@@ -1759,7 +2104,8 @@
           _carbNames = { potato: "Potato (raw)", rice: "Rice (dry)", noodle: "Noodles (dry)", bread: "Bread / Wrap" },
           _carbLabel = _carbNames[e ? e.carb : "potato"] || "Carb base";
         (a.steps.length &&
-          ((t += '<div class="step-list">'),
+          ((t += `<button type="button" class="cook-start-btn" onclick="openCookMode()">👨‍🍳 Start cooking — step by step</button>`),
+          (t += '<div class="step-list">'),
           a.steps.forEach((a, r) => {
             const c = a.toLowerCase(),
               l = i.filter((a) =>
@@ -1782,8 +2128,9 @@
                       t = (e.amt || "")
                         .replace("{{proteinG}}", s)
                         .replace("{{carbG}}", o)
+                        .replace("{{eggCount}}", (_pR.eggs != null ? _pR.eggs : eggCount) * n)
                         .replace("{{servings}}", n);
-                    let i = a ? t : scaleAmt(t, n),
+                    let i = a || (e.amt || "").includes("{{eggCount}}") ? t : scaleAmt(t, n),
                       r = e.name;
                     e.amt && e.amt.includes("{{proteinG}}") && (r = _proteinLabel);
                     e.amt && e.amt.includes("{{carbG}}") && (r = _carbLabel);
@@ -2103,7 +2450,21 @@
           renderPantry(),
           filterRecipes());
       }
-      function switchTab(e, a) {
+      // Tabs live in the URL hash (#calc, #nutrition, #randomizer) so a reload,
+      // the Back button and shared links all land on the right tab.
+      const TAB_IDS = ["recipes", "calc", "nutrition", "randomizer"];
+      let activeTab = "recipes";
+      function tabFromHash() {
+        const t = window.location.hash.replace(/^#/, "").split("/")[0];
+        return TAB_IDS.includes(t) ? t : "recipes";
+      }
+      function switchTab(e, a, fromHistory) {
+        a = a || document.querySelector(`.nav-tab[onclick*="'${e}'"]`);
+        if (!a || !document.getElementById("page-" + e)) return;
+        if (!fromHistory && e !== activeTab) {
+          try { history.pushState({ rvTab: e }, "", "recipes" === e ? window.location.pathname + window.location.search : "#" + e); } catch (err) {}
+        }
+        activeTab = e;
         (document.querySelectorAll(".nav-tab").forEach((e) => e.classList.remove("active")),
           a.classList.add("active"),
           document.querySelectorAll(".page").forEach((e) => e.classList.remove("active")),
@@ -2425,6 +2786,7 @@
       }
 
       function randRenderMacros() {
+        randSaveDay();
         const target = randTarget();
         const sums = { kcal: 0, p: 0, c: 0, f: 0 };
         randSlots.forEach((r, i) => {
@@ -2544,6 +2906,7 @@
       }
 
       function renderRandomizer() {
+        randRestoreDay();
         randBuildFilterChips();
         randSyncGoalButtons();
         const grid = document.getElementById("randGrid");
@@ -3985,10 +4348,13 @@
         }
       }
       function openHowItWorksModal() {
-        (document.getElementById("hiwOverlay").classList.add("open"), (document.body.style.overflow = "hidden"));
+        (document.getElementById("hiwOverlay").classList.add("open"), (document.body.style.overflow = "hidden"), overlayOpened(closeHowItWorksModal));
       }
-      function closeHowItWorksModal() {
-        (document.getElementById("hiwOverlay").classList.remove("open"), (document.body.style.overflow = ""));
+      function closeHowItWorksModal(fromHistory) {
+        const el = document.getElementById("hiwOverlay");
+        if (!el.classList.contains("open")) return;
+        (el.classList.remove("open"), (document.body.style.overflow = ""));
+        true === fromHistory || overlayClosed(closeHowItWorksModal);
       }
       // Keep the mobile browser UI tint in sync with the active theme.
       function syncThemeColor() {
@@ -4070,3 +4436,6 @@
         buildDietaryGrid(),
         document.querySelectorAll('#page-recipes .filter-section').forEach(s => s.classList.add('open')));
       _c2RestoreInputs();
+      syncFavButtons();
+      // Open the tab named in the URL (reload, shared link) without adding a history entry.
+      tabFromHash() !== "recipes" && switchTab(tabFromHash(), null, true);
