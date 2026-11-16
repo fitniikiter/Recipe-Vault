@@ -57,16 +57,28 @@
             let delay = opts.delay || 0;
             if (typeof delay === "function") delay = delay(el, i);
             const anim = el.animate([from, to], { duration, delay, easing, fill: "forwards" });
-            anim.onfinish = () => {
-              // Bake final values into inline styles (like anime did), then
-              // release the WAAPI hold so complete() callbacks can override.
-              try { anim.commitStyles(); } catch (e) {}
-              anim.cancel();
+            // Settle exactly once: write the END values inline ourselves, then
+            // release the WAAPI hold so complete() callbacks can override.
+            // We do NOT use commitStyles(): it bakes in whatever the browser
+            // last sampled, and Safari on iOS does not sample animations on
+            // off-screen elements — it committed the start frame (opacity 0)
+            // and left recipe cards permanently invisible.
+            let settled = false;
+            const settle = () => {
+              if (settled) return;
+              settled = true;
+              clearTimeout(guard);
+              Object.assign(el.style, to);
+              try { anim.cancel(); } catch (e) {}
               if (--remaining <= 0 && !done) {
                 done = true;
                 opts.complete && opts.complete();
               }
             };
+            anim.onfinish = settle;
+            // If the browser never reports the finish (suspended off-screen
+            // animation, background tab), settle anyway.
+            const guard = setTimeout(settle, delay + duration + 250);
           });
         }
         // Per-element increasing delay: stagger(step, { start }) -> (el, i) => start + i*step
@@ -4026,13 +4038,21 @@
           const visibleCards = Array.from(document.querySelectorAll("#recipeGrid .card")).filter(
             (c) => c.style.display !== "none"
           );
+          // Entry animation only for cards the visitor can actually see, and
+          // not at all when they asked for reduced motion. Cards further down
+          // need no animation — and animating off-screen elements is what
+          // left cards invisible on iOS.
+          const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          const onScreen = reduceMotion ? [] : visibleCards.filter((c) => c.getBoundingClientRect().top < window.innerHeight);
           anime({
-            targets: visibleCards,
+            targets: onScreen,
             opacity: [0, 1],
             translateY: [28, 0],
             delay: anime.stagger(35, { start: 60 }),
             duration: 420,
-            easing: "easeOutQuad"
+            easing: "easeOutQuad",
+            // Leave no inline opacity/transform behind on the cards.
+            complete: () => onScreen.forEach((c) => { c.style.opacity = ""; c.style.transform = ""; }),
           });
         })(),
         updatePillStates(),
