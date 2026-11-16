@@ -1523,7 +1523,7 @@
           _isNoneProtein = "none" === n,
           r = o
             ? "eggs"
-            : "salmon" === n
+            : "salmon" === n || "fish" === n
               ? "salmon"
               : "tofu" === n
                 ? "tofu"
@@ -1663,14 +1663,14 @@
                     c: Math.round(((_eggNut.c * _eggG) / 100) * 10) / 10,
                     f: Math.round(((_eggNut.f * _eggG) / 100) * 10) / 10,
                   };
-                } else ((h = a.id || findIngredientId(m)), (g = h ? calcIngredientMacros(h, d) : null));
+                } else ((h = a.id || findIngredientId(m)), (g = h ? calcIngredientMacros(h, c) : null)); // c = per-portion amount; d is the batch shown in the list
               } catch (e) {}
               const _inSteps = _isIngInSteps(a, _recipeStepsText);
               const _warnBadge = _inSteps ? "" : ' <span class="ing-not-in-steps" title="Not mentioned in recipe steps">!</span>';
               if (g) {
                 ((_ = !0), (b += g.kcal), (f += g.p), (v += g.c), (w += g.f));
                 Math.random().toString(36).slice(2, 7);
-                y += `<li class="has-macros" onclick="toggleIngMacro(this)">\n          <div class="ing-main-row">\n            <div style="display:flex;align-items:center;gap:4px;">\n              <span class="ing-expand-icon">▼</span>\n              <span class="ing-item-name">${m}${_warnBadge}</span>\n            </div>\n            <span class="ing-item-amt">${d}</span>\n          </div>\n          <div class="ing-macro-panel">\n            <div class="ing-macro-grid">\n              <div class="ing-macro-cell mk"><span class="imc-val">${g.kcal}</span><span class="imc-lbl">kcal</span></div>\n              <div class="ing-macro-cell mp"><span class="imc-val">${g.p}g</span><span class="imc-lbl">protein</span></div>\n              <div class="ing-macro-cell mc"><span class="imc-val">${g.c}g</span><span class="imc-lbl">carbs</span></div>\n              <div class="ing-macro-cell mf"><span class="imc-val">${g.f}g</span><span class="imc-lbl">fat</span></div>\n              ${g.a > 0 ? `<div class="ing-macro-cell ma"><span class="imc-val">${g.a}g</span><span class="imc-lbl">alcohol</span></div>` : ""}\n            </div>\n            <div class="ing-macro-hint">${i > 1 ? `${i} servings` : "Per portion"} · based on ${g.grams}g</div>\n          </div>\n        </li>`;
+                y += `<li class="has-macros" onclick="toggleIngMacro(this)">\n          <div class="ing-main-row">\n            <div style="display:flex;align-items:center;gap:4px;">\n              <span class="ing-expand-icon">▼</span>\n              <span class="ing-item-name">${m}${_warnBadge}</span>\n            </div>\n            <span class="ing-item-amt">${d}</span>\n          </div>\n          <div class="ing-macro-panel">\n            <div class="ing-macro-grid">\n              <div class="ing-macro-cell mk"><span class="imc-val">${g.kcal}</span><span class="imc-lbl">kcal</span></div>\n              <div class="ing-macro-cell mp"><span class="imc-val">${g.p}g</span><span class="imc-lbl">protein</span></div>\n              <div class="ing-macro-cell mc"><span class="imc-val">${g.c}g</span><span class="imc-lbl">carbs</span></div>\n              <div class="ing-macro-cell mf"><span class="imc-val">${g.f}g</span><span class="imc-lbl">fat</span></div>\n              ${g.a > 0 ? `<div class="ing-macro-cell ma"><span class="imc-val">${g.a}g</span><span class="imc-lbl">alcohol</span></div>` : ""}\n            </div>\n            <div class="ing-macro-hint">Per portion · based on ${g.grams}g</div>\n          </div>\n        </li>`;
               } else
                 y += `<li><div class="ing-main-row"><span class="ing-item-name">${m}${_warnBadge}</span><span class="ing-item-amt">${d}</span></div></li>`;
             }),
@@ -3944,6 +3944,15 @@
             })
             .join(""));
       }
+      // Short message at the bottom of the screen that disappears by itself.
+      function showNotice(msg) {
+        let el = document.getElementById("siteNotice");
+        el || ((el = document.createElement("div")), (el.id = "siteNotice"), el.setAttribute("role", "status"), document.body.appendChild(el));
+        el.textContent = msg;
+        el.classList.add("show");
+        clearTimeout(showNotice._t);
+        showNotice._t = setTimeout(() => el.classList.remove("show"), 5000);
+      }
       function shareRecipe() {
         if (!currentModalRecipe) return;
         // Share the static /r/<id> page (correct per-recipe social preview),
@@ -3999,7 +4008,9 @@
           requestAnimationFrame(() => {
             setTimeout(() => {
               const a = R.find((a) => a.id === e || String(a.displayNum) === e);
-              a && openModal(a.id);
+              // A shared link can point at a recipe that isn't in the vault
+              // right now — say so instead of silently showing the list.
+              a ? openModal(a.id) : showNotice("That recipe isn't available right now — here are the current ones.");
             }, 100);
           });
       })(),
