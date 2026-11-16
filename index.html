@@ -92,7 +92,7 @@
     <!-- Self-hosted fonts (Bebas Neue + DM Sans) — no runtime dependency on
          Google Fonts. Files live in /fonts, generated into /fonts.css. -->
     <link rel="stylesheet" href="/fonts.css" />
-    <link rel="stylesheet" href="style.css?v=202611162" />
+    <link rel="stylesheet" href="style.css?v=202611163" />
   </head>
   <body>
     <div class="nav-tabs">
@@ -323,7 +323,8 @@
       </div>
       <div class="recipes-main">
       <div class="stats-bar">
-        Showing <span id="visibleCount">550</span> of <span id="totalCount">550</span> recipes
+        Showing <span id="visibleCount">–</span> of <span id="totalCount">–</span> recipes
+        <div class="active-filter-note" id="activeFilterNote" style="display: none"></div>
       </div>
       <div id="noResults" class="no-results" style="display: none">
         <strong>No recipes found</strong>Adjust your filters or carb weights above.
@@ -820,7 +821,7 @@
     </footer>
     <script src="nutrition.js?v=202611151" defer></script>
   <script src="recipes.js?v=202611152" defer></script>
-    <script src="app.js?v=202611162" defer></script>
+    <script src="app.js?v=202611163" defer></script>
     <div class="hiw-overlay" id="hiwOverlay" onclick="event.target === this && closeHowItWorksModal()">
       <div class="hiw-modal">
         <button class="hiw-modal-close" onclick="closeHowItWorksModal()">✕</button>

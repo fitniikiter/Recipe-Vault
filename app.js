@@ -1085,6 +1085,42 @@
           n = document.getElementById("totalCount");
         (n && (n.textContent = i), t && (t.style.display = 0 === a ? "block" : "none"));
         updatePillStates(); // the badge always reflects what was just filtered
+        renderActiveFilterNote(a, i);
+      }
+      // Plain-language list of everything that is currently narrowing the
+      // recipe list. Filters are saved between visits (diet) or sit in a
+      // collapsed panel (phone), so without this a visitor just sees recipes
+      // "missing" with no hint why.
+      function activeFilterLabels() {
+        const out = [];
+        const q = (document.getElementById("searchInput")?.value || "").trim();
+        q && out.push(`Search “${q}”`);
+        Object.entries(proteinEnabled).forEach(([k, on]) => on || out.push("No " + k));
+        ["potato", "rice", "noodle", "bread"].forEach((k) => carbEnabled[k] || out.push("No " + (k === "noodle" ? "noodles" : k)));
+        macroFilter.kcalMax < 9999 && out.push(`≤ ${macroFilter.kcalMax} kcal`);
+        macroFilter.protMin > 0 && out.push(`≥ ${macroFilter.protMin}g protein`);
+        macroFilter.carbMax < 999 && out.push(`≤ ${macroFilter.carbMax}g carbs`);
+        macroFilter.fatMax < 999 && out.push(`≤ ${macroFilter.fatMax}g fat`);
+        macroFilter.scoreMin > 1 && out.push(`Score ≥ ${macroFilter.scoreMin}`);
+        macroFilter.timeMax < 999 && out.push(`≤ ${macroFilter.timeMax} min`);
+        videoFilterOnly && out.push("With video");
+        currentCuisineFilter !== "all" && out.push(tagLabel(currentCuisineFilter));
+        flavorFilter !== "all" && out.push(flavorFilter.charAt(0).toUpperCase() + flavorFilter.slice(1));
+        spicyFilter && out.push("Spicy");
+        dipFilter && out.push("Dip");
+        DIETARY_FILTERS.forEach((f) => activeDietary.has(f.id) && out.push(f.label));
+        return out;
+      }
+      function renderActiveFilterNote(shown, total) {
+        const el = document.getElementById("activeFilterNote");
+        if (!el) return;
+        const labels = activeFilterLabels();
+        if (!labels.length) return void ((el.innerHTML = ""), (el.style.display = "none"));
+        el.style.display = "";
+        el.innerHTML =
+          `<b>${total - shown} hidden</b> by: ` +
+          labels.map((l) => `<em>${l.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c])}</em>`).join(" ") +
+          ` <button type="button" onclick="doResetAll()">Show all</button>`;
       }
       function setFilter(e, a) {
         ((currentCuisineFilter = e),
