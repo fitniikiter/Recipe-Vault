@@ -92,7 +92,7 @@
     <!-- Self-hosted fonts (Bebas Neue + DM Sans) — no runtime dependency on
          Google Fonts. Files live in /fonts, generated into /fonts.css. -->
     <link rel="stylesheet" href="/fonts.css" />
-    <link rel="stylesheet" href="style.css?v=202611161" />
+    <link rel="stylesheet" href="style.css?v=202611162" />
   </head>
   <body>
     <div class="nav-tabs">
@@ -120,7 +120,7 @@
     <div class="page active" id="page-recipes">
       <header>
         <div class="header-top" style="display: flex; align-items: flex-start; gap: 20px">
-          <div class="header-avatar-wrap" onclick="handleProfileClick()" style="cursor: pointer">
+          <div class="header-avatar-wrap">
             <img
               class="header-avatar"
               src="avatar.jpg?v=20260904"
@@ -820,7 +820,7 @@
     </footer>
     <script src="nutrition.js?v=202611151" defer></script>
   <script src="recipes.js?v=202611152" defer></script>
-    <script src="app.js?v=202611161" defer></script>
+    <script src="app.js?v=202611162" defer></script>
     <div class="hiw-overlay" id="hiwOverlay" onclick="event.target === this && closeHowItWorksModal()">
       <div class="hiw-modal">
         <button class="hiw-modal-close" onclick="closeHowItWorksModal()">✕</button>
@@ -949,75 +949,7 @@
         </div>
       </div>
     </div>
-    <div class="exit-modal-overlay" id="exitModalOverlay">
-      <div class="exit-modal">
-        <h3>Exit Admin Mode</h3>
-        <p>
-          Save your changes?<br /><span style="color: var(--faint); font-size: 11px"
-            >Saved in browser (localStorage) + optional HTML download.</span
-          >
-        </p>
-        <div class="exit-modal-btns">
-          <button class="exit-btn-primary" onclick="exitAdminSaveAndDownload()">💾 Save + Download HTML</button>
-          <button class="exit-btn-secondary" onclick="exitAdminSaveOnly()">✓ Nur im Browser speichern</button>
-          <button class="exit-btn-danger" onclick="exitAdminDiscard()">✕ Discard & exit</button>
-        </div>
-      </div>
-    </div>
     <button id="scrollTopBtn" title="Back to top">&#8679;</button>
-    <div class="admin-modal-overlay" id="adminModalOverlay" onclick="event.target === this && closeAdminEdit()">
-      <div class="admin-modal">
-        <h2 id="adminRecipeTitle">Edit Recipe</h2>
-        <div class="admin-section-title">📋 Basic Info</div>
-        <div style="display: grid; grid-template-columns: 80px 1fr; gap: 12px">
-          <div class="admin-field">
-            <label>Recipe #</label><input type="number" id="aRecipeNum" min="1" max="9999" />
-          </div>
-          <div class="admin-field"><label>Titel</label><input id="aTitle" /></div>
-        </div>
-        <div class="admin-field"><label>Description</label><input id="aDesc" /></div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px">
-          <div class="admin-field"><label>Zeit (min)</label><input type="number" id="aTime" /></div>
-          <div class="admin-field">
-            <label>▶️ YouTube Video ID</label><input id="aVideoId" placeholder="e.g. I5BZybb9bpM" />
-          </div>
-        </div>
-        <div class="admin-field">
-          <label>🖼️ Image URL <span style="color: var(--faint); font-size: 10px">(Cloudflare R2, Imgur, etc.)</span></label
-          ><input id="aImageUrl" placeholder="https://..." />
-        </div>
-        <div style="font-size: 10px; color: var(--faint); margin-top: -8px; margin-bottom: 8px">
-          Own image takes priority over YouTube thumbnail. Recommended: 1280×720px or larger.
-        </div>
-        <div style="display: grid; grid-template-columns: 80px 1fr; gap: 12px">
-          <div class="admin-field">
-            <label>Tags (comma-separated)</label><input id="aTags" placeholder="korean, comfort, fusion" />
-          </div>
-          <div class="admin-section-title">📊 Sauce Macros (added on top of protein+carb)</div>
-          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px">
-            <div class="admin-field"><label>+ kcal</label><input type="number" id="aSkcal" /></div>
-            <div class="admin-field"><label>+ Protein g</label><input type="number" id="aSp" /></div>
-            <div class="admin-field"><label>+ Carbs g</label><input type="number" id="aSc" /></div>
-            <div class="admin-field"><label>+ Fat g</label><input type="number" id="aSf" /></div>
-          </div>
-          <div class="admin-section-title">🥄 Ingredients</div>
-          <div id="adminIngList"></div>
-          <div class="admin-section-title">👨‍🍳 Steps</div>
-          <div class="admin-steps-list" id="adminStepsList"></div>
-          <button class="admin-add-btn" onclick="addAdminStep()">+ Add step</button>
-          <div class="admin-section-title">💡 80/20 Hacks</div>
-          <div id="adminHacksList"></div>
-          <button class="admin-add-btn" onclick="addAdminHack()">+ Add hack</button>
-          <div class="admin-section-title">📌 Notes</div>
-          <div class="admin-field">
-            <textarea id="aNotes" placeholder="Storage tips, spice level, variations..."></textarea>
-          </div>
-          <div style="display: flex; gap: 8px; margin-bottom: 4px">
-            <button id="adminVisibilityBtn" class="admin-add-btn"></button>
-          </div>
-        </div>
-      </div>
-    </div>
     <script>
       (function () {
         const btn = document.getElementById("scrollTopBtn");

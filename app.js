@@ -149,22 +149,6 @@
           a: t.a ? Math.round((t.a || 0) * n * 10) / 10 : 0,
         };
       }
-      function loadHiddenIds() {
-        try {
-          const e = localStorage.getItem("hiddenRecipeIds");
-          if (null !== e) return new Set(JSON.parse(e));
-        } catch (e) {}
-        return null;
-      }
-      function saveHiddenIds() {
-        try {
-          localStorage.setItem("hiddenRecipeIds", JSON.stringify([...HIDDEN_RECIPE_IDS]));
-        } catch (e) {}
-      }
-      const DEFAULT_HIDDEN_IDS = new Set([]),
-        _savedHidden = loadHiddenIds();
-      let HIDDEN_RECIPE_IDS = null !== _savedHidden ? _savedHidden : new Set(DEFAULT_HIDDEN_IDS);
-
       let spicyFilter = false,
         dipFilter = false,
         currentCuisineFilter = "all",
@@ -575,22 +559,6 @@
           badge.style.display = count > 0 ? "inline-block" : "none";
         }
         if (btn) btn.classList.toggle("has-active", count > 0);
-      }
-      function adminToggleRecipe(e) {
-        (HIDDEN_RECIPE_IDS.has(e) ? HIDDEN_RECIPE_IDS.delete(e) : HIDDEN_RECIPE_IDS.add(e),
-          saveHiddenIds(),
-          buildDisplayNumbers(),
-          filterRecipes());
-        const a = document.querySelector(`.card[data-id="${e}"]`);
-        if (a) {
-          const t = a.querySelector(".admin-toggle-btn");
-          if (t) {
-            const a = HIDDEN_RECIPE_IDS.has(e);
-            ((t.textContent = a ? "👁 Show" : "🚫 Hide"),
-              (t.style.background = a ? "#2a5a2a" : "#5a2a2a"),
-              (t.style.color = a ? "#47e8a3" : "#e84747"));
-          }
-        }
       }
       function setModalEggSize(e, a) {
         eggSizeG = e;
@@ -1062,11 +1030,7 @@
         (R.forEach((t) => {
           const i = document.querySelector(`.card[data-id="${t.id}"]`);
           if (!i) return;
-          if (HIDDEN_RECIPE_IDS.has(t.id))
-            return void (adminMode
-              ? ((i.style.display = ""), (i.style.opacity = "0.35"))
-              : ((i.style.display = "none"), (i.style.opacity = "")));
-          if (((i.style.opacity = ""), (t.carb !== "none" && !carbEnabled[t.carb]))) return void (i.style.display = "none");
+          if (t.carb !== "none" && !carbEnabled[t.carb]) return void (i.style.display = "none");
           if ("sweet_potato" === t.carb && !carbEnabled.potato) return void (i.style.display = "none");
           // Recipes without a protein/carb base (dips, baked oats) are not
           // affected by the protein/carb buttons — those only switch off what
@@ -1117,7 +1081,7 @@
           ((i.style.display = y ? "" : "none"), y && a++);
         }),
           (document.getElementById("visibleCount").textContent = a));
-        const i = R.filter((e) => !HIDDEN_RECIPE_IDS.has(e.id)).length,
+        const i = R.length,
           n = document.getElementById("totalCount");
         (n && (n.textContent = i), t && (t.style.display = 0 === a ? "block" : "none"));
         updatePillStates(); // the badge always reflects what was just filtered
@@ -1272,7 +1236,6 @@
       }
 
       function getRecipeDetail(e) {
-        if (adminOverrides && adminOverrides[e.id]) return { ...(RECIPE_DETAILS[e.id] || {}), ...adminOverrides[e.id] };
         if (RECIPE_DETAILS[e.id]) return RECIPE_DETAILS[e.id];
         const a = { potato: "potato", rice: "rice", noodle: "noodles", bread: "bread/wrap" }[e.carb],
           t = activeProtein.replace("_", " ");
@@ -2214,7 +2177,6 @@
 
       function randCandidatePool(mealType) {
         return R.filter((r) => {
-          if (HIDDEN_RECIPE_IDS.has(r.id)) return false;
           if (!recipeIsMealType(r, mealType)) return false;
           if (randActiveCuisines.size && !r.tags.some((t) => randActiveCuisines.has(t))) return false;
           return !dietBlocks(r) && !pantryBlocks(r);
@@ -2565,222 +2527,6 @@
         randRenderMacros();
       }
 
-      const ADMIN_HASH = "4fdb10503bb511548ce67d426a58d23f2863c3e4bf16c517dccb2196405fdec7";
-      let adminMode = !1,
-        adminClickCount = 0,
-        adminClickTimer = null,
-        editingRecipeId = null,
-        adminOverrides = {};
-      try {
-        adminOverrides = JSON.parse(localStorage.getItem("adminOverrides") || "{}");
-      } catch (e) {}
-      function saveAdminOverrides() {
-        try {
-          localStorage.setItem("adminOverrides", JSON.stringify(adminOverrides));
-        } catch (e) {}
-      }
-      async function sha256(e) {
-        const a = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(e));
-        return Array.from(new Uint8Array(a))
-          .map((e) => e.toString(16).padStart(2, "0"))
-          .join("");
-      }
-      function handleProfileClick() {
-        (adminClickCount++,
-          clearTimeout(adminClickTimer),
-          (adminClickTimer = setTimeout(() => {
-            adminClickCount = 0;
-          }, 1500)),
-          adminClickCount >= 5 && ((adminClickCount = 0), clearTimeout(adminClickTimer), promptAdminPassword()));
-      }
-      async function promptAdminPassword() {
-        if (adminMode) return void deactivateAdmin();
-        const e = prompt("Admin-Passwort:");
-        if (!e) return;
-        (await sha256(e)) === ADMIN_HASH ? activateAdmin() : alert("Falsches Passwort.");
-      }
-      function activateAdmin() {
-        ((adminMode = !0),
-          document.body.classList.add("admin-mode"),
-          document.querySelectorAll(".card").forEach((e) => {
-            if (!e.querySelector(".admin-edit-btn")) {
-              const a = document.createElement("button");
-              ((a.className = "admin-edit-btn"),
-                (a.textContent = "✏️ Edit"),
-                (a.onclick = (a) => {
-                  (a.stopPropagation(), openAdminEdit(e.dataset.id));
-                }),
-                e.appendChild(a));
-              const t = document.createElement("button"),
-                i = e.dataset.id,
-                n = HIDDEN_RECIPE_IDS.has(i);
-              ((t.className = "admin-toggle-btn"),
-                (t.textContent = n ? "👁 Show" : "🚫 Hide"),
-                (t.style.cssText = `position:absolute;top:8px;right:72px;border:none;border-radius:6px;font-size:10px;font-weight:700;padding:4px 8px;cursor:pointer;z-index:10;font-family:"DM Sans",sans-serif;text-transform:uppercase;letter-spacing:.5px;background:${n ? "#2a5a2a" : "#5a2a2a"};color:${n ? "#47e8a3" : "#e84747"};`),
-                (t.onclick = (e) => {
-                  (e.stopPropagation(), adminToggleRecipe(i));
-                }),
-                e.appendChild(t));
-            }
-          }));
-      }
-      function deactivateAdmin() {
-        document.getElementById("exitModalOverlay").classList.add("open");
-      }
-      function exitAdminSaveAndDownload() {
-        saveAdminOverrides();
-        try {
-          localStorage.setItem("hiddenRecipes", JSON.stringify([...HIDDEN_RECIPE_IDS]));
-        } catch (e) {}
-        (document.getElementById("exitModalOverlay").classList.remove("open"),
-          (adminMode = !1),
-          document.body.classList.remove("admin-mode"),
-          exportAdminHTML());
-      }
-      function exitAdminSaveOnly() {
-        saveAdminOverrides();
-        try {
-          localStorage.setItem("hiddenRecipes", JSON.stringify([...HIDDEN_RECIPE_IDS]));
-        } catch (e) {}
-        (document.getElementById("exitModalOverlay").classList.remove("open"),
-          (adminMode = !1),
-          document.body.classList.remove("admin-mode"));
-      }
-      function exitAdminDiscard() {
-        try {
-          adminOverrides = JSON.parse(localStorage.getItem("adminOverrides") || "{}");
-        } catch (e) {}
-        (document.getElementById("exitModalOverlay").classList.remove("open"),
-          (adminMode = !1),
-          document.body.classList.remove("admin-mode"),
-          filterRecipes());
-      }
-      function getEffectiveDetail(e) {
-        return adminOverrides[e.id] ? { ...getRecipeDetail(e), ...adminOverrides[e.id] } : getRecipeDetail(e);
-      }
-      function openAdminEdit(e) {
-        const a = R.find((a) => a.id === e);
-        if (!a) return;
-        editingRecipeId = e;
-        const t = getEffectiveDetail(a),
-          i = document.getElementById("adminModalOverlay");
-        ((document.getElementById("aRecipeNum").value = a.id),
-          (document.getElementById("aTitle").value = a.title),
-          (document.getElementById("aDesc").value = a.desc),
-          (document.getElementById("aTime").value = a.time),
-          (document.getElementById("aTags").value = a.tags.join(", ")),
-          (document.getElementById("aVideoId").value = t.video || ""),
-          (document.getElementById("aImageUrl").value = t.image || ""),
-          (document.getElementById("aNotes").value = t.notes || ""),
-          (document.getElementById("aSkcal").value = a.sauce_kcal),
-          (document.getElementById("aSp").value = a.sauce_p),
-          (document.getElementById("aSc").value = a.sauce_c),
-          (document.getElementById("aSf").value = a.sauce_f),
-          renderAdminSteps(t.steps || []),
-          renderAdminHacks(t.hacks || []),
-          renderAdminIngredients(t.ingredients || []),
-          (document.getElementById("adminRecipeTitle").textContent = a.title),
-          updateAdminVisibilityBtn(),
-          i.classList.add("open"),
-          (document.body.style.overflow = "hidden"));
-      }
-      function renderAdminSteps(e) {
-        document.getElementById("adminStepsList").innerHTML = e
-          .map(
-            (e, a) =>
-              `\n    <div class="admin-step-row" data-idx="${a}">\n      <span class="admin-step-num">${a + 1}</span>\n      <textarea class="admin-step-text">${e}</textarea>\n      <button class="admin-step-del" onclick="removeAdminStep(${a})">✕</button>\n    </div>`,
-          )
-          .join("");
-      }
-      function removeAdminStep(e) {
-        const a = getAdminStepsValues();
-        (a.splice(e, 1), renderAdminSteps(a));
-      }
-      function addAdminStep() {
-        const e = getAdminStepsValues();
-        (e.push(""),
-          renderAdminSteps(e),
-          document.querySelectorAll("#adminStepsList .admin-step-text").forEach((a, t) => {
-            t === e.length - 1 && a.focus();
-          }));
-      }
-      function getAdminStepsValues() {
-        return [...document.querySelectorAll("#adminStepsList .admin-step-text")].map((e) => e.value);
-      }
-      function renderAdminHacks(e) {
-        document.getElementById("adminHacksList").innerHTML = e
-          .map(
-            (e, a) =>
-              `\n    <div class="admin-field" data-hack="${a}" style="border:1px solid #2a2a2a;padding:12px;border-radius:8px;position:relative;">\n      <label>💡 Hack ${a + 1} — Titel</label>\n      <input type="text" class="admin-hack-title" value="${e.title || ""}">\n      <label style="margin-top:8px;">Text</label>\n      <textarea class="admin-hack-text">${e.text || ""}</textarea>\n      <button class="admin-step-del" style="margin-top:4px;" onclick="removeAdminHack(${a})">✕ Hack entfernen</button>\n    </div>`,
-          )
-          .join("");
-      }
-      function removeAdminHack(e) {
-        const a = getAdminHacksValues();
-        (a.splice(e, 1), renderAdminHacks(a));
-      }
-      function addAdminHack() {
-        const e = getAdminHacksValues();
-        (e.push({ title: "", text: "" }), renderAdminHacks(e));
-      }
-      function getAdminHacksValues() {
-        return [...document.querySelectorAll("#adminHacksList [data-hack]")].map((e) => ({
-          title: e.querySelector(".admin-hack-title")?.value || "",
-          text: e.querySelector(".admin-hack-text")?.value || "",
-        }));
-      }
-      function renderAdminIngredients(e) {
-        const a = document.getElementById("adminIngList");
-        let t = "";
-        (e.forEach((e, a) => {
-          ((t += `<div class="admin-section-title">${e.section}</div>`),
-            e.items.forEach((e, i) => {
-              t += `<div class="admin-ing-row" data-sec="${a}" data-item="${i}">\n        <input type="text" class="admin-ing-name" value="${(e.name || "").replace(/"/g, "&quot;")}" placeholder="Ingredient name">\n        <input type="text" class="admin-ing-amt" value="${(e.amt || "").replace(/"/g, "&quot;")}" placeholder="Amount">\n        <button class="admin-step-del" onclick="this.closest('.admin-ing-row').remove()">✕</button>\n      </div>`;
-            }),
-            (t += `<button class="admin-add-btn" onclick="addAdminIngredient(${a})">+ Zutat</button>`));
-        }),
-          (a.innerHTML = t));
-      }
-      function addAdminIngredient(e) {
-        const a = document.querySelectorAll('#adminIngList .admin-ing-row[data-sec="' + e + '"]'),
-          t = [...a].pop(),
-          i = document.createElement("div");
-        ((i.className = "admin-ing-row"),
-          (i.dataset.sec = e),
-          (i.dataset.item = a.length),
-          (i.innerHTML =
-            '<input type="text" class="admin-ing-name" placeholder="Ingredient name"><input type="text" class="admin-ing-amt" placeholder="Amount"><button class="admin-step-del" onclick="this.closest(\'.admin-ing-row\').remove()">✕</button>'),
-          t ? t.after(i) : document.getElementById("adminIngList").appendChild(i),
-          i.querySelector("input").focus());
-      }
-      function updateAdminVisibilityBtn() {
-        const e = document.getElementById("adminVisibilityBtn");
-        if (!e || !editingRecipeId) return;
-        const a = HIDDEN_RECIPE_IDS.has(editingRecipeId);
-        ((e.textContent = a ? "👁 Show recipe" : "🚫 Hide recipe"),
-          (e.style.borderColor = a ? "#47e8a3" : "#e84747"),
-          (e.style.color = a ? "#47e8a3" : "#e84747"));
-      }
-      function closeAdminEdit() {
-        (document.getElementById("adminModalOverlay").classList.remove("open"),
-          (document.body.style.overflow = ""),
-          (editingRecipeId = null));
-      }
-      function exportAdminHTML() {
-        let e = document.documentElement.outerHTML;
-        const a = `<script>\n(function(){\n  const overrides = ${JSON.stringify(adminOverrides)};\n  Object.entries(overrides).forEach(([id, data]) => {\n    RECIPE_DETAILS[parseInt(id)] = data;\n  });\n})();\n<\/script>`;
-        e = e.replace("</body>", a + "</body>");
-        const t = new Blob([e], { type: "text/html" }),
-          i = document.createElement("a");
-        ((i.href = URL.createObjectURL(t)), (i.download = "fitniikiter-recipes.html"), i.click());
-      }
-      try {
-        const e = JSON.parse(localStorage.getItem("hiddenRecipes") || "null");
-        e && e.forEach((e) => HIDDEN_RECIPE_IDS.add(e));
-      } catch (e) {}
-      Object.entries(adminOverrides).forEach(([e, a]) => {
-        RECIPE_DETAILS[parseInt(e)] = { ...(RECIPE_DETAILS[parseInt(e)] || {}), ...a };
-      });
       let c2Goal = "fat_loss",
         c2Gender = "m",
         c2ActivityFactor = 1.375;
