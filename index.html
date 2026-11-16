@@ -1038,6 +1038,15 @@
       // never competes with the first render).
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", function () {
+          // When an updated service worker takes over a page that was loaded
+          // under the old one, reload once so HTML, CSS, JS and recipes all
+          // come from the same version.
+          var hadController = !!navigator.serviceWorker.controller, reloaded = false;
+          navigator.serviceWorker.addEventListener("controllerchange", function () {
+            if (!hadController || reloaded) return;
+            reloaded = true;
+            window.location.reload();
+          });
           navigator.serviceWorker.register("/sw.js").catch(function () {});
         });
       }

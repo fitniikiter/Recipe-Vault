@@ -3,14 +3,21 @@
  * Strategy:
  *   - Navigations (HTML): network-first, fall back to cached index.html so the
  *     app opens offline but always shows the latest shell when online.
- *   - Same-origin static assets (js/css/woff2/png/json): stale-while-revalidate
- *     — instant from cache, refreshed in the background, so deploys propagate
- *     without a manual cache-version bump.
+ *   - Versioned assets (style.css?v=…, app.js?v=…, recipes.js?v=…): the URL
+ *     changes whenever the file changes, so an EXACT cache hit is always the
+ *     right file and a new version is always fetched from the network. Older
+ *     versions of the same file are deleted once the new one is stored.
+ *   - Unversioned assets (fonts, icons): stale-while-revalidate.
+ *   - Offline with no exact hit: fall back to any cached version of the file.
  *   - Cross-origin requests (R2 recipe images, YouTube, etc.): left untouched.
+ *
+ * Never serve a versioned request from a different version of the file while
+ * online: that pairs a new index.html with old CSS/JS/recipes (the bug this
+ * replaced — the lookup ignored ?v= and kept returning the first copy cached).
  *
  * Bump CACHE_VERSION only if you ever need to hard-invalidate everything.
  */
-const CACHE_VERSION = "v3";
+const CACHE_VERSION = "v4";
 const CACHE = "recipe-vault-" + CACHE_VERSION;
 
 // Stable, query-string-free URLs that make the app usable offline after the
@@ -82,21 +89,43 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Static assets: stale-while-revalidate. ignoreSearch so a changed ?v=
-  // cache-buster still hits the previously cached file instantly.
+  const versioned = /[?&]v=/.test(url.search);
   event.respondWith(
-    caches.open(CACHE).then((cache) =>
-      cache.match(req, { ignoreSearch: true }).then((cached) => {
-        const network = fetch(req)
-          .then((res) => {
-            if (res && res.status === 200 && res.type === "basic") {
-              cache.put(req, res.clone());
-            }
-            return res;
-          })
-          .catch(() => cached);
-        return cached || network;
-      })
-    )
+    caches.open(CACHE).then(async (cache) => {
+      const exact = await cache.match(req);
+      if (versioned && exact) return exact; // immutable: same URL, same content
+
+      const network = fetch(req).then((res) => {
+        if (res && res.status === 200 && res.type === "basic") {
+          const copy = res.clone();
+          cache.put(req, copy).then(() => {
+            if (!versioned) return;
+            // Drop every other cached copy of this file (older ?v= and the
+            // unversioned precache entry) so the cache can't grow or go stale.
+            return cache.keys().then((keys) =>
+              Promise.all(
+                keys
+                  .filter((k) => new URL(k.url).pathname === url.pathname && k.url !== req.url)
+                  .map((k) => cache.delete(k))
+              )
+            );
+          });
+        }
+        return res;
+      });
+
+      if (exact) {
+        network.catch(() => {}); // unversioned: serve now, refresh in the background
+        return exact;
+      }
+      try {
+        return await network;
+      } catch (err) {
+        // Offline: any cached version of the file beats a failed request.
+        const anyVersion = await cache.match(req, { ignoreSearch: true });
+        if (anyVersion) return anyVersion;
+        throw err;
+      }
+    })
   );
 });
