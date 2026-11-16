@@ -8,6 +8,7 @@
         --accent3: #47e8a3;
         --text: #f0f0f0;
         --muted: #888;
+        --faint: #7a7a7a; /* de-emphasised hints — still readable on --bg and --card */
         --tag-asian: #47b3e8;
         --tag-american: #e84747;
         --tag-korean: #c847e8;
@@ -41,6 +42,7 @@
         /* #777 measured 4.05-4.47:1 against white/off-white (WCAG AA needs
            4.5:1) — darkened to #666 for a safe margin (~5.7:1). */
         --muted: #666;
+        --faint: #777;
         /* The dark-mode accent/tag/carb/macro colors below were tuned to pop
            against a near-black background (#0e0e0e) and were never given a
            light-mode-safe counterpart, so every badge/tag/macro-value using
@@ -292,7 +294,7 @@
         border-color: rgba(255, 140, 0, 0.18);
       }
       html.light .note-box {
-        color: #666;
+        color: var(--muted);
       }
       html.light .reset-modal {
         background: #fff;
@@ -1551,7 +1553,7 @@
       }
       .input-hint {
         font-size: 11px;
-        color: #555;
+        color: var(--faint);
       }
       .carb-input-group-calc {
         display: flex;
@@ -1828,7 +1830,7 @@
       }
       .protein-macro-hint {
         font-size: 11px;
-        color: #555;
+        color: var(--faint);
         margin-top: 8px;
       }
       .egg-size-row {
@@ -2263,7 +2265,7 @@
       }
       .ing-macro-hint {
         font-size: 10px;
-        color: #555;
+        color: var(--faint);
         margin-top: 6px;
       }
       .ing-total-bar {
@@ -2337,14 +2339,14 @@
       }
       .equipment-label {
         font-size: 10px;
-        color: #444;
+        color: var(--faint);
         text-transform: uppercase;
         letter-spacing: 0.6px;
         margin-right: 4px;
       }
       .ing-note {
         font-size: 11px;
-        color: #555;
+        color: var(--faint);
         margin-top: 16px;
         padding: 10px 14px;
         border: 1px solid #2a2a2a;
@@ -2448,7 +2450,7 @@
       }
       .modal-weight-hint {
         font-size: 10px;
-        color: #444;
+        color: var(--faint);
       }
       .serving-control .modal-weight-hint {
         margin-left: 0;
@@ -2730,14 +2732,14 @@
         border-radius: 10px;
         padding: 32px;
         text-align: center;
-        color: #555;
+        color: var(--faint);
         font-size: 13px;
       }
       .video-placeholder strong {
         display: block;
         font-family: "Bebas Neue", sans-serif;
         font-size: 18px;
-        color: #444;
+        color: var(--faint);
         margin-bottom: 6px;
       }
       .video-embed {
@@ -2758,7 +2760,7 @@
       }
       .card-click-hint {
         font-size: 10px;
-        color: #444;
+        color: var(--faint);
         text-align: right;
         margin-top: 8px;
         transition: color 0.15s;
@@ -2835,7 +2837,7 @@
         font-size: 9px;
         text-transform: uppercase;
         letter-spacing: 1px;
-        color: #444;
+        color: var(--faint);
         margin: 6px 0 3px;
       }
       @media (max-width: 600px) {
@@ -4678,12 +4680,12 @@
       }
       .mf-sep {
         font-size: 11px;
-        color: #555;
+        color: var(--faint);
       }
       .mf-reset-btn {
         background: 0 0;
         border: 1px solid #333;
-        color: #555;
+        color: var(--faint);
         padding: 5px 12px;
         border-radius: 6px;
         font-size: 10px;
@@ -5322,7 +5324,7 @@
       }
       html.light .compare-note,
       html.light .pantry-info {
-        color: #555;
+        color: var(--faint);
       }
       /* Keep the "g" unit clear of the number input */
       .rand-target-input {
@@ -5414,4 +5416,95 @@
         .nutdb-table td, .nutdb-table thead th { padding: 8px 6px; }
         .nutdb-table thead th { font-size: 11px; white-space: normal; }
         .nutdb-table td.nutdb-name { white-space: normal; }
+      }
+
+      /* ── Design pass: spacing, touch layout and consistency ── */
+      /* Recipe modal: no dead band between the title and the description */
+      .modal-body {
+        padding-top: 6px;
+      }
+      /* Diet chips match the other filter chips instead of being twice their size */
+      #dietaryGrid {
+        gap: 6px;
+      }
+      #dietaryGrid .dietary-btn {
+        padding: 4px 10px;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        gap: 4px;
+      }
+      #dietaryGrid .dietary-btn .diet-icon {
+        font-size: 11px;
+      }
+      /* Randomizer: daily target as an even grid instead of a ragged inline row */
+      .rand-target-label {
+        margin-top: 16px;
+        font-size: 10px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .rand-target-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+        margin-top: 6px;
+      }
+      .rand-target-grid label {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .rand-target-grid .rand-target-input {
+        width: 100%;
+        margin: 0;
+        padding: 8px 10px;
+        font-size: 14px; /* 16px on phones below prevents iOS zoom-on-focus */
+        box-sizing: border-box;
+      }
+      @media (max-width: 600px) {
+        .rand-target-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .rand-target-grid .rand-target-input {
+          font-size: 16px;
+        }
+        /* Recipe modal weight rows: label + input + unit on one line, the
+           per-portion hint on its own line instead of wrapping mid-row */
+        #protWeightRow .modal-weight-row-main,
+        #carbWeightRow .modal-weight-row-main {
+          display: grid;
+          grid-template-columns: 1fr auto auto;
+          grid-template-areas: "label input unit" "hint hint expand";
+          align-items: center;
+          column-gap: 8px;
+          row-gap: 4px;
+        }
+        #protWeightRow .modal-weight-row-main > label,
+        #carbWeightRow .modal-weight-row-main > label { grid-area: label; }
+        #protWeightRow .modal-weight-input,
+        #carbWeightRow .modal-weight-input { grid-area: input; }
+        #protWeightRow .modal-weight-unit,
+        #carbWeightRow .modal-weight-unit { grid-area: unit; }
+        #protWeightRow .modal-weight-hint,
+        #carbWeightRow .modal-weight-hint { grid-area: hint; font-size: 11px; }
+        #protWeightRow .modal-weight-expand,
+        #carbWeightRow .modal-weight-expand { grid-area: expand; justify-self: end; }
+        #sideEggRow .modal-weight-row-main {
+          flex-wrap: wrap !important;
+        }
+        #sideEggRow .modal-weight-hint {
+          white-space: nowrap;
+          font-size: 11px;
+        }
+      }
+      #dietaryGrid .dietary-btn .diet-label {
+        font-size: inherit;
+      }
+      .rand-target-grid .rand-target-input {
+        font-family: inherit;
       }

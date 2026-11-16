@@ -92,7 +92,7 @@
     <!-- Self-hosted fonts (Bebas Neue + DM Sans) — no runtime dependency on
          Google Fonts. Files live in /fonts, generated into /fonts.css. -->
     <link rel="stylesheet" href="/fonts.css" />
-    <link rel="stylesheet" href="style.css?v=202611154" />
+    <link rel="stylesheet" href="style.css?v=202611161" />
   </head>
   <body>
     <div class="nav-tabs">
@@ -164,7 +164,6 @@
             class="filter-pill"
             id="btnResetAll"
             onclick="resetAllFilters()"
-            style="border-color: #444; color: #666"
           >
             ↺ Reset
           </button>
@@ -372,7 +371,7 @@
               <label>Height (cm)</label> <input type="number" id="c2Height" placeholder="175" min="100" max="250" />
             </div>
             <div class="calc2-field">
-              <label>Body Fat % <span style="color: #555; font-size: 10px">(optional)</span></label>
+              <label>Body Fat % <span style="color: var(--faint); font-size: 10px">(optional)</span></label>
               <input type="number" id="c2BF" placeholder="e.g. 18" min="3" max="60" />
             </div>
           </div>
@@ -664,12 +663,12 @@
         <div class="results-box">
           <h3>Your Day — <span id="randDayShare">100</span>% of target planned</h3>
           <div class="results-grid" id="randMacroGrid"></div>
-          <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:14px; font-size:11px; color:var(--muted);">
-            <span>Target:</span>
-            <label>Kcal <input type="number" id="randTargetKcal" class="rand-target-input" value="2000" min="0" oninput="randUpdateTarget()"></label>
-            <label>Protein <input type="number" id="randTargetP" class="rand-target-input" value="160" min="0" oninput="randUpdateTarget()">g</label>
-            <label>Carbs <input type="number" id="randTargetC" class="rand-target-input" value="190" min="0" oninput="randUpdateTarget()">g</label>
-            <label>Fat <input type="number" id="randTargetF" class="rand-target-input" value="60" min="0" oninput="randUpdateTarget()">g</label>
+          <div class="rand-target-label">Daily target</div>
+          <div class="rand-target-grid">
+            <label><span>Kcal</span><input type="number" id="randTargetKcal" class="rand-target-input" value="2000" min="0" inputmode="numeric" oninput="randUpdateTarget()"></label>
+            <label><span>Protein (g)</span><input type="number" id="randTargetP" class="rand-target-input" value="160" min="0" inputmode="numeric" oninput="randUpdateTarget()"></label>
+            <label><span>Carbs (g)</span><input type="number" id="randTargetC" class="rand-target-input" value="190" min="0" inputmode="numeric" oninput="randUpdateTarget()"></label>
+            <label><span>Fat (g)</span><input type="number" id="randTargetF" class="rand-target-input" value="60" min="0" inputmode="numeric" oninput="randUpdateTarget()"></label>
           </div>
           <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:12px;">
             <span style="font-size:11px; color:var(--muted);">Goal:</span>
@@ -808,7 +807,7 @@
         style="
           margin-top: 10px;
           font-size: 10px;
-          color: #444;
+          color: var(--faint);
           font-weight: 300;
           line-height: 1.6;
           max-width: 700px;
@@ -821,29 +820,29 @@
     </footer>
     <script src="nutrition.js?v=202611151" defer></script>
   <script src="recipes.js?v=202611152" defer></script>
-    <script src="app.js?v=202611154" defer></script>
+    <script src="app.js?v=202611161" defer></script>
     <div class="hiw-overlay" id="hiwOverlay" onclick="event.target === this && closeHowItWorksModal()">
       <div class="hiw-modal">
         <button class="hiw-modal-close" onclick="closeHowItWorksModal()">✕</button>
         <h2>💡 How It Works</h2>
         <p class="hiw-modal-sub">Everything you need to know to get the most out of this Recipe Vault.</p>
         <div class="hiw-section">
-          <div class="hiw-section-title">⚖️ Macro Calculator</div>
+          <div class="hiw-section-title">⚖️ Portions & Macros</div>
           <div class="hiw-step">
-            <strong>Set your protein weight</strong> — Enter how many grams of protein (e.g. chicken, beef, salmon)
-            you're cooking for. Every macro value on every recipe card updates live based on this number.
+            <strong>Every number is per portion</strong> — the macros on a card, in the recipe and in the Randomizer
+            are always the same calculation, using that recipe's own protein (beef for a beef recipe).
           </div>
           <div class="hiw-step">
-            <strong>Choose your protein source</strong> — Switch between Chicken Thigh, Chicken Breast, Beef, Salmon,
-            Eggs or Tofu. The macros recalculate instantly.
+            <strong>Protein weight</strong> — In the filter panel, enter how many grams of raw protein you cook with.
+            Every card updates live. Inside a recipe you can switch the cut: Thigh/Breast or 20%/5% beef.
           </div>
           <div class="hiw-step">
-            <strong>Set your carb weight</strong> — Adjust rice, potatoes, noodles or bread independently. The carb
-            values on each recipe card update as you type.
+            <strong>Carb weight</strong> — One amount, shown as dry rice. Potatoes, noodles and bread are converted
+            automatically, because they need different gram amounts for the same meal.
           </div>
           <div class="hiw-step">
-            <strong>Servings</strong> — Set how many portions you're splitting into. All macros shown per card already
-            reflect your serving count.
+            <strong>Servings</strong> — The weights are your batch total. With 2 servings the batch is split in two,
+            and the ingredient list shows the sauce for both portions.
           </div>
         </div>
         <div class="hiw-section">
@@ -887,12 +886,26 @@
             <strong>Search</strong> — Type any keyword (dish name, ingredient, cuisine) to instantly filter recipes.
           </div>
           <div class="hiw-step">
-            <strong>Cuisine & carb tags</strong> — Filter by cuisine type (Asian, Korean, Mexican…) or carb source
-            (Rice, Potato, Noodle, Bread). Multiple filters stack.
+            <strong>Protein, carbs & cuisine</strong> — Switch off what you don't want to see. Multiple filters stack,
+            and the number on the Filter button shows how many are active.
           </div>
           <div class="hiw-step">
-            <strong>Macro filter</strong> — Set max kcal, min protein, max carbs, max fat or max prep time to only show
-            recipes that fit your targets.
+            <strong>Macro filter</strong> — Set max kcal, min protein, max carbs, max fat, min score or max prep time
+            to only show recipes that fit your targets.
+          </div>
+          <div class="hiw-step">
+            <strong>Diet & allergies</strong> — Vegetarian, Halal, Gluten-Free, No Eggs and more. These check the whole
+            ingredient list, not just the main protein. Reset brings everything back.
+          </div>
+        </div>
+        <div class="hiw-section">
+          <div class="hiw-section-title">🎲 Calculator & Randomizer</div>
+          <div class="hiw-step">
+            <strong>Calorie Calculator</strong> — Enter your stats and goal to get your daily calories and macros.
+          </div>
+          <div class="hiw-step">
+            <strong>Randomizer</strong> — Rolls a full day of meals for a daily target and sizes each portion to its
+            share of the day. Lock the meals you like, reroll the rest, and tap a meal to cook exactly that portion.
           </div>
         </div>
         <div class="hiw-section hiw-section-pantry">
@@ -909,8 +922,8 @@
         <div class="hiw-section">
           <div class="hiw-section-title">📖 Recipe Details</div>
           <div class="hiw-step">
-            Click any recipe card to open the full recipe with <strong>live macro breakdown per ingredient</strong>,
-            step-by-step instructions, sauce variants, and 80/20 hacks.
+            Tap any recipe card to open the full recipe with <strong>live macro breakdown per ingredient</strong>,
+            step-by-step instructions and 80/20 hacks.
           </div>
           <div class="hiw-step">
             <strong>Ingredients are clickable</strong> — tap any ingredient to see its individual macro contribution
@@ -940,7 +953,7 @@
       <div class="exit-modal">
         <h3>Exit Admin Mode</h3>
         <p>
-          Save your changes?<br /><span style="color: #555; font-size: 11px"
+          Save your changes?<br /><span style="color: var(--faint); font-size: 11px"
             >Saved in browser (localStorage) + optional HTML download.</span
           >
         </p>
@@ -970,10 +983,10 @@
           </div>
         </div>
         <div class="admin-field">
-          <label>🖼️ Image URL <span style="color: #555; font-size: 10px">(Cloudflare R2, Imgur, etc.)</span></label
+          <label>🖼️ Image URL <span style="color: var(--faint); font-size: 10px">(Cloudflare R2, Imgur, etc.)</span></label
           ><input id="aImageUrl" placeholder="https://..." />
         </div>
-        <div style="font-size: 10px; color: #555; margin-top: -8px; margin-bottom: 8px">
+        <div style="font-size: 10px; color: var(--faint); margin-top: -8px; margin-bottom: 8px">
           Own image takes priority over YouTube thumbnail. Recommended: 1280×720px or larger.
         </div>
         <div style="display: grid; grid-template-columns: 80px 1fr; gap: 12px">
