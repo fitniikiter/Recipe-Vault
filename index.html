@@ -92,7 +92,7 @@
     <!-- Self-hosted fonts (Bebas Neue + DM Sans) — no runtime dependency on
          Google Fonts. Files live in /fonts, generated into /fonts.css. -->
     <link rel="stylesheet" href="/fonts.css" />
-    <link rel="stylesheet" href="style.css?v=202611166" />
+    <link rel="stylesheet" href="style.css?v=202611171" />
   </head>
   <body>
     <div class="nav-tabs">
@@ -837,7 +837,7 @@
     </footer>
     <script src="nutrition.js?v=202611151" defer></script>
   <script src="recipes.js?v=202611152" defer></script>
-    <script src="app.js?v=202611166" defer></script>
+    <script src="app.js?v=202611171" defer></script>
     <div class="hiw-overlay" id="hiwOverlay" onclick="event.target === this && closeHowItWorksModal()">
       <div class="hiw-modal">
         <button class="hiw-modal-close" onclick="closeHowItWorksModal()">✕</button>
@@ -978,8 +978,19 @@
       </div>
       <div class="cook-bar"><div id="cookBar"></div></div>
       <div class="cook-body" id="cookBody">
-        <div class="cook-text" id="cookText"></div>
-        <div class="cook-ings" id="cookIngs"></div>
+        <div class="cook-step">
+          <div class="cook-num" id="cookNum"></div>
+          <div class="cook-text" id="cookText"></div>
+          <ul class="cook-details" id="cookDetails"></ul>
+          <div class="cook-ings-wrap" id="cookIngsWrap">
+            <div class="cook-label">You need</div>
+            <div class="cook-ings" id="cookIngs"></div>
+          </div>
+        </div>
+        <div class="cook-upnext" id="cookUpNext" onclick="cookStep(1)">
+          <div class="cook-label">Up next</div>
+          <div id="cookUpNextText"></div>
+        </div>
       </div>
       <div class="cook-nav">
         <button type="button" id="cookPrev" onclick="cookStep(-1)">← Back</button>

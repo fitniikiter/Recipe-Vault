@@ -340,7 +340,7 @@
         if (!currentModalRecipe) return;
         buildRecipeTab(currentModalRecipe); // make sure the steps reflect the current portion
         _cookSteps = [...document.querySelectorAll("#tab-recipe .step")].map((st) => ({
-          text: st.querySelector(".step-text > div")?.innerHTML || "",
+          text: st.querySelector(".step-text > div")?.textContent || "",
           ings: st.querySelector(".step-ing-panel")?.innerHTML || "",
         }));
         if (!_cookSteps.length) return;
@@ -352,14 +352,56 @@
         // Keep the screen on while cooking, where the browser supports it.
         try { navigator.wakeLock && navigator.wakeLock.request("screen").then((l) => (_cookWakeLock = l)).catch(() => {}); } catch (e) {}
       }
+      const _cookEsc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+      // Marks what a cook looks for at a glance: times, temperatures, heat level.
+      function _cookHighlight(text) {
+        return _cookEsc(text).replace(
+          /\b\d+(?:\s?[–-]\s?\d+)?\s?(?:seconds?|secs?|minutes?|mins?|hours?|hrs?)\b|\b\d{2,3}\s?°\s?[CF]\b|\b(?:very\s+)?(?:medium[- ]high|medium[- ]low|high|medium|low)\s+heat\b/gi,
+          (m) => `<mark>${m}</mark>`,
+        );
+      }
+      // Splits a step into the action (shown large) and its details (one per
+      // line): the first sentence up to an em dash is the action, everything
+      // after it and every further sentence is a detail.
+      function _cookParts(text) {
+        const sentences = text.trim().split(/(?<=[.!?])\s+(?=[A-Z(“"])/);
+        const first = sentences.shift() || "";
+        const dash = first.search(/\s[—–]\s/);
+        let lead = dash > 12 ? first.slice(0, dash) : first;
+        const details = dash > 12 ? [first.slice(dash).replace(/^\s[—–]\s/, "")] : [];
+        // A long action without a dash: break it at its first natural joint
+        // ("…, then …", "…; …", "… and …") so the large line stays short.
+        if (lead.length > 110) {
+          // "and" only counts before a cooking verb — never inside a list of ingredients.
+          const joint = /:\s+|,\s+then\s+|;\s+|,?\s+and\s+(?=(?:then\s+)?(?:bake|cook|roast|fry|sear|simmer|boil|stir|serve|toss|mix|set|let|rest|leave|add|hold|remove|season|flip|reduce|pour|immediately|grill|smash|whisk|fold|cover|drain|transfer)\b)/gi;
+          let m;
+          while ((m = joint.exec(lead)) && m.index < 35);
+          if (m && lead.length - m.index > 20) {
+            details.unshift(lead.slice(m.index + m[0].length));
+            lead = lead.slice(0, m.index);
+          }
+        }
+        sentences.forEach((x) => details.push(x));
+        const cap = (x) => x.charAt(0).toUpperCase() + x.slice(1);
+        return { lead: lead.replace(/[.]$/, ""), details: details.map((x) => cap(x.trim())).filter(Boolean) };
+      }
       function renderCookStep() {
-        const n = _cookSteps.length, st = _cookSteps[_cookIdx];
+        const n = _cookSteps.length, st = _cookSteps[_cookIdx], parts = _cookParts(st.text);
         document.getElementById("cookProgress").textContent = `Step ${_cookIdx + 1} of ${n}`;
         document.getElementById("cookBar").style.width = ((_cookIdx + 1) / n) * 100 + "%";
-        document.getElementById("cookText").innerHTML = st.text;
-        const ing = document.getElementById("cookIngs");
-        ing.innerHTML = st.ings;
-        ing.style.display = st.ings.trim() ? "" : "none";
+        document.getElementById("cookNum").textContent = _cookIdx + 1;
+        document.getElementById("cookText").innerHTML = _cookHighlight(parts.lead);
+        document.getElementById("cookText").classList.toggle("long", parts.lead.length > 95); // smaller type for a long action
+        const det = document.getElementById("cookDetails");
+        det.innerHTML = parts.details.map((d) => `<li>${_cookHighlight(d)}</li>`).join("");
+        det.style.display = parts.details.length ? "" : "none";
+        const ingWrap = document.getElementById("cookIngsWrap");
+        document.getElementById("cookIngs").innerHTML = st.ings;
+        ingWrap.style.display = st.ings.trim() ? "" : "none";
+        // A glimpse of what comes next, so nothing catches the cook off guard.
+        const up = document.getElementById("cookUpNext"), next = _cookSteps[_cookIdx + 1];
+        up.style.display = next ? "" : "none";
+        next && (document.getElementById("cookUpNextText").textContent = _cookParts(next.text).lead);
         document.getElementById("cookPrev").disabled = 0 === _cookIdx;
         document.getElementById("cookNext").textContent = _cookIdx === n - 1 ? "✓ Done" : "Next →";
         document.getElementById("cookBody").scrollTop = 0;
@@ -379,6 +421,21 @@
         _cookWakeLock = null;
         true === fromHistory || overlayClosed(closeCookMode);
       }
+      // Swipe left / right to change the step (a mostly horizontal swipe only,
+      // so scrolling a long step still works).
+      (function () {
+        let x0 = null, y0 = null;
+        document.addEventListener("touchstart", (e) => {
+          if (!e.target.closest || !e.target.closest("#cookBody")) return void (x0 = null);
+          x0 = e.touches[0].clientX; y0 = e.touches[0].clientY;
+        }, { passive: true });
+        document.addEventListener("touchend", (e) => {
+          if (x0 === null) return;
+          const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+          x0 = null;
+          Math.abs(dx) > 60 && Math.abs(dx) > 2 * Math.abs(dy) && cookStep(dx < 0 ? 1 : -1);
+        }, { passive: true });
+      })();
       document.addEventListener("keydown", (e) => {
         if (!document.getElementById("cookOverlay")?.classList.contains("open")) return;
         "ArrowRight" === e.key && cookStep(1);
