@@ -92,7 +92,7 @@
     <!-- Self-hosted fonts (Bebas Neue + DM Sans) — no runtime dependency on
          Google Fonts. Files live in /fonts, generated into /fonts.css. -->
     <link rel="stylesheet" href="/fonts.css" />
-    <link rel="stylesheet" href="style.css?v=202611172" />
+    <link rel="stylesheet" href="style.css?v=202611176" />
   </head>
   <body>
     <div class="nav-tabs">
@@ -678,6 +678,17 @@
         <div class="results-box">
           <h3>Your Day — <span id="randDayShare">100</span>% of target planned</h3>
           <div class="results-grid" id="randMacroGrid"></div>
+          <div class="rand-over-note" id="randOverNote" role="status" style="display: none"></div>
+          <div class="rand-day-time" id="randDayTime"></div>
+          <div class="rand-meals-row">
+            <span class="rand-target-label" style="margin-top: 0">Meals per day</span>
+            <div class="rand-meals-btns">
+              <button class="filter-btn" data-meal-count="1" onclick="randSetMealCount(1)" title="Dinner only">1</button>
+              <button class="filter-btn" data-meal-count="2" onclick="randSetMealCount(2)" title="Lunch and dinner">2</button>
+              <button class="filter-btn" data-meal-count="3" onclick="randSetMealCount(3)" title="Breakfast, lunch and dinner">3</button>
+              <button class="filter-btn" data-meal-count="4" onclick="randSetMealCount(4)" title="Breakfast, lunch, dinner and an extra meal">4</button>
+            </div>
+          </div>
           <div class="rand-target-label">Daily target</div>
           <div class="rand-target-grid">
             <label><span>Kcal</span><input type="number" id="randTargetKcal" class="rand-target-input" value="2000" min="0" inputmode="numeric" oninput="randUpdateTarget()"></label>
@@ -794,7 +805,7 @@
           <span class="share-icon">🔗</span> Share
         </button>
         <div class="modal-header">
-          <div class="modal-meta"><span class="modal-num" id="modalNum"></span><span class="card-time" id="modalTime"></span><button type="button" class="modal-fav-btn" id="modalFavBtn" aria-pressed="false" onclick="currentModalRecipe && toggleFavorite(currentModalRecipe.id)">♡ Save</button></div>
+          <div class="modal-meta"><span class="modal-num" id="modalNum"></span><span class="card-time" id="modalTime"></span><button type="button" class="modal-fav-btn" id="modalFavBtn" aria-pressed="false" onclick="currentModalRecipe && toggleFavorite(currentModalRecipe.id)">♡ Save</button><span class="modal-time-split" id="modalTimeSplit" style="display: none"></span></div>
           <div class="modal-title" id="modalTitle"></div>
         </div>
         <div class="modal-body">
@@ -836,8 +847,8 @@
       </div>
     </footer>
     <script src="nutrition.js?v=202611151" defer></script>
-  <script src="recipes.js?v=202611152" defer></script>
-    <script src="app.js?v=202611171" defer></script>
+  <script src="recipes.js?v=202611171" defer></script>
+    <script src="app.js?v=202611176" defer></script>
     <div class="hiw-overlay" id="hiwOverlay" onclick="event.target === this && closeHowItWorksModal()">
       <div class="hiw-modal">
         <button class="hiw-modal-close" onclick="closeHowItWorksModal()">✕</button>
@@ -936,7 +947,9 @@
           </div>
           <div class="hiw-step">
             <strong>Randomizer</strong> — Rolls a full day of meals for a daily target and sizes each portion to its
-            share of the day. Lock the meals you like, reroll the rest, and tap a meal to cook exactly that portion.
+share of the day — the day never goes over the calories you entered (bulking aims up to 15% above).
+            Choose how many meals you eat, skip single meals with ✕, lock the ones you like, reroll the rest, and tap
+            a meal to cook exactly that portion.
           </div>
           <div class="hiw-step">
             <strong>Shopping list & sharing</strong> — “Shopping list” adds up the ingredients of the whole day.
@@ -1011,6 +1024,25 @@
         <div class="shop-foot">
           <span>Amounts are for one portion of each meal.</span>
           <button type="button" class="primary" onclick="shareShoppingList()">Share / copy list</button>
+        </div>
+      </div>
+    </div>
+    <!-- Opened from a shared Randomizer link whose target differs from the visitor's -->
+    <div class="reset-modal-overlay" id="sharedDayOverlay">
+      <div class="reset-modal shared-day-modal" role="dialog" aria-modal="true" aria-label="Shared day of meals">
+        <h3>🎲 A shared day of meals</h3>
+        <p>These meals were planned for a different daily target than yours. Which one do you want to use?</p>
+        <div class="shared-day-option">
+          <div class="shared-day-label">Their target</div>
+          <div class="shared-day-values" id="sharedDayTheirs"></div>
+          <button type="button" class="shared-day-btn primary" onclick="resolveSharedDay(true)">Use their targets</button>
+          <div class="shared-day-hint">Portions stay exactly as shared. Replaces your saved target.</div>
+        </div>
+        <div class="shared-day-option">
+          <div class="shared-day-label">Your target</div>
+          <div class="shared-day-values" id="sharedDayMine"></div>
+          <button type="button" class="shared-day-btn" onclick="resolveSharedDay(false)">Keep mine — adapt the portions</button>
+          <div class="shared-day-hint">Same meals, portions re-sized to your target.</div>
         </div>
       </div>
     </div>

@@ -50,8 +50,9 @@ The schema is defined (and enforced) in `tools/validate-recipes.js` — read its
 header before touching recipe data. Two objects, matched by the same `id`:
 
 R (card, in `const R = [...]`):
-{ id, protein, displayNum, carb, mealType, time, title, desc, tags[], flavor,
-  hint, sideEgg? }
+{ id, protein, displayNum, carb, mealType, time, prepTime?, cookTime?, title, desc,
+  tags[], flavor, hint, sideEgg? }
+  time = total minutes; prepTime + cookTime (optional pair) must add up to time
   protein: chicken|beef|eggs|fish|tofu|none · carb: rice|potato|noodle|bread|none
   mealType: array of breakfast|main|snack|dip, e.g. ["breakfast", "main"] · flavor: savory|sweet
 
@@ -71,6 +72,8 @@ run `node tools/check.js` (must pass), then `node tools/build-testset.js`
   (validator warning). Decide: delete or add a card.
 - Review the recipes flagged by `node tools/check-recipe-macros.js recipes-archive.js`
   (17 flagged — mostly "extras dominate": the sauce has more kcal than protein + carb).
+- prepTime / cookTime exist only for the 16 test-set recipes (estimates from the
+  steps). The other 182 show just the total until they are filled in.
 - Review mealType assignments (auto-assigned; most egg dishes are ["breakfast", "main"]).
 
 ## Creator

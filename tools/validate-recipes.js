@@ -17,7 +17,9 @@
 //   carb        rice | potato | noodle | bread | none
 //   mealType    non-empty array of breakfast | main | snack | dip — a dish can
 //               be both, e.g. ["breakfast", "main"]. Randomizer slots use this.
-//   time        minutes, integer 1–240
+//   time        total minutes, integer 1–240
+//   prepTime    optional: minutes of preparation (chopping, mixing)   ┐ given together,
+//   cookTime    optional: minutes at the stove / in the oven (0 = none) ┘ and prepTime + cookTime = time
 //   title, desc non-empty strings
 //   tags        array of known tags (TAGS below), no duplicates
 //   flavor      savory | sweet
@@ -56,7 +58,7 @@ const TAGS = [
   // style / content
   "comfort", "fusion", "spicy", "dip", "eggs", "oats", "protein-powder",
 ];
-const CARD_KEYS = ["id", "displayNum", "protein", "carb", "mealType", "time", "title", "desc", "tags", "flavor", "hint", "sideEgg"];
+const CARD_KEYS = ["id", "displayNum", "protein", "carb", "mealType", "time", "prepTime", "cookTime", "title", "desc", "tags", "flavor", "hint", "sideEgg"];
 const DETAIL_KEYS = ["video", "image", "ingredients", "steps", "hacks", "notes"];
 const ITEM_KEYS = ["name", "amt", "id"];
 
@@ -86,6 +88,11 @@ function validateFile(file) {
     const mealOk = Array.isArray(r.mealType) && r.mealType.length > 0 && r.mealType.every((m) => MEAL_TYPES.includes(m)) && new Set(r.mealType).size === r.mealType.length;
     if (!mealOk) err(r, `mealType must be a non-empty array of ${MEAL_TYPES.join("|")} without duplicates (got ${JSON.stringify(r.mealType)})`);
     if (!Number.isInteger(r.time) || r.time < 1 || r.time > 240) err(r, `time must be whole minutes 1–240 (got ${JSON.stringify(r.time)})`);
+    if (r.prepTime !== undefined || r.cookTime !== undefined) {
+      const ok = Number.isInteger(r.prepTime) && Number.isInteger(r.cookTime) && r.prepTime >= 0 && r.cookTime >= 0;
+      if (!ok) err(r, `prepTime and cookTime must both be whole minutes ≥ 0 (got ${JSON.stringify(r.prepTime)} / ${JSON.stringify(r.cookTime)})`);
+      else if (r.prepTime + r.cookTime !== r.time) err(r, `prepTime (${r.prepTime}) + cookTime (${r.cookTime}) must equal time (${r.time})`);
+    }
     if (!nonEmpty(r.title)) err(r, "title is empty");
     if (!nonEmpty(r.desc)) err(r, "desc is empty");
     if (!FLAVORS.includes(r.flavor)) err(r, `flavor must be one of ${FLAVORS.join("|")} (got ${JSON.stringify(r.flavor)})`);

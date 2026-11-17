@@ -37,8 +37,12 @@ for a CSS tweak, etc. Grep the anchors below.
 - **Calorie calculator (TDEE page)** → `app.js` `function runCalc`, `setGoal`,
   `setGender`, `setActivity`; `calcToRandomizer` hands the plan to the Randomizer.
 - **Randomizer** → `app.js` `renderRandomizer`, `randPickOne`,
-  `randSolveRecipeAtShare` (portion per slot), `randOpen` (opens the modal with
-  that portion), `randAdjustShare`.
+  `randPlanDay` (plans the whole day under the calorie ceiling — the ONLY source
+  of a slot's portion), `randSolveRecipeAtShare` (one meal, optional kcal cap),
+  `randSetMealCount` / `randToggleActive` (meals per day, skipped slots),
+  `randOpen` (opens the modal with that portion), `randAdjustShare`,
+  `askSharedDayTarget` / `resolveSharedDay` (shared link: whose target to use).
+- **Recipe times** → `recipeTimes(r)` (total, optional prep/cook split), `fmtMinutes`.
 - **Protein selection / native protein** → `activeProtein` (global), variants in
   `const PROTEIN_DEFS`, `_nativeVariant(recipe)`.
 - **Share link / OG** → `app.js` `function shareRecipe`; per-recipe preview

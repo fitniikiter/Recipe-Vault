@@ -13,7 +13,8 @@ foundation is finished. If asked anyway, confirm first.
 2. Find the next number: `grep -o "displayNum: [0-9]*" recipes-archive.js | sort -t' ' -k2 -n | tail -1`
 3. Add BOTH entries to `recipes-archive.js` (never to the generated `recipes.js`):
    - a card in `const R` (id, displayNum, protein, carb, mealType, time, title,
-     desc, tags, flavor, hint, optional sideEgg)
+     desc, tags, flavor, hint, optional sideEgg, optional prepTime + cookTime
+     which must add up to time)
    - details in `const RECIPE_DETAILS` under the same id (video, ingredients,
      steps, hacks, notes)
    The adjustable base is written with placeholders: `{{proteinG}}g raw` for

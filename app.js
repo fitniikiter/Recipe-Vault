@@ -259,6 +259,17 @@
       function _autoRound5() { return !!document.getElementById("chkRound5")?.checked; }
 
 
+      // ─── Recipe times ────────────────────────────────────────────────────
+      // `time` is the total. Recipes that also declare prepTime + cookTime
+      // (they add up to `time`) can show the split; the others show the total.
+      function recipeTimes(r) {
+        const split = Number.isInteger(r.prepTime) && Number.isInteger(r.cookTime);
+        return { total: r.time, prep: split ? r.prepTime : 0, cook: split ? r.cookTime : 0, split };
+      }
+      function fmtMinutes(min) {
+        return min < 60 ? min + " min" : Math.floor(min / 60) + " h" + (min % 60 ? " " + (min % 60) + " min" : "");
+      }
+
       // ─── Favorites ───────────────────────────────────────────────────────
       // Saved in this browser only (no accounts, no backend).
       let favorites = new Set();
@@ -561,17 +572,21 @@
       function randSaveDay() {
         if (!_randRestored) return; // never overwrite the saved day before it was read
         try {
-          localStorage.setItem("randDay", JSON.stringify({ ids: randSlots.map((r) => (r ? r.id : null)), locked: randLocked, shares: randShares }));
+          localStorage.setItem("randDay", JSON.stringify({ ids: randSlots.map((r) => (r ? r.id : null)), locked: randLocked, shares: randShares, active: randActive }));
         } catch (e) {}
       }
       function _randApplyDay(d) {
         if (!d || !Array.isArray(d.ids)) return false;
         const slots = d.ids.slice(0, 4).map((id) => R.find((r) => r.id === id) || null);
         if (!slots.some(Boolean)) return false;
-        randSlots = [0, 1, 2, 3].map((i) => slots[i] || null);
+        const active = Array.isArray(d.active) && d.active.length === 4 && d.active.some(Boolean) ? d.active.map(Boolean) : [true, true, true, true];
+        randActive = active;
+        randSlots = [0, 1, 2, 3].map((i) => (active[i] ? slots[i] || null : null));
         Array.isArray(d.locked) && (randLocked = [0, 1, 2, 3].map((i) => !!d.locked[i] && !!randSlots[i]));
-        if (Array.isArray(d.shares) && d.shares.length === 4 && d.shares.every((v) => v >= RAND_SHARE_MIN && v <= RAND_SHARE_MAX) && d.shares.reduce((a, b) => a + b, 0) <= 100)
-          randShares = d.shares.map(Number);
+        const sh = Array.isArray(d.shares) && d.shares.length === 4 ? d.shares.map(Number) : null;
+        if (sh && sh.every((v, k) => !active[k] || (v >= RAND_SHARE_MIN && v <= RAND_SHARE_MAX)) && sh.reduce((a, v, k) => (active[k] ? a + v : a), 0) <= 100)
+          randShares = sh.map((v, k) => (active[k] && v >= RAND_SHARE_MIN ? v : 25));
+        else randEqualShares();
         return true;
       }
       // A shared link looks like  #randomizer/d=id,id,id,id&s=25,25,25,25&t=2000,160,190,60&g=cut
@@ -584,6 +599,7 @@
         return {
           ids: (q.get("d") || "").split(","),
           shares: nums("s"),
+          active: q.get("a") ? q.get("a").split(",").map((v) => v === "1") : null,
           target: t.length === 4 && t.every((v) => v >= 0 && v < 20000) ? { kcal: t[0], p: t[1], c: t[2], f: t[3] } : null,
           goal: ["cut", "maintain", "bulk"].includes(q.get("g")) ? q.get("g") : null,
         };
@@ -593,15 +609,49 @@
         _randRestored = true;
         const shared = _randDayFromHash();
         if (shared && _randApplyDay(shared)) {
-          try {
-            shared.target && localStorage.setItem("randTarget", JSON.stringify(shared.target));
-            shared.goal && localStorage.setItem("randGoal", shared.goal);
-            history.replaceState(history.state, "", "#randomizer"); // the long link has done its job
-          } catch (e) {}
-          showNotice("Loaded a shared day of meals.");
+          try { history.replaceState(history.state, "", "#randomizer"); } catch (e) {} // the long link has done its job
+          // The meals are loaded with the visitor's OWN target first. If the
+          // sender planned for a different one, let the visitor choose.
+          const mine = randTarget(), t = shared.target;
+          if (t && (t.kcal !== mine.kcal || t.p !== mine.p || t.c !== mine.c || t.f !== mine.f)) askSharedDayTarget(shared, mine);
+          else {
+            try { shared.goal && localStorage.setItem("randGoal", shared.goal); } catch (e) {}
+            showNotice("Loaded a shared day of meals.");
+          }
           return;
         }
         try { _randApplyDay(JSON.parse(localStorage.getItem("randDay") || "null")); } catch (e) {}
+      }
+      // A shared day was planned for someone else's target: keep the visitor's
+      // own target (portions are re-sized to it) or take over the sender's.
+      let _sharedDayPending = null;
+      function askSharedDayTarget(shared, mine) {
+        _sharedDayPending = shared;
+        const line = (t) => `${t.kcal} kcal · ${t.p}g protein · ${t.c}g carbs · ${t.f}g fat`;
+        document.getElementById("sharedDayTheirs").textContent = line(shared.target);
+        document.getElementById("sharedDayMine").textContent = line(mine);
+        document.getElementById("sharedDayOverlay").classList.add("open");
+      }
+      function resolveSharedDay(useTheirs) {
+        const shared = _sharedDayPending;
+        _sharedDayPending = null;
+        document.getElementById("sharedDayOverlay").classList.remove("open");
+        if (!shared) return;
+        if (useTheirs) {
+          try {
+            localStorage.setItem("randTarget", JSON.stringify(shared.target));
+            shared.goal && localStorage.setItem("randGoal", shared.goal);
+          } catch (e) {}
+          const t = randTarget();
+          [["randTargetKcal", t.kcal], ["randTargetP", t.p], ["randTargetC", t.c], ["randTargetF", t.f]].forEach(([id, v]) => {
+            const el = document.getElementById(id);
+            el && (el.value = v);
+          });
+          randSyncGoalButtons();
+        }
+        for (let i = 0; i < 4; i++) randRenderCard(i);
+        randRenderMacros();
+        showNotice(useTheirs ? "Using the shared targets — portions are exactly as planned." : "Kept your targets — portions are sized for you.");
       }
       function randShareDay() {
         if (!randSlots.some(Boolean)) return;
@@ -610,6 +660,7 @@
           window.location.origin + window.location.pathname + "#randomizer/" +
           "d=" + randSlots.map((r) => (r ? r.id : "")).join(",") +
           "&s=" + randShares.join(",") +
+          "&a=" + randActive.map((v) => (v ? 1 : 0)).join(",") +
           "&t=" + [t.kcal, t.p, t.c, t.f].join(",") +
           "&g=" + randGoal();
         shareOrCopy({ title: "My day of meals — FIT NIIKITER's Recipe Vault", url }, "Link to this day copied.");
@@ -1697,7 +1748,11 @@
           (document.getElementById("modalDesc").textContent = a.desc),
           (function(){ const hb=document.getElementById("modalHintBox"),ht=document.getElementById("modalHintText"); if(a.hint){ht.textContent=a.hint;hb.style.display="flex";}else{hb.style.display="none";ht.textContent="";} })(),
           (document.getElementById("modalTime").innerHTML =
-            `<span class="time-icon">${clockEmoji(a.time)}</span>${a.time} min`));
+            `<span class="time-icon">${clockEmoji(a.time)}</span>${a.time} min`),
+          (function () {
+            const el = document.getElementById("modalTimeSplit"), t = recipeTimes(a);
+            el && ((el.textContent = t.split ? `🔪 ${fmtMinutes(t.prep)} prep · 🔥 ${t.cook ? fmtMinutes(t.cook) + " cooking" : "no cooking"}` : ""), (el.style.display = t.split ? "" : "none"));
+          })());
         const t = a.protein === "none" ? "none" : (a.protein || "chicken"),
           i =
             { chicken: "🍗 Chicken", beef: "🥩 Beef", eggs: "🥚 Eggs", fish: "🐟 Fish", tofu: "🫘 Tofu" }[t] ||
@@ -2664,37 +2719,30 @@
         // kcal lands to this slot's kcal share — that catches overshoot from
         // ANY source (fat, hidden carbs, both) in one number.
         const shareTarget = randShareTargetFor(slotIndex);
-        const scored = pool.map((r) => ({ r, kcal: randSolveRecipeAtShare(r, shareTarget).kcal }));
+        const cap = shareTarget.kcal * randKcalCeilingFactor();
+        const scored = pool.map((r) => {
+          const m = randSolveRecipeAtShare(r, shareTarget, cap);
+          return { r, kcal: m.kcal, p: m.p, f: m.f };
+        });
 
-        // The goal decides which side of the share is acceptable: cutting
-        // means the share is a ceiling (landing over it defeats the point of
-        // a target at all), bulking means it's a floor (a surplus is the
-        // goal), maintaining wants either direction as long as it's close.
-        const goal = randGoal();
-        let candidates;
-        if (goal === "cut") {
-          candidates = scored.filter((s) => s.kcal <= shareTarget.kcal);
-          if (!candidates.length) {
-            // Nothing fits under budget at all — closest-from-above beats
-            // silently picking something even further over.
-            scored.sort((a, b) => a.kcal - b.kcal);
-            candidates = scored.slice(0, Math.max(3, Math.ceil(scored.length * 0.2)));
-          }
-        } else if (goal === "bulk") {
-          candidates = scored.filter((s) => s.kcal >= shareTarget.kcal && s.kcal <= shareTarget.kcal * 1.3);
-          if (!candidates.length) {
-            // Nothing reaches the floor (a lean cuisine filter, say) —
-            // closest-from-below beats a surplus goal landing short.
-            scored.sort((a, b) => b.kcal - a.kcal);
-            candidates = scored.slice(0, Math.max(3, Math.ceil(scored.length * 0.2)));
-          }
-        } else {
-          const KCAL_TOLERANCE = 1.15; // allow 15% over this slot's kcal share before treating a candidate as "too much"
-          candidates = scored.filter((s) => s.kcal <= shareTarget.kcal * KCAL_TOLERANCE);
-          if (!candidates.length) {
-            scored.sort((a, b) => a.kcal - b.kcal);
-            candidates = scored.slice(0, Math.max(3, Math.ceil(scored.length * 0.2)));
-          }
+        // Only meals that fit under this slot's calorie ceiling. If none can,
+        // the lightest ones — the day planner then takes the excess out of
+        // the other meals.
+        let candidates = scored.filter((s) => s.kcal <= cap + 0.5);
+        if (!candidates.length) {
+          scored.sort((a, b) => a.kcal - b.kcal);
+          candidates = scored.slice(0, Math.max(2, Math.ceil(scored.length * 0.2)));
+        }
+        if ("bulk" === randGoal()) {
+          // Bulking: of the meals under the ceiling, prefer those that reach the share at all.
+          const filling = candidates.filter((s) => s.kcal >= shareTarget.kcal);
+          filling.length && (candidates = filling);
+        } else if (candidates.length > 3) {
+          // Prefer the ones that keep fat near its share and don't give up
+          // much protein: drop the worse half when there is a choice.
+          const score = (s) => Math.max(0, s.f - shareTarget.f) * 9 + Math.max(0, shareTarget.p - s.p) * 4;
+          candidates.sort((a, b) => score(a) - score(b));
+          candidates = candidates.slice(0, Math.max(3, Math.ceil(candidates.length / 2)));
         }
         // Randomize among the qualifying candidates (not always literally
         // the single closest one) so rerolling still gives real variety.
@@ -2711,11 +2759,67 @@
       // budget) — see solveAutoWeight() — just driven by this slot's share
       // of the day instead of a global macro-filter constraint.
       let randShares = [25, 25, 25, 25];
-      const RAND_SHARE_MIN = 10, RAND_SHARE_MAX = 70;
+      const RAND_SHARE_MIN = 10, RAND_SHARE_MAX = 100;
+      // Which of the four meal slots count for the day. A skipped slot holds
+      // no recipe, so it is left out of the macros, the shopping list and the
+      // shared link automatically.
+      let randActive = [true, true, true, true];
+      const randActiveCount = () => randActive.filter(Boolean).length;
+      // Sum of the shares of the meals that count (optionally without slot `except`).
+      function randShareSum(except) {
+        return randShares.reduce((sum, v, k) => (randActive[k] && k !== except ? sum + v : sum), 0);
+      }
+      // Split 100% evenly over the meals that count, in steps of 5 (three
+      // meals → 30 / 35 / 35, the later meals get the remainder).
+      function randEqualShares() {
+        const idx = [0, 1, 2, 3].filter((k) => randActive[k]);
+        if (!idx.length) return;
+        const base = Math.floor(100 / idx.length / 5) * 5;
+        let rest = 100 - base * idx.length;
+        idx.forEach((k) => (randShares[k] = base));
+        for (let j = idx.length - 1; rest > 0; j--, rest -= 5) randShares[idx[j]] += 5;
+      }
+      // "How many meals do I eat?" — 4: all · 3: breakfast, lunch, dinner ·
+      // 2: lunch, dinner · 1: dinner. Single meals can also be skipped on their card.
+      function randSetMealCount(n) {
+        const want = { 4: [1, 1, 1, 1], 3: [1, 1, 1, 0], 2: [0, 1, 1, 0], 1: [0, 0, 1, 0] }[n];
+        if (!want) return;
+        want.forEach((on, i) => randSetActive(i, !!on, true));
+        randEqualShares();
+        randRefreshAll();
+      }
+      function randToggleActive(i) {
+        if (randActive[i] && randActiveCount() <= 1) return; // a day needs at least one meal
+        randSetActive(i, !randActive[i], true);
+        randEqualShares();
+        randRefreshAll();
+      }
+      function randSetActive(i, on, quiet) {
+        if (randActive[i] === on) return;
+        randActive[i] = on;
+        if (!on) {
+          randSlots[i] && randUsedIds.delete(randSlots[i].id);
+          randSlots[i] = null;
+          randLocked[i] = false;
+        }
+        quiet || randRefreshAll();
+      }
+      // Re-pick meals for empty active slots (their share may have changed) and redraw everything.
+      function randRefreshAll() {
+        for (let i = 0; i < 4; i++) {
+          if (randActive[i] && !randSlots[i]) {
+            const next = randPickOne(RAND_SLOT_TYPES[i], randUsedIds, i);
+            randSlots[i] = next;
+            next && randUsedIds.add(next.id);
+          }
+          randRenderCard(i);
+        }
+        randRenderMacros();
+      }
       function randAdjustShare(i, delta) {
         // A bigger meal has to come out of another one: the day never plans
         // more than 100% of the target.
-        const others = randShares.reduce((sum, v, k) => (k === i ? sum : sum + v), 0);
+        const others = randShareSum(i);
         const next = Math.max(RAND_SHARE_MIN, Math.min(RAND_SHARE_MAX, 100 - others, randShares[i] + delta));
         if (next === randShares[i]) return;
         randShares[i] = next;
@@ -2728,7 +2832,7 @@
       // can also use it to evaluate candidates BEFORE one lands in a slot
       // (see below: picking now weighs each candidate's resulting fat,
       // since fat is the one macro portioning can't fix after the fact).
-      function randSolveRecipeAtShare(recipe, shareTarget) {
+      function randSolveRecipeAtShare(recipe, shareTarget, kcalCap) {
         const key = proteinKeyFor(recipe),
           pn = (key && NUTRITION_DB[key]) || ZERO_MACROS,
           cn = carbNutFor(recipe),
@@ -2759,6 +2863,26 @@
           cg = Math.min(Math.max((remainingCarb * 100) / cn.c, carbFloor), PORTION_BOUNDS.carbMax);
         }
 
+        // Hard calorie ceiling: the target is what the visitor typed in, so a
+        // meal may not go over its budget. Carbs give way first (down to the
+        // floor), then protein — the fixed sauce can't shrink.
+        if (kcalCap != null) {
+          const kcalOf = () => (pg * pn.kcal) / 100 + (cn ? (cg * cn.kcal) / 100 : 0) + fx.kcal;
+          let over = kcalOf() - kcalCap;
+          if (over > 0 && cn && cn.kcal > 0) {
+            cg = Math.max(15, cg - (over * 100) / cn.kcal);
+            over = kcalOf() - kcalCap;
+          }
+          if (over > 0 && key && pn.kcal > 0) {
+            if (key === "eggs") {
+              eggs = Math.max(1, eggs - Math.ceil((over * 100) / pn.kcal / eggSizeG));
+              pg = eggs * eggSizeG;
+            } else pg = Math.max(AUTO_W.pgMin, pg - (over * 100) / pn.kcal);
+          }
+          // Round DOWN so rounding can't push the meal back over the ceiling.
+          cg = Math.floor(cg);
+          key !== "eggs" && (pg = Math.floor(pg));
+        }
         // Round the grams first, then compute macros from the rounded grams,
         // so the numbers on the card are exactly what the modal shows.
         pg = Math.round(pg);
@@ -2790,10 +2914,52 @@
         return { kcal: target.kcal * share, p: target.p * share, c: target.c * share, f: target.f * share };
       }
 
+      // How far above the typed-in calorie target a day may land, per goal:
+      // cutting and maintaining never go over; bulking aims above the target
+      // but stays within 15% of it.
+      function randKcalCeilingFactor() {
+        return "bulk" === randGoal() ? 1.15 : 1;
+      }
+      // Plans the whole day at once. Each meal gets its share of the calorie
+      // target as a ceiling; when a meal can't get that low (a fixed-portion
+      // recipe, or a sauce heavier than the budget), the excess is taken out
+      // of the other meals so the DAY still stays at or under the target.
+      const _EMPTY_MEAL = { kcal: 0, p: 0, c: 0, f: 0, pg: 0, cg: 0, eggs: null };
+      let _randPlanKey = "", _randPlan = null;
+      function randPlanDay() {
+        const target = randTarget(), factor = randKcalCeilingFactor();
+        const key = JSON.stringify([randSlots.map((r) => r && r.id), randShares, randActive, target, factor, proteinVariantPref, eggSizeG, sideEggCount, sideEggSizeG]);
+        if (key === _randPlanKey && _randPlan) return _randPlan;
+        const idx = [0, 1, 2, 3].filter((i) => randSlots[i]);
+        const caps = {};
+        idx.forEach((i) => (caps[i] = factor == null ? null : target.kcal * (randShares[i] / 100) * factor));
+        const solve = (i) => randSolveRecipeAtShare(randSlots[i], randShareTargetFor(i), caps[i]);
+        const plan = [0, 1, 2, 3].map(() => _EMPTY_MEAL);
+        idx.forEach((i) => (plan[i] = solve(i)));
+        if (factor != null) {
+          const budget = idx.reduce((sum, i) => sum + caps[i], 0);
+          for (let round = 0; round < 6; round++) {
+            const total = idx.reduce((sum, i) => sum + plan[i].kcal, 0);
+            const excess = total - budget;
+            if (excess <= 0) break;
+            // Meals that still have room to shrink take the excess, in proportion to their size.
+            const flexible = idx.filter((i) => plan[i].kcal <= caps[i] + 0.5 && plan[i].kcal > 0);
+            const room = flexible.reduce((sum, i) => sum + plan[i].kcal, 0);
+            if (!flexible.length || room <= 0) break;
+            const before = total;
+            flexible.forEach((i) => {
+              caps[i] = Math.max(0, plan[i].kcal - (excess * plan[i].kcal) / room - 1);
+              plan[i] = solve(i);
+            });
+            if (idx.reduce((sum, i) => sum + plan[i].kcal, 0) >= before) break; // nothing left to give
+          }
+        }
+        _randPlanKey = key;
+        _randPlan = plan;
+        return plan;
+      }
       function randRecipeMacrosForSlot(i) {
-        const recipe = randSlots[i];
-        if (!recipe) return { kcal: 0, p: 0, c: 0, f: 0, pg: 0, cg: 0 };
-        return randSolveRecipeAtShare(recipe, randShareTargetFor(i));
+        return randSlots[i] ? randPlanDay()[i] : _EMPTY_MEAL;
       }
 
       const RAND_TARGET_DEFAULT = { kcal: 2000, p: 160, c: 190, f: 60 };
@@ -2854,6 +3020,27 @@
         });
         const shareEl = document.getElementById("randDayShare");
         shareEl && (shareEl.textContent = randSlots.reduce((sum, r, i) => (r ? sum + randShares[i] : sum), 0));
+        const overEl = document.getElementById("randOverNote");
+        if (overEl) {
+          const over = Math.round(sums.kcal) > Math.round(target.kcal * randKcalCeilingFactor());
+          overEl.style.display = over ? "" : "none";
+          over && (overEl.textContent = `These meals can't go below ${Math.round(sums.kcal)} kcal — every portion is already at its minimum. Reroll, skip a meal or raise the target.`);
+        }
+        document.querySelectorAll("[data-meal-count]").forEach((b) => b.classList.toggle("active", +b.dataset.mealCount === randActiveCount()));
+        // Kitchen time for the whole day.
+        const timeEl = document.getElementById("randDayTime");
+        if (timeEl) {
+          const tt = { prep: 0, cook: 0, total: 0, split: true };
+          randSlots.forEach((r) => {
+            if (!r) return;
+            const t = recipeTimes(r);
+            tt.total += t.total; tt.prep += t.prep; tt.cook += t.cook;
+            t.split || (tt.split = false);
+          });
+          timeEl.textContent = tt.total
+            ? `⏱ ${fmtMinutes(tt.total)} in the kitchen` + (tt.split ? ` · ${fmtMinutes(tt.prep)} prep + ${fmtMinutes(tt.cook)} cooking` : "")
+            : "";
+        }
         const pct = (v, t) => (t > 0 ? Math.min(100, Math.round((v / t) * 100)) : 0);
         const grid = document.getElementById("randMacroGrid");
         if (!grid) return;
@@ -2906,12 +3093,20 @@
         const r = randSlots[i];
         const locked = randLocked[i];
         const slotLabel = RAND_SLOT_DISPLAY_LABELS[i];
+        el.classList.toggle("skipped", !randActive[i]);
+        if (!randActive[i]) {
+          el.style.borderColor = "";
+          el.style.background = "";
+          el.innerHTML = `<div class="rand-card-top"><span class="rand-card-num">${slotLabel} · skipped</span><button type="button" class="rand-skip-btn" onclick="randToggleActive(${i})">＋ Add this meal</button></div>`;
+          return;
+        }
         if (!r) {
           el.style.borderColor = "";
           el.style.background = "";
-          el.innerHTML = `<div class="rand-card-top"><span class="rand-card-num">${slotLabel}</span></div><div class="rand-empty">No ${RAND_SLOT_TYPES[i]} recipe matches your filters</div>`;
+          el.innerHTML = `<div class="rand-card-top"><span class="rand-card-num">${slotLabel}</span>${randActiveCount() > 1 ? `<button type="button" class="rand-skip-btn" onclick="randToggleActive(${i})">Skip</button>` : ""}</div><div class="rand-empty">No ${RAND_SLOT_TYPES[i]} recipe matches your filters</div>`;
           return;
         }
+        const tm = recipeTimes(r);
         const m = randRecipeMacrosForSlot(i);
         el.style.borderColor = locked ? "#47e8a3" : "";
         el.style.background = locked ? "rgba(71,232,163,0.06)" : "";
@@ -2921,23 +3116,25 @@
           <span class="rand-card-btns">
             <button onclick="randReroll(${i})" ${locked ? "disabled style='opacity:.3'" : ""} title="Reroll">🎲</button>
             <button onclick="randToggleLock(${i})" title="Lock">${locked ? "🔒" : "🔓"}</button>
+            ${randActiveCount() > 1 ? `<button onclick="randToggleActive(${i})" title="Skip this meal — it no longer counts for the day" aria-label="Skip this meal">✕</button>` : ""}
           </span>
         </div>
         <div class="card-title" style="cursor:pointer" onclick="randOpen(${i})">${r.title}</div>
         <div class="tags">${r.tags.slice(0, 2).map((t) => `<span class="tag tag-${t}">${tagLabel(t)}</span>`).join("")}</div>
         <div class="rand-card-macros">${m.kcal} kcal · ${m.p}g P · ${m.c}g C · ${m.f}g F</div>
+        <div class="rand-card-time">${tm.split ? `<span>🔪 ${fmtMinutes(tm.prep)} prep</span><span>🔥 ${tm.cook ? fmtMinutes(tm.cook) + " cooking" : "no cooking"}</span>` : `<span>⏱ ${fmtMinutes(tm.total)}</span>`}</div>
         <div class="rand-card-portion">
           <span class="rand-portion-grams">${[m.eggs ? m.eggs + (m.eggs === 1 ? " egg" : " eggs") : m.pg ? m.pg + "g protein" : "", m.cg ? m.cg + "g carb" : ""].filter(Boolean).join(" · ") || "fixed portion"}</span>
           <span class="rand-portion-stepper">
             <button onclick="randAdjustShare(${i}, -5)" ${randShares[i] <= RAND_SHARE_MIN ? "disabled" : ""} title="Smaller portion">−</button>
             <span>${randShares[i]}% of day</span>
-            <button onclick="randAdjustShare(${i}, 5)" ${randShares[i] >= RAND_SHARE_MAX || randShares.reduce((a, b) => a + b, 0) >= 100 ? "disabled" : ""} title="Bigger portion — shrink another meal first if the day is full">+</button>
+            <button onclick="randAdjustShare(${i}, 5)" ${randShares[i] >= RAND_SHARE_MAX || randShareSum() >= 100 ? "disabled" : ""} title="Bigger portion — shrink another meal first if the day is full">+</button>
           </span>
         </div>`;
       }
 
       function randReroll(i) {
-        if (randLocked[i]) return;
+        if (randLocked[i] || !randActive[i]) return;
         if (randSlots[i]) randUsedIds.delete(randSlots[i].id);
         const next = randPickOne(RAND_SLOT_TYPES[i], randUsedIds, i);
         randSlots[i] = next;
@@ -2953,6 +3150,14 @@
       }
 
       function randRerollAll() {
+        // Release every unlocked meal first, then pick in order. Rerolling one
+        // slot at a time let a later slot keep the one recipe an earlier slot
+        // needed (e.g. the only light breakfast sitting in the dinner slot).
+        for (let i = 0; i < randSlots.length; i++) {
+          if (randLocked[i] || !randActive[i] || !randSlots[i]) continue;
+          randUsedIds.delete(randSlots[i].id);
+          randSlots[i] = null;
+        }
         for (let i = 0; i < randSlots.length; i++) if (!randLocked[i]) randReroll(i);
       }
 
@@ -2978,7 +3183,9 @@
         document.getElementById("randTargetF").value = t.f;
         randUsedIds.clear();
         for (let i = 0; i < 4; i++) {
-          if (!randSlots[i]) {
+          if (!randActive[i]) {
+            randSlots[i] = null;
+          } else if (!randSlots[i]) {
             const next = randPickOne(RAND_SLOT_TYPES[i], randUsedIds, i);
             randSlots[i] = next;
             if (next) randUsedIds.add(next.id);
@@ -2990,8 +3197,8 @@
           } else {
             randUsedIds.add(randSlots[i].id);
           }
-          randRenderCard(i);
         }
+        for (let i = 0; i < 4; i++) randRenderCard(i); // after all picks: the skip button depends on the meal count
         randRenderMacros();
       }
 
