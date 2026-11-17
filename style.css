@@ -5812,3 +5812,16 @@
         font-size: clamp(20px, 5.4vw, 28px);
         line-height: 1.3;
       }
+      /* Tags with and without an emoji share one height and one text baseline
+         (an emoji makes its line taller, which pushed plain tags' text upward). */
+      .tags {
+        align-items: center;
+      }
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        min-height: 20px;
+        line-height: 1;
+        box-sizing: border-box;
+        white-space: nowrap;
+      }
